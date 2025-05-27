@@ -23,5 +23,6 @@ namespace ZappyGui {
             window _window;
             Client _client;
             //FIXME: add the cirular buffer here
+            //FIXME: add the gameinfo structures here
     };
 };

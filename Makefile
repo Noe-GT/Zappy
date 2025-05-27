@@ -7,9 +7,15 @@
 
 SERVER_SRC	=	$(wildcard server/*.c)
 
-GUI_SRC		=	$(wildcard gui/*.cpp)			\
-				$(wildcard gui/UI/*.cpp)		\
-				$(wildcard gui/Client/*.cpp)	\
+GUI_SRC		=	$(wildcard gui/*.cpp)								\
+				$(wildcard gui/UI/*.cpp)							\
+				$(wildcard gui/Client/*.cpp)						\
+				$(wildcard gui/Client/Commands/game/*.cpp)			\
+				$(wildcard gui/Client/Commands/map/*.cpp)			\
+				$(wildcard gui/Client/Commands/misc/*.cpp)			\
+				$(wildcard gui/Client/Commands/player/*.cpp)		\
+				$(wildcard gui/Client/Commands/ressources/*.cpp)	\
+				$(wildcard gui/Client/Commands/settings/*.cpp)		\
 
 AI_SRC		=	$(wildcard ai/*.c)
 
