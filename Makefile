@@ -6,24 +6,32 @@
 ##
 
 SERVER_SRC	=	$(wildcard server/*.c)
-GUI_SRC	=	$(wildcard gui/*.cpp)
-AI_SRC	=	$(wildcard ai/*.c)
+
+GUI_SRC		=	$(wildcard gui/*.cpp)			\
+				$(wildcard gui/UI/*.cpp)		\
+				$(wildcard gui/Client/*.cpp)	\
+
+AI_SRC		=	$(wildcard ai/*.c)
+
 
 SERVER_OBJ	=	$(SERVER_SRC:.c=.o)
-GUI_OBJ	=	$(GUI_SRC:.cpp=.o)
-AI_OBJ	=	$(AI_SRC:.c=.o)
+GUI_OBJ		=	$(GUI_SRC:.cpp=.o)
+AI_OBJ		=	$(AI_SRC:.c=.o)
+
 
 SERVER_EXEC	=	zappy_server
 GUI_EXEC	=	zappy_gui
 AI_EXEC		=	zappy_ai
 
-CC	=	gcc
+CC			=	gcc
 
-CPPC	=	g++
+CPPC		=	g++
 
-CFLAGS	+=	-Wall -Wextra -g3
+CFLAGS		+=	-Wall -Wextra -g3
 
-all:	server gui	ai
+GUI_LDFLAGS = -lsfml-graphics -lsfml-window -lsfml-system
+
+all:	server gui ai
 
 server: $(SERVER_EXEC)
 
@@ -33,7 +41,7 @@ $(SERVER_EXEC): $(SERVER_OBJ)
 gui:	$(GUI_EXEC)
 
 $(GUI_EXEC):	$(GUI_OBJ)
-	$(CPPC) $(GUI_OBJ) -o $(GUI_EXEC) $(CFLAGS)
+	$(CPPC) $(GUI_OBJ) -o $(GUI_EXEC) $(CFLAGS) $(GUI_LDFLAGS)
 
 ai: $(AI_EXEC)
 
