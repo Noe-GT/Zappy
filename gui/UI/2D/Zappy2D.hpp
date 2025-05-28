@@ -7,9 +7,10 @@
 
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "UI/Window.hpp"
+#include "UI/shared/Window.hpp"
+#include "UI/shared/AGraphical.hpp"
 
-class Zappy2D {
+class Zappy2D: public AGraphical {
     public:
         Zappy2D();
 
