@@ -6,20 +6,20 @@
 */
 
 #include "pin.hpp"
-ZappyGui::pin::pin()
+zappyGUI::pin::pin()
 {
 }
 
-ZappyGui::pin::~pin()
+zappyGUI::pin::~pin()
 {
 }
 
-void ZappyGui::pin::receive(std::string command, ZappyGui::GUI &gui)
+void zappyGUI::pin::receive(std::string command, zappyGUI::GUI &gui)
 {
     //TODO:
 }
 
-void ZappyGui::pin::send(std::string command, ZappyGui::GUI &gui)
+void zappyGUI::pin::send(std::string command, zappyGUI::GUI &gui)
 {
     //TODO:
 }

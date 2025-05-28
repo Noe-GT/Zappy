@@ -6,20 +6,20 @@
 */
 
 #include "sst.hpp"
-ZappyGui::sst::sst()
+zappyGUI::sst::sst()
 {
 }
 
-ZappyGui::sst::~sst()
+zappyGUI::sst::~sst()
 {
 }
 
-void ZappyGui::sst::receive(std::string command, ZappyGui::GUI &gui)
+void zappyGUI::sst::receive(std::string command, zappyGUI::GUI &gui)
 {
     //TODO:
 }
 
-void ZappyGui::sst::send(std::string command, ZappyGui::GUI &gui)
+void zappyGUI::sst::send(std::string command, zappyGUI::GUI &gui)
 {
     //TODO:
 }

@@ -6,20 +6,20 @@
 */
 
 #include "smg.hpp"
-ZappyGui::smg::smg()
+zappyGUI::smg::smg()
 {
 }
 
-ZappyGui::smg::~smg()
+zappyGUI::smg::~smg()
 {
 }
 
-void ZappyGui::smg::receive(std::string command, ZappyGui::GUI &gui)
+void zappyGUI::smg::receive(std::string command, zappyGUI::GUI &gui)
 {
     //TODO:
 }
 
-void ZappyGui::smg::send(std::string command, ZappyGui::GUI &gui)
+void zappyGUI::smg::send(std::string command, zappyGUI::GUI &gui)
 {
     throw std::runtime_error("smg can not be send by the client");
 }

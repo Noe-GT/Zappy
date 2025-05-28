@@ -6,20 +6,20 @@
 */
 
 #include "pdr.hpp"
-ZappyGui::pdr::pdr()
+zappyGUI::pdr::pdr()
 {
 }
 
-ZappyGui::pdr::~pdr()
+zappyGUI::pdr::~pdr()
 {
 }
 
-void ZappyGui::pdr::receive(std::string command, ZappyGui::GUI &gui)
+void zappyGUI::pdr::receive(std::string command, zappyGUI::GUI &gui)
 {
     //TODO:
 }
 
-void ZappyGui::pdr::send(std::string command, ZappyGui::GUI &gui)
+void zappyGUI::pdr::send(std::string command, zappyGUI::GUI &gui)
 {
     throw std::runtime_error("pdr can not be send by the client");
 }

@@ -1,0 +1,77 @@
+/*
+** EPITECH PROJECT, 2024
+** zap
+** File description:
+** Game.cpp
+*/
+
+#include "Game.hpp"
+zappyGUI::Game::Game()
+{
+}
+
+zappyGUI::Game::~Game()
+{
+}
+
+int zappyGUI::Game::getFrequence()
+{
+    return this->_frequence;
+}
+
+int zappyGUI::Game::getTeamNbr()
+{
+    return this->_teamNbr;
+}
+
+bool zappyGUI::Game::isGameInProgess()
+{
+    return this->_gameInProgess;
+}
+
+std::vector <std::string> zappyGUI::Game::getLogs()
+{
+    return this->_logs;
+}
+
+std::vector <std::vector <zappyGUI::Tile>> zappyGUI::Game::getMap()
+{
+    return this->_map;
+}
+
+
+void zappyGUI::Game::setFrequence(int newVal)
+{
+    this->_frequence = newVal;
+}
+
+void zappyGUI::Game::setTeamNbr(int newVal)
+{
+    this->_gameInProgess = newVal;
+}
+
+void zappyGUI::Game::isGameInProgess(bool newVal)
+{
+    this->_gameInProgess = newVal;
+}
+
+void zappyGUI::Game::setLogs(std::vector <std::string> newVal)
+{
+    this->_logs = newVal;
+}
+
+void zappyGUI::Game::addLogs(std::string newVal)
+{
+    this->_logs.push_back(newVal);
+}
+
+void zappyGUI::Game::setMap(std::vector <std::vector <zappyGUI::Tile>> newVal)
+{
+    this->_map = newVal;
+}
+
+
+void zappyGUI::Game::display()
+{
+    //TODO: implement the display method
+}

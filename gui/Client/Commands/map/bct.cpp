@@ -6,20 +6,20 @@
 */
 
 #include "bct.hpp"
-ZappyGui::bct::bct()
+zappyGUI::bct::bct()
 {
 }
 
-ZappyGui::bct::~bct()
+zappyGUI::bct::~bct()
 {
 }
 
-void ZappyGui::bct::receive(std::string command, ZappyGui::GUI &gui)
+void zappyGUI::bct::receive(std::string command, zappyGUI::GUI &gui)
 {
     //TODO:
 }
 
-void ZappyGui::bct::send(std::string command, ZappyGui::GUI &gui)
+void zappyGUI::bct::send(std::string command, zappyGUI::GUI &gui)
 {
     //TODO:
 }

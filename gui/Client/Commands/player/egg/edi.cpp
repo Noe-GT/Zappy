@@ -6,20 +6,20 @@
 */
 
 #include "edi.hpp"
-ZappyGui::edi::edi()
+zappyGUI::edi::edi()
 {
 }
 
-ZappyGui::edi::~edi()
+zappyGUI::edi::~edi()
 {
 }
 
-void ZappyGui::edi::receive(std::string command, ZappyGui::GUI &gui)
+void zappyGUI::edi::receive(std::string command, zappyGUI::GUI &gui)
 {
     //TODO:
 }
 
-void ZappyGui::edi::send(std::string command, ZappyGui::GUI &gui)
+void zappyGUI::edi::send(std::string command, zappyGUI::GUI &gui)
 {
     throw std::runtime_error("edi can not be send by the client");
 }

@@ -7,7 +7,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 
-namespace ZappyGui {
+namespace zappyGUI {
     class window {
         public:
             window();

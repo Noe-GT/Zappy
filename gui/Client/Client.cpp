@@ -7,7 +7,7 @@
 
 #include "Client.hpp"
 #include <stdexcept>
-ZappyGui::Client::Client(int port, std::string hostname): _Client(port)
+zappyGUI::Client::Client(int port, std::string hostname): _Client(port)
 {
     int sockfd = _Client.socket(AF_INET, SOCK_STREAM, 0);
 
@@ -23,7 +23,7 @@ ZappyGui::Client::Client(int port, std::string hostname): _Client(port)
     this->_Client.setSocket(sockfd);
 }
 
-ZappyGui::Client::~Client()
+zappyGUI::Client::~Client()
 {
 
 }

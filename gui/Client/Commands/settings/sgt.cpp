@@ -6,20 +6,20 @@
 */
 
 #include "sgt.hpp"
-ZappyGui::sgt::sgt()
+zappyGUI::sgt::sgt()
 {
 }
 
-ZappyGui::sgt::~sgt()
+zappyGUI::sgt::~sgt()
 {
 }
 
-void ZappyGui::sgt::receive(std::string command, ZappyGui::GUI &gui)
+void zappyGUI::sgt::receive(std::string command, zappyGUI::GUI &gui)
 {
     //TODO:
 }
 
-void ZappyGui::sgt::send(std::string command, ZappyGui::GUI &gui)
+void zappyGUI::sgt::send(std::string command, zappyGUI::GUI &gui)
 {
     //TODO:
 }

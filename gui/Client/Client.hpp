@@ -7,7 +7,7 @@
 #pragma once
 #include <string>
 #include "Cserver.hpp"
-namespace ZappyGui {
+namespace zappyGUI {
     class Client {
         public:
             Client(int port, std::string hostname);

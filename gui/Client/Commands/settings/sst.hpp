@@ -8,7 +8,7 @@
 #pragma once
 #include "../Icommand.hpp"
 
-namespace ZappyGui {
+namespace zappyGUI {
     class sst : public Icommand {
         public:
             sst();

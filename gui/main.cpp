@@ -4,7 +4,6 @@
 ** File description:
 ** gui/main.cpp
 */
-
 #include "GUI.hpp"
 #include <iostream>
 #include <string>
@@ -43,7 +42,7 @@ int main(int argc, char **argv)
             exitWithUsage();
     }
     try {
-        ZappyGui::GUI gui(port, hostname);
+        zappyGUI::GUI gui(port, hostname);
         gui.loop();
     } catch (const std::exception &e) {
         std::cerr << "Error: " << e.what() << std::endl;

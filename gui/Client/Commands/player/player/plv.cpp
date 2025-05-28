@@ -6,20 +6,20 @@
 */
 
 #include "plv.hpp"
-ZappyGui::plv::plv()
+zappyGUI::plv::plv()
 {
 }
 
-ZappyGui::plv::~plv()
+zappyGUI::plv::~plv()
 {
 }
 
-void ZappyGui::plv::receive(std::string command, ZappyGui::GUI &gui)
+void zappyGUI::plv::receive(std::string command, zappyGUI::GUI &gui)
 {
     //TODO:
 }
 
-void ZappyGui::plv::send(std::string command, ZappyGui::GUI &gui)
+void zappyGUI::plv::send(std::string command, zappyGUI::GUI &gui)
 {
     //TODO:
 }

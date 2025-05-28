@@ -8,7 +8,7 @@
 #pragma once
 #include "../Icommand.hpp"
 
-namespace ZappyGui {
+namespace zappyGUI {
     class pie : public Icommand {
         public:
             pie();

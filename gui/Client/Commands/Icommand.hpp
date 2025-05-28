@@ -8,7 +8,7 @@
 #pragma once
 #include <string>
 #include "../../GUI.hpp"
-namespace ZappyGui {
+namespace zappyGUI {
     class Icommand {
         public:
             virtual ~Icommand() = default;

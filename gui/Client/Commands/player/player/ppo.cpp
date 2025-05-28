@@ -6,20 +6,20 @@
 */
 
 #include "ppo.hpp"
-ZappyGui::ppo::ppo()
+zappyGUI::ppo::ppo()
 {
 }
 
-ZappyGui::ppo::~ppo()
+zappyGUI::ppo::~ppo()
 {
 }
 
-void ZappyGui::ppo::receive(std::string command, ZappyGui::GUI &gui)
+void zappyGUI::ppo::receive(std::string command, zappyGUI::GUI &gui)
 {
     //TODO:
 }
 
-void ZappyGui::ppo::send(std::string command, ZappyGui::GUI &gui)
+void zappyGUI::ppo::send(std::string command, zappyGUI::GUI &gui)
 {
     //TODO:
 }

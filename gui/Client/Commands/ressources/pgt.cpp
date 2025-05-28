@@ -6,20 +6,20 @@
 */
 
 #include "pgt.hpp"
-ZappyGui::pgt::pgt()
+zappyGUI::pgt::pgt()
 {
 }
 
-ZappyGui::pgt::~pgt()
+zappyGUI::pgt::~pgt()
 {
 }
 
-void ZappyGui::pgt::receive(std::string command, ZappyGui::GUI &gui)
+void zappyGUI::pgt::receive(std::string command, zappyGUI::GUI &gui)
 {
     //TODO:
 }
 
-void ZappyGui::pgt::send(std::string command, ZappyGui::GUI &gui)
+void zappyGUI::pgt::send(std::string command, zappyGUI::GUI &gui)
 {
     throw std::runtime_error("pgt can not be send by the client");
 }

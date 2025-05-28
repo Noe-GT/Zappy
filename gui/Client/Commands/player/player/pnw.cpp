@@ -6,20 +6,20 @@
 */
 
 #include "pnw.hpp"
-ZappyGui::pnw::pnw()
+zappyGUI::pnw::pnw()
 {
 }
 
-ZappyGui::pnw::~pnw()
+zappyGUI::pnw::~pnw()
 {
 }
 
-void ZappyGui::pnw::receive(std::string command, ZappyGui::GUI &gui)
+void zappyGUI::pnw::receive(std::string command, zappyGUI::GUI &gui)
 {
     //TODO:
 }
 
-void ZappyGui::pnw::send(std::string command, ZappyGui::GUI &gui)
+void zappyGUI::pnw::send(std::string command, zappyGUI::GUI &gui)
 {
     throw std::runtime_error("pnw can not be send by the client");
 }

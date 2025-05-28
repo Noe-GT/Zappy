@@ -8,7 +8,8 @@
 #pragma once
 #include "UI/Window.hpp"
 #include "Client/Client.hpp"
-namespace ZappyGui {
+#include "Game/Game.hpp"
+namespace zappyGUI {
     class GUI {
         public:
             GUI(int port, std::string hostname);
@@ -22,7 +23,7 @@ namespace ZappyGui {
 
             window _window;
             Client _client;
+            Game _game;
             //FIXME: add the cirular buffer here
-            //FIXME: add the gameinfo structures here
     };
 };

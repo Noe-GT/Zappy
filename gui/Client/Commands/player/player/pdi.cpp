@@ -6,20 +6,20 @@
 */
 
 #include "pdi.hpp"
-ZappyGui::pdi::pdi()
+zappyGUI::pdi::pdi()
 {
 }
 
-ZappyGui::pdi::~pdi()
+zappyGUI::pdi::~pdi()
 {
 }
 
-void ZappyGui::pdi::receive(std::string command, ZappyGui::GUI &gui)
+void zappyGUI::pdi::receive(std::string command, zappyGUI::GUI &gui)
 {
     //TODO:
 }
 
-void ZappyGui::pdi::send(std::string command, ZappyGui::GUI &gui)
+void zappyGUI::pdi::send(std::string command, zappyGUI::GUI &gui)
 {
     throw std::runtime_error("pdi can not be send by the client");
 }

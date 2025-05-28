@@ -6,20 +6,20 @@
 */
 
 #include "mct.hpp"
-ZappyGui::mct::mct()
+zappyGUI::mct::mct()
 {
 }
 
-ZappyGui::mct::~mct()
+zappyGUI::mct::~mct()
 {
 }
 
-void ZappyGui::mct::receive(std::string command, ZappyGui::GUI &gui)
+void zappyGUI::mct::receive(std::string command, zappyGUI::GUI &gui)
 {
     //TODO:
 }
 
-void ZappyGui::mct::send(std::string command, ZappyGui::GUI &gui)
+void zappyGUI::mct::send(std::string command, zappyGUI::GUI &gui)
 {
     //TODO:
 }

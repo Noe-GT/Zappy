@@ -6,20 +6,20 @@
 */
 
 #include "tna.hpp"
-ZappyGui::tna::tna()
+zappyGUI::tna::tna()
 {
 }
 
-ZappyGui::tna::~tna()
+zappyGUI::tna::~tna()
 {
 }
 
-void ZappyGui::tna::receive(std::string command, ZappyGui::GUI &gui)
+void zappyGUI::tna::receive(std::string command, zappyGUI::GUI &gui)
 {
     //TODO:
 }
 
-void ZappyGui::tna::send(std::string command, ZappyGui::GUI &gui)
+void zappyGUI::tna::send(std::string command, zappyGUI::GUI &gui)
 {
     //TODO:
 }

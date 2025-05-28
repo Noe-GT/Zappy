@@ -8,7 +8,7 @@
 #pragma once
 #include "../../Icommand.hpp"
 
-namespace ZappyGui {
+namespace zappyGUI {
     class ebo : public Icommand {
         public:
             ebo();

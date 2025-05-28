@@ -6,20 +6,20 @@
 */
 
 #include "pfk.hpp"
-ZappyGui::pfk::pfk()
+zappyGUI::pfk::pfk()
 {
 }
 
-ZappyGui::pfk::~pfk()
+zappyGUI::pfk::~pfk()
 {
 }
 
-void ZappyGui::pfk::receive(std::string command, ZappyGui::GUI &gui)
+void zappyGUI::pfk::receive(std::string command, zappyGUI::GUI &gui)
 {
     //TODO:
 }
 
-void ZappyGui::pfk::send(std::string command, ZappyGui::GUI &gui)
+void zappyGUI::pfk::send(std::string command, zappyGUI::GUI &gui)
 {
     throw std::runtime_error("pfk can not be send by the client");
 }

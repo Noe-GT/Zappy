@@ -6,20 +6,20 @@
 */
 
 #include "sbp.hpp"
-ZappyGui::sbp::sbp()
+zappyGUI::sbp::sbp()
 {
 }
 
-ZappyGui::sbp::~sbp()
+zappyGUI::sbp::~sbp()
 {
 }
 
-void ZappyGui::sbp::receive(std::string command, ZappyGui::GUI &gui)
+void zappyGUI::sbp::receive(std::string command, zappyGUI::GUI &gui)
 {
     //TODO:
 }
 
-void ZappyGui::sbp::send(std::string command, ZappyGui::GUI &gui)
+void zappyGUI::sbp::send(std::string command, zappyGUI::GUI &gui)
 {
     throw std::runtime_error("sbp can not be send by the client");
 }

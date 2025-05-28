@@ -6,20 +6,20 @@
 */
 
 #include "suc.hpp"
-ZappyGui::suc::suc()
+zappyGUI::suc::suc()
 {
 }
 
-ZappyGui::suc::~suc()
+zappyGUI::suc::~suc()
 {
 }
 
-void ZappyGui::suc::receive(std::string command, ZappyGui::GUI &gui)
+void zappyGUI::suc::receive(std::string command, zappyGUI::GUI &gui)
 {
     //TODO:
 }
 
-void ZappyGui::suc::send(std::string command, ZappyGui::GUI &gui)
+void zappyGUI::suc::send(std::string command, zappyGUI::GUI &gui)
 {
     throw std::runtime_error("suc can not be send by the client");
 }

@@ -6,20 +6,20 @@
 */
 
 #include "msz.hpp"
-ZappyGui::msz::msz()
+zappyGUI::msz::msz()
 {
 }
 
-ZappyGui::msz::~msz()
+zappyGUI::msz::~msz()
 {
 }
 
-void ZappyGui::msz::receive(std::string command, ZappyGui::GUI &gui)
+void zappyGUI::msz::receive(std::string command, zappyGUI::GUI &gui)
 {
     //TODO:
 }
 
-void ZappyGui::msz::send(std::string command, ZappyGui::GUI &gui)
+void zappyGUI::msz::send(std::string command, zappyGUI::GUI &gui)
 {
     //TODO:
 }

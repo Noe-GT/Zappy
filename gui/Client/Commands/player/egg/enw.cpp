@@ -6,20 +6,20 @@
 */
 
 #include "enw.hpp"
-ZappyGui::enw::enw()
+zappyGUI::enw::enw()
 {
 }
 
-ZappyGui::enw::~enw()
+zappyGUI::enw::~enw()
 {
 }
 
-void ZappyGui::enw::receive(std::string command, ZappyGui::GUI &gui)
+void zappyGUI::enw::receive(std::string command, zappyGUI::GUI &gui)
 {
     //TODO:
 }
 
-void ZappyGui::enw::send(std::string command, ZappyGui::GUI &gui)
+void zappyGUI::enw::send(std::string command, zappyGUI::GUI &gui)
 {
     throw std::runtime_error("enw can not be send by the client");
 }

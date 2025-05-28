@@ -6,20 +6,20 @@
 */
 
 #include "pbc.hpp"
-ZappyGui::pbc::pbc()
+zappyGUI::pbc::pbc()
 {
 }
 
-ZappyGui::pbc::~pbc()
+zappyGUI::pbc::~pbc()
 {
 }
 
-void ZappyGui::pbc::receive(std::string command, ZappyGui::GUI &gui)
+void zappyGUI::pbc::receive(std::string command, zappyGUI::GUI &gui)
 {
     //TODO:
 }
 
-void ZappyGui::pbc::send(std::string command, ZappyGui::GUI &gui)
+void zappyGUI::pbc::send(std::string command, zappyGUI::GUI &gui)
 {
     throw std::runtime_error("pbc can not be send by the client");
 }

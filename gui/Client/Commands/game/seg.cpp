@@ -6,20 +6,20 @@
 */
 
 #include "seg.hpp"
-ZappyGui::seg::seg()
+zappyGUI::seg::seg()
 {
 }
 
-ZappyGui::seg::~seg()
+zappyGUI::seg::~seg()
 {
 }
 
-void ZappyGui::seg::receive(std::string command, ZappyGui::GUI &gui)
+void zappyGUI::seg::receive(std::string command, zappyGUI::GUI &gui)
 {
     //TODO:
 }
 
-void ZappyGui::seg::send(std::string command, ZappyGui::GUI &gui)
+void zappyGUI::seg::send(std::string command, zappyGUI::GUI &gui)
 {
     throw std::runtime_error("seg can not be send by the client");
 }

@@ -6,20 +6,20 @@
 */
 
 #include "ebo.hpp"
-ZappyGui::ebo::ebo()
+zappyGUI::ebo::ebo()
 {
 }
 
-ZappyGui::ebo::~ebo()
+zappyGUI::ebo::~ebo()
 {
 }
 
-void ZappyGui::ebo::receive(std::string command, ZappyGui::GUI &gui)
+void zappyGUI::ebo::receive(std::string command, zappyGUI::GUI &gui)
 {
     //TODO:
 }
 
-void ZappyGui::ebo::send(std::string command, ZappyGui::GUI &gui)
+void zappyGUI::ebo::send(std::string command, zappyGUI::GUI &gui)
 {
     throw std::runtime_error("ebo can not be send by the client");
 }
