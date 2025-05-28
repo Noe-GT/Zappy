@@ -7,8 +7,8 @@
 
 #pragma once
 #include "UI/Window.hpp"
-#include "Client/Client.hpp"
-#include "Game/Game.hpp"
+#include "client/Client.hpp"
+#include "game/Game.hpp"
 namespace zappyGUI {
     class GUI {
         public:

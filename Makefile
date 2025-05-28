@@ -9,13 +9,15 @@ SERVER_SRC	=	$(wildcard server/*.c)
 
 GUI_SRC		=	$(wildcard gui/*.cpp)								\
 				$(wildcard gui/UI/*.cpp)							\
-				$(wildcard gui/Client/*.cpp)						\
-				$(wildcard gui/Client/Commands/game/*.cpp)			\
-				$(wildcard gui/Client/Commands/map/*.cpp)			\
-				$(wildcard gui/Client/Commands/misc/*.cpp)			\
-				$(wildcard gui/Client/Commands/player/*.cpp)		\
-				$(wildcard gui/Client/Commands/ressources/*.cpp)	\
-				$(wildcard gui/Client/Commands/settings/*.cpp)		\
+				$(wildcard gui/client/*.cpp)						\
+				$(wildcard gui/client/commands/game/*.cpp)			\
+				$(wildcard gui/client/commands/map/*.cpp)			\
+				$(wildcard gui/client/commands/misc/*.cpp)			\
+				$(wildcard gui/client/commands/player/*.cpp)		\
+				$(wildcard gui/client/commands/ressources/*.cpp)	\
+				$(wildcard gui/client/commands/settings/*.cpp)		\
+				$(wildcard gui/game/*.cpp)							\
+				$(wildcard gui/game/Spell*.cpp)						\
 
 AI_SRC		=	$(wildcard ai/*.c)
 

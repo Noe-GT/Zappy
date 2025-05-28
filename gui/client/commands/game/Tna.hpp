@@ -1,0 +1,20 @@
+/*
+** EPITECH PROJECT, 2024
+** zap
+** File description:
+** Tna.hpp
+*/
+
+#pragma once
+#include "../Icommand.hpp"
+
+namespace zappyGUI {
+    class Tna : public Icommand {
+        public:
+            Tna();
+            ~Tna();
+
+            void receive(std::string command, GUI &gui);
+            void send(std::string command, GUI &gui);
+    };
+};
