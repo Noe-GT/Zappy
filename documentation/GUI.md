@@ -34,7 +34,7 @@ classDiagram
         - int id
         - Iincentation _incentationInProgress
         - Inventory _inventory
-        vector ~Tile~ _visionData
+        - vector ~Tile~ _visionData
         - int _lvl
         - vector ~std::string~ _logs
         + display()
