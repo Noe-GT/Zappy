@@ -5,7 +5,7 @@
 ## Makefile
 ##
 
-SERVER_SRC	=	$(wildcard server/*.c)
+SERVER_SRC	=	$(wildcard server/src/*.c)
 GUI_SRC	=	$(wildcard gui/*.cpp)
 AI_SRC	=	$(wildcard ai/*.c)
 
