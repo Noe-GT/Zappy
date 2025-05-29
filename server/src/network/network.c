@@ -5,30 +5,13 @@
 ** network
 */
 
-#include "../include/network.h"
+#include "../../include/network.h"
 
 network_t *init_network(void)
 {
     network_t *net = malloc(sizeof(network_t));
 
     return net;
-}
-
-void manage_client(network_t *net, int i)
-{
-    (void)net;
-    (void)i;
-}
-
-void client_remove(network_t *net, int i)
-{
-    (void)net;
-    (void)i;
-}
-
-void new_client(network_t *net)
-{
-    (void)net;
 }
 
 static int check_event(network_t *net, int i)
@@ -43,9 +26,9 @@ static int check_event(network_t *net, int i)
     }
     if (net->clients->fds[i].revents == POLLIN) {
         if (net->clients->fds[i].fd == net->main_socket)
-            new_client(net);
+            client_new(net, net->main_socket);
         else
-            manage_client(net, i);
+            client_manage(net, i);
     }
     return 0;
 }

@@ -9,6 +9,7 @@
     #define NETWORK_H_
     #include "external.h"
     #include "queue.h"
+    #define MAX_CLIENTS 255
 
 typedef struct clients_s {
     struct pollfd *fds;
@@ -23,5 +24,9 @@ typedef struct network_s {
 
 network_t *init_network(void);
 int handle_network(network_t *net);
+
+void client_manage(clients_t *clients, int i);
+void client_remove(clients_t *clients, int i);
+void client_new(clients_t *clients, int main_socket);
 
 #endif /* !NETWORK_H_ */
