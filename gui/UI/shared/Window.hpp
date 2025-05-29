@@ -8,16 +8,17 @@
 #include <SFML/Window.hpp>
 
 namespace ZappyGui {
-    class window {
+    class Window {
         public:
-            window();
-            ~window();
+            Window();
+            ~Window();
 
             void switchFullscreen();
             bool pollEvent(sf::Event &event);
             void display();
             sf::Event &getEvent();
             bool isOpen();
+            sf::RenderWindow &getRenderWindow();
         private:
             bool _isFullscreen;
             sf::RenderWindow _window;

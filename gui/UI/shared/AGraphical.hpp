@@ -8,10 +8,11 @@
 #pragma once
 #include "IGraphical.hpp"
 
-class AGraphical: public IGraphical{
-    public:
-        AGraphical();
-        ~AGraphical();
-
-    private:
-};
+namespace ZappyGui {
+    class AGraphical: public IGraphical {
+        public:
+            AGraphical();
+            ~AGraphical();
+        private:
+    };
+}

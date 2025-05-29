@@ -10,10 +10,12 @@
 #include "UI/shared/Window.hpp"
 #include "UI/shared/AGraphical.hpp"
 
-class Zappy3D: public AGraphical {
-    public:
-        Zappy3D();
-
-    private:
-};
+namespace ZappyGui {
+    class Zappy3D: public AGraphical {
+        public:
+            Zappy3D();
+    
+        private:
+    };
+}
 

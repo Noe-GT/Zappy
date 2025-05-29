@@ -8,11 +8,14 @@
 
 #pragma once
 
-class IGraphical {
-    public:
-        IGraphical();
-        ~IGraphical();
-
-    protected:
-    private:
+namespace ZappyGui {
+    class IGraphical {
+        public:
+            IGraphical();
+            ~IGraphical();
+    
+        protected:
+        private:
+    };
 };
+
