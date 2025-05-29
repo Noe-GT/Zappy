@@ -11,6 +11,7 @@ server_t *init_server()
 {
     server_t *server = malloc(sizeof(server_t));
 
+    server->network = init_network();
     return server;
 }
 
