@@ -35,10 +35,8 @@ static int check_event(network_t *net, int i)
         return -1;
     }
     if (net->clients->fds[i].revents == POLLIN) {
-        printf("in\n");
         if (net->clients->fds[i].fd == net->main_socket->fd) {
             client_new(net->clients, net->main_socket->fd);
-            printf("new\n");
         } else
             client_handle(net->clients, i);
     }
@@ -62,6 +60,5 @@ int network_handle(network_t *net)
         perror("ERROR: poll failed");
         return -1;
     }
-    printf("clients\n");
     return parse_clients(net);
 }

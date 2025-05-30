@@ -24,7 +24,6 @@ void queue_push(int_queue_t *queue, int value)
         return;
     }
     queue->items[queue->back] = value;
-    // printf(" | q: %d\n", value);
     queue->back++;
 }
 
