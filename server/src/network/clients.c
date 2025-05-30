@@ -11,17 +11,19 @@ clients_t *init_clients(void)
 {
     clients_t *clients = malloc(sizeof(clients_t));
 
+
+    clients->fds = malloc(sizeof(struct pollfd) * MAX_CLIENTS + 1);
+    memset(clients->fds, 0, sizeof(*clients->fds));
     clients->n = 0;
     clients->available_ids = queue_init(MAX_CLIENTS);
-    for (int i = 0; i < MAX_CLIENTS; i++)
-        queue_push(clients->available_ids, i);
+    for (int id = 1; id <= MAX_CLIENTS; id++)
+        queue_push(clients->available_ids, id);
     return clients;
 }
 
-void client_manage(clients_t *clients, int i)
+void client_handle(clients_t *clients, int i)
 {
-    (void)clients;
-    (void)i;
+    printf("(client) id: %d | fd : %d", i, clients->fds[i].fd);
 }
 
 void client_remove(clients_t *clients, int i)
@@ -30,7 +32,7 @@ void client_remove(clients_t *clients, int i)
     queue_push(clients->available_ids, i);
 }
 
-struct pollfd set_pollfd(int new_fd)
+static struct pollfd set_pollfd(int new_fd)
 {
     struct pollfd pfd;
 
@@ -39,7 +41,7 @@ struct pollfd set_pollfd(int new_fd)
     return pfd;
 }
 
-void client_new(clients_t *clients, int main_socket)
+void client_new(clients_t *clients, int main_socket_fd)
 {
     struct sockaddr_in *addr;
     socklen_t addr_len;
@@ -49,14 +51,15 @@ void client_new(clients_t *clients, int main_socket)
         perror("Max amount of clients reached");
         return;
     }
-    addr = make_addr(main_socket);
+    addr = make_addr(main_socket_fd);
     addr_len = sizeof(addr);
-    new_fd = accept(main_socket, (struct sockaddr*)addr, &addr_len);
+    new_fd = accept(main_socket_fd, (struct sockaddr*)addr, &addr_len);
     if (new_fd < 0) {
         perror("ERROR: accept failed");
         free(addr);
         return;
     }
     clients->n++;
+    printf("new client (id : %d | fd : %d)\n", queue_peek(clients->available_ids), new_fd);
     clients->fds[queue_pop(clients->available_ids)] = set_pollfd(new_fd);
 }

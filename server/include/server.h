@@ -18,6 +18,6 @@ typedef struct server_s {
 } server_t;
 
 server_t *init_server();
-int run_server(server_t *server);
+int server_run(server_t *server);
 
 #endif /* !SERVER_HP_ */

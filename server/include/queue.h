@@ -9,6 +9,7 @@
     #define QUEUE_H_
     #include <stdio.h>
     #include <stdbool.h>
+    #include <stdlib.h>
 
 typedef struct int_queue_s {
     int *items;

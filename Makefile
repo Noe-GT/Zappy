@@ -5,7 +5,15 @@
 ## Makefile
 ##
 
-SERVER_SRC	=	$(wildcard server/src/*.c)
+SERVER_DIR	=	server/
+
+SERVER_SRC	=	$(SERVER_DIR)src/main.c	\
+				$(SERVER_DIR)src/server.c	\
+				$(SERVER_DIR)src/network/network.c	\
+				$(SERVER_DIR)src/network/clients.c	\
+				$(SERVER_DIR)src/network/queue.c	\
+				$(SERVER_DIR)src/network/network_utils.c	\
+
 GUI_SRC	=	$(wildcard gui/*.cpp)
 AI_SRC	=	$(wildcard ai/*.c)
 

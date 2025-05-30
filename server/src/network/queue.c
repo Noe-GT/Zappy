@@ -5,7 +5,7 @@
 ** queue
 */
 
-#include "../include/queue.h"
+#include "../../include/queue.h"
 
 int_queue_t *queue_init(size_t size)
 {
@@ -24,6 +24,8 @@ void queue_push(int_queue_t *queue, int value)
         return;
     }
     queue->items[queue->back] = value;
+    // printf(" | q: %d\n", value);
+    queue->back++;
 }
 
 int queue_pop(int_queue_t *queue)
@@ -42,7 +44,7 @@ int queue_peek(int_queue_t *queue)
         fprintf(stderr, "peek: queue is empty\n");
         return -1;
     }
-    return queue->items[queue->front++];
+    return queue->items[queue->front + 1];
 }
 
 bool queue_empty(int_queue_t *queue)
