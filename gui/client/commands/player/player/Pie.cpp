@@ -19,7 +19,7 @@ void zappyGUI::Pie::receive(std::string command, zappyGUI::GUI &gui)
     //TODO:
 }
 
-void zappyGUI::Pie::send(std::string command, zappyGUI::GUI &gui)
+void zappyGUI::Pie::send(std::string command, zappyGUI::GUI &gui, zappyGUI::Cserver &sender)
 {
     throw std::runtime_error("Pie can not be send by the client");
 }

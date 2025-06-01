@@ -19,7 +19,7 @@ void zappyGUI::Pdr::receive(std::string command, zappyGUI::GUI &gui)
     //TODO:
 }
 
-void zappyGUI::Pdr::send(std::string command, zappyGUI::GUI &gui)
+void zappyGUI::Pdr::send(std::string command, zappyGUI::GUI &gui, zappyGUI::Cserver &sender)
 {
     throw std::runtime_error("Pdr can not be send by the client");
 }

@@ -19,7 +19,7 @@ void zappyGUI::Seg::receive(std::string command, zappyGUI::GUI &gui)
     //TODO:
 }
 
-void zappyGUI::Seg::send(std::string command, zappyGUI::GUI &gui)
+void zappyGUI::Seg::send(std::string command, zappyGUI::GUI &gui, zappyGUI::Cserver &sender)
 {
     throw std::runtime_error("Seg can not be send by the client");
 }

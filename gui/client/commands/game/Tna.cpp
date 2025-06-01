@@ -19,7 +19,7 @@ void zappyGUI::Tna::receive(std::string command, zappyGUI::GUI &gui)
     //TODO:
 }
 
-void zappyGUI::Tna::send(std::string command, zappyGUI::GUI &gui)
+void zappyGUI::Tna::send(std::string command, zappyGUI::GUI &gui, zappyGUI::Cserver &sender)
 {
     //TODO:
 }

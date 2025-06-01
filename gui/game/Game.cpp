@@ -39,6 +39,10 @@ std::vector <std::vector <zappyGUI::Tile>> zappyGUI::Game::getMap()
     return this->_map;
 }
 
+std::pair<int, int> zappyGUI::Game::getMapSize()
+{
+    return this->_mapSize;
+}
 
 void zappyGUI::Game::setFrequence(int newVal)
 {
@@ -70,6 +74,10 @@ void zappyGUI::Game::setMap(std::vector <std::vector <zappyGUI::Tile>> newVal)
     this->_map = newVal;
 }
 
+void zappyGUI::Game::setMapSize(int newX, int newY)
+{
+    this->_mapSize = {newX, newY};
+}
 
 void zappyGUI::Game::display()
 {

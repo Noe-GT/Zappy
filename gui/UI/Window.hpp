@@ -12,6 +12,7 @@ namespace zappyGUI {
         public:
             window();
             ~window();
+            window(window &window);
 
             void switchFullscreen();
             bool pollEvent(sf::Event &event);

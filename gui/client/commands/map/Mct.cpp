@@ -19,7 +19,7 @@ void zappyGUI::Mct::receive(std::string command, zappyGUI::GUI &gui)
     //TODO:
 }
 
-void zappyGUI::Mct::send(std::string command, zappyGUI::GUI &gui)
+void zappyGUI::Mct::send(std::string command, zappyGUI::GUI &gui, zappyGUI::Cserver &sender)
 {
     //TODO:
 }

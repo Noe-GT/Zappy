@@ -19,7 +19,7 @@ void zappyGUI::Suc::receive(std::string command, zappyGUI::GUI &gui)
     //TODO:
 }
 
-void zappyGUI::Suc::send(std::string command, zappyGUI::GUI &gui)
+void zappyGUI::Suc::send(std::string command, zappyGUI::GUI &gui, zappyGUI::Cserver &sender)
 {
     throw std::runtime_error("Suc can not be send by the client");
 }

@@ -16,10 +16,15 @@ zappyGUI::Sgt::~Sgt()
 
 void zappyGUI::Sgt::receive(std::string command, zappyGUI::GUI &gui)
 {
-    //TODO:
+    std::stringstream ss(command);
+    std::string code;
+    int newFrequence;
+
+    ss >> code >> newFrequence;
+    gui.getGame().setFrequence(newFrequence);
 }
 
-void zappyGUI::Sgt::send(std::string command, zappyGUI::GUI &gui)
+void zappyGUI::Sgt::send(std::string command, zappyGUI::GUI &gui, zappyGUI::Cserver &sender)
 {
-    //TODO:
+    sender.send("sgt\n");
 }

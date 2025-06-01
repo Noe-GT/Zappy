@@ -16,10 +16,16 @@ zappyGUI::Msz::~Msz()
 
 void zappyGUI::Msz::receive(std::string command, zappyGUI::GUI &gui)
 {
-    //TODO:
+    std::stringstream ss(command);
+    std::string code;
+    int x;
+    int y;
+
+    ss >> code >> x >> y;
+    gui.getGame().setMapSize(x, y);
 }
 
-void zappyGUI::Msz::send(std::string command, zappyGUI::GUI &gui)
+void zappyGUI::Msz::send(std::string command, zappyGUI::GUI &gui, zappyGUI::Cserver &sender)
 {
-    //TODO:
+    sender.send("msz\n");
 }

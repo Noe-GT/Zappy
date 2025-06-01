@@ -19,7 +19,7 @@ void zappyGUI::Bct::receive(std::string command, zappyGUI::GUI &gui)
     //TODO:
 }
 
-void zappyGUI::Bct::send(std::string command, zappyGUI::GUI &gui)
+void zappyGUI::Bct::send(std::string command, zappyGUI::GUI &gui, zappyGUI::Cserver &sender)
 {
     //TODO:
 }

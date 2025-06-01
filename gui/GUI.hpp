@@ -16,6 +16,10 @@ namespace zappyGUI {
 
             void loop();
 
+            window getWindow();
+            Client getClient();
+            Game getGame();
+
         private:
             void update();
             void events();

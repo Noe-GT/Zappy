@@ -14,12 +14,12 @@ zappyGUI::Tile::~Tile()
 {
 }
 
-std::vector <zappyGUI::Player> zappyGUI::Tile::getPlayers()
+std::vector <std::shared_ptr <zappyGUI::Player>> zappyGUI::Tile::getPlayers()
 {
     return this->_player;
 }
 
-zappyGUI::Player zappyGUI::Tile::getPlayer(int index)
+std::shared_ptr <zappyGUI::Player> zappyGUI::Tile::getPlayer(int index)
 {
     return this->_player.at(index);
 }
@@ -29,7 +29,7 @@ std::vector <std::shared_ptr <zappyGUI::IRessource>> zappyGUI::Tile::getRessourc
     return this->_ressource;
 }
 
-void zappyGUI::Tile::setPlayer(std::vector <zappyGUI::Player> newVal)
+void zappyGUI::Tile::setPlayer(std::vector <std::shared_ptr <zappyGUI::Player>> newVal)
 {
     this->_player = newVal;
 }
@@ -39,7 +39,7 @@ void zappyGUI::Tile::setRessource(std::vector <std::shared_ptr <zappyGUI::IResso
     this->_ressource = newVal;
 }
 
-void zappyGUI::Tile::addPlayer(zappyGUI::Player newVal)
+void zappyGUI::Tile::addPlayer(std::shared_ptr <zappyGUI::Player> newVal)
 {
     this->_player.push_back(newVal);
 }

@@ -19,7 +19,7 @@ void zappyGUI::Pin::receive(std::string command, zappyGUI::GUI &gui)
     //TODO:
 }
 
-void zappyGUI::Pin::send(std::string command, zappyGUI::GUI &gui)
+void zappyGUI::Pin::send(std::string command, zappyGUI::GUI &gui, zappyGUI::Cserver &sender)
 {
     //TODO:
 }

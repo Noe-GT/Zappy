@@ -40,3 +40,18 @@ void zappyGUI::GUI::loop()
         this->display();
     }
 }
+
+zappyGUI::window zappyGUI::GUI::getWindow()
+{
+    return this->_window;
+}
+
+zappyGUI::Client zappyGUI::GUI::getClient()
+{
+    return this->_client;
+}
+
+zappyGUI::Game zappyGUI::GUI::getGame()
+{
+    return this->_game;
+}

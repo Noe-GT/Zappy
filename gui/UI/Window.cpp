@@ -18,6 +18,18 @@ zappyGUI::window::~window()
 {
     this->_window.close();
 }
+zappyGUI::window::window(zappyGUI::window &other)
+{
+    if (other._isFullscreen) {
+        this->_window.create(sf::VideoMode(1920, 1080), "Zappy - GUI", sf::Style::Fullscreen);
+        this->_window.setFramerateLimit(60);
+        this->_isFullscreen = true;
+    }
+    this->_window.create(sf::VideoMode(1920, 1080), "Zappy - GUI");
+    this->_window.setFramerateLimit(60);
+    this->_isFullscreen = false;
+}
+
 
 void zappyGUI::window::switchFullscreen()
 {

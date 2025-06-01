@@ -19,7 +19,7 @@ void zappyGUI::Pnw::receive(std::string command, zappyGUI::GUI &gui)
     //TODO:
 }
 
-void zappyGUI::Pnw::send(std::string command, zappyGUI::GUI &gui)
+void zappyGUI::Pnw::send(std::string command, zappyGUI::GUI &gui, zappyGUI::Cserver &sender)
 {
     throw std::runtime_error("Pnw can not be send by the client");
 }

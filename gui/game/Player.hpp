@@ -14,6 +14,12 @@
 
 namespace zappyGUI {
     class Tile;
+    enum oriantation {
+        NORTH,
+        EAST,
+        WEST,
+        SOUTH
+    };
     class Player {
         public:
             Player();
@@ -40,6 +46,7 @@ namespace zappyGUI {
             int _id;
             int _lvl;
             std::string _name;
+            oriantation _orientation;
             std::vector <std::shared_ptr <IRessource>> _inventory;
             std::shared_ptr <ISpell> _spellInProgress;
             std::vector <Tile> _visionData;

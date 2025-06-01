@@ -16,10 +16,20 @@ zappyGUI::Sst::~Sst()
 
 void zappyGUI::Sst::receive(std::string command, zappyGUI::GUI &gui)
 {
-    //TODO:
+    std::stringstream ss(command);
+    std::string code;
+    int newFrequence;
+
+    ss >> code >> newFrequence;
+    gui.getGame().setFrequence(newFrequence);
 }
 
-void zappyGUI::Sst::send(std::string command, zappyGUI::GUI &gui)
+void zappyGUI::Sst::send(std::string command, zappyGUI::GUI &gui, zappyGUI::Cserver &sender)
 {
-    //TODO:
+    std::stringstream ss(command);
+    std::string code;
+    int newFrequence;
+
+    ss >> code >> newFrequence;
+    sender.send("sst %d\n", newFrequence);
 }

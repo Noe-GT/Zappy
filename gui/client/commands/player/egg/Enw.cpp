@@ -19,7 +19,7 @@ void zappyGUI::Ebw::receive(std::string command, zappyGUI::GUI &gui)
     //TODO:
 }
 
-void zappyGUI::Ebw::send(std::string command, zappyGUI::GUI &gui)
+void zappyGUI::Ebw::send(std::string command, zappyGUI::GUI &gui, zappyGUI::Cserver &sender)
 {
     throw std::runtime_error("Ebw can not be send by the client");
 }

@@ -15,6 +15,6 @@ namespace zappyGUI {
             ~Sst();
 
             void receive(std::string command, GUI &gui);
-            void send(std::string command, GUI &gui);
+            void send(std::string command, GUI &gui, Cserver &sender);
     };
 };

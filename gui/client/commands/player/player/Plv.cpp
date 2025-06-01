@@ -19,7 +19,7 @@ void zappyGUI::Plv::receive(std::string command, zappyGUI::GUI &gui)
     //TODO:
 }
 
-void zappyGUI::Plv::send(std::string command, zappyGUI::GUI &gui)
+void zappyGUI::Plv::send(std::string command, zappyGUI::GUI &gui, zappyGUI::Cserver &sender)
 {
     //TODO:
 }

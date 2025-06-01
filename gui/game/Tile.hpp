@@ -16,20 +16,20 @@ namespace zappyGUI {
             Tile();
             ~Tile();
 
-            std::vector <Player> getPlayers();
-            Player getPlayer(int index);
+            std::vector <std::shared_ptr <Player>> getPlayers();
+            std::shared_ptr <Player> getPlayer(int index);
             std::vector <std::shared_ptr <IRessource>> getRessource();
 
-            void setPlayer(std::vector <Player> newVal);
+            void setPlayer(std::vector <std::shared_ptr <Player>> newVal);
             void setRessource(std::vector <std::shared_ptr <IRessource>> newVal);
 
-            void addPlayer(Player newVal);
+            void addPlayer(std::shared_ptr <Player> newVal);
             void addRessource(std::shared_ptr <IRessource> newVal);
 
             void display();
 
         private:
-            std::vector <Player> _player;
+            std::vector <std::shared_ptr <Player>> _player;
             std::vector <std::shared_ptr <IRessource>> _ressource;
     };
 };

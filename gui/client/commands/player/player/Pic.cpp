@@ -19,7 +19,7 @@ void zappyGUI::Pic::receive(std::string command, zappyGUI::GUI &gui)
     //TODO:
 }
 
-void zappyGUI::Pic::send(std::string command, zappyGUI::GUI &gui)
+void zappyGUI::Pic::send(std::string command, zappyGUI::GUI &gui, zappyGUI::Cserver &sender)
 {
     throw std::runtime_error("Pic can not be send by the client");
 }
