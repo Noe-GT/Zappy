@@ -7,6 +7,8 @@
 *.ko
 *.obj
 *.elf
+*.gcda
+*.gcno
 
 # Linker output
 *.ilk
@@ -73,6 +75,7 @@ dkms.conf
 *.lai
 
 # Executables
+unit_tests
 zappy_server
 zappy_gui
 zappy_ai
