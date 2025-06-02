@@ -45,34 +45,60 @@ void zappyGUI::GUI::display()
 
 void zappyGUI::GUI::update()
 {
-    const int BUFFER_SIZE = 4096;
-    char buffer[BUFFER_SIZE];
-    std::memset(buffer, 0, BUFFER_SIZE);
-    ssize_t bytesRead = read(this->getClient().getCserver().getSocket(), buffer, BUFFER_SIZE - 1);
+    int socket_fd = this->getClient().getCserver().getSocket();
+    struct pollfd pfd;
+    pfd.fd = socket_fd;
+    pfd.events = POLLIN;
+    pfd.revents = 0;
+    int result = poll(&pfd, 1, 0);
 
-    if (bytesRead <= 0)
-        if (bytesRead == 0)
-            this->_window.close();
+    if (result <= 0)
         return;
-    std::string receivedData(buffer, bytesRead);
-    std::istringstream iss(receivedData);
-    std::string line;
-
-    while (std::getline(iss, line)) {
-        if (!line.empty()) {
-            size_t spacePos = line.find(' ');
-            std::string commandName = (spacePos == std::string::npos) ? line : line.substr(0, spacePos);
-            std::string args = (spacePos == std::string::npos) ? "" : line.substr(spacePos + 1);
-            auto it = _commands.find(commandName);
-            if (it != _commands.end()) {
-                try {
-                    it->second->receive(line, *this);
-                } catch (const std::exception& e) {
-                    std::cerr << "failed du execute " << commandName << ": " << e.what() << std::endl;
-                }
-            } else
-                std::cerr << "unknow command: " << commandName << std::endl;
+    if (pfd.revents & POLLIN) {
+        const int BUFFER_SIZE = 4096;
+        char buffer[BUFFER_SIZE];
+        std::memset(buffer, 0, BUFFER_SIZE);
+        ssize_t bytesRead = read(socket_fd, buffer, BUFFER_SIZE - 1);
+        if (bytesRead <= 0) {
+            if (bytesRead == 0) {
+                std::cerr << "Connexion fermée par le serveur" << std::endl;
+                this->_window.close();
+            }
+            return;
         }
+        std::string receivedData(buffer, bytesRead);
+        std::istringstream iss(receivedData);
+        std::string line;
+
+        while (std::getline(iss, line)) {
+            if (!line.empty()) {
+                size_t spacePos = line.find(' ');
+                std::string commandName = (spacePos == std::string::npos) ? line : line.substr(0, spacePos);
+                std::string args = (spacePos == std::string::npos) ? "" : line.substr(spacePos + 1);
+
+                auto it = _commands.find(commandName);
+                if (it != _commands.end()) {
+                    try {
+                        it->second->receive(line, *this);
+                    } catch (const std::exception& e) {
+                        std::cerr << "error on the " << commandName << " execution: " << e.what() << std::endl;
+                    }
+                } else
+                    std::cerr << "unknow command: " << commandName << std::endl;
+            }
+        }
+    }
+    if (pfd.revents & POLLERR) {
+        std::cerr << "error detected on the socket" << std::endl;
+        this->_window.close();
+    }
+    if (pfd.revents & POLLHUP) {
+        std::cerr << "Server closed" << std::endl;
+        this->_window.close();
+    }
+    if (pfd.revents & POLLNVAL) {
+        std::cerr << "invalid socket" << std::endl;
+        this->_window.close();
     }
 }
 
