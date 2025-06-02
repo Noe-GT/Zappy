@@ -35,6 +35,7 @@ client_list_t *cl_destroy(client_list_t *list)
         client_destroy(parse);
         parse = next;
     }
+    free(list);
     return NULL;
 }
 
@@ -60,19 +61,18 @@ static client_t *new_node(int id)
     return new;
 }
 
-client_list_t *cl_add_end(client_list_t *list, int id)
+void cl_add_end(client_list_t *list, int id)
 {
     if (list->begin == NULL) {
         list->begin = new_node(id);
         list->end = list->begin;
-        return list;
+        return;
     }
     list->end -> next = new_node(id);
     list->end = list->end->next;
-    return list;
 }
 
-client_list_t *cl_remove(client_list_t *list, int id)
+void cl_remove(client_list_t *list, int id)
 {
     client_t *parse = list->begin;
     client_t *previous = NULL;
@@ -83,7 +83,7 @@ client_list_t *cl_remove(client_list_t *list, int id)
     }
     if (parse == NULL) {
         fprintf(stderr, "cl remove: id out of range\n");
-        return list;
+        return;
     } else {
         if (previous != NULL) {
             previous->next = parse->next;
@@ -94,5 +94,4 @@ client_list_t *cl_remove(client_list_t *list, int id)
                 list->end = list->begin;
         }
     }
-    return list;
 }

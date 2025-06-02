@@ -35,8 +35,6 @@ SERVER_EXEC	=	$(ROOT_DIR)zappy_server
 
 CC	=	gcc
 
-CPPC	=	g++
-
 CFLAGS	+=	-Wall -Wextra -g3
 
 all:	$(SERVER_EXEC)
