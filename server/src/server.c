@@ -17,10 +17,19 @@ server_t *init_server(void)
     return server;
 }
 
+void free_server(server_t *server)
+{
+    if (server == NULL)
+        return;
+    free_network(server->network);
+    free(server);
+}
+
 int server_run(server_t *server)
 {
     while (1) {
         network_handle(server->network);
     }
+    free_server(server);
     return 0;
 }

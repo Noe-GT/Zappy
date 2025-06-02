@@ -17,6 +17,14 @@ int_queue_t *queue_init(size_t size)
     return queue;
 }
 
+void queue_destroy(int_queue_t *queue)
+{
+    if (queue == NULL)
+        return;
+    free(queue->items);
+    free(queue);
+}
+
 void queue_push(int_queue_t *queue, int value)
 {
     if (queue_full(queue)) {

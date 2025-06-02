@@ -95,3 +95,14 @@ void cl_remove(client_list_t *list, int id)
         }
     }
 }
+
+client_t *cl_get(client_list_t *list, int id)
+{
+    client_t *parse = list->begin;
+
+    while (!(parse == NULL || parse->id == id))
+        parse = parse->next;
+    if (parse == NULL)
+        fprintf(stderr, "cl get: id out of range\n");
+    return parse;
+}

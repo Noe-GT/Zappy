@@ -14,7 +14,7 @@
 
 typedef struct clients_s {
     struct pollfd *fds;
-    client_t *client_list;
+    client_list_t *client_list;
     size_t n;
     int_queue_t *available_ids;
 } clients_t;
@@ -30,6 +30,7 @@ typedef struct network_s {
 } network_t;
 
 network_t *init_network(void);
+void free_network(network_t *net);
 int network_handle(network_t *net);
 
 clients_t *init_clients(void);

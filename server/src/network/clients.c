@@ -17,18 +17,60 @@ clients_t *init_clients(void)
     clients->available_ids = queue_init(MAX_CLIENTS);
     for (int id = 1; id <= MAX_CLIENTS; id++)
         queue_push(clients->available_ids, id);
+    clients->client_list = init_client_list();
     return clients;
+}
+
+static char *handle_buff(char *t_buff, char *res_buff, int len)
+{
+    if (len == 2)
+        strcpy(res_buff, t_buff);
+    else
+        strcat(res_buff, t_buff);
+    return res_buff;
+}
+
+// REPLACE BY CIRCULAR BUFFER
+static char *read_from_socket(int r_fd)
+{
+    size_t len = 1;
+    char *res_buff = (char *)malloc(sizeof(char) * len);
+    char *t_buff = (char *)malloc(sizeof(char) * 2);
+    int r_out = read(r_fd, t_buff, 1);
+
+    t_buff[1] = '\0';
+    while (r_out != 0 && t_buff[0] != '\n') {
+        if (t_buff[0] != '\r') {
+            len++;
+            res_buff = realloc(res_buff, len);
+            res_buff = handle_buff(t_buff, res_buff, len);
+        }
+        r_out = read(r_fd, t_buff, 1);
+        t_buff[1] = '\0';
+    }
+    free(t_buff);
+    res_buff[len - 1] = '\0';
+    return res_buff;
 }
 
 void client_handle(clients_t *clients, int i)
 {
-    printf("(client) id: %d | fd : %d", i, clients->fds[i].fd);
+    client_t *client = cl_get(clients->client_list, i);
+
+    if (client == NULL)
+        return;
+    if (client->read_buffer != NULL)
+        free(client->read_buffer);
+    client->read_buffer = read_from_socket(clients->fds[i].fd);
+    printf("(client) id: %d | read_buffer: %s\n",
+        client->id, client->read_buffer);
 }
 
 void client_remove(clients_t *clients, int i)
 {
     close(clients->fds[i].fd);
     queue_push(clients->available_ids, i);
+    cl_remove(clients->client_list, i);
 }
 
 static struct pollfd set_pollfd(int new_fd)
@@ -61,5 +103,6 @@ void client_new(clients_t *clients, int main_socket_fd)
     clients->n++;
     printf("new client (id : %d | fd : %d)\n",
         queue_peek(clients->available_ids), new_fd);
+    cl_add_end(clients->client_list, queue_peek(clients->available_ids));
     clients->fds[queue_pop(clients->available_ids)] = set_pollfd(new_fd);
 }

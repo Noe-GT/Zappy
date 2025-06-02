@@ -23,6 +23,24 @@ network_t *init_network(void)
     return net;
 }
 
+void free_network(network_t *net)
+{
+    if (net == NULL)
+        return;
+    if (net->main_socket != NULL) {
+        close(net->main_socket->fd);
+        free(net->main_socket->addr);
+        free(net->main_socket);
+    }
+    if (net->clients != NULL) {
+        cl_destroy(net->clients->client_list);
+        free(net->clients->fds);
+        queue_destroy(net->clients->available_ids);
+        free(net->clients);
+    }
+    free(net);
+}
+
 static int check_event(network_t *net, int i)
 {
     if (net->clients->fds[i].revents == POLLERR ||

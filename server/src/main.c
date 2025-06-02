@@ -14,5 +14,6 @@ int main(void)
 	if (server == NULL)
 		return 84;
 	server_run(server);
+	free_server(server);
 	return 0;
 }
