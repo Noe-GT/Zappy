@@ -9,26 +9,35 @@ SERVER_DIR	=	server/
 
 GUI_SRC	=	$(wildcard gui/*.cpp)
 AI_SRC	=	$(wildcard ai/*.c)
+PROTOCOL_SRC	=	$(wildcard protocol/src/*.c)
 
 GUI_OBJ	=	$(GUI_SRC:.cpp=.o)
 AI_OBJ	=	$(AI_SRC:.c=.o)
+PROTOCOL_OBJ	=	$(PROTOCOL_SRC:.c=.o)
 
 GUI_EXEC	=	zappy_gui
 AI_EXEC		=	zappy_ai
+PROTOCOL_EXEC	=	libprotocol.so
 
 CC	=	gcc
 
 CPPC	=	g++
 
+# TODO: remove debug information
 CFLAGS	+=	-Wall -Wextra -g3
 
-all:	server gui	ai
+all:	server gui	ai	protocol
 
 tests_run:
 	make tests_run -C $(SERVER_DIR)
 
 server:
 	make -C $(SERVER_DIR)
+
+protocol: $(PROTOCOL_EXEC)
+
+$(PROTOCOL_EXEC): $(PROTOCOL_OBJ)
+	$(CC) $(PROTOCOL_OBJ) -o $(PROTOCOL_EXEC) $(CFLAGS) -shared
 
 gui:	$(GUI_EXEC)
 
