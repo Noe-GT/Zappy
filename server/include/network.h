@@ -11,8 +11,14 @@
     #include "queue.h"
     #define MAX_CLIENTS 255
 
+typedef struct client_s {
+    int id;
+    char *read_buffer;
+} client_t;
+
 typedef struct clients_s {
     struct pollfd *fds;
+    client_t *clients;
     size_t n;
     int_queue_t *available_ids;
 } clients_t;

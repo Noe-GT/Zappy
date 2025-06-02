@@ -17,7 +17,7 @@ typedef struct server_s {
     instruction_queue_t *instruction_queue;
 } server_t;
 
-server_t *init_server();
+server_t *init_server(void);
 int server_run(server_t *server);
 
 #endif /* !SERVER_HP_ */

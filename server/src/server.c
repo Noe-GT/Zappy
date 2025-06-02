@@ -7,7 +7,7 @@
 
 #include "../include/server.h"
 
-server_t *init_server()
+server_t *init_server(void)
 {
     server_t *server = malloc(sizeof(server_t));
 

@@ -11,8 +11,8 @@ clients_t *init_clients(void)
 {
     clients_t *clients = malloc(sizeof(clients_t));
 
-
     clients->fds = malloc(sizeof(struct pollfd) * MAX_CLIENTS + 1);
+    clients->clients = malloc(sizeof(client_t) * MAX_CLIENTS + 1);
     memset(clients->fds, 0, sizeof(*clients->fds));
     clients->n = 0;
     clients->available_ids = queue_init(MAX_CLIENTS);
@@ -60,6 +60,7 @@ void client_new(clients_t *clients, int main_socket_fd)
         return;
     }
     clients->n++;
-    printf("new client (id : %d | fd : %d)\n", queue_peek(clients->available_ids), new_fd);
+    printf("new client (id : %d | fd : %d)\n",
+        queue_peek(clients->available_ids), new_fd);
     clients->fds[queue_pop(clients->available_ids)] = set_pollfd(new_fd);
 }
