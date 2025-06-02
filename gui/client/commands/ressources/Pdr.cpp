@@ -6,6 +6,8 @@
 */
 
 #include "Pdr.hpp"
+#include "../../../GUI.hpp"
+#include "../../Cserver.hpp"
 zappyGUI::Pdr::Pdr()
 {
 }

@@ -25,5 +25,9 @@ zappyGUI::Client::Client(int port, std::string hostname): _Client(port)
 
 zappyGUI::Client::~Client()
 {
+}
 
+zappyGUI::Cserver &zappyGUI::Client::getCserver()
+{
+    return this->_Client;
 }

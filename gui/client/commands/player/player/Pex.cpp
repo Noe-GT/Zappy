@@ -6,6 +6,8 @@
 */
 
 #include "Pex.hpp"
+#include "../../../../GUI.hpp"
+#include "../../../Cserver.hpp"
 zappyGUI::Pex::Pex()
 {
 }

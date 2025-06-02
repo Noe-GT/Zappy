@@ -6,6 +6,8 @@
 */
 
 #include "Tna.hpp"
+#include "../../../GUI.hpp"
+#include "../../Cserver.hpp"
 zappyGUI::Tna::Tna()
 {
 }

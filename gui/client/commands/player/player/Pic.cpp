@@ -6,6 +6,8 @@
 */
 
 #include "Pic.hpp"
+#include "../../../../GUI.hpp"
+#include "../../../Cserver.hpp"
 zappyGUI::Pic::Pic()
 {
 }

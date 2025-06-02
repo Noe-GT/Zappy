@@ -2,17 +2,17 @@
 ** EPITECH PROJECT, 2024
 ** zap
 ** File description:
-** Ebw.hpp
+** Enw.hpp
 */
 
 #pragma once
 #include "../../Icommand.hpp"
 
 namespace zappyGUI {
-    class Ebw : public Icommand {
+    class Enw : public Icommand {
         public:
-            Ebw();
-            ~Ebw();
+            Enw();
+            ~Enw();
 
             void receive(std::string command, GUI &gui);
             void send(std::string command, GUI &gui, Cserver &sender);

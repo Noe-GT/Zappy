@@ -7,10 +7,12 @@
 
 #pragma once
 #include <string>
-#include "../Cserver.hpp"
-#include "../../GUI.hpp"
 #include <sstream>
+
 namespace zappyGUI {
+    class GUI;
+    class Cserver;
+
     class Icommand {
         public:
             virtual ~Icommand() = default;

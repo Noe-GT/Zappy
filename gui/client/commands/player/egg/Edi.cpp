@@ -6,6 +6,8 @@
 */
 
 #include "Edi.hpp"
+#include "../../../../GUI.hpp"
+#include "../../../Cserver.hpp"
 zappyGUI::Edi::Edi()
 {
 }

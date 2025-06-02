@@ -6,6 +6,8 @@
 */
 
 #include "Msz.hpp"
+#include "../../../GUI.hpp"
+#include "../../Cserver.hpp"
 zappyGUI::Msz::Msz()
 {
 }

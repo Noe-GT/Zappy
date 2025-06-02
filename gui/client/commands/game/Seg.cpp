@@ -6,6 +6,8 @@
 */
 
 #include "Seg.hpp"
+#include "../../../GUI.hpp"
+#include "../../Cserver.hpp"
 zappyGUI::Seg::Seg()
 {
 }

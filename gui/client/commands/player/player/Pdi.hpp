@@ -6,7 +6,7 @@
 */
 
 #pragma once
-#include "../Icommand.hpp"
+#include "../../Icommand.hpp"
 
 namespace zappyGUI {
     class Pdi : public Icommand {

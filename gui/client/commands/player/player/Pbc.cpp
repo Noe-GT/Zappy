@@ -6,6 +6,8 @@
 */
 
 #include "Pbc.hpp"
+#include "../../../../GUI.hpp"
+#include "../../../Cserver.hpp"
 zappyGUI::Pbc::Pbc()
 {
 }

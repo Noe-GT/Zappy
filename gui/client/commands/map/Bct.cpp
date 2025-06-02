@@ -6,6 +6,8 @@
 */
 
 #include "Bct.hpp"
+#include "../../../GUI.hpp"
+#include "../../Cserver.hpp"
 zappyGUI::Bct::Bct()
 {
 }

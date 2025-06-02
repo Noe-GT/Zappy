@@ -2,24 +2,26 @@
 ** EPITECH PROJECT, 2024
 ** zap
 ** File description:
-** Ebw.cpp
+** Enw.cpp
 */
 
-#include "Ebw.hpp"
-zappyGUI::Ebw::Ebw()
+#include "Enw.hpp"
+#include "../../../../GUI.hpp"
+#include "../../../Cserver.hpp"
+zappyGUI::Enw::Enw()
 {
 }
 
-zappyGUI::Ebw::~Ebw()
+zappyGUI::Enw::~Enw()
 {
 }
 
-void zappyGUI::Ebw::receive(std::string command, zappyGUI::GUI &gui)
+void zappyGUI::Enw::receive(std::string command, zappyGUI::GUI &gui)
 {
     //TODO:
 }
 
-void zappyGUI::Ebw::send(std::string command, zappyGUI::GUI &gui, zappyGUI::Cserver &sender)
+void zappyGUI::Enw::send(std::string command, zappyGUI::GUI &gui, zappyGUI::Cserver &sender)
 {
-    throw std::runtime_error("Ebw can not be send by the client");
+    throw std::runtime_error("Enw can not be send by the client");
 }

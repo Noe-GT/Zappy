@@ -6,6 +6,8 @@
 */
 
 #include "Plv.hpp"
+#include "../../../../GUI.hpp"
+#include "../../../Cserver.hpp"
 zappyGUI::Plv::Plv()
 {
 }

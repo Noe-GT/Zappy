@@ -6,6 +6,8 @@
 */
 
 #include "Smg.hpp"
+#include "../../../GUI.hpp"
+#include "../../Cserver.hpp"
 zappyGUI::Smg::Smg()
 {
 }

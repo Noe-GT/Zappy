@@ -6,6 +6,8 @@
 */
 
 #include "Sbp.hpp"
+#include "../../../GUI.hpp"
+#include "../../Cserver.hpp"
 zappyGUI::Sbp::Sbp()
 {
 }

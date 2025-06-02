@@ -6,6 +6,8 @@
 */
 
 #include "Pie.hpp"
+#include "../../../../GUI.hpp"
+#include "../../../Cserver.hpp"
 zappyGUI::Pie::Pie()
 {
 }

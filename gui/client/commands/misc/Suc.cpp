@@ -6,6 +6,8 @@
 */
 
 #include "Suc.hpp"
+#include "../../../GUI.hpp"
+#include "../../Cserver.hpp"
 zappyGUI::Suc::Suc()
 {
 }

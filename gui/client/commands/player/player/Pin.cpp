@@ -6,6 +6,8 @@
 */
 
 #include "Pin.hpp"
+#include "../../../../GUI.hpp"
+#include "../../../Cserver.hpp"
 zappyGUI::Pin::Pin()
 {
 }

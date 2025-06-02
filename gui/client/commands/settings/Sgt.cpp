@@ -6,6 +6,8 @@
 */
 
 #include "Sgt.hpp"
+#include "../../../GUI.hpp"
+#include "../../Cserver.hpp"
 zappyGUI::Sgt::Sgt()
 {
 }

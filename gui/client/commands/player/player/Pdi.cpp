@@ -6,6 +6,8 @@
 */
 
 #include "Pdi.hpp"
+#include "../../../../GUI.hpp"
+#include "../../../Cserver.hpp"
 zappyGUI::Pdi::Pdi()
 {
 }

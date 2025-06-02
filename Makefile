@@ -13,7 +13,8 @@ GUI_SRC		=	$(wildcard gui/*.cpp)								\
 				$(wildcard gui/client/commands/game/*.cpp)			\
 				$(wildcard gui/client/commands/map/*.cpp)			\
 				$(wildcard gui/client/commands/misc/*.cpp)			\
-				$(wildcard gui/client/commands/player/*.cpp)		\
+				$(wildcard gui/client/commands/player/egg/*.cpp)	\
+				$(wildcard gui/client/commands/player/player/*.cpp)	\
 				$(wildcard gui/client/commands/ressources/*.cpp)	\
 				$(wildcard gui/client/commands/settings/*.cpp)		\
 				$(wildcard gui/game/*.cpp)							\

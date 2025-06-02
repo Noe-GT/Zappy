@@ -6,6 +6,8 @@
 */
 
 #include "Pfk.hpp"
+#include "../../../../GUI.hpp"
+#include "../../../Cserver.hpp"
 zappyGUI::Pfk::Pfk()
 {
 }

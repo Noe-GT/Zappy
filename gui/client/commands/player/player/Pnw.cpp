@@ -6,6 +6,8 @@
 */
 
 #include "Pnw.hpp"
+#include "../../../../GUI.hpp"
+#include "../../../Cserver.hpp"
 zappyGUI::Pnw::Pnw()
 {
 }

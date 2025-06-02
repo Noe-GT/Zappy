@@ -6,6 +6,8 @@
 */
 
 #include "Pgt.hpp"
+#include "../../../GUI.hpp"
+#include "../../Cserver.hpp"
 zappyGUI::Pgt::Pgt()
 {
 }

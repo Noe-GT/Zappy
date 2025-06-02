@@ -6,6 +6,8 @@
 */
 
 #include "Mct.hpp"
+#include "../../../GUI.hpp"
+#include "../../Cserver.hpp"
 zappyGUI::Mct::Mct()
 {
 }

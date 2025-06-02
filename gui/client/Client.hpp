@@ -12,6 +12,8 @@ namespace zappyGUI {
         public:
             Client(int port, std::string hostname);
             ~Client();
+
+            Cserver &getCserver();
         private:
             Cserver _Client;
             int socket;

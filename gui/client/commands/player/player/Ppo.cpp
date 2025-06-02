@@ -6,6 +6,8 @@
 */
 
 #include "Ppo.hpp"
+#include "../../../../GUI.hpp"
+#include "../../../Cserver.hpp"
 zappyGUI::Ppo::Ppo()
 {
 }
