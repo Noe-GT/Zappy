@@ -7,11 +7,12 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 
-namespace ZappyGui {
-    class Window {
+namespace zappyGUI {
+    class window {
         public:
-            Window();
-            ~Window();
+            window();
+            ~window();
+            window(window &window);
 
             void switchFullscreen();
             bool pollEvent(sf::Event &event);

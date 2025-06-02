@@ -1,4 +1,4 @@
-/*
+    /*
 ** EPITECH PROJECT, 2024
 ** zap
 ** File description:
@@ -7,7 +7,7 @@
 #pragma once
 #include <string>
 #include "Cserver.hpp"
-namespace ZappyGui {
+namespace zappyGUI {
     class Client {
         public:
             Client(int port, std::string hostname);

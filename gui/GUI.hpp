@@ -8,12 +8,17 @@
 #pragma once
 #include "UI/shared/Window.hpp"
 #include "Client/Client.hpp"
-namespace ZappyGui {
+#include "game/Game.hpp"
+namespace zappyGUI {
     class GUI {
         public:
             GUI(int port, std::string hostname);
 
             void loop();
+
+            window getWindow();
+            Client getClient();
+            Game getGame();
 
         private:
             void update();
@@ -22,5 +27,6 @@ namespace ZappyGui {
 
             window _window;
             Client _client;
+            Game _game;
     };
 };

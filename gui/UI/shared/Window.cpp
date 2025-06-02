@@ -7,19 +7,39 @@
 
 #include "Window.hpp"
 
+<<<<<<< HEAD:gui/UI/shared/Window.cpp
 ZappyGui::Window::Window()
+=======
+zappyGUI::window::window()
+>>>>>>> origin/origin/feat/GUI/commands:gui/UI/Window.cpp
 {
     this->_window.create(sf::VideoMode(1920, 1080), "Zappy - GUI");
     this->_window.setFramerateLimit(60);
     this->_isFullscreen = false;
 }
 
+<<<<<<< HEAD:gui/UI/shared/Window.cpp
 ZappyGui::Window::~Window()
+=======
+zappyGUI::window::~window()
+>>>>>>> origin/origin/feat/GUI/commands:gui/UI/Window.cpp
 {
     this->_window.close();
 }
+zappyGUI::window::window(zappyGUI::window &other)
+{
+    if (other._isFullscreen) {
+        this->_window.create(sf::VideoMode(1920, 1080), "Zappy - GUI", sf::Style::Fullscreen);
+        this->_window.setFramerateLimit(60);
+        this->_isFullscreen = true;
+    }
+    this->_window.create(sf::VideoMode(1920, 1080), "Zappy - GUI");
+    this->_window.setFramerateLimit(60);
+    this->_isFullscreen = false;
+}
 
-void ZappyGui::Window::switchFullscreen()
+
+void zappyGUI::window::switchFullscreen()
 {
     this->_isFullscreen = !this->_isFullscreen;
     this->_window.close();
@@ -32,23 +52,23 @@ void ZappyGui::Window::switchFullscreen()
     this->_window.setFramerateLimit(60);
 }
 
-bool ZappyGui::Window::pollEvent(sf::Event &event)
+bool zappyGUI::window::pollEvent(sf::Event &event)
 {
     return this->_window.pollEvent(event);
 }
 
-void ZappyGui::Window::display()
+void zappyGUI::window::display()
 {
     this->_window.display();
     this->_window.clear();
 }
 
-sf::Event &ZappyGui::Window::getEvent()
+sf::Event &zappyGUI::window::getEvent()
 {
     return this->_event;
 }
 
-bool ZappyGui::Window::isOpen()
+bool zappyGUI::window::isOpen()
 {
     return this->_window.isOpen();
 }
