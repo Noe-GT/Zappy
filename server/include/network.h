@@ -9,16 +9,12 @@
     #define NETWORK_H_
     #include "external.h"
     #include "queue.h"
+    #include "client_list.h"
     #define MAX_CLIENTS 255
-
-typedef struct client_s {
-    int id;
-    char *read_buffer;
-} client_t;
 
 typedef struct clients_s {
     struct pollfd *fds;
-    client_t *clients;
+    client_t *client_list;
     size_t n;
     int_queue_t *available_ids;
 } clients_t;

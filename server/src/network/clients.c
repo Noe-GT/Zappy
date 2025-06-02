@@ -12,7 +12,6 @@ clients_t *init_clients(void)
     clients_t *clients = malloc(sizeof(clients_t));
 
     clients->fds = malloc(sizeof(struct pollfd) * MAX_CLIENTS + 1);
-    clients->clients = malloc(sizeof(client_t) * MAX_CLIENTS + 1);
     memset(clients->fds, 0, sizeof(*clients->fds));
     clients->n = 0;
     clients->available_ids = queue_init(MAX_CLIENTS);
@@ -55,7 +54,7 @@ void client_new(clients_t *clients, int main_socket_fd)
     addr_len = sizeof(addr);
     new_fd = accept(main_socket_fd, (struct sockaddr*)addr, &addr_len);
     if (new_fd < 0) {
-        perror("ERROR: accept failed");
+        perror("Accept failed");
         free(addr);
         return;
     }

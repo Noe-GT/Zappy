@@ -24,6 +24,9 @@ CFLAGS	+=	-Wall -Wextra -g3
 
 all:	server gui	ai
 
+tests_run:
+	make tests_run -C $(SERVER_DIR)
+
 server:
 	make -C $(SERVER_DIR)
 
