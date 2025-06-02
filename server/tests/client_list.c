@@ -39,9 +39,16 @@ Test(memset, add)
     client_list_t *list =  init_client_list();
 
     cl_add_end(list, 1);
+    cr_assert(test_list(list, 1, 1));
+}
+
+Test(memset, add_multiple)
+{
+    client_list_t *list =  init_client_list();
+
+    cl_add_end(list, 1);
     cl_add_end(list, 2);
     cl_add_end(list, 3);
-
     cr_assert(test_list(list, 3, 1, 2, 3));
 }
 
@@ -53,7 +60,6 @@ Test(memset, remove)
     cl_add_end(list, 2);
     cl_add_end(list, 3);
     cl_remove(list, 2);
-
     cr_assert(test_list(list, 2, 1, 3));
 }
 
@@ -65,7 +71,6 @@ Test(memset, remove_begin)
     cl_add_end(list, 2);
     cl_add_end(list, 3);
     cl_remove(list, 1);
-
     cr_assert(test_list(list, 2, 2, 3));
 }
 
@@ -77,6 +82,23 @@ Test(memset, remove_end)
     cl_add_end(list, 2);
     cl_add_end(list, 3);
     cl_remove(list, 3);
-
     cr_assert(test_list(list, 2, 1, 2));
+}
+
+Test(memset, remove_nonexistant)
+{
+    client_list_t *list =  init_client_list();
+
+    cl_add_end(list, 1);
+    cl_add_end(list, 2);
+    cl_remove(list, 3);
+    cr_assert(test_list(list, 2, 1, 2));
+}
+
+Test(memset, remove_empty)
+{
+    client_list_t *list =  init_client_list();
+
+    cl_remove(list, 3);
+    cr_assert(list->begin == NULL && list->end == NULL);
 }
