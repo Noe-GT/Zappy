@@ -1,8 +1,8 @@
 /*
-** EPITECH PROJECT, 2024
-** zap
-** File description:
-** GUI.cpp
+*** EPITECH PROJECT, 2024*
+*** zap*
+*** File description:*
+*** GUI.cpp*
 */
 #include "GUI.hpp"
 #include <iostream>
@@ -10,36 +10,37 @@
 
 zappyGUI::GUI::GUI(int port, std::string hostname): _window(), _client(port, hostname)
 {
-    _commands["Seg"] = std::move(std::make_unique <Seg>(Seg()));
-    _commands["Smg"] = std::move(std::make_unique <Smg>(Smg()));
-    _commands["Tna"] = std::move(std::make_unique <Tna>(Tna()));
-    _commands["Bct"] = std::move(std::make_unique <Bct>(Bct()));
-    _commands["Mct"] = std::move(std::make_unique <Mct>(Mct()));
-    _commands["Msz"] = std::move(std::make_unique <Msz>(Msz()));
-    _commands["Suc"] = std::move(std::make_unique <Suc>(Suc()));
-    _commands["Ebo"] = std::move(std::make_unique <Ebo>(Ebo()));
-    _commands["Edi"] = std::move(std::make_unique <Edi>(Edi()));
-    _commands["Enw"] = std::move(std::make_unique <Enw>(Enw()));
-    _commands["Pfk"] = std::move(std::make_unique <Pfk>(Pfk()));
-    _commands["Pbc"] = std::move(std::make_unique <Pbc>(Pbc()));
-    _commands["Pdi"] = std::move(std::make_unique <Pdi>(Pdi()));
-    _commands["Pex"] = std::move(std::make_unique <Pex>(Pex()));
-    _commands["Pic"] = std::move(std::make_unique <Pic>(Pic()));
-    _commands["Pie"] = std::move(std::make_unique <Pie>(Pie()));
-    _commands["Pin"] = std::move(std::make_unique <Pin>(Pin()));
-    _commands["Plv"] = std::move(std::make_unique <Plv>(Plv()));
-    _commands["Pnw"] = std::move(std::make_unique <Pnw>(Pnw()));
-    _commands["Ppo"] = std::move(std::make_unique <Ppo>(Ppo()));
-    _commands["Pdr"] = std::move(std::make_unique <Pdr>(Pdr()));
-    _commands["Pgt"] = std::move(std::make_unique <Pgt>(Pgt()));
-    _commands["Sgt"] = std::move(std::make_unique <Sgt>(Sgt()));
-    _commands["Sst"] = std::move(std::make_unique <Sst>(Sst()));
+    _commands["Seg"] = std::make_unique<Seg>();
+    _commands["Smg"] = std::make_unique<Smg>();
+    _commands["Tna"] = std::make_unique<Tna>();
+    _commands["Bct"] = std::make_unique<Bct>();
+    _commands["Mct"] = std::make_unique<Mct>();
+    _commands["Msz"] = std::make_unique<Msz>();
+    _commands["Suc"] = std::make_unique<Suc>();
+    _commands["Ebo"] = std::make_unique<Ebo>();
+    _commands["Edi"] = std::make_unique<Edi>();
+    _commands["Enw"] = std::make_unique<Enw>();
+    _commands["Pfk"] = std::make_unique<Pfk>();
+    _commands["Pbc"] = std::make_unique<Pbc>();
+    _commands["Pdi"] = std::make_unique<Pdi>();
+    _commands["Pex"] = std::make_unique<Pex>();
+    _commands["Pic"] = std::make_unique<Pic>();
+    _commands["Pie"] = std::make_unique<Pie>();
+    _commands["Pin"] = std::make_unique<Pin>();
+    _commands["Plv"] = std::make_unique<Plv>();
+    _commands["Pnw"] = std::make_unique<Pnw>();
+    _commands["Ppo"] = std::make_unique<Ppo>();
+    _commands["Pdr"] = std::make_unique<Pdr>();
+    _commands["Pgt"] = std::make_unique<Pgt>();
+    _commands["Sgt"] = std::make_unique<Sgt>();
+    _commands["Sst"] = std::make_unique<Sst>();
 }
 
 void zappyGUI::GUI::display()
 {
+    // FIXME: add the calls to the display of all elements of the map here
+    this->_window.clear();
     this->_window.display();
-    //FIXME: add the calls to the display of all elements of the map here
 }
 
 void zappyGUI::GUI::update()
@@ -48,20 +49,16 @@ void zappyGUI::GUI::update()
     char buffer[BUFFER_SIZE];
     std::memset(buffer, 0, BUFFER_SIZE);
     ssize_t bytesRead = read(this->getClient().getCserver().getSocket(), buffer, BUFFER_SIZE - 1);
+
+    if (bytesRead <= 0)
+        if (bytesRead == 0)
+            this->_window.close();
+        return;
     std::string receivedData(buffer, bytesRead);
     std::istringstream iss(receivedData);
     std::string line;
 
-    if (bytesRead <= 0) {
-        if (bytesRead == 0)
-            std::cerr << "Connexion fermée par le client" << std::endl;
-        else
-            perror("Erreur de lecture");
-        return;
-    }
     while (std::getline(iss, line)) {
-        if (!line.empty() && line.back() == '\r')
-            line.pop_back();
         if (!line.empty()) {
             size_t spacePos = line.find(' ');
             std::string commandName = (spacePos == std::string::npos) ? line : line.substr(0, spacePos);
@@ -71,24 +68,27 @@ void zappyGUI::GUI::update()
                 try {
                     it->second->receive(line, *this);
                 } catch (const std::exception& e) {
-                    std::cerr << "Erreur d'exécution de la commande " << commandName << ": " << e.what() << std::endl;
+                    std::cerr << "failed du execute " << commandName << ": " << e.what() << std::endl;
                 }
             } else
-                std::cerr << "Commande inconnue: " << commandName << std::endl;
+                std::cerr << "unknow command: " << commandName << std::endl;
         }
     }
 }
 
 void zappyGUI::GUI::events()
 {
-    while (this->_window.pollEvent(this->_window.getEvent())) {
-        if (this->_window.getEvent().type == sf::Event::Closed)
-            exit(0);
-        if (this->_window.getEvent().type == sf::Event::KeyPressed && this->_window.getEvent().key.code == sf::Keyboard::Escape)
-            this->_window.switchFullscreen();
+    while (this->_window.pollEvent()) {
+        if (this->_window.getEvent().type == sf::Event::Closed) {
+            this->_window.close();
+            return;
+        }
+        if (this->_window.getEvent().type == sf::Event::KeyPressed) {
+            if (this->_window.getEvent().key.code == sf::Keyboard::Escape)
+                this->_window.switchFullscreen();
+        }
     }
 }
-
 
 void zappyGUI::GUI::loop()
 {
