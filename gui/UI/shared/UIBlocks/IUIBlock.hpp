@@ -12,7 +12,7 @@
 namespace UIBlocks {
     class IUIBlock {
         public:
-            virtual void draw(ZappyGui::Window &window) = 0;
+            virtual void draw(zappyGUI::Window &window) = 0;
             virtual void handleEvent(const sf::Event &event) = 0;
     };
 }

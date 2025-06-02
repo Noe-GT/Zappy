@@ -16,7 +16,7 @@ namespace UIBlocks {
             PopupSelector(std::vector<std::string> &options);
             ~PopupSelector() = default;
 
-            void draw(ZappyGui::Window &window) override;
+            void draw(zappyGUI::Window &window) override;
             bool isInside(int x, int y) const;
             void handleEvent(const sf::Event &event) override;
             const std::string &getSelected() const;

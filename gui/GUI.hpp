@@ -16,7 +16,7 @@ namespace zappyGUI {
 
             void loop();
 
-            window getWindow();
+            Window getWindow();
             Client getClient();
             Game getGame();
 
@@ -25,7 +25,7 @@ namespace zappyGUI {
             void events();
             void display();
 
-            window _window;
+            Window _window;
             Client _client;
             Game _game;
     };

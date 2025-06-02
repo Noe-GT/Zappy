@@ -10,7 +10,7 @@
 #include "UI/shared/Window.hpp"
 #include "UI/shared/AGraphical.hpp"
 
-namespace ZappyGui {
+namespace zappyGUI {
     class Zappy3D: public AGraphical {
         public:
             Zappy3D();

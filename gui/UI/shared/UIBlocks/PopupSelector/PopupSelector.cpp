@@ -17,7 +17,7 @@ UIBlocks::PopupSelector::PopupSelector(std::vector<std::string> &options):
 {
 }
 
-void UIBlocks::PopupSelector::draw(ZappyGui::Window &window)
+void UIBlocks::PopupSelector::draw(zappyGUI::Window &window)
 {
     if (!_isOpen)
         return;

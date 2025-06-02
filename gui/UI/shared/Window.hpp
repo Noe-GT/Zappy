@@ -5,14 +5,13 @@
 ** Window.hpp
 */
 #include <SFML/Graphics.hpp>
-#include <SFML/Window.hpp>
 
 namespace zappyGUI {
-    class window {
+    class Window {
         public:
-            window();
-            ~window();
-            window(window &window);
+            Window();
+            ~Window();
+            Window(Window &window);
 
             void switchFullscreen();
             bool pollEvent(sf::Event &event);

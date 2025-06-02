@@ -8,7 +8,7 @@
 #pragma once
 #include "IGraphical.hpp"
 
-namespace ZappyGui {
+namespace zappyGUI {
     class AGraphical: public IGraphical {
         public:
             AGraphical();
