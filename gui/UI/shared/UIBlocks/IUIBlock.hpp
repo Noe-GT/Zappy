@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "UI/shared/Window.hpp"
+#include "../Window.hpp"
 
 namespace UIBlocks {
     class IUIBlock {

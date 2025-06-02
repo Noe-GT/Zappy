@@ -7,8 +7,8 @@
 
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "UI/shared/UIBlocks/utils/Scroller/Scroller.hpp"
-#include "UI/shared/UIBlocks/IUIBlock.hpp"
+#include "../utils/Scroller/Scroller.hpp"
+#include "../IUIBlock.hpp"
 
 namespace UIBlocks {
     class PopupSelector: public IUIBlock {

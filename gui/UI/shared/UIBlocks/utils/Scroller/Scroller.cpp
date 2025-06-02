@@ -7,7 +7,7 @@
 
 #include "Scroller.hpp"
 
-Scroller::Scroller(std::vector<std::string> &options, int maxVisibleOptions = 5): 
+Scroller::Scroller(std::vector<std::string> &options, int maxVisibleOptions): 
     _maxVisibleOptions(maxVisibleOptions),
     _currentOffset(0),
     _options(options)
