@@ -16,6 +16,28 @@ client_list_t *init_client_list()
     return list;
 }
 
+static void client_destroy(client_t *client)
+{
+    if (client == NULL)
+        return;
+    if (client->read_buffer != NULL)
+        free(client->read_buffer);
+    free(client);
+}
+
+client_list_t *cl_destroy(client_list_t *list)
+{
+    client_t *parse = list->begin;
+    client_t *next;
+
+    while (parse != NULL) {
+        next = parse->next;
+        client_destroy(parse);
+        parse = next;
+    }
+    return NULL;
+}
+
 void cl_display(client_list_t *list)
 {
     client_t *parse = list->begin;
