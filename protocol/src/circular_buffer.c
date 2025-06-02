@@ -85,9 +85,9 @@ static char *concat_pages(circular_buffer_t *buffer, size_t bytes_to_read)
         available = (size_t)getpagesize() - curr->read_idx;
         newline = memchr(curr->buffer + curr->read_idx, '\n', available);
         if (newline) {
-            size_t chunk = newline - (curr->buffer + curr->read_idx) + 1;
-            string = strncat(string, curr->buffer + curr->read_idx, chunk);
-            curr->read_idx += chunk;
+            available = newline - (curr->buffer + curr->read_idx) + 1;
+            string = strncat(string, curr->buffer + curr->read_idx, available);
+            curr->read_idx += available;
             return string;
         } else {
             string = strncat(string, curr->buffer + curr->read_idx, available);
