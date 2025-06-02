@@ -76,3 +76,7 @@ dkms.conf
 zappy_server
 zappy_gui
 zappy_ai
+
+## OTHER ###
+# vscode
+.vscode/
