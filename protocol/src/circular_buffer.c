@@ -107,7 +107,6 @@ char *read_string(circular_buffer_t *buffer)
     if (buffer->read_idx == (size_t)getpagesize() - 1)
         return read_string(buffer->next);
     bytes_to_read = get_bytes_to_read(buffer);
-    printf("bytes to read %lu\n", bytes_to_read);
     if (bytes_to_read == 0)
         return NULL;
     return concat_pages(buffer, bytes_to_read);
