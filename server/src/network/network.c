@@ -20,7 +20,6 @@ network_t *init_network(void)
     net->clients = init_clients();
     net->clients->fds[0].fd = net->main_socket->fd;
     net->clients->fds[0].events = POLLIN;
-    net->clients->n++;
     return net;
 }
 
@@ -45,9 +44,9 @@ static int check_event(network_t *net, int i)
 
 static int parse_clients(network_t *net)
 {
-    int clientn = net->clients->n;
+    int sokets_n = net->clients->n + 1;
 
-    for (int i = 0; i < clientn; i++) {
+    for (int i = 0; i < sokets_n; i++) {
         check_event(net, i);
     }
     return 0;
@@ -56,7 +55,7 @@ static int parse_clients(network_t *net)
 int network_handle(network_t *net)
 {
     printf("clients : %ld\n", net->clients->n);
-    if (poll(net->clients->fds, net->clients->n, -1) < 0) {
+    if (poll(net->clients->fds, net->clients->n + 1, -1) < 0) {
         perror("ERROR: poll failed");
         return -1;
     }
