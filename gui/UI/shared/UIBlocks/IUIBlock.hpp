@@ -14,5 +14,6 @@ namespace UIBlocks {
         public:
             virtual void draw(zappyGUI::Window &window) = 0;
             virtual void handleEvent(const sf::Event &event) = 0;
+            virtual void setPosition(const std::pair<int, int> &position) = 0;
     };
 }

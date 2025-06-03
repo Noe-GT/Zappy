@@ -13,12 +13,14 @@
 namespace UIBlocks {
     class PopupSelector: public IUIBlock {
         public:
-            PopupSelector(std::vector<std::string> options, std::pair<int, int> position, std::pair<int, int> size);
+            PopupSelector(std::vector<std::string> &options, std::pair<int, int> position, std::pair<int, int> size);
             ~PopupSelector() = default;
 
             void draw(zappyGUI::Window &window) override;
-            bool isInside(int x, int y) const;
             void handleEvent(const sf::Event &event) override;
+            void setPosition(const std::pair<int, int> &position) override;
+
+            bool isInside(int x, int y) const;
             const std::string &getSelected() const;
             void open();
             void close();

@@ -7,7 +7,7 @@
 
 #include "PopupSelector.hpp"
 
-UIBlocks::PopupSelector::PopupSelector(std::vector<std::string> options, std::pair<int, int> position, std::pair<int, int> size):
+UIBlocks::PopupSelector::PopupSelector(std::vector<std::string> &options, std::pair<int, int> position, std::pair<int, int> size):
     _position(position),
     _size(size),
     _options(options),
@@ -75,4 +75,8 @@ void UIBlocks::PopupSelector::handleEvent(const sf::Event &event)
     }
 }
 
+void UIBlocks::PopupSelector::setPosition(const std::pair<int, int> &position)
+{
+    this->_position = position;
+}
 

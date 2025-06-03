@@ -8,19 +8,24 @@
 #pragma once
 
 #include "../IUIBlock.hpp"
+#include <memory>
 
-class List: public UIBlocks::IUIBlock {
-    public:
-        List(std::vector<UIBlocks::IUIBlock> elements, std::pair<int, int> position, std::pair<int, int> size);
-        ~List() = default;
-        void draw(zappyGUI::Window &window) override;
-        void handleEvent(const sf::Event &event) override;
-        void addElement(UIBlocks::IUIBlock &element);
-        void removeElement(size_t index);
+namespace UIBlocks {
+    class List: public IUIBlock {
+        public:
+            List(std::vector<std::shared_ptr<IUIBlock>> &elements, std::pair<int, int> position, std::pair<int, int> size);
+            ~List() = default;
+            void draw(zappyGUI::Window &window) override;
+            void setPosition(const std::pair<int, int> &position) override;
+            void handleEvent(const sf::Event &event) override;
+            
+            void addElement(std::shared_ptr<IUIBlock> element);
+            void removeElement(size_t index);
 
-    private:
-        std::pair<int, int> _position;
-        std::pair<int, int> _size;
-        std::vector<UIBlocks::IUIBlock> _elements;
-        sf::RectangleShape _background;
-};
+        private:
+            std::pair<int, int> _position;
+            std::pair<int, int> _size;
+            std::vector<std::shared_ptr<IUIBlock>> _elements;
+            sf::RectangleShape _background;
+    };
+}

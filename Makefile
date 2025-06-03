@@ -20,6 +20,9 @@ GUI_SRC		=	$(wildcard gui/*.cpp)														\
 				$(wildcard gui/game/*.cpp)													\
 				$(wildcard gui/game/Spell*.cpp)												\
 				$(wildcard gui/UI/shared/UIBlocks/PopupSelector/*.cpp)						\
+				$(wildcard gui/UI/shared/UIBlocks/Pair/*.cpp)								\
+				$(wildcard gui/UI/shared/UIBlocks/List/*.cpp)								\
+				$(wildcard gui/UI/shared/UIBlocks/Text/*.cpp)								\
 				$(wildcard gui/UI/shared/UIBlocks/utils/Scroller/*.cpp)						\
 
 AI_SRC		=	$(wildcard ai/*.c)

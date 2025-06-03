@@ -6,7 +6,7 @@
 */
 #include "Tile.hpp"
 
-zappyGUI::Tile::Tile(): _playerSelector(std::vector<std::string>())
+zappyGUI::Tile::Tile()
 {
 }
 

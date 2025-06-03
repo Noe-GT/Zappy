@@ -32,6 +32,5 @@ namespace zappyGUI {
         private:
             std::vector <std::shared_ptr <Player>> _players;
             std::vector <std::shared_ptr <IRessource>> _ressources;
-            UIBlocks::PopupSelector _playerSelector;
     };
 };
