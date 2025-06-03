@@ -50,13 +50,13 @@ $(AI_EXEC): $(AI_OBJ)
 	$(CC) $(AI_OBJ) -o $(AI_EXEC) $(CFLAGS)
 
 clean:
-	rm -f vgcore.* $(GUI_OBJ)
+	rm -f vgcore.* $(GUI_OBJ) $(PROTOCOL_OBJ)
 	rm -f $(AI_OBJ) *.gch
 	make clean -C $(SERVER_DIR)
 
 fclean:	clean
 	rm -f $(GUI_EXEC) $(AI_EXEC)
-	make fclean -C $(SERVER_DIR)
+	make fclean -C $(SERVER_DIR) $(PROTOCOL_EXEC)
 
 re:	fclean	all
 
