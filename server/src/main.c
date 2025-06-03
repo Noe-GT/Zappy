@@ -9,7 +9,7 @@
 
 int main(void)
 {
-    server_t *server = init_server();
+    server_t *server = init_server(20);
 
     if (server == NULL)
         return 84;

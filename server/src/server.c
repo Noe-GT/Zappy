@@ -7,11 +7,11 @@
 
 #include "../include/server.h"
 
-server_t *init_server(void)
+server_t *init_server(int max_clients)
 {
     server_t *server = malloc(sizeof(server_t));
 
-    server->network = init_network();
+    server->network = init_network(max_clients);
     if (server->network == NULL)
         return NULL;
     return server;

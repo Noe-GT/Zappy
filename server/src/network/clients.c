@@ -7,20 +7,6 @@
 
 #include "../../include/network.h"
 
-clients_t *init_clients(void)
-{
-    clients_t *clients = malloc(sizeof(clients_t));
-
-    clients->fds = malloc(sizeof(struct pollfd) * MAX_CLIENTS + 1);
-    memset(clients->fds, 0, sizeof(*clients->fds));
-    clients->n = 0;
-    clients->available_ids = queue_init(MAX_CLIENTS);
-    for (int id = 1; id <= MAX_CLIENTS; id++)
-        queue_push(clients->available_ids, id);
-    clients->client_list = init_client_list();
-    return clients;
-}
-
 static char *handle_buff(char *t_buff, char *res_buff, int len)
 {
     if (len == 2)
@@ -53,42 +39,34 @@ static char *read_from_socket(int r_fd)
     return res_buff;
 }
 
-void client_handle(clients_t *clients, int i)
+void client_handle(network_t *net, int i)
 {
-    client_t *client = cl_get(clients->client_list, i);
+    client_t *client = cl_get(net->client_list, net->sockets[i].fd);
 
     if (client == NULL)
         return;
     if (client->read_buffer != NULL)
         free(client->read_buffer);
-    client->read_buffer = read_from_socket(clients->fds[i].fd);
+    client->read_buffer = read_from_socket(net->sockets[i].fd);
     printf("(client) id: %d | read_buffer: %s\n",
         client->id, client->read_buffer);
 }
 
-void client_remove(clients_t *clients, int i)
+void client_remove(network_t *net, int i)
 {
-    close(clients->fds[i].fd);
-    queue_push(clients->available_ids, i);
-    cl_remove(clients->client_list, i);
+    cl_remove(net->client_list, net->sockets[i].fd);
+    close(net->sockets[i].fd);
+    pollfd_array_remove(net->sockets, i, net->sockets_n + 1);
+    net->sockets_n--;
 }
 
-static struct pollfd set_pollfd(int new_fd)
-{
-    struct pollfd pfd;
-
-    pfd.fd = new_fd;
-    pfd.events = POLLIN;
-    return pfd;
-}
-
-void client_new(clients_t *clients, int main_socket_fd)
+void client_new(network_t *net, int main_socket_fd)
 {
     struct sockaddr_in *addr;
     socklen_t addr_len;
     int new_fd;
 
-    if (clients->n == MAX_CLIENTS) {
+    if (net->sockets_n - 1 == MAX_CLIENTS) {
         perror("Max amount of clients reached");
         return;
     }
@@ -100,9 +78,8 @@ void client_new(clients_t *clients, int main_socket_fd)
         free(addr);
         return;
     }
-    clients->n++;
-    printf("new client (id : %d | fd : %d)\n",
-        queue_peek(clients->available_ids), new_fd);
-    cl_add_end(clients->client_list, queue_peek(clients->available_ids));
-    clients->fds[queue_pop(clients->available_ids)] = set_pollfd(new_fd);
+    printf("new client (fd : %d)\n", new_fd);
+    cl_add_end(net->client_list, new_fd);
+    net->sockets = pollfd_array_add(net->sockets, new_fd, net->sockets_n + 1);
+    net->sockets_n++;
 }
