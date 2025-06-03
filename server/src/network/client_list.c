@@ -7,7 +7,7 @@
 
 #include "../../include/client_list.h"
 
-client_list_t *init_client_list()
+client_list_t *init_client_list(void)
 {
     client_list_t *list = malloc(sizeof(client_list_t));
 
@@ -68,7 +68,7 @@ void cl_add_end(client_list_t *list, int id)
         list->end = list->begin;
         return;
     }
-    list->end -> next = new_node(id);
+    list->end->next = new_node(id);
     list->end = list->end->next;
 }
 

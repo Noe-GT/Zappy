@@ -9,11 +9,11 @@
 
 int main(void)
 {
-	server_t *server = init_server();
+    server_t *server = init_server();
 
-	if (server == NULL)
-		return 84;
-	server_run(server);
-	free_server(server);
-	return 0;
+    if (server == NULL)
+        return 84;
+    server_run(server);
+    free_server(server);
+    return 0;
 }
