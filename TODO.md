@@ -25,7 +25,19 @@
 # GUI
 
 - [ ] Affichage de la map (2d / 3d)
-- [ ] Display des informations (historique des commandes)
+- [ ] Créer le plugin de Blocs UI
+- [ ] Passer les modes de rendu en plugins
+- [ ] Mettre en place l'affichage de l'interface commune au deux modes de rendu:
+    - [ ] Logs
+    - [ ] Spells en cours
+    - [ ] Scoreboard
+    - [ ] Timer
+    - [ ] Inventaire
+    - [ ] Niveau
+    - [ ] Nom d'équipe
+- [ ] faire le focus du player selectionné
+- [ ] Recevoir et interpreter les commandes
+
 
 # AI
 
