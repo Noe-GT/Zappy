@@ -57,6 +57,7 @@ static client_t *new_node(int id)
     client_t *new = malloc(sizeof(client_t));
 
     new->id = id;
+    new->read_buffer = NULL;
     new->next = NULL;
     return new;
 }
@@ -82,7 +83,7 @@ void cl_remove(client_list_t *list, int id)
         parse = parse->next;
     }
     if (parse == NULL) {
-        fprintf(stderr, "cl remove: id out of range\n");
+        fprintf(stderr, "cl remove: id(%d) out of range\n", id);
         return;
     } else {
         if (previous != NULL) {
@@ -103,6 +104,6 @@ client_t *cl_get(client_list_t *list, int id)
     while (!(parse == NULL || parse->id == id))
         parse = parse->next;
     if (parse == NULL)
-        fprintf(stderr, "cl get: id out of range\n");
+        fprintf(stderr, "cl get: id(%d) out of range\n", id);
     return parse;
 }

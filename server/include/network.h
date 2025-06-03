@@ -10,13 +10,11 @@
     #include "external.h"
     #include "queue.h"
     #include "client_list.h"
+    #include "pollfd.h"
     #define MAX_CLIENTS 255
 
 typedef struct clients_s {
-    struct pollfd *fds;
-    client_list_t *client_list;
-    size_t n;
-    int_queue_t *available_ids;
+    size_t max_clients;
 } clients_t;
 
 typedef struct socket_s {
@@ -25,18 +23,20 @@ typedef struct socket_s {
 } socket_t;
 
 typedef struct network_s {
-    clients_t *clients;
+    client_list_t *client_list;
+    struct pollfd *sockets;
+    size_t sockets_n;
     socket_t *main_socket;
 } network_t;
 
-network_t *init_network(void);
+network_t *init_network(size_t max_clients);
 void free_network(network_t *net);
 int network_handle(network_t *net);
 
-clients_t *init_clients(void);
-void client_handle(clients_t *clients, int i);
-void client_remove(clients_t *clients, int i);
-void client_new(clients_t *clients, int main_socket_fd);
+clients_t *init_clients(size_t max_clients);
+void client_handle(network_t *net, int i);
+void client_remove(network_t *net, int i);
+void client_new(network_t *net, int main_socket_fd);
 
 struct sockaddr_in *make_addr(int port);
 int create_socket(struct sockaddr_in *addr, socklen_t addrlen, int listen_n);

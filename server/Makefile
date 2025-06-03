@@ -17,6 +17,7 @@ SERVER_SRC	=	$(SRC_DIR)server.c	\
 				$(SRC_DIR)network/queue.c	\
 				$(SRC_DIR)network/network_utils.c	\
 				$(SRC_DIR)network/client_list.c	\
+				$(SRC_DIR)network/pollfd.c	\
 				$(SRC_DIR)main.c	\
 
 TEST_SRC	=	$(TEST_DIR)client_list.c	\
