@@ -14,7 +14,7 @@
 
 namespace zappyGUI {
     class Tile;
-    enum oriantation {
+    enum orientation {
         NORTH,
         EAST,
         WEST,
@@ -29,25 +29,30 @@ namespace zappyGUI {
             int getId();
             int getLvl();
             std::string getName();
-            std::vector <std::shared_ptr <IRessource>> getInventory();
-            std::shared_ptr <ISpell> getSpellInProgress();
-            std::vector <Tile> getVisionData();
-            std::vector <std::string> getLogs();
+            std::vector <std::pair <std::shared_ptr <IRessource>, int>> &getInventory();
+            std::shared_ptr <ISpell> &getSpellInProgress();
+            std::vector <Tile> &getVisionData();
+            std::vector <std::string> &getLogs();
+            std::pair <int, int> getPos();
+            orientation getOrientation();
 
             void setId(int newVal);
             void setLvl(int newVal);
             void setName(std::string newVal);
-            void setInventory(std::vector <std::shared_ptr <IRessource>> newVal);
+            void setInventory(std::vector <std::pair <std::shared_ptr <IRessource>, int>> newVal);
             void setSpellInProgress(std::shared_ptr <ISpell> newval);
             void setVisionData(std::vector <Tile> newVal);
             void setLogs(std::vector <std::string> newVal);
+            void setPos(std::pair <int, int> newVal);
+            void setOrientation(int newVal);
 
         private:
             int _id;
             int _lvl;
+            std::pair <int, int> _pos;
             std::string _name;
-            oriantation _orientation;
-            std::vector <std::shared_ptr <IRessource>> _inventory;
+            orientation _orientation;
+            std::vector <std::pair <std::shared_ptr <IRessource>, int>> _inventory;
             std::shared_ptr <ISpell> _spellInProgress;
             std::vector <Tile> _visionData;
             std::vector <std::string> _logs;

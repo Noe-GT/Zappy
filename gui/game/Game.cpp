@@ -6,7 +6,8 @@
 */
 
 #include "Game.hpp"
-zappyGUI::Game::Game()
+#include <iostream>
+zappyGUI::Game::Game() : _frequence(0), _teamNbr(0), _gameInProgess(false), _mapSize(0, 0)
 {
 }
 
@@ -29,12 +30,12 @@ bool zappyGUI::Game::isGameInProgess()
     return this->_gameInProgess;
 }
 
-std::vector <std::string> zappyGUI::Game::getLogs()
+std::vector <std::string> &zappyGUI::Game::getLogs()
 {
     return this->_logs;
 }
 
-std::vector <std::vector <zappyGUI::Tile>> zappyGUI::Game::getMap()
+std::vector <std::vector <zappyGUI::Tile>> &zappyGUI::Game::getMap()
 {
     return this->_map;
 }
@@ -44,6 +45,16 @@ std::pair<int, int> zappyGUI::Game::getMapSize()
     return this->_mapSize;
 }
 
+std::vector <zappyGUI::Player> &zappyGUI::Game::getPlayers()
+{
+    return this->_players;
+}
+
+zappyGUI::Player zappyGUI::Game::getPlayer(int id)
+{
+    return this->_players[id];
+}
+
 void zappyGUI::Game::setFrequence(int newVal)
 {
     this->_frequence = newVal;
@@ -51,10 +62,10 @@ void zappyGUI::Game::setFrequence(int newVal)
 
 void zappyGUI::Game::setTeamNbr(int newVal)
 {
-    this->_gameInProgess = newVal;
+    this->_teamNbr = newVal;
 }
 
-void zappyGUI::Game::isGameInProgess(bool newVal)
+void zappyGUI::Game::setIsGameInProgess(bool newVal)
 {
     this->_gameInProgess = newVal;
 }
@@ -77,6 +88,20 @@ void zappyGUI::Game::setMap(std::vector <std::vector <zappyGUI::Tile>> newVal)
 void zappyGUI::Game::setMapSize(int newX, int newY)
 {
     this->_mapSize = {newX, newY};
+    this->_map.resize(newY);
+    for (auto& row : this->_map)
+        row.resize(newX, Tile());
+    std::clog << "map have now a size of " << this->_map.size() << "x" << this->_map[0].size() << std::endl;
+}
+
+void zappyGUI::Game::setPlayers(std::vector <zappyGUI::Player> newVal)
+{
+    this->_players = newVal;
+}
+
+void zappyGUI::Game::addPlayer(zappyGUI::Player newVal)
+{
+    this->_players.push_back(newVal);
 }
 
 void zappyGUI::Game::display()

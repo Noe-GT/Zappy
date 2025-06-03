@@ -10,30 +10,30 @@
 
 zappyGUI::GUI::GUI(int port, std::string hostname): _window(), _client(port, hostname)
 {
-    _commands["Seg"] = std::make_unique<Seg>();
-    _commands["Smg"] = std::make_unique<Smg>();
-    _commands["Tna"] = std::make_unique<Tna>();
-    _commands["Bct"] = std::make_unique<Bct>();
-    _commands["Mct"] = std::make_unique<Mct>();
-    _commands["Msz"] = std::make_unique<Msz>();
-    _commands["Suc"] = std::make_unique<Suc>();
-    _commands["Ebo"] = std::make_unique<Ebo>();
-    _commands["Edi"] = std::make_unique<Edi>();
-    _commands["Enw"] = std::make_unique<Enw>();
-    _commands["Pfk"] = std::make_unique<Pfk>();
-    _commands["Pbc"] = std::make_unique<Pbc>();
-    _commands["Pdi"] = std::make_unique<Pdi>();
-    _commands["Pex"] = std::make_unique<Pex>();
-    _commands["Pic"] = std::make_unique<Pic>();
-    _commands["Pie"] = std::make_unique<Pie>();
-    _commands["Pin"] = std::make_unique<Pin>();
-    _commands["Plv"] = std::make_unique<Plv>();
-    _commands["Pnw"] = std::make_unique<Pnw>();
-    _commands["Ppo"] = std::make_unique<Ppo>();
-    _commands["Pdr"] = std::make_unique<Pdr>();
-    _commands["Pgt"] = std::make_unique<Pgt>();
-    _commands["Sgt"] = std::make_unique<Sgt>();
-    _commands["Sst"] = std::make_unique<Sst>();
+    _commands["seg"] = std::make_unique<Seg>();
+    _commands["smg"] = std::make_unique<Smg>();
+    _commands["tna"] = std::make_unique<Tna>();
+    _commands["bct"] = std::make_unique<Bct>();
+    _commands["mct"] = std::make_unique<Mct>();
+    _commands["msz"] = std::make_unique<Msz>();
+    _commands["suc"] = std::make_unique<Suc>();
+    _commands["ebo"] = std::make_unique<Ebo>();
+    _commands["edi"] = std::make_unique<Edi>();
+    _commands["enw"] = std::make_unique<Enw>();
+    _commands["pfk"] = std::make_unique<Pfk>();
+    _commands["pbc"] = std::make_unique<Pbc>();
+    _commands["pdi"] = std::make_unique<Pdi>();
+    _commands["pex"] = std::make_unique<Pex>();
+    _commands["pic"] = std::make_unique<Pic>();
+    _commands["pie"] = std::make_unique<Pie>();
+    _commands["pin"] = std::make_unique<Pin>();
+    _commands["plv"] = std::make_unique<Plv>();
+    _commands["pnw"] = std::make_unique<Pnw>();
+    _commands["ppo"] = std::make_unique<Ppo>();
+    _commands["pdr"] = std::make_unique<Pdr>();
+    _commands["pgt"] = std::make_unique<Pgt>();
+    _commands["sgt"] = std::make_unique<Sgt>();
+    _commands["sst"] = std::make_unique<Sst>();
 }
 
 void zappyGUI::GUI::display()
@@ -125,17 +125,17 @@ void zappyGUI::GUI::loop()
     }
 }
 
-zappyGUI::window zappyGUI::GUI::getWindow()
+zappyGUI::window &zappyGUI::GUI::getWindow()
 {
     return this->_window;
 }
 
-zappyGUI::Client zappyGUI::GUI::getClient()
+zappyGUI::Client &zappyGUI::GUI::getClient()
 {
     return this->_client;
 }
 
-zappyGUI::Game zappyGUI::GUI::getGame()
+zappyGUI::Game &zappyGUI::GUI::getGame()
 {
     return this->_game;
 }

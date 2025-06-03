@@ -2,12 +2,13 @@
 ** EPITECH PROJECT, 2024
 ** zap
 ** File description:
-** IRessource.hpp
+** food.hpp
 */
 #pragma once
+#include "IRessource.hpp"
 namespace zappyGUI {
-    class IRessource {
+    class Food: public IRessource{
         public:
-            virtual ~IRessource() = default;
+            ~Food() override = default;
     };
-};
+}

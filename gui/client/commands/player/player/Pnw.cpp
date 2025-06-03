@@ -8,6 +8,7 @@
 #include "Pnw.hpp"
 #include "../../../../GUI.hpp"
 #include "../../../Cserver.hpp"
+#include <iostream>
 zappyGUI::Pnw::Pnw()
 {
 }
@@ -18,7 +19,25 @@ zappyGUI::Pnw::~Pnw()
 
 void zappyGUI::Pnw::receive(std::string command, zappyGUI::GUI &gui)
 {
-    //TODO:
+    std::stringstream ss(command);
+    std::string code;
+    int playerID;
+    int ressourceID;
+    std::pair <int, int> playerPos;
+    int orientation;
+    int lvl;
+    std::string teamName;
+    Player newPlayer;
+    ss >> code >> playerID >> playerPos.first >> playerPos.second >> orientation >> lvl >> teamName;
+    newPlayer.setId(playerID);
+    newPlayer.setLvl(lvl);
+    newPlayer.setPos(playerPos);
+    newPlayer.setName(teamName);
+    newPlayer.setOrientation(orientation);
+    gui.getGame().getPlayers().push_back(newPlayer);
+    std::clog << gui.getGame().getMap().size() << std::endl;
+    gui.getGame().getMap()[playerPos.first][playerPos.second].addPlayer(std::make_shared <Player> (newPlayer));
+    std::clog << "added new player " << playerID << ", lvl " << lvl <<", of the team " << teamName << " in " << newPlayer.getPos().first << " " << playerPos.second << std::endl;
 }
 
 void zappyGUI::Pnw::send(std::string command, zappyGUI::GUI &gui, zappyGUI::Cserver &sender)

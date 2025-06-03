@@ -25,7 +25,6 @@ namespace zappyGUI {
 
             void addPlayer(std::shared_ptr <Player> newVal);
             void addRessource(std::shared_ptr <IRessource> newVal);
-
             void display();
 
         private:

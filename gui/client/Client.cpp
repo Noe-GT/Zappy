@@ -19,7 +19,6 @@ zappyGUI::Client::Client(int port, std::string hostname): _Client(port)
         inet_pton(AF_INET, hostname.c_str(), &_Client.getAdress().sin_addr);
     }
     if (_Client.connect(sockfd) == -1) {
-        // close(sockfd);
         throw std::runtime_error("Connection to server failed");
     }
     flags = fcntl(sockfd, F_GETFL, 0);
@@ -32,8 +31,6 @@ zappyGUI::Client::Client(int port, std::string hostname): _Client(port)
 
 zappyGUI::Client::~Client()
 {
-    // if (this->_Client.getSocket() != -1)
-        // close(this->_Client.getSocket());
 }
 
 zappyGUI::Cserver &zappyGUI::Client::getCserver()
