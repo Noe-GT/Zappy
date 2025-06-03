@@ -125,7 +125,7 @@ void zappyGUI::GUI::loop()
     }
 }
 
-zappyGUI::window &zappyGUI::GUI::getWindow()
+zappyGUI::Window &zappyGUI::GUI::getWindow()
 {
     return this->_window;
 }

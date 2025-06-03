@@ -6,7 +6,7 @@
 */
 
 #pragma once
-#include "UI/Window.hpp"
+#include "UI/shared/Window.hpp"
 #include "client/Client.hpp"
 #include "game/Game.hpp"
 #include "client/commands/Icommand.hpp"
@@ -46,7 +46,7 @@ namespace zappyGUI {
 
             void loop();
 
-            window &getWindow();
+            Window &getWindow();
             Client &getClient();
             Game &getGame();
 
@@ -55,7 +55,7 @@ namespace zappyGUI {
             void events();
             void display();
 
-            window _window;
+            Window _window;
             Client _client;
             Game _game;
             std::unordered_map<std::string, std::unique_ptr<Icommand>> _commands;

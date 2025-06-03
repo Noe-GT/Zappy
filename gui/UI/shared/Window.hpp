@@ -6,15 +6,14 @@
 */
 #pragma once
 #include <SFML/Graphics.hpp>
-#include <SFML/Window.hpp>
 
 namespace zappyGUI {
-    class window {
+    class Window {
     public:
-        window();
-        ~window();
-        window(const window &other);
-        window& operator=(const window &other);
+        Window();
+        ~Window();
+        Window(const Window &other);
+        Window& operator=(const Window &other);
 
         void switchFullscreen();
         bool pollEvent();

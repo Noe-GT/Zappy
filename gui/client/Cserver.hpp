@@ -25,10 +25,10 @@ namespace zappyGUI{
 
             void init(int port);
             int poll(pollfd *__fds, nfds_t __nfds, int __timeout);
-            int bind(int __fd, const sockaddr *__addr, socklen_t __len) noexcept;
+            int bind(int __fd, const sockaddr *__addr, socklen_t __len);
             int bind(int __fd);
-            int listen(int __fd, int __n) noexcept;
-            int socket(int __domain, int __type, int __protocol) noexcept;
+            int listen(int __fd, int __n);
+            int socket(int __domain, int __type, int __protocol);
             int accept(int __fd, sockaddr *__restrict__ __addr, socklen_t *__restrict__ __addr_len);
             int accept(int __fd);
             int connect(int __fd, const sockaddr *__addr, socklen_t __len);

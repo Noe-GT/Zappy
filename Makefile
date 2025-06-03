@@ -8,6 +8,7 @@
 SERVER_SRC	=	$(wildcard server/*.c)
 
 GUI_SRC		=	$(wildcard gui/*.cpp)								\
+				$(wildcard gui/UI/shared/*.cpp)						\
 				$(wildcard gui/UI/*.cpp)							\
 				$(wildcard gui/client/*.cpp)						\
 				$(wildcard gui/client/commands/game/*.cpp)			\

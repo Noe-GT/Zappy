@@ -33,7 +33,7 @@ int zappyGUI::Cserver::poll(pollfd *__fds, nfds_t __nfds, int __timeout)
     return ::poll(__fds, __nfds, __timeout);
 }
 
-int zappyGUI::Cserver::bind(int __fd, const sockaddr *__addr, socklen_t __len) noexcept
+int zappyGUI::Cserver::bind(int __fd, const sockaddr *__addr, socklen_t __len)
 {
     return ::bind(__fd, __addr, __len);
 }
@@ -42,12 +42,12 @@ int zappyGUI::Cserver::bind(int __fd)
     return ::bind(__fd, (struct sockaddr *)&this->_adress, sizeof(this->_adress));
 }
 
-int zappyGUI::Cserver::listen(int __fd, int __n) noexcept
+int zappyGUI::Cserver::listen(int __fd, int __n)
 {
     return ::listen(__fd, __n);
 }
 
-int zappyGUI::Cserver::socket(int __domain, int __type, int __protocol) noexcept
+int zappyGUI::Cserver::socket(int __domain, int __type, int __protocol)
 {
     return ::socket(__domain, __type, __protocol);
 }
