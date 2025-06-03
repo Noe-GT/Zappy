@@ -127,7 +127,7 @@ circular_buffer_t *clean_buffer(circular_buffer_t *buffer)
 
     if (buffer == NULL)
         return create_buffer();
-    if (buffer->read_idx == getpagesize() - 1) {
+    if (buffer->read_idx == (size_t)getpagesize() - 1) {
         next = buffer->next;
         free(buffer->buffer);
         free(buffer);

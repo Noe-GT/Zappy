@@ -24,7 +24,7 @@ CC	=	gcc
 CPPC	=	g++
 
 # TODO: remove debug information
-CFLAGS	+=	-Wall -Wextra -g3
+CFLAGS	+=	-Wall -Wextra -g3 -fPIC
 
 all:	server gui	ai	protocol
 
@@ -55,8 +55,8 @@ clean:
 	make clean -C $(SERVER_DIR)
 
 fclean:	clean
-	rm -f $(GUI_EXEC) $(AI_EXEC)
-	make fclean -C $(SERVER_DIR) $(PROTOCOL_EXEC)
+	rm -f $(GUI_EXEC) $(AI_EXEC) $(PROTOCOL_EXEC)
+	make fclean -C $(SERVER_DIR)
 
 re:	fclean	all
 
