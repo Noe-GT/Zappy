@@ -26,13 +26,13 @@ void zappyGUI::Pdr::receive(std::string command, zappyGUI::GUI &gui)
     std::pair <int, int> playerPos;
 
     ss >> code >> playerID >> ressourceID;
-    playerPos = gui.getGame().getPlayer(playerID).getPos();
-    gui.getGame().getPlayer(playerID).getInventory()[ressourceID].second --;
-    // if (gui.getGame().getPlayer(playerID).getInventory()[ressourceID].second < 0)
-    //     gui.getGame().getPlayer(playerID).getInventory()[ressourceID].second = 0;
-    // else
-    //     gui.getGame().getMap()[playerPos.first][playerPos.second].addRessource(gui.getGame().getPlayer(playerID).getInventory()[ressourceID].first);
-    std::clog << playerID << " droped " << ressourceID << " in tile " << playerPos.first << " " << playerPos.second << std::endl;
+    playerPos = gui.getGame().getPlayers()[playerID].getPos();
+    gui.getGame().getPlayers()[playerID].getInventory()[ressourceID].second --;
+    if (gui.getGame().getPlayers()[playerID].getInventory()[ressourceID].second < 0)
+        gui.getGame().getPlayers()[playerID].getInventory()[ressourceID].second = 0;
+    else
+        gui.getGame().getMap()[playerPos.first][playerPos.second].addRessource(gui.getGame().getPlayers()[playerID].getInventory()[ressourceID].first);
+    std::clog << "player " << playerID << " droped " << ressourceID << " in tile " << playerPos.first << " " << playerPos.second << " now have " << gui.getGame().getPlayers()[playerID].getInventory()[ressourceID].second << " left" << std::endl;
 }
 
 void zappyGUI::Pdr::send(std::string command, zappyGUI::GUI &gui, zappyGUI::Cserver &sender)

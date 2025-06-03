@@ -50,10 +50,6 @@ std::vector <zappyGUI::Player> &zappyGUI::Game::getPlayers()
     return this->_players;
 }
 
-zappyGUI::Player zappyGUI::Game::getPlayer(int id)
-{
-    return this->_players[id];
-}
 
 void zappyGUI::Game::setFrequence(int newVal)
 {
