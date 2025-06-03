@@ -6,7 +6,6 @@
 */
 
 #pragma once
-#include "UI/shared/Window.hpp"
 #include "Client/Client.hpp"
 #include "game/Game.hpp"
 namespace zappyGUI {

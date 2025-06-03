@@ -7,9 +7,9 @@
 
 #include "PopupSelector.hpp"
 
-UIBlocks::PopupSelector::PopupSelector(std::vector<std::string> &options):
-    _position(0, 0),
-    _size(200, 300),
+UIBlocks::PopupSelector::PopupSelector(std::vector<std::string> options, std::pair<int, int> position, std::pair<int, int> size):
+    _position(position),
+    _size(size),
     _options(options),
     _background(sf::Vector2f(_size.first, _size.second)),
     _selected(""),
