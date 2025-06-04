@@ -13,7 +13,7 @@
 namespace UIBlocks {
     class PopupSelector: public IUIBlock {
         public:
-            PopupSelector(std::vector<std::string> &options, std::pair<int, int> position, std::pair<int, int> size);
+            PopupSelector(std::vector<std::shared_ptr<IUIBlock>> &options, std::pair<int, int> position, std::pair<int, int> size);
             ~PopupSelector() = default;
 
             void draw(zappyGUI::Window &window) override;
@@ -21,17 +21,16 @@ namespace UIBlocks {
             void setPosition(const std::pair<int, int> &position) override;
 
             bool isInside(int x, int y) const;
-            const std::string &getSelected() const;
+            const std::shared_ptr<IUIBlock> &getSelected() const;
             void open();
             void close();
-    
+
         private:
             std::pair<int, int> _position;
             std::pair<int, int> _size;
             Scroller _options;
             sf::RectangleShape _background;
-            std::string _selected;
+            std::shared_ptr<IUIBlock> _selected;
             bool _isOpen;
     };
 }
-

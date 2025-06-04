@@ -9,11 +9,13 @@
 #include <vector>
 #include <string>
 
+#include "../../IUIBlock.hpp"
+
 class Scroller {
     public:
-        Scroller(std::vector<std::string> &options, int maxVisibleOptions = 5);
+        Scroller(std::vector<std::shared_ptr<UIBlocks::IUIBlock>> &options, int maxVisibleOptions = 5);
         ~Scroller() = default;
-        std::vector<std::string> getVisibleOptions() const;
+        std::vector<std::shared_ptr<UIBlocks::IUIBlock>> &getVisibleOptions() const;
         void scrollUp();
         void scrollDown();
         void setMaxVisibleOptions(int maxVisibleOptions);
@@ -21,6 +23,6 @@ class Scroller {
     private:
         int _maxVisibleOptions;
         int _currentOffset;
-        std::vector<std::string> _options;
+        std::vector<std::shared_ptr<UIBlocks::IUIBlock>> _options;
 };
 
