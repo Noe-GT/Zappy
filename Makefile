@@ -32,10 +32,10 @@ CC	=	gcc
 CPPC	=	g++
 
 # TODO: remove debug information
-CFLAGS	+=	-Wall -Wextra -g3 -fPIC
+CFLAGS	+=	-Wall -Wextra -g3 -fPIC -Iprotocol/include
 CRITERION	=	--coverage -lcriterion
 
-all:	$(SERVER_EXEC)	$(GUI_EXEC)	$(AI_EXEC)	$(PROTOCOL_EXEC)
+all:	$(PROTOCOL_EXEC) $(SERVER_EXEC)	$(GUI_EXEC)	$(AI_EXEC)
 
 tests_run:	$(TEST_OBJ)	$(TEST_SERVER)
 	$(CC) $(CFLAGS) -o $(TEST_EXEC) $(TEST_OBJ) $(TEST_SERVER) $(CRITERION)
@@ -44,7 +44,7 @@ $(PROTOCOL_EXEC): $(PROTOCOL_OBJ)
 	$(CC) $(PROTOCOL_OBJ) -o $(PROTOCOL_EXEC) $(CFLAGS) -shared
 
 $(SERVER_EXEC): $(SERVER_OBJ)
-	$(CC) $(SERVER_OBJ) -o $(SERVER_EXEC) $(CFLAGS)
+	$(CC) $(SERVER_OBJ) -o $(SERVER_EXEC) $(CFLAGS) -L. -lprotocol -Wl,-rpath=.
 
 $(GUI_EXEC):	$(GUI_OBJ)
 	$(CPPC) $(GUI_OBJ) -o $(GUI_EXEC) $(CFLAGS)

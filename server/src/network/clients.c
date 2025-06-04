@@ -45,11 +45,9 @@ void client_handle(network_t *net, int i)
 
     if (client == NULL)
         return;
-    if (client->read_buffer != NULL)
-        free(client->read_buffer);
-    client->read_buffer = read_from_socket(net->sockets[i].fd);
+    pr_receive(net->sockets[i].fd, client->read_buffer);
     printf("(client) id: %d | read_buffer: %s\n",
-        client->id, client->read_buffer);
+        client->id, client->read_buffer->buffer);
 }
 
 void client_remove(network_t *net, int i)

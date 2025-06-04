@@ -11,7 +11,6 @@
     #include "queue.h"
     #include "client_list.h"
     #include "pollfd.h"
-    #include "../../protocol/include/protocol.h"
     #define MAX_CLIENTS 255
 
 typedef struct clients_s {

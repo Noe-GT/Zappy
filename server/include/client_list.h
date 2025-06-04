@@ -9,10 +9,11 @@
     #define CLIENT_LIST_H_
     #include <stdio.h>
     #include <stdlib.h>
+    #include "protocol.h"
 
 typedef struct client_s {
     int id;
-    char *read_buffer;
+    circular_buffer_t *read_buffer;
     struct client_s *next;
 } client_t;
 

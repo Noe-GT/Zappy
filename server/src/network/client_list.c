@@ -59,6 +59,7 @@ static client_t *new_node(int id)
     new->id = id;
     new->read_buffer = NULL;
     new->next = NULL;
+    new->read_buffer = create_buffer();
     return new;
 }
 
@@ -88,12 +89,13 @@ void cl_remove(client_list_t *list, int id)
     } else {
         if (previous != NULL) {
             previous->next = parse->next;
-            free(parse);
         } else {
             list->begin = parse->next;
             if (list->end == parse)
                 list->end = list->begin;
         }
+        destroy_buffer(parse->read_buffer);
+        free(parse);
     }
 }
 
