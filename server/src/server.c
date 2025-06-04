@@ -12,8 +12,10 @@ server_t *init_server(int max_clients)
     server_t *server = malloc(sizeof(server_t));
 
     server->network = init_network(max_clients);
-    if (server->network == NULL)
+    if (server->network == NULL) {
+        free(server);
         return NULL;
+    }
     return server;
 }
 

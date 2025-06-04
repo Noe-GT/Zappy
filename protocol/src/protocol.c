@@ -9,10 +9,17 @@
 
 #include <stdio.h>
 #include <string.h>
-#include <stdlib.h>
+#include <poll.h>
 
 bool send(int fd, char *string)
 {
+
+    struct pollfd pfd = {fd, POLLOUT, 0};
+
+    if (poll(&pfd, 1, 100) <= 0 || !(pfd.revents & POLLOUT)) {
+        perror("[PROTOCOL] Poll failed\n");
+        return false;
+    }
     if (write(fd, string, strlen(string)) == -1) {
         perror("[PROTOCOL] Write failed\n");
         return false;
