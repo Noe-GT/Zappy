@@ -7,38 +7,6 @@
 
 #include "../../include/network.h"
 
-static char *handle_buff(char *t_buff, char *res_buff, int len)
-{
-    if (len == 2)
-        strcpy(res_buff, t_buff);
-    else
-        strcat(res_buff, t_buff);
-    return res_buff;
-}
-
-// REPLACE BY CIRCULAR BUFFER
-static char *read_from_socket(int r_fd)
-{
-    size_t len = 1;
-    char *res_buff = (char *)malloc(sizeof(char) * len);
-    char *t_buff = (char *)malloc(sizeof(char) * 2);
-    int r_out = read(r_fd, t_buff, 1);
-
-    t_buff[1] = '\0';
-    while (r_out != 0 && t_buff[0] != '\n') {
-        if (t_buff[0] != '\r') {
-            len++;
-            res_buff = realloc(res_buff, len);
-            res_buff = handle_buff(t_buff, res_buff, len);
-        }
-        r_out = read(r_fd, t_buff, 1);
-        t_buff[1] = '\0';
-    }
-    free(t_buff);
-    res_buff[len - 1] = '\0';
-    return res_buff;
-}
-
 void client_handle(network_t *net, int i)
 {
     client_t *client = cl_get(net->client_list, net->sockets[i].fd);
