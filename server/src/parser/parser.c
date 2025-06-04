@@ -1,0 +1,86 @@
+/*
+** EPITECH PROJECT, 2025
+** zappy
+** File description:
+** server/src/parser/parser.c
+*/
+
+#include "../../include/server.h"
+#include "../../include/utils.h"
+
+#include <string.h>
+#include <stdbool.h>
+
+static bool handle_other_short_flag(char **av, int *i,
+    int ac, server_t *server)
+{
+    if (strcmp(av[*i], "-p") == 0) {
+        parse_port(server, av + *i, ac - *i);
+        ++(*i);
+        return true;
+    }
+    if (strcmp(av[*i], "-x") == 0) {
+        parse_width(server, av + *i, ac - *i);
+        ++(*i);
+        return true;
+    }
+    if (strcmp(av[*i], "-y") == 0) {
+        parse_height(server, av + *i, ac - *i);
+        ++(*i);
+        return true;
+    }
+    return false;
+}
+
+static bool handle_short_flag(char **av, int *i, int ac, server_t *server)
+{
+    if (strcmp(av[*i], "-c") == 0) {
+        parse_nb_clients(server, av + *i, ac - *i);
+        ++(*i);
+        return true;
+    }
+    if (strcmp(av[*i], "-f") == 0) {
+        parse_freq(server, av + *i, ac - *i);
+        ++(*i);
+        return true;
+    }
+    return false;
+}
+
+static void parse_long_flag(char **av, int *i, int ac, server_t *server)
+{
+    if (strcmp(av[*i], "--auto-start") == 0) {
+        parse_auto_start(server, av + *i, ac - *i);
+        ++(*i);
+        return;
+    }
+    if (strcmp(av[*i], "--display-eggs") == 0) {
+        parse_display_egg(server, av + *i, ac - *i);
+        ++(*i);
+        return;
+    }
+    if (strcmp(av[*i], "--match_duration") == 0) {
+        parse_match_duration(server, av + *i, ac - *i);
+        ++(*i);
+        return;
+    }
+    if (strcmp(av[*i], "--verbose") == 0 || strcmp(av[*i], "-v") == 0) {
+        PARAMETERS->verbose = true;
+        return;
+    }
+    usage("Incorrect Arguments");
+}
+
+static void parse_flag(char **av, int *i, int ac, server_t *server)
+{
+    if (handle_short_flag(av, i, ac, server) ||
+        handle_other_short_flag(av, i, ac, server))
+        return;
+    parse_long_flag(av, i, ac, server);
+}
+
+void parser(int ac, char **av, server_t *server)
+{
+    for (int i = 1; i < ac; ++i)
+        parse_flag(av, &i, ac, server);
+}

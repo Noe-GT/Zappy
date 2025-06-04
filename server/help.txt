@@ -1,0 +1,11 @@
+USAGE: ./zappy_server -p port -x width -y height -n name1 name2 ... -c clientsNb -f freq --auto-start on|off --display-eggs true|false
+ [-v | --verbose]--game_duration time
+        port            is the port number
+        width           is the width of the world
+        height          is the height of the world
+        nameX           is the name of the team X
+        clientsNb       is the number of authorized clients per team
+        freq            is the reciprocal of time unit for execution of actions
+        auto-start      does the greeting is send automaticly
+        display-eggs    eggs are visible and destructible
+        match_duration  is the duration of the match in seconds

@@ -5,8 +5,6 @@
 ## Makefile
 ##
 
-SERVER_DIR	=	server/
-
 SERVER_SRC	=	$(shell find server -type f -name '*.c')
 GUI_SRC	=	$(shell find gui -type f -name '*.cpp')
 AI_SRC	=	$(shell find ai -type f -name '*.c')
@@ -39,6 +37,7 @@ all:	$(PROTOCOL_EXEC) $(SERVER_EXEC)	$(GUI_EXEC)	$(AI_EXEC)
 
 tests_run:	$(TEST_OBJ)	$(TEST_SERVER)
 	$(CC) $(CFLAGS) -o $(TEST_EXEC) $(TEST_OBJ) $(TEST_SERVER) $(CRITERION)
+	./$(TEST_EXEC)
 
 $(PROTOCOL_EXEC): $(PROTOCOL_OBJ)
 	$(CC) $(PROTOCOL_OBJ) -o $(PROTOCOL_EXEC) $(CFLAGS) -shared
