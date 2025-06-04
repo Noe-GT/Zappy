@@ -61,8 +61,8 @@ void UIBlocks::PopupSelector::handleEvent(const sf::Event &event)
     if (event.type == sf::Event::MouseButtonPressed) {
         if (event.mouseButton.button == sf::Mouse::Left) {
             if (isInside(event.mouseButton.x, event.mouseButton.y)) {
-                size_t index = (event.mouseButton.y - _position.second) / 30;
-                if (index >= 0 and index < this->_options.getVisibleOptions().size()) 
+                int index = (event.mouseButton.y - _position.second) / 30;
+                if (index >= 0 and index < (int)this->_options.getVisibleOptions().size()) 
                     this->_selected = this->_options.getVisibleOptions()[index];
             }
         }
