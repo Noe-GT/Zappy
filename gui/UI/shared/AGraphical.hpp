@@ -13,6 +13,7 @@ namespace zappyGUI {
         public:
             AGraphical();
             ~AGraphical();
+            
         private:
     };
 }

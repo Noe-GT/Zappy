@@ -6,7 +6,6 @@
 */
 
 #pragma once
-#include "UI/shared/Window.hpp"
 #include "client/Client.hpp"
 #include "game/Game.hpp"
 #include "client/commands/Icommand.hpp"

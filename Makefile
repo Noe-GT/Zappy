@@ -7,19 +7,28 @@
 
 SERVER_SRC	=	$(wildcard server/*.c)
 
-GUI_SRC		=	$(wildcard gui/*.cpp)								\
-				$(wildcard gui/UI/shared/*.cpp)						\
-				$(wildcard gui/UI/*.cpp)							\
-				$(wildcard gui/client/*.cpp)						\
-				$(wildcard gui/client/commands/game/*.cpp)			\
-				$(wildcard gui/client/commands/map/*.cpp)			\
-				$(wildcard gui/client/commands/misc/*.cpp)			\
-				$(wildcard gui/client/commands/player/egg/*.cpp)	\
-				$(wildcard gui/client/commands/player/player/*.cpp)	\
-				$(wildcard gui/client/commands/ressources/*.cpp)	\
-				$(wildcard gui/client/commands/settings/*.cpp)		\
-				$(wildcard gui/game/*.cpp)							\
-				$(wildcard gui/game/Spell*.cpp)						\
+GUI_SRC		=	$(wildcard gui/*.cpp)														\
+				$(wildcard gui/UI/*.cpp)													\
+				$(wildcard gui/UI/shared/*.cpp)												\
+				$(wildcard gui/client/*.cpp)												\
+				$(wildcard gui/client/commands/game/*.cpp)									\
+				$(wildcard gui/client/commands/map/*.cpp)									\
+				$(wildcard gui/client/commands/misc/*.cpp)									\
+				$(wildcard gui/client/commands/player/*.cpp)								\
+				$(wildcard gui/client/commands/player/egg/*.cpp)							\
+				$(wildcard gui/client/commands/player/player/*.cpp)							\
+				$(wildcard gui/client/commands/ressources/*.cpp)							\
+				$(wildcard gui/client/commands/settings/*.cpp)								\
+				$(wildcard gui/game/*.cpp)													\
+				$(wildcard gui/game/Spell*.cpp)												\
+				$(wildcard gui/UI/shared/UIBlocks/PopupSelector/*.cpp)						\
+				$(wildcard gui/UI/shared/UIBlocks/Pair/*.cpp)								\
+				$(wildcard gui/UI/shared/UIBlocks/List/*.cpp)								\
+				$(wildcard gui/UI/shared/UIBlocks/Text/*.cpp)								\
+				$(wildcard gui/UI/shared/UIBlocks/Timer/*.cpp)								\
+				$(wildcard gui/UI/shared/UIBlocks/Image/*.cpp)								\
+				$(wildcard gui/UI/shared/UIBlocks/Popup/*.cpp)								\
+				$(wildcard gui/UI/shared/UIBlocks/utils/Scroller/*.cpp)						\
 
 AI_SRC		=	$(wildcard ai/*.c)
 
@@ -39,6 +48,8 @@ CPPC		=	g++
 
 CFLAGS		+=	-Wall -Wextra -g3
 
+CPPFLAGS	=	-std=c++17
+
 GUI_LDFLAGS = -lsfml-graphics -lsfml-window -lsfml-system
 
 all:	server gui ai
@@ -51,7 +62,7 @@ $(SERVER_EXEC): $(SERVER_OBJ)
 gui:	$(GUI_EXEC)
 
 $(GUI_EXEC):	$(GUI_OBJ)
-	$(CPPC) $(GUI_OBJ) -o $(GUI_EXEC) $(CFLAGS) $(GUI_LDFLAGS)
+	$(CPPC) $(GUI_OBJ) -o $(GUI_EXEC) $(CFLAGS) $(CPPFLAGS) $(GUI_LDFLAGS)
 
 ai: $(AI_EXEC)
 
@@ -74,3 +85,9 @@ re:	fclean	all
 	$(CPPC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
 
 .PHONY:	server	gui	ai	clean	fclean	re
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+%.o: %.cpp
+	$(CPPC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@

@@ -8,6 +8,7 @@
 
 #include "ressources/IRessource.hpp"
 #include "Player.hpp"
+#include "../UI/shared/UIBlocks/PopupSelector/PopupSelector.hpp"
 
 namespace zappyGUI {
     class Player;
@@ -28,7 +29,7 @@ namespace zappyGUI {
             void display();
 
         private:
-            std::vector <std::shared_ptr <Player>> _player;
-            std::vector <std::pair<std::shared_ptr <IRessource>, int>> _ressource;
+            std::vector <std::shared_ptr <Player>> _players;
+            std::vector <std::pair<std::shared_ptr <IRessource>, int>> _ressources;
     };
 };
