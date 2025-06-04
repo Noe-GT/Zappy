@@ -13,10 +13,10 @@
 namespace UIBlocks {
     class List: public IUIBlock {
         public:
-            List(std::vector<std::shared_ptr<IUIBlock>> &elements, std::pair<int, int> position, std::pair<int, int> size);
+            List(std::vector<std::shared_ptr<IUIBlock>> &elements, std::pair<float, float> position, std::pair<float, float> size);
             ~List() = default;
             void draw(zappyGUI::Window &window) override;
-            void setPosition(const std::pair<int, int> &position) override;
+            void setPosition(const std::pair<float, float> &position) override;
             void handleEvent(const sf::Event &event) override;
             
             void addElement(std::shared_ptr<IUIBlock> element);
@@ -24,8 +24,8 @@ namespace UIBlocks {
             const std::variant<std::string, std::vector<std::shared_ptr<IUIBlock>>> getValue() const override;
 
         private:
-            std::pair<int, int> _position;
-            std::pair<int, int> _size;
+            std::pair<float, float> _position;
+            std::pair<float, float> _size;
             std::vector<std::shared_ptr<IUIBlock>> _elements;
             sf::RectangleShape _background;
     };

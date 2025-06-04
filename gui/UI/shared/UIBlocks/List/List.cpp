@@ -7,7 +7,7 @@
 
 #include "List.hpp"
 
-UIBlocks::List::List(std::vector<std::shared_ptr<IUIBlock>> &elements, std::pair<int, int> position, std::pair<int, int> size):
+UIBlocks::List::List(std::vector<std::shared_ptr<IUIBlock>> &elements, std::pair<float, float> position, std::pair<float, float> size):
     _position(position),
     _size(size),
     _elements(elements),
@@ -44,11 +44,11 @@ void UIBlocks::List::removeElement(size_t index)
         _elements.erase(_elements.begin() + index);
 }
 
-void UIBlocks::List::setPosition(const std::pair<int, int> &position)
+void UIBlocks::List::setPosition(const std::pair<float, float> &position)
 {
     _position = position;
     for (size_t i = 0; i < _elements.size(); ++i) {
-        _elements[i]->setPosition(std::pair<int, int>(position.first, position.second + i * 20));
+        _elements[i]->setPosition(std::pair<float, float>(position.first, position.second + i * 20));
     }
 }
 

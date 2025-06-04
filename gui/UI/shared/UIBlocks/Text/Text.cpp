@@ -7,9 +7,9 @@
 
 #include "Text.hpp"
 
-UIBlocks::Text::Text(std::string text, std::string font, std::pair<int, int> position, int size)
+UIBlocks::Text::Text(std::string text, std::pair<float, float> position, int size)
 {
-    this->_font.loadFromFile(font);
+    this->_font.loadFromFile("");
     this->_text.setFont(this->_font);
     this->_text.setCharacterSize(size);
     this->_text.setString(text);
@@ -29,7 +29,7 @@ void UIBlocks::Text::draw(zappyGUI::Window &window)
     window.getRenderWindow().draw(this->_text);
 }
 
-void UIBlocks::Text::setPosition(const std::pair<int, int> &position)
+void UIBlocks::Text::setPosition(const std::pair<float, float> &position)
 {
     this->_text.setPosition(sf::Vector2f(position.first, position.second));
 }

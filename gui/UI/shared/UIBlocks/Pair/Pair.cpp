@@ -7,7 +7,7 @@
 
 #include "Pair.hpp"
 
-UIBlocks::Pair::Pair(std::pair<std::shared_ptr<UIBlocks::IUIBlock>, std::shared_ptr<UIBlocks::IUIBlock>> &pair, std::pair<int, int> position):
+UIBlocks::Pair::Pair(std::pair<std::shared_ptr<UIBlocks::IUIBlock>, std::shared_ptr<UIBlocks::IUIBlock>> &pair, std::pair<float, float> position):
     _pair(pair)
 {
     this->setPosition(position);
@@ -19,11 +19,11 @@ void UIBlocks::Pair::draw(zappyGUI::Window &window)
     this->_pair.second->draw(window);
 }
 
-void UIBlocks::Pair::setPosition(const std::pair<int, int> &position)
+void UIBlocks::Pair::setPosition(const std::pair<float, float> &position)
 {
     this->_position = position;
     this->_pair.first->setPosition(position);
-    this->_pair.second->setPosition(std::pair<int, int>(position.first + 20, position.second));
+    this->_pair.second->setPosition(std::pair<float, float>(position.first + 20, position.second));
 }
 
 void UIBlocks::Pair::handleEvent(const sf::Event &event)

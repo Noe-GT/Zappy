@@ -8,8 +8,7 @@
 #include "Timer.hpp"
 
 
-UIBlocks::Timer::Timer(std::string font, std::pair<int, int> position, int size)
-    : _text("0", font, position, size)
+UIBlocks::Timer::Timer(std::pair<float, float> position, int size): _text("0", position, size)
 {
     this->_timer.restart();
 }
@@ -31,7 +30,7 @@ const std::variant<std::string, std::vector<std::shared_ptr<UIBlocks::IUIBlock>>
     return value;
 }
 
-void UIBlocks::Timer::setPosition(const std::pair<int, int> &position)
+void UIBlocks::Timer::setPosition(const std::pair<float, float> &position)
 {
     this->_text.setPosition(position);
 }

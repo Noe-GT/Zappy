@@ -7,7 +7,7 @@
 
 #include "PopupSelector.hpp"
 
-UIBlocks::PopupSelector::PopupSelector(std::vector<std::shared_ptr<UIBlocks::IUIBlock>> &options, std::pair<int, int> position, std::pair<int, int> size):
+UIBlocks::PopupSelector::PopupSelector(std::vector<std::shared_ptr<UIBlocks::IUIBlock>> &options, std::pair<float, float> position, std::pair<float, float> size):
     _position(position),
     _size(size),
     _options(options),
@@ -28,7 +28,7 @@ void UIBlocks::PopupSelector::draw(zappyGUI::Window &window)
     std::vector<std::shared_ptr<UIBlocks::IUIBlock>> visibleOptions = this->_options.getVisibleOptions();
     for (size_t i = 0; i < visibleOptions.size(); ++i) {
         sf::Text optionText;
-        visibleOptions[i].get()->setPosition(std::pair<int, int>(this->_position.first + 10, this->_position.second + 10 + i * 30));
+        visibleOptions[i].get()->setPosition(std::pair<float, float>(this->_position.first + 10, this->_position.second + 10 + i * 30));
         optionText.setFillColor(sf::Color::White);
         window.getRenderWindow().draw(optionText);
     }
@@ -74,7 +74,7 @@ void UIBlocks::PopupSelector::handleEvent(const sf::Event &event)
     }
 }
 
-void UIBlocks::PopupSelector::setPosition(const std::pair<int, int> &position)
+void UIBlocks::PopupSelector::setPosition(const std::pair<float, float> &position)
 {
     this->_position = position;
 }

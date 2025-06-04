@@ -7,8 +7,8 @@
 
 #include "Image.hpp"
 
-UIBlocks::Image::Image(const std::string &path, std::pair<int, int> position, std::pair<int, int> size, std::string &alternativeText):
-    _position(position), _size(size), _alternativeText(UIBlocks::Popup(alternativeText, "", position, size))
+UIBlocks::Image::Image(const std::string &path, std::pair<float, float> position, std::pair<float, float> size, std::string &alternativeText):
+    _position(position), _size(size), _alternativeText(UIBlocks::Popup(alternativeText, position, size))
 {
     this->_image.loadFromFile(path);
     this->_texture.loadFromImage(this->_image);
@@ -25,7 +25,7 @@ void UIBlocks::Image::draw(zappyGUI::Window &window)
     window.getRenderWindow().draw(this->_sprite);
 }
 
-void UIBlocks::Image::setPosition(const std::pair<int, int> &position)
+void UIBlocks::Image::setPosition(const std::pair<float, float> &position)
 {
     this->_sprite.setPosition(position.first, position.second);
 }

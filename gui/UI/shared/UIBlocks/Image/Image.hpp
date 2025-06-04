@@ -16,17 +16,17 @@
 namespace UIBlocks {
     class Image: public IUIBlock {
         public:
-            Image(const std::string &path, std::pair<int, int> position, std::pair<int, int> size, std::string &alternativeText);
+            Image(const std::string &path, std::pair<float, float> position, std::pair<float, float> size, std::string &alternativeText);
             ~Image() = default;
             void draw(zappyGUI::Window &window) override;
-            void setPosition(const std::pair<int, int> &position) override;
+            void setPosition(const std::pair<float, float> &position) override;
             void handleEvent(const sf::Event &event) override;
             bool isInside(int x, int y) const;
             const std::variant<std::string, std::vector<std::shared_ptr<IUIBlock>>> getValue() const override;
 
         private:
-            std::pair<int, int> _position;
-            std::pair<int, int> _size;
+            std::pair<float, float> _position;
+            std::pair<float, float> _size;
             Popup _alternativeText;
             sf::Sprite _sprite;
             sf::Texture _texture;

@@ -13,16 +13,16 @@
 namespace UIBlocks {
     class Pair: public IUIBlock {
         public:
-            Pair(std::pair<std::shared_ptr<IUIBlock>, std::shared_ptr<IUIBlock>> &pair, std::pair<int, int> position);
+            Pair(std::pair<std::shared_ptr<IUIBlock>, std::shared_ptr<IUIBlock>> &pair, std::pair<float, float> position);
             ~Pair() = default;
             void draw(zappyGUI::Window &window) override;
-            void setPosition(const std::pair<int, int> &position) override;
+            void setPosition(const std::pair<float, float> &position) override;
             void handleEvent(const sf::Event &event) override;
             const std::variant<std::string, std::vector<std::shared_ptr<IUIBlock>>> getValue() const override;
 
 
         private:
-            std::pair<int, int> _position;
+            std::pair<float, float> _position;
             std::pair<std::shared_ptr<IUIBlock>, std::shared_ptr<IUIBlock>> _pair;
     };
 }

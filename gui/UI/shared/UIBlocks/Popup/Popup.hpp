@@ -14,10 +14,10 @@
 namespace UIBlocks {
     class Popup: public IUIBlock {
         public:
-            Popup(std::string &content, const std::string font, std::pair<int, int> position, std::pair<int, int> size);
+            Popup(std::string &content, std::pair<float, float> position, std::pair<float, float> size);
             ~Popup() = default;
             void draw(zappyGUI::Window &window) override;
-            void setPosition(const std::pair<int, int> &position) override;
+            void setPosition(const std::pair<float, float> &position) override;
             void handleEvent(const sf::Event &event) override;
             void open();
             void close();
@@ -25,8 +25,8 @@ namespace UIBlocks {
 
         private:
             bool _isOpen;
-            std::pair<int, int> _position;
-            std::pair<int, int> _size;
+            std::pair<float, float> _position;
+            std::pair<float, float> _size;
             Text _content;
             sf::RectangleShape _background;
             std::pair<std::shared_ptr<IUIBlock>, std::shared_ptr<IUIBlock>> _pair;
