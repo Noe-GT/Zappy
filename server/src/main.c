@@ -9,9 +9,13 @@
 
 int main(int ac, char **av)
 {
-    server_t server;
+    server_t server = {0};
 
     parser(ac, av, &server);
+    free(server.parameters);
+
+    // server.network = init_network(20);
+
     // server_t *server = init_server(20);
     //
     // if (server == NULL)

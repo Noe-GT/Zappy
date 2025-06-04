@@ -42,7 +42,7 @@ tests_run:	$(TEST_OBJ)	$(TEST_SERVER)
 $(PROTOCOL_EXEC): $(PROTOCOL_OBJ)
 	$(CC) $(PROTOCOL_OBJ) -o $(PROTOCOL_EXEC) $(CFLAGS) -shared
 
-$(SERVER_EXEC): $(SERVER_OBJ)
+$(SERVER_EXEC): $(PROTOCOL_EXEC) $(SERVER_OBJ)
 	$(CC) $(SERVER_OBJ) -o $(SERVER_EXEC) $(CFLAGS) -L. -lprotocol -Wl,-rpath=.
 
 $(GUI_EXEC):	$(GUI_OBJ)

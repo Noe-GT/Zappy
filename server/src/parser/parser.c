@@ -81,6 +81,7 @@ static void parse_flag(char **av, int *i, int ac, server_t *server)
 
 void parser(int ac, char **av, server_t *server)
 {
+    server->parameters = malloc(sizeof(parameters_t));
     for (int i = 1; i < ac; ++i)
         parse_flag(av, &i, ac, server);
 }
