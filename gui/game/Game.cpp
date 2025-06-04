@@ -50,6 +50,10 @@ std::vector <zappyGUI::Player> &zappyGUI::Game::getPlayers()
     return this->_players;
 }
 
+std::vector <std::string> &zappyGUI::Game::getTeams()
+{
+    return this->_teams;
+}
 
 void zappyGUI::Game::setFrequence(int newVal)
 {
@@ -98,6 +102,16 @@ void zappyGUI::Game::setPlayers(std::vector <zappyGUI::Player> newVal)
 void zappyGUI::Game::addPlayer(zappyGUI::Player newVal)
 {
     this->_players.push_back(newVal);
+}
+
+void zappyGUI::Game::setTeams(std::vector <std::string> newVal)
+{
+    this->_teams = newVal;
+}
+
+void zappyGUI::Game::addTeam(std::string newVal)
+{
+    this->_teams.push_back(newVal);
 }
 
 void zappyGUI::Game::display()

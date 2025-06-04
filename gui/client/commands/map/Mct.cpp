@@ -8,6 +8,7 @@
 #include "Mct.hpp"
 #include "../../../GUI.hpp"
 #include "../../Cserver.hpp"
+#include <iostream>
 zappyGUI::Mct::Mct()
 {
 }
@@ -18,10 +19,10 @@ zappyGUI::Mct::~Mct()
 
 void zappyGUI::Mct::receive(std::string command, zappyGUI::GUI &gui)
 {
-    //TODO:
+    throw std::runtime_error("Mtc can not be receive by the client");
 }
 
 void zappyGUI::Mct::send(std::string command, zappyGUI::GUI &gui, zappyGUI::Cserver &sender)
 {
-    //TODO:
+    sender.send("mct\n");
 }

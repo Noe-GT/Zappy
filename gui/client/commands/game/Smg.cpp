@@ -8,6 +8,7 @@
 #include "Smg.hpp"
 #include "../../../GUI.hpp"
 #include "../../Cserver.hpp"
+#include <iostream>
 zappyGUI::Smg::Smg()
 {
 }
@@ -18,7 +19,9 @@ zappyGUI::Smg::~Smg()
 
 void zappyGUI::Smg::receive(std::string command, zappyGUI::GUI &gui)
 {
-    //TODO:
+    command.erase(0, 4);
+    gui.getGame().getLogs().push_back(command);
+    std::clog << "server message receive: " << command << std::endl;
 }
 
 void zappyGUI::Smg::send(std::string command, zappyGUI::GUI &gui, zappyGUI::Cserver &sender)

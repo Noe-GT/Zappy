@@ -5,9 +5,23 @@
 ** Tile.cpp
 */
 #include "Tile.hpp"
+#include "ressources/Food.hpp"
+#include "ressources/Linemate.hpp"
+#include "ressources/Deraumere.hpp"
+#include "ressources/Sibur.hpp"
+#include "ressources/Mendiane.hpp"
+#include "ressources/Phiras.hpp"
+#include "ressources/Thystame.hpp"
 
 zappyGUI::Tile::Tile()
 {
+    this->_ressource.push_back({std::make_shared<Food> (),0});
+    this->_ressource.push_back({std::make_shared<Linemate> (),0});
+    this->_ressource.push_back({std::make_shared<Deraumere> (),0});
+    this->_ressource.push_back({std::make_shared<Sibur> (),0});
+    this->_ressource.push_back({std::make_shared<Mendiane> (),0});
+    this->_ressource.push_back({std::make_shared<Phiras> (),0});
+    this->_ressource.push_back({std::make_shared<Thystame> (),0});
 }
 
 zappyGUI::Tile::~Tile()

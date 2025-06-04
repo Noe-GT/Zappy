@@ -8,6 +8,7 @@
 #include "Tna.hpp"
 #include "../../../GUI.hpp"
 #include "../../Cserver.hpp"
+#include <iostream>
 zappyGUI::Tna::Tna()
 {
 }
@@ -18,10 +19,16 @@ zappyGUI::Tna::~Tna()
 
 void zappyGUI::Tna::receive(std::string command, zappyGUI::GUI &gui)
 {
-    //TODO:
+    std::stringstream ss(command);
+    std::string code;
+    std::string teamName;
+
+    ss >> code >> teamName;
+    gui.getGame().addTeam(teamName);
+    std::clog << "added team " << teamName << ", now have " << gui.getGame().getTeams().size() << " teams registered" << std::endl;
 }
 
 void zappyGUI::Tna::send(std::string command, zappyGUI::GUI &gui, zappyGUI::Cserver &sender)
 {
-    //TODO:
+    sender.send("tna\n");
 }

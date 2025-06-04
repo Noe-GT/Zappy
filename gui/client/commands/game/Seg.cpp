@@ -8,6 +8,7 @@
 #include "Seg.hpp"
 #include "../../../GUI.hpp"
 #include "../../Cserver.hpp"
+#include <iostream>
 zappyGUI::Seg::Seg()
 {
 }
@@ -18,7 +19,8 @@ zappyGUI::Seg::~Seg()
 
 void zappyGUI::Seg::receive(std::string command, zappyGUI::GUI &gui)
 {
-    //TODO:
+    gui.getWindow().close();
+    std::clog << "end of the game" << std::endl;
 }
 
 void zappyGUI::Seg::send(std::string command, zappyGUI::GUI &gui, zappyGUI::Cserver &sender)
