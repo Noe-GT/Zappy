@@ -24,6 +24,7 @@ GUI_SRC		=	$(wildcard gui/*.cpp)														\
 				$(wildcard gui/UI/shared/UIBlocks/List/*.cpp)								\
 				$(wildcard gui/UI/shared/UIBlocks/Text/*.cpp)								\
 				$(wildcard gui/UI/shared/UIBlocks/Timer/*.cpp)								\
+				$(wildcard gui/UI/shared/UIBlocks/Image/*.cpp)								\
 				$(wildcard gui/UI/shared/UIBlocks/utils/Scroller/*.cpp)						\
 
 AI_SRC		=	$(wildcard ai/*.c)

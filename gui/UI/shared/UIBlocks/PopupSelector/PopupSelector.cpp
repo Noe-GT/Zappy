@@ -25,7 +25,7 @@ void UIBlocks::PopupSelector::draw(zappyGUI::Window &window)
     this->_background.setFillColor(sf::Color(50, 50, 50, 200));
     window.getRenderWindow().draw(_background);
 
-    std::vector<std::shared_ptr<UIBlocks::IUIBlock>> &visibleOptions = this->_options.getVisibleOptions();
+    std::vector<std::shared_ptr<UIBlocks::IUIBlock>> visibleOptions = this->_options.getVisibleOptions();
     for (size_t i = 0; i < visibleOptions.size(); ++i) {
         sf::Text optionText;
         visibleOptions[i].get()->setPosition(std::pair<int, int>(this->_position.first + 10, this->_position.second + 10 + i * 30));
