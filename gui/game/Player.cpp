@@ -14,7 +14,7 @@
 #include "ressources/Phiras.hpp"
 #include "ressources/Thystame.hpp"
 
-zappyGUI::Player::Player(): _lastspellSucess(false), _spellInProgress(nullptr)
+zappyGUI::Player::Player(): _lastspellSucess(false), _alive(true), _spellInProgress(nullptr)
 {
     this->_inventory.push_back({std::make_shared<Food> (),0});
     this->_inventory.push_back({std::make_shared<Linemate> (),0});
@@ -62,7 +62,7 @@ std::vector <std::pair <std::shared_ptr <zappyGUI::IRessource>, int>> &zappyGUI:
     return this->_inventory;
 }
 
-std::shared_ptr <zappyGUI::ISpell> &zappyGUI::Player::getSpellInProgress()
+std::shared_ptr <zappyGUI::Spell> &zappyGUI::Player::getSpellInProgress()
 {
     return this->_spellInProgress;
 }
@@ -92,6 +92,11 @@ bool zappyGUI::Player::isLastSpellSucess()
     return this->_lastspellSucess;
 }
 
+bool zappyGUI::Player::isAlive()
+{
+    return this->_alive;
+}
+
 void zappyGUI::Player::setId(int newVal)
 {
     this->_id = newVal;
@@ -112,7 +117,7 @@ void zappyGUI::Player::setInventory(std::vector <std::pair <std::shared_ptr <zap
     this->_inventory = newVal;
 }
 
-void zappyGUI::Player::setSpellInProgress(std::shared_ptr <zappyGUI::ISpell> newVal)
+void zappyGUI::Player::setSpellInProgress(std::shared_ptr <zappyGUI::Spell> newVal)
 {
     this->_spellInProgress = newVal;
 }
@@ -141,3 +146,7 @@ void zappyGUI::Player::setLastSpellSucess(bool newVal)
     this->_lastspellSucess = newVal;
 }
 
+void zappyGUI::Player::kill()
+{
+    this->_alive = false;
+}

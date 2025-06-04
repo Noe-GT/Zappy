@@ -34,7 +34,10 @@ void zappyGUI::Pnw::receive(std::string command, zappyGUI::GUI &gui)
     newPlayer.setPos(playerPos);
     newPlayer.setName(teamName);
     newPlayer.setOrientation(orientation - 1);
-    gui.getGame().getPlayers().push_back(newPlayer);
+    if (gui.getGame().getPlayers().size() >= playerID)
+        gui.getGame().getPlayers().push_back(newPlayer);
+    else
+        gui.getGame().getPlayers()[playerID] = newPlayer;
     gui.getGame().getMap()[playerPos.first][playerPos.second].addPlayer(std::make_shared <Player> (newPlayer));
     std::clog << "added new player " << playerID << ", lvl " << lvl <<", of the team " << teamName << " in " << newPlayer.getPos().first << " " << playerPos.second << std::endl;
 }

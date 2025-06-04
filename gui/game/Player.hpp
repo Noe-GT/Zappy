@@ -5,7 +5,7 @@
 ** Player.hpp
 */
 #pragma once
-#include "spell/ISpell.hpp"
+#include "spell/Spell.hpp"
 #include "ressources/IRessource.hpp"
 #include <memory>
 #include <vector>
@@ -30,33 +30,36 @@ namespace zappyGUI {
             int getLvl();
             std::string getName();
             std::vector <std::pair <std::shared_ptr <IRessource>, int>> &getInventory();
-            std::shared_ptr <ISpell> &getSpellInProgress();
+            std::shared_ptr <Spell> &getSpellInProgress();
             std::vector <Tile> &getVisionData();
             std::vector <std::string> &getLogs();
             std::pair <int, int> getPos();
             orientation getOrientation();
             bool isLastSpellSucess();
+            bool isAlive();
 
             void setId(int newVal);
             void setLvl(int newVal);
             void setName(std::string newVal);
             void setInventory(std::vector <std::pair <std::shared_ptr <IRessource>, int>> newVal);
-            void setSpellInProgress(std::shared_ptr <ISpell> newval);
+            void setSpellInProgress(std::shared_ptr <Spell> newval);
             void setVisionData(std::vector <Tile> newVal);
             void setLogs(std::vector <std::string> newVal);
             void setPos(std::pair <int, int> newVal);
             void setOrientation(int newVal);
             void setLastSpellSucess(bool newVal);
+            void kill();
 
         private:
             int _id;
             int _lvl;
             bool _lastspellSucess;
+            bool _alive;
             std::pair <int, int> _pos;
             std::string _name;
             orientation _orientation;
             std::vector <std::pair <std::shared_ptr <IRessource>, int>> _inventory;
-            std::shared_ptr <ISpell> _spellInProgress;
+            std::shared_ptr <Spell> _spellInProgress;
             std::vector <Tile> _visionData;
             std::vector <std::string> _logs;
     };
