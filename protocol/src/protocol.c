@@ -11,7 +11,7 @@
 #include <string.h>
 #include <poll.h>
 
-bool send(int fd, char *string)
+bool pr_send(int fd, char *string)
 {
 
     struct pollfd pfd = {fd, POLLOUT, 0};
@@ -27,7 +27,7 @@ bool send(int fd, char *string)
     return true;
 }
 
-bool receive(int fd, circular_buffer_t *buffer)
+bool pr_receive(int fd, circular_buffer_t *buffer)
 {
     char buf[4096];
     ssize_t n = read(fd, buf, 4095);

@@ -15,7 +15,6 @@
     #include <sys/socket.h>
     #include <unistd.h>
     #include <errno.h>
-    #include <arpa/inet.h>
     #include <poll.h>
     #include <stdbool.h>
     #include <dirent.h>
