@@ -51,3 +51,9 @@ void UIBlocks::List::setPosition(const std::pair<int, int> &position)
         _elements[i]->setPosition(std::pair<int, int>(position.first, position.second + i * 20));
     }
 }
+
+const std::variant<std::string, std::vector<std::shared_ptr<UIBlocks::IUIBlock>>> UIBlocks::List::getValue() const
+{
+    static std::variant<std::string, std::vector<std::shared_ptr<IUIBlock>>> value = this->_elements;
+    return value;
+}

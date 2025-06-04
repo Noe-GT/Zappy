@@ -23,6 +23,7 @@ GUI_SRC		=	$(wildcard gui/*.cpp)														\
 				$(wildcard gui/UI/shared/UIBlocks/Pair/*.cpp)								\
 				$(wildcard gui/UI/shared/UIBlocks/List/*.cpp)								\
 				$(wildcard gui/UI/shared/UIBlocks/Text/*.cpp)								\
+				$(wildcard gui/UI/shared/UIBlocks/Timer/*.cpp)								\
 				$(wildcard gui/UI/shared/UIBlocks/utils/Scroller/*.cpp)						\
 
 AI_SRC		=	$(wildcard ai/*.c)
@@ -43,6 +44,8 @@ CPPC		=	g++
 
 CFLAGS		+=	-Wall -Wextra -g3
 
+CPPFLAGS	=	-std=c++17
+
 GUI_LDFLAGS = -lsfml-graphics -lsfml-window -lsfml-system
 
 all:	server gui ai
@@ -55,7 +58,7 @@ $(SERVER_EXEC): $(SERVER_OBJ)
 gui:	$(GUI_EXEC)
 
 $(GUI_EXEC):	$(GUI_OBJ)
-	$(CPPC) $(GUI_OBJ) -o $(GUI_EXEC) $(CFLAGS) $(GUI_LDFLAGS)
+	$(CPPC) $(GUI_OBJ) -o $(GUI_EXEC) $(CFLAGS) $(CPPFLAGS) $(GUI_LDFLAGS)
 
 ai: $(AI_EXEC)
 
@@ -72,3 +75,9 @@ fclean:	clean
 re:	fclean	all
 
 .PHONY:	server	gui	ai	clean	fclean	re
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+%.o: %.cpp
+	$(CPPC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@

@@ -14,26 +14,26 @@ Scroller::Scroller(std::vector<std::shared_ptr<UIBlocks::IUIBlock>> &options, in
 {
 }
 
-std::vector<std::shared_ptr<UIBlocks::IUIBlock>> &Scroller::getVisibleOptions() const
+std::vector<std::shared_ptr<UIBlocks::IUIBlock>> Scroller::getVisibleOptions() const
 {
     std::vector<std::shared_ptr<UIBlocks::IUIBlock>> visibleOptions;
-    int start = _currentOffset;
+    size_t start = this->_currentOffset;
     
-    for (int i = start; i < start + _maxVisibleOptions or i < this->_options.size(); ++i)
+    for (size_t i = start; i < start + _maxVisibleOptions or i < this->_options.size(); ++i)
         visibleOptions.push_back(this->_options[i]);
     return visibleOptions;
 }
 
 void Scroller::scrollUp()
 {
-    if (_currentOffset > 0)
-        _currentOffset--;
+    if (this->_currentOffset > 0)
+        this->_currentOffset--;
 }
 
 void Scroller::scrollDown()
 {
-    if (_currentOffset < _options.size() - _maxVisibleOptions)
-        _currentOffset++;
+    if (this->_currentOffset < this->_options.size() - this->_maxVisibleOptions)
+        this->_currentOffset++;
 }
 
 void Scroller::setMaxVisibleOptions(int maxVisibleOptions)

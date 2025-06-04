@@ -18,6 +18,8 @@ namespace UIBlocks {
             void draw(zappyGUI::Window &window) override;
             void setPosition(const std::pair<int, int> &position) override;
             void handleEvent(const sf::Event &event) override;
+            const std::variant<std::string, std::vector<std::shared_ptr<IUIBlock>>> getValue() const override;
+
 
         private:
             std::pair<int, int> _position;

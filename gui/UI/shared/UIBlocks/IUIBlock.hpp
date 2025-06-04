@@ -12,6 +12,7 @@
 #include <memory>
 #include <vector>
 #include <string>
+#include <variant>
 
 namespace UIBlocks {
     class IUIBlock {
@@ -19,7 +20,6 @@ namespace UIBlocks {
         virtual void draw(zappyGUI::Window &window) = 0;
         virtual void handleEvent(const sf::Event &event) = 0;
         virtual void setPosition(const std::pair<int, int> &position) = 0;
-        virtual std::string getValue() const = 0;
-        virtual std::vector<std::shared_ptr<IUIBlock>> getList() const = 0;
+        virtual const std::variant<std::string, std::vector<std::shared_ptr<IUIBlock>>> getValue() const = 0;
     };
 }

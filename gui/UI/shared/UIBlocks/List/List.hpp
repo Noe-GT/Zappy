@@ -21,6 +21,7 @@ namespace UIBlocks {
             
             void addElement(std::shared_ptr<IUIBlock> element);
             void removeElement(size_t index);
+            const std::variant<std::string, std::vector<std::shared_ptr<IUIBlock>>> getValue() const override;
 
         private:
             std::pair<int, int> _position;

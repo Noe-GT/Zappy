@@ -15,14 +15,14 @@ class Scroller {
     public:
         Scroller(std::vector<std::shared_ptr<UIBlocks::IUIBlock>> &options, int maxVisibleOptions = 5);
         ~Scroller() = default;
-        std::vector<std::shared_ptr<UIBlocks::IUIBlock>> &getVisibleOptions() const;
+        std::vector<std::shared_ptr<UIBlocks::IUIBlock>> getVisibleOptions() const;
         void scrollUp();
         void scrollDown();
         void setMaxVisibleOptions(int maxVisibleOptions);
         int getMaxVisibleOptions() const;
     private:
         int _maxVisibleOptions;
-        int _currentOffset;
+        size_t _currentOffset;
         std::vector<std::shared_ptr<UIBlocks::IUIBlock>> _options;
 };
 

@@ -7,10 +7,13 @@
 
 #include "Text.hpp"
 
-UIBlocks::Text::Text(std::string text, std::string font, std::pair<int, int> position, std::pair<int, int> size)
+UIBlocks::Text::Text(std::string text, std::string font, std::pair<int, int> position, int size)
 {
     this->_font.loadFromFile(font);
     this->_text.setFont(this->_font);
+    this->_text.setCharacterSize(size);
+    this->_text.setString(text);
+
     this->setPosition(position);
 }
 
@@ -33,4 +36,11 @@ void UIBlocks::Text::setPosition(const std::pair<int, int> &position)
 
 void UIBlocks::Text::handleEvent(const sf::Event &event)
 {
+    (void)event;
+}
+
+const std::variant<std::string, std::vector<std::shared_ptr<UIBlocks::IUIBlock>>> UIBlocks::Text::getValue() const
+{
+    std::variant<std::string, std::vector<std::shared_ptr<UIBlocks::IUIBlock>>> value = this->_text.getString();
+    return value;
 }

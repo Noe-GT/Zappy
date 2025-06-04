@@ -61,7 +61,7 @@ void UIBlocks::PopupSelector::handleEvent(const sf::Event &event)
     if (event.type == sf::Event::MouseButtonPressed) {
         if (event.mouseButton.button == sf::Mouse::Left) {
             if (isInside(event.mouseButton.x, event.mouseButton.y)) {
-                int index = (event.mouseButton.y - _position.second) / 30;
+                size_t index = (event.mouseButton.y - _position.second) / 30;
                 if (index >= 0 and index < this->_options.getVisibleOptions().size()) 
                     this->_selected = this->_options.getVisibleOptions()[index];
             }
@@ -77,5 +77,11 @@ void UIBlocks::PopupSelector::handleEvent(const sf::Event &event)
 void UIBlocks::PopupSelector::setPosition(const std::pair<int, int> &position)
 {
     this->_position = position;
+}
+
+const std::variant<std::string, std::vector<std::shared_ptr<UIBlocks::IUIBlock>>> UIBlocks::PopupSelector::getValue() const
+{
+    std::variant<std::string, std::vector<std::shared_ptr<UIBlocks::IUIBlock>>> value = this->getSelected().get()->getValue();
+    return value;
 }
 

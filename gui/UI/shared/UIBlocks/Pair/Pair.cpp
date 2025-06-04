@@ -31,3 +31,10 @@ void UIBlocks::Pair::handleEvent(const sf::Event &event)
     this->_pair.first->handleEvent(event);
     this->_pair.second->handleEvent(event);
 }
+
+const std::variant<std::string, std::vector<std::shared_ptr<UIBlocks::IUIBlock>>> UIBlocks::Pair::getValue() const
+{
+    static std::variant<std::string, std::vector<std::shared_ptr<UIBlocks::IUIBlock>>> value = std::vector<std::shared_ptr<UIBlocks::IUIBlock>>{this->_pair.first, this->_pair.second};
+    return value;
+}
+
