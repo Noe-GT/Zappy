@@ -21,6 +21,7 @@
 ## Network
 
 - [ ] Lecture Ecriture des commandes - Laurent
+- [ ] Gestion socket et client
 
 # GUI
 
