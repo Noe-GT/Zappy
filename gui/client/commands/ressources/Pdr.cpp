@@ -35,7 +35,7 @@ void zappyGUI::Pdr::receive(std::string command, zappyGUI::GUI &gui)
     std::clog << "player " << playerID << " droped " << ressourceID << " in tile " << playerPos.first << " " << playerPos.second << " now have " << gui.getGame().getPlayers()[playerID].getInventory()[ressourceID].second << " left" << std::endl;
 }
 
-void zappyGUI::Pdr::send(std::string command, zappyGUI::GUI &gui, zappyGUI::Cserver &sender)
+void zappyGUI::Pdr::send(std::string, zappyGUI::GUI &, zappyGUI::Cserver &)
 {
     throw std::runtime_error("Pdr can not be send by the client");
 }

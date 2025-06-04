@@ -21,7 +21,7 @@ void zappyGUI::Pex::receive(std::string command, zappyGUI::GUI &gui)
     //TODO:
 }
 
-void zappyGUI::Pex::send(std::string command, zappyGUI::GUI &gui, zappyGUI::Cserver &sender)
+void zappyGUI::Pex::send(std::string, zappyGUI::GUI &, zappyGUI::Cserver &)
 {
     throw std::runtime_error("Pex can not be send by the client");
 }

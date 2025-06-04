@@ -8,6 +8,7 @@
 #include "Pie.hpp"
 #include "../../../../GUI.hpp"
 #include "../../../Cserver.hpp"
+#include <iostream>
 zappyGUI::Pie::Pie()
 {
 }
@@ -18,10 +19,21 @@ zappyGUI::Pie::~Pie()
 
 void zappyGUI::Pie::receive(std::string command, zappyGUI::GUI &gui)
 {
-    //TODO:
+    std::stringstream ss(command);
+    std::string code;
+    int x;
+    int y;
+    int sucessStatus;
+
+    ss >> code >> x >> y >> sucessStatus;
+    for (std::size_t i = 0; i != gui.getGame().getMap()[x][y].getPlayers().size(); i++) {
+        gui.getGame().getMap()[x][y].getPlayers()[i]->getSpellInProgress() = nullptr;
+        gui.getGame().getMap()[x][y].getPlayers()[i]->setLastSpellSucess(sucessStatus);
+        std::clog << "the spell of the player " << gui.getGame().getMap()[x][y].getPlayers()[i]->getId() << " finished with status " << sucessStatus << std::endl;
+    }
 }
 
-void zappyGUI::Pie::send(std::string command, zappyGUI::GUI &gui, zappyGUI::Cserver &sender)
+void zappyGUI::Pie::send(std::string, zappyGUI::GUI &, zappyGUI::Cserver &)
 {
     throw std::runtime_error("Pie can not be send by the client");
 }

@@ -28,7 +28,7 @@ void zappyGUI::Sst::receive(std::string command, zappyGUI::GUI &gui)
     std::clog << "newFrequence set to " << newFrequence << std::endl;
 }
 
-void zappyGUI::Sst::send(std::string command, zappyGUI::GUI &gui, zappyGUI::Cserver &sender)
+void zappyGUI::Sst::send(std::string command, zappyGUI::GUI &, zappyGUI::Cserver &sender)
 {
     std::stringstream ss(command);
     std::string code;

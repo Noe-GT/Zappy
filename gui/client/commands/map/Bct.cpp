@@ -39,10 +39,10 @@ void zappyGUI::Bct::receive(std::string command, zappyGUI::GUI &gui)
     gui.getGame().getMap()[x][y].getRessource()[4].second = q4;
     gui.getGame().getMap()[x][y].getRessource()[5].second = q5;
     gui.getGame().getMap()[x][y].getRessource()[6].second = q6;
-    std::clog << "tile " << x << " " << y << " have ressources " << q0 << " " << q1 << " " << q2 << " " << q3 << " " << q4 << " " << q5 << " " << q6 << std::endl;
+    std::clog << "tile " << x << " " << y << " have ressources " << q0 << " " << q1 << " " << q2 << " " << q3 << " " << q4 << " " << q5 << " " << q6 << ", and " << gui.getGame().getMap()[x][y].getPlayers().size() << " players" << std::endl;
 }
 
-void zappyGUI::Bct::send(std::string command, zappyGUI::GUI &gui, zappyGUI::Cserver &sender)
+void zappyGUI::Bct::send(std::string command, zappyGUI::GUI &, zappyGUI::Cserver &sender)
 {
     std::stringstream ss(command);
     std::string code;

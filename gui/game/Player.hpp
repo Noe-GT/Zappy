@@ -17,8 +17,8 @@ namespace zappyGUI {
     enum orientation {
         NORTH,
         EAST,
-        WEST,
-        SOUTH
+        SOUTH,
+        WEST
     };
     class Player {
         public:
@@ -35,6 +35,7 @@ namespace zappyGUI {
             std::vector <std::string> &getLogs();
             std::pair <int, int> getPos();
             orientation getOrientation();
+            bool isLastSpellSucess();
 
             void setId(int newVal);
             void setLvl(int newVal);
@@ -45,10 +46,12 @@ namespace zappyGUI {
             void setLogs(std::vector <std::string> newVal);
             void setPos(std::pair <int, int> newVal);
             void setOrientation(int newVal);
+            void setLastSpellSucess(bool newVal);
 
         private:
             int _id;
             int _lvl;
+            bool _lastspellSucess;
             std::pair <int, int> _pos;
             std::string _name;
             orientation _orientation;

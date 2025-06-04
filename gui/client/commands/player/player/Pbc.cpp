@@ -21,7 +21,7 @@ void zappyGUI::Pbc::receive(std::string command, zappyGUI::GUI &gui)
     //TODO:
 }
 
-void zappyGUI::Pbc::send(std::string command, zappyGUI::GUI &gui, zappyGUI::Cserver &sender)
+void zappyGUI::Pbc::send(std::string, zappyGUI::GUI &, zappyGUI::Cserver &)
 {
     throw std::runtime_error("Pbc can not be send by the client");
 }

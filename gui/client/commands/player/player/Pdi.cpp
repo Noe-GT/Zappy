@@ -21,7 +21,7 @@ void zappyGUI::Pdi::receive(std::string command, zappyGUI::GUI &gui)
     //TODO:
 }
 
-void zappyGUI::Pdi::send(std::string command, zappyGUI::GUI &gui, zappyGUI::Cserver &sender)
+void zappyGUI::Pdi::send(std::string, zappyGUI::GUI &, zappyGUI::Cserver &)
 {
     throw std::runtime_error("Pdi can not be send by the client");
 }

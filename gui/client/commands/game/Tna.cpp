@@ -28,7 +28,7 @@ void zappyGUI::Tna::receive(std::string command, zappyGUI::GUI &gui)
     std::clog << "added team " << teamName << ", now have " << gui.getGame().getTeams().size() << " teams registered" << std::endl;
 }
 
-void zappyGUI::Tna::send(std::string command, zappyGUI::GUI &gui, zappyGUI::Cserver &sender)
+void zappyGUI::Tna::send(std::string, zappyGUI::GUI &, zappyGUI::Cserver &sender)
 {
     sender.send("tna\n");
 }

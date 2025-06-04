@@ -17,13 +17,13 @@ zappyGUI::Seg::~Seg()
 {
 }
 
-void zappyGUI::Seg::receive(std::string command, zappyGUI::GUI &gui)
+void zappyGUI::Seg::receive(std::string, zappyGUI::GUI &gui)
 {
     gui.getWindow().close();
     std::clog << "end of the game" << std::endl;
 }
 
-void zappyGUI::Seg::send(std::string command, zappyGUI::GUI &gui, zappyGUI::Cserver &sender)
+void zappyGUI::Seg::send(std::string, zappyGUI::GUI &, zappyGUI::Cserver &)
 {
     throw std::runtime_error("Seg can not be send by the client");
 }

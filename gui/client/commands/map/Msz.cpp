@@ -27,7 +27,7 @@ void zappyGUI::Msz::receive(std::string command, zappyGUI::GUI &gui)
     gui.getGame().setMapSize(x, y);
 }
 
-void zappyGUI::Msz::send(std::string command, zappyGUI::GUI &gui, zappyGUI::Cserver &sender)
+void zappyGUI::Msz::send(std::string, zappyGUI::GUI &, zappyGUI::Cserver &sender)
 {
     sender.send("msz\n");
 }

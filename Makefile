@@ -67,4 +67,10 @@ fclean:	clean
 
 re:	fclean	all
 
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+%.o: %.cpp
+	$(CPPC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
+
 .PHONY:	server	gui	ai	clean	fclean	re

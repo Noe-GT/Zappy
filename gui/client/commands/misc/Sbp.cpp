@@ -8,6 +8,7 @@
 #include "Sbp.hpp"
 #include "../../../GUI.hpp"
 #include "../../Cserver.hpp"
+#include <iostream>
 zappyGUI::Sbp::Sbp()
 {
 }
@@ -16,12 +17,12 @@ zappyGUI::Sbp::~Sbp()
 {
 }
 
-void zappyGUI::Sbp::receive(std::string command, zappyGUI::GUI &gui)
+void zappyGUI::Sbp::receive(std::string, zappyGUI::GUI &)
 {
-    //TODO:
+    std::clog << "wrong parameter !" << std::endl;
 }
 
-void zappyGUI::Sbp::send(std::string command, zappyGUI::GUI &gui, zappyGUI::Cserver &sender)
+void zappyGUI::Sbp::send(std::string, zappyGUI::GUI &, zappyGUI::Cserver &)
 {
     throw std::runtime_error("Sbp can not be send by the client");
 }

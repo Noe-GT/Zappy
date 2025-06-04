@@ -14,7 +14,7 @@
 #include "ressources/Phiras.hpp"
 #include "ressources/Thystame.hpp"
 
-zappyGUI::Player::Player()
+zappyGUI::Player::Player(): _lastspellSucess(false), _spellInProgress(nullptr)
 {
     this->_inventory.push_back({std::make_shared<Food> (),0});
     this->_inventory.push_back({std::make_shared<Linemate> (),0});
@@ -87,6 +87,11 @@ zappyGUI::orientation zappyGUI::Player::getOrientation()
     return this->_orientation;
 }
 
+bool zappyGUI::Player::isLastSpellSucess()
+{
+    return this->_lastspellSucess;
+}
+
 void zappyGUI::Player::setId(int newVal)
 {
     this->_id = newVal;
@@ -130,3 +135,9 @@ void zappyGUI::Player::setOrientation(int newVal)
 {
     this->_orientation = orientation(newVal);
 }
+
+void zappyGUI::Player::setLastSpellSucess(bool newVal)
+{
+    this->_lastspellSucess = newVal;
+}
+

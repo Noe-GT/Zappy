@@ -17,12 +17,12 @@ zappyGUI::Mct::~Mct()
 {
 }
 
-void zappyGUI::Mct::receive(std::string command, zappyGUI::GUI &gui)
+void zappyGUI::Mct::receive(std::string, zappyGUI::GUI &)
 {
     throw std::runtime_error("Mtc can not be receive by the client");
 }
 
-void zappyGUI::Mct::send(std::string command, zappyGUI::GUI &gui, zappyGUI::Cserver &sender)
+void zappyGUI::Mct::send(std::string, zappyGUI::GUI &, zappyGUI::Cserver &sender)
 {
     sender.send("mct\n");
 }
