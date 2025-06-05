@@ -5,37 +5,33 @@
 ## Makefile
 ##
 
-SERVER_DIR	=	server/
-
-SERVER_SRC	=	$(shell find server -type f -name '*.c')
-GUI_SRC	=	$(shell find gui -type f -name '*.cpp')
-AI_SRC	=	$(shell find ai -type f -name '*.c')
+SERVER_SRC		=	$(shell find server -type f -name '*.c')
+GUI_SRC			=	$(shell find gui -type f -name '*.cpp')
+AI_SRC			=	$(shell find ai -type f -name '*.c')
 PROTOCOL_SRC	=	$(shell find protocol -type f -name '*.c')
-TEST_SRC	=	$(shell find tests -type f -name '*.c')
+TEST_SRC		=	$(shell find tests -type f -name '*.c')
 
-SERVER_OBJ	=	$(SERVER_SRC:server/src/%.c=server/bin/%.o)
-GUI_OBJ	=	$(GUI_SRC:.cpp=.o)
-AI_OBJ	=	$(AI_SRC:.c=.o)
+SERVER_OBJ		=	$(SERVER_SRC:.c=.o)
+GUI_OBJ			=	$(GUI_SRC:.cpp=.o)
+AI_OBJ			=	$(AI_SRC:.c=.o)
 PROTOCOL_OBJ	=	$(PROTOCOL_SRC:.c=.o)
-TEST_OBJ	=	$(TEST_SRC:.c=.o)
+TEST_OBJ		=	$(TEST_SRC:.c=.o)
 
-TEST_SERVER	=	$(filter-out server/src/main.o, $(SERVER_OBJ))
+TEST_SERVER		=	$(filter-out server/src/main.o, $(SERVER_OBJ))
 
-SERVER_EXEC	=	zappy_server
-GUI_EXEC	=	zappy_gui
-AI_EXEC		=	zappy_ai
+SERVER_EXEC		=	zappy_server
+GUI_EXEC		=	zappy_gui
+AI_EXEC			=	zappy_ai
 PROTOCOL_EXEC	=	libprotocol.so
-TEST_EXEC	=	unit_tests
+TEST_EXEC		=	unit_tests
 
 CC	=	gcc
 
 CPPC	=	g++
 
 # TODO: remove debug information
-CFLAGS	+=	-Wall -Wextra -g3 -fPIC -Iprotocol/include
+CFLAGS	+=	-Wall -Wextra -g3 -fPIC -Iprotocol/include -Iserver/include
 CRITERION	=	--coverage -lcriterion
-
-SERVER_FLAGS	=	$(CFLAGS) -Iserver/include
 
 all:	$(PROTOCOL_EXEC) $(SERVER_EXEC)	$(GUI_EXEC)	$(AI_EXEC)
 
@@ -46,12 +42,7 @@ $(PROTOCOL_EXEC): $(PROTOCOL_OBJ)
 	$(CC) $(PROTOCOL_OBJ) -o $(PROTOCOL_EXEC) $(CFLAGS) -shared
 
 $(SERVER_EXEC): $(SERVER_OBJ)
-	$(CC) $(SERVER_OBJ) -o $(SERVER_EXEC) -L. -lprotocol -Wl,-rpath=.
-
-server/bin/%.o:	server/src/%.c
-	@mkdir -p server/bin
-	@mkdir -p server/bin/network
-	$(CC) -c $< -o $@ $(SERVER_FLAGS)
+	$(CC) $(SERVER_OBJ) $(CFLAGS) -o $(SERVER_EXEC) -L. -lprotocol -Wl,-rpath=.
 
 $(GUI_EXEC):	$(GUI_OBJ)
 	$(CPPC) $(GUI_OBJ) -o $(GUI_EXEC) $(CFLAGS)
