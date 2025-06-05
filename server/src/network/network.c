@@ -5,7 +5,7 @@
 ** network
 */
 
-#include "network.h"
+#include "../../include/network.h"
 
 network_t *init_network(size_t max_clients)
 {
@@ -59,7 +59,7 @@ static int check_event(network_t *net, int i)
 
 static int parse_clients(network_t *net)
 {
-    for (int i = 0; i < net->sockets_n; i++) {
+    for (size_t i = 0; i < net->sockets_n; i++) {
         check_event(net, i);
     }
     return 0;

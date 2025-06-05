@@ -5,7 +5,7 @@
 ** client_list
 */
 
-#include "client_list.h"
+#include "../../include/client_list.h"
 
 client_list_t *init_client_list(void)
 {
@@ -20,8 +20,7 @@ static void client_destroy(client_t *client)
 {
     if (client == NULL)
         return;
-    if (client->read_buffer != NULL)
-        free(client->read_buffer);
+    destroy_buffer(client->buffer);
     free(client);
 }
 
@@ -44,9 +43,8 @@ static client_t *new_node(int id)
     client_t *new = malloc(sizeof(client_t));
 
     new->id = id;
-    new->read_buffer = NULL;
     new->next = NULL;
-    new->read_buffer = create_buffer();
+    new->buffer = create_buffer();
     return new;
 }
 
@@ -81,7 +79,7 @@ void cl_remove(client_list_t *list, int id)
         if (list->end == parse)
             list->end = list->begin;
     }
-    destroy_buffer(parse->read_buffer);
+    destroy_buffer(parse->buffer);
     free(parse);
 }
 

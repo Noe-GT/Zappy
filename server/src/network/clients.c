@@ -5,7 +5,7 @@
 ** clients
 */
 
-#include "network.h"
+#include "../../include/network.h"
 
 void client_handle(network_t *net, int i)
 {
@@ -13,8 +13,8 @@ void client_handle(network_t *net, int i)
 
     if (client == NULL)
         return;
-    pr_receive(net->sockets[i].fd, client->read_buffer);
-    broadcast_message(net, "broadcast\n");
+    receive(net->sockets[i].fd, client->buffer);
+    printf("(client) id: %d\n", client->id);
 }
 
 void client_remove(network_t *net, int i)
@@ -28,7 +28,7 @@ void client_remove(network_t *net, int i)
 void client_new(network_t *net, int main_socket_fd)
 {
     struct sockaddr_in *addr;
-    socklen_t addr_len;
+    socklen_t addr_len = sizeof(struct sockaddr_in *);
     int new_fd;
 
     if (net->sockets_n - 1 == MAX_CLIENTS) {
@@ -36,8 +36,7 @@ void client_new(network_t *net, int main_socket_fd)
         return;
     }
     addr = make_addr(main_socket_fd);
-    addr_len = sizeof(addr);
-    new_fd = accept(main_socket_fd, (struct sockaddr*)addr, &addr_len);
+    new_fd = accept(main_socket_fd, (struct sockaddr *)addr, &addr_len);
     if (new_fd < 0) {
         perror("Accept failed");
         free(addr);

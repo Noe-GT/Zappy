@@ -11,9 +11,8 @@
 #include <string.h>
 #include <poll.h>
 
-bool pr_send(int fd, char *string)
+bool send_message(int fd, char *string)
 {
-
     struct pollfd pfd = {fd, POLLOUT, 0};
 
     if (poll(&pfd, 1, 100) <= 0 || !(pfd.revents & POLLOUT)) {
@@ -27,7 +26,7 @@ bool pr_send(int fd, char *string)
     return true;
 }
 
-bool pr_receive(int fd, circular_buffer_t *buffer)
+bool receive(int fd, circular_buffer_t *buffer)
 {
     char buf[4096];
     ssize_t n = read(fd, buf, 4095);

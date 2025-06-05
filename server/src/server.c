@@ -5,7 +5,8 @@
 ** server
 */
 
-#include "server.h"
+#include "../include/server.h"
+#include "../include/commands.h"
 
 server_t *init_server(int max_clients)
 {
@@ -31,6 +32,7 @@ int server_run(server_t *server)
 {
     while (1) {
         network_handle(server->network);
+        handle_client_commands(server->network);
     }
     free_server(server);
     return 0;
