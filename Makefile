@@ -13,7 +13,7 @@ AI_SRC	=	$(shell find ai -type f -name '*.c')
 PROTOCOL_SRC	=	$(shell find protocol -type f -name '*.c')
 TEST_SRC	=	$(shell find tests -type f -name '*.c')
 
-SERVER_OBJ	=	$(SERVER_SRC:.c=.o)
+SERVER_OBJ	=	$(SERVER_SRC:server/src/%.c=server/bin/%.o)
 GUI_OBJ	=	$(GUI_SRC:.cpp=.o)
 AI_OBJ	=	$(AI_SRC:.c=.o)
 PROTOCOL_OBJ	=	$(PROTOCOL_SRC:.c=.o)
@@ -48,8 +48,9 @@ $(PROTOCOL_EXEC): $(PROTOCOL_OBJ)
 $(SERVER_EXEC): $(SERVER_OBJ)
 	$(CC) $(SERVER_OBJ) -o $(SERVER_EXEC) -L. -lprotocol -Wl,-rpath=.
 
-server/src/%.o:	server/src/%.c
-	@mkdir -p bin
+server/bin/%.o:	server/src/%.c
+	@mkdir -p server/bin
+	@mkdir -p server/bin/network
 	$(CC) -c $< -o $@ $(SERVER_FLAGS)
 
 $(GUI_EXEC):	$(GUI_OBJ)
@@ -59,7 +60,7 @@ $(AI_EXEC): $(AI_OBJ)
 	$(CC) $(AI_OBJ) -o $(AI_EXEC) $(CFLAGS)
 
 clean:
-	rm -f $(SERVER_OBJ)
+	rm -rf server/bin
 	rm -f $(GUI_OBJ)
 	rm -f $(AI_OBJ)
 	rm -f $(PROTOCOL_OBJ)
