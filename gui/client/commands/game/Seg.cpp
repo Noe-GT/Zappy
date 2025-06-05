@@ -17,10 +17,15 @@ zappyGUI::Seg::~Seg()
 {
 }
 
-void zappyGUI::Seg::receive(std::string, zappyGUI::GUI &gui)
+void zappyGUI::Seg::receive(std::string command, zappyGUI::GUI &gui)
 {
+    std::stringstream ss(command);
+    std::string code;
+    std::string teamName;
+
+    ss >> code >> teamName;
     gui.getWindow().close();
-    std::clog << "end of the game" << std::endl;
+    std::clog << "end of the game team " << teamName << " won" << std::endl;
 }
 
 void zappyGUI::Seg::send(std::string, zappyGUI::GUI &, zappyGUI::Cserver &)

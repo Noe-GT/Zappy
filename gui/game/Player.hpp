@@ -49,6 +49,7 @@ namespace zappyGUI {
             void setOrientation(int newVal);
             void setLastSpellSucess(bool newVal);
             void kill();
+            void revive();
 
         private:
             int _id;

@@ -17,7 +17,7 @@ zappyGUI::Pex::~Pex()
 {
 }
 
-std::vector <int> getPlayerToMove(zappyGUI::Game game, int id)
+std::vector <int> getPlayerToMove(zappyGUI::Game &game, int id)
 {
     std::pair <int, int> pos;
     std::vector <int> result;
@@ -44,9 +44,12 @@ std::vector <int> getPlayerToMove(zappyGUI::Game game, int id)
         if (pos.first > (int)game.getMap()[0].size() - 1)
             pos.first = 0;
     }
-    for (std::size_t i = 0; i != game.getMap()[pos.first][pos.second].getPlayers().size(); i++)
-        if (game.getMap()[pos.first][pos.second].getPlayers()[i]->isAlive())
-            result.push_back(game.getMap()[pos.first][pos.second].getPlayers()[i]->getId());
+    for (std::size_t i = 0; i != game.getMap()[pos.first][pos.second].getPlayers().size(); i++) {
+        if (game.getMap()[pos.first][pos.second].getPlayers()[i]->getLvl() != 0) {
+            if (game.getMap()[pos.first][pos.second].getPlayers()[i]->isAlive())
+                result.push_back(game.getMap()[pos.first][pos.second].getPlayers()[i]->getId());
+        }
+    }
     return result;
 }
 

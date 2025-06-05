@@ -148,5 +148,16 @@ void zappyGUI::Player::setLastSpellSucess(bool newVal)
 
 void zappyGUI::Player::kill()
 {
+    this->_inventory.clear();
+    this->_lastspellSucess = false;
+    this->_logs.clear();
+    this->_name.clear();
+    this->_orientation = SOUTH;
+    this->_spellInProgress = nullptr;
     this->_alive = false;
+}
+
+void zappyGUI::Player::revive()
+{
+    this->_alive = true;
 }

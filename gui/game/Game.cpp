@@ -50,6 +50,11 @@ std::vector <zappyGUI::Player> &zappyGUI::Game::getPlayers()
     return this->_players;
 }
 
+std::vector <std::pair<std::shared_ptr <zappyGUI::Player>, int>> &zappyGUI::Game::getEggs()
+{
+    return this->_eggs;
+}
+
 std::vector <std::string> &zappyGUI::Game::getTeams()
 {
     return this->_teams;
@@ -102,6 +107,16 @@ void zappyGUI::Game::setPlayers(std::vector <zappyGUI::Player> newVal)
 void zappyGUI::Game::addPlayer(zappyGUI::Player newVal)
 {
     this->_players.push_back(newVal);
+}
+
+void zappyGUI::Game::setEggs(std::vector <std::pair <std::shared_ptr <zappyGUI::Player>, int>> newVal)
+{
+    this->_eggs = newVal;
+}
+
+void zappyGUI::Game::addEgg(std::shared_ptr <zappyGUI::Player> newVal, int ID)
+{
+    this->_eggs.push_back({newVal, ID});
 }
 
 void zappyGUI::Game::setTeams(std::vector <std::string> newVal)

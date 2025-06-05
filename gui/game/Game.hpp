@@ -20,6 +20,7 @@ namespace zappyGUI {
             std::vector <std::vector <Tile>> &getMap();
             std::pair<int, int> getMapSize();
             std::vector <Player> &getPlayers();
+            std::vector <std::pair<std::shared_ptr <Player>, int>> &getEggs();
             std::vector <std::string> &getTeams();
 
             void setFrequence(int newVal);
@@ -31,6 +32,8 @@ namespace zappyGUI {
             void setMapSize(int newX, int newY);
             void setPlayers(std::vector <Player> newVal);
             void addPlayer(Player newVal);
+            void setEggs(std::vector <std::pair <std::shared_ptr <Player>, int>> newVal);
+            void addEgg(std::shared_ptr <Player> newVal, int ID);
             void setTeams(std::vector <std::string> newVal);
             void addTeam(std::string newVal);
 
@@ -41,6 +44,7 @@ namespace zappyGUI {
             int _teamNbr;
             bool _gameInProgess;
             std::vector <Player> _players;
+            std::vector <std::pair <std::shared_ptr <Player>, int>> _eggs;
             std::vector <std::string> _logs;
             std::pair <int, int> _mapSize;
             std::vector <std::vector <Tile>> _map;
