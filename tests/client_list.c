@@ -5,7 +5,7 @@
 ** client_list
 */
 
-#include "../include/tests.h"
+#include "../server/include/tests.h"
 
 static bool test_list(client_list_t *list, int count, ...)
 {

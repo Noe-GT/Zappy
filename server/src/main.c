@@ -7,8 +7,12 @@
 
 #include "../include/server.h"
 
-int main(void)
+int main(int ac, char **av)
 {
+    server_t server = {0};
+
+    parser(ac, av, &server);
+
     server_t *server = init_server();
 
     if (server == NULL)
