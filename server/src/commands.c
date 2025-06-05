@@ -14,7 +14,7 @@ static void handle_message(client_t *client)
     if (client == NULL)
         return;
     message = read_string(client->buffer);
-    printf("Handling massage: %s\n", message);
+    printf("Handling massage: %s", message);
     free(message);
 }
 

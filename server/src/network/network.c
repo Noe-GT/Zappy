@@ -7,7 +7,7 @@
 
 #include "../../include/network.h"
 
-network_t *init_network(size_t max_clients)
+network_t *init_network()
 {
     network_t *net = malloc(sizeof(network_t));
     struct sockaddr_in *addr = make_addr(4000);

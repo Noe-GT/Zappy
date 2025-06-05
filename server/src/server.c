@@ -8,11 +8,11 @@
 #include "../include/server.h"
 #include "../include/commands.h"
 
-server_t *init_server(int max_clients)
+server_t *init_server()
 {
     server_t *server = malloc(sizeof(server_t));
 
-    server->network = init_network(max_clients);
+    server->network = init_network();
     if (server->network == NULL) {
         free(server);
         return NULL;
@@ -28,12 +28,11 @@ void free_server(server_t *server)
     free(server);
 }
 
-int server_run(server_t *server)
+void server_run(server_t *server)
 {
-    while (1) {
+    while (true) {
         network_handle(server->network);
         handle_client_commands(server->network);
     }
     free_server(server);
-    return 0;
 }
