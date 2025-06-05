@@ -51,6 +51,7 @@ $(AI_EXEC): $(AI_OBJ)
 	$(CC) $(AI_OBJ) -o $(AI_EXEC) $(CFLAGS)
 
 clean:
+	rm -f $(SERVER_OBJ)
 	rm -f $(GUI_OBJ)
 	rm -f $(AI_OBJ)
 	rm -f $(PROTOCOL_OBJ)
