@@ -29,7 +29,7 @@ typedef struct network_s {
     bool debug;
 } network_t;
 
-network_t *init_network();
+network_t *init_network(void);
 void free_network(network_t *net);
 int network_handle(network_t *net);
 

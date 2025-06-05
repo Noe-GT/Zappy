@@ -12,11 +12,9 @@ int main(int ac, char **av)
     server_t server = {0};
 
     parser(ac, av, &server);
-
-    server_t *server = init_server();
-
-    if (server == NULL)
+    init_server(&server);
+    if (server.network == NULL)
         return 84;
-    server_run(server);
-    free_server(server);
+    server_run(&server);
+    free_server(&server);
 }

@@ -9,5 +9,4 @@
 
 void command_bct(server_t *server, client_t *client, char *message)
 {
-
 }

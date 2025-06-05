@@ -8,16 +8,12 @@
 #include "../include/server.h"
 #include "../include/commands.h"
 
-server_t *init_server()
+void init_server(server_t *server)
 {
-    server_t *server = malloc(sizeof(server_t));
-
     server->network = init_network();
     if (server->network == NULL) {
         free(server);
-        return NULL;
     }
-    return server;
 }
 
 void free_server(server_t *server)
@@ -25,7 +21,10 @@ void free_server(server_t *server)
     if (server == NULL)
         return;
     free_network(server->network);
-    free(server);
+    for (int i = 0; i < server->parameters->team_count; ++i)
+        free(server->parameters->team_names[i]);
+    free(server->parameters->team_names);
+    free(server->parameters);
 }
 
 void server_run(server_t *server)

@@ -9,5 +9,4 @@
 
 void message_pin(server_t *server, client_t *client, char *message)
 {
-
 }
