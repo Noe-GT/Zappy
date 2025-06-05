@@ -5,7 +5,7 @@
 ** server/main.c
 */
 
-#include "../include/server.h"
+#include "server.h"
 
 int main(void)
 {

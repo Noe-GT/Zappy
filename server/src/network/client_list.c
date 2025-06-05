@@ -5,7 +5,7 @@
 ** client_list
 */
 
-#include "../../include/client_list.h"
+#include "client_list.h"
 
 client_list_t *init_client_list(void)
 {

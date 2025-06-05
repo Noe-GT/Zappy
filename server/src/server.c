@@ -5,7 +5,7 @@
 ** server
 */
 
-#include "../include/server.h"
+#include "server.h"
 
 server_t *init_server(int max_clients)
 {

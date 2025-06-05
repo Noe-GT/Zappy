@@ -5,7 +5,7 @@
 ** network_utils
 */
 
-#include "../../include/network.h"
+#include "network.h"
 
 struct sockaddr_in *make_addr(int port)
 {

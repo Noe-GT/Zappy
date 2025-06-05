@@ -5,7 +5,7 @@
 ** pollfd
 */
 
-#include "../../include/pollfd.h"
+#include "pollfd.h"
 
 struct pollfd pollfd_set(int new_fd)
 {

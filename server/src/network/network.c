@@ -5,7 +5,7 @@
 ** network
 */
 
-#include "../../include/network.h"
+#include "network.h"
 
 network_t *init_network(size_t max_clients)
 {

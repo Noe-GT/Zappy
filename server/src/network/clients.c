@@ -5,7 +5,7 @@
 ** clients
 */
 
-#include "../../include/network.h"
+#include "network.h"
 
 void client_handle(network_t *net, int i)
 {

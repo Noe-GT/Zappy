@@ -5,7 +5,7 @@
 ** queue
 */
 
-#include "../../include/queue.h"
+#include "queue.h"
 
 int_queue_t *queue_init(size_t size)
 {
