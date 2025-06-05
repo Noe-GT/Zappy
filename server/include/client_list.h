@@ -13,6 +13,7 @@
 
 typedef struct client_s {
     int id;
+    int fd;
     struct client_s *next;
     circular_buffer_t *buffer;
 } client_t;

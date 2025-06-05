@@ -7,6 +7,18 @@
 
 #include "../include/commands.h"
 
+const command_t client_commands[] = {
+    // { "msz", temp },
+    // { "bct", temp },
+    // { "mct", temp },
+    // { "tna", temp },
+    // { "ppo", temp },
+    // { "plv", temp },
+    // { "pin", temp },
+    // { "sgt", temp },
+    // { "sst", temp },
+};
+
 static void handle_message(client_t *client)
 {
     char *message;
