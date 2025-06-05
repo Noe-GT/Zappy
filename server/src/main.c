@@ -12,6 +12,10 @@ int main(int ac, char **av)
     server_t server = {0};
 
     parser(ac, av, &server);
+
+    for (int i = 0; i < server.parameters->team_count; ++i)
+        free(server.parameters->team_names[i]);
+    free(server.parameters->team_names);
     free(server.parameters);
 
     // server.network = init_network(20);

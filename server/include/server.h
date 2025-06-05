@@ -23,6 +23,8 @@ typedef struct parameters_s {
     uint16_t nb_clients;
     uint16_t freq;
     uint16_t match_duration;
+    char **team_names;
+    uint16_t team_count;
     bool auto_start;
     bool display_egg;
     bool verbose;

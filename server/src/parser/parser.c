@@ -32,6 +32,28 @@ static bool handle_other_short_flag(char **av, int *i,
     return false;
 }
 
+void count_team(int ac, server_t *server, int *i)
+{
+    PARAMETERS->team_count = 0;
+    for (int j = *i + 1; j < ac; ++j)
+        ++PARAMETERS->team_count;
+}
+
+void get_names(server_t *server, char **av, int ac, int *i)
+{
+    int j = 0;
+
+    count_team(ac, server, i);
+    PARAMETERS->team_names = NULL;
+    if (PARAMETERS->team_count < 2)
+        usage("You must provide at least 2 teams after -n");
+    PARAMETERS->team_names = malloc(sizeof(char *) * PARAMETERS->team_count);
+    for (; j < PARAMETERS->team_count; ++j) {
+        PARAMETERS->team_names[j] = strdup(av[*i + j + 1]);
+    }
+    *i += j + 1;
+}
+
 static bool handle_short_flag(char **av, int *i, int ac, server_t *server)
 {
     if (strcmp(av[*i], "-c") == 0) {
@@ -42,6 +64,10 @@ static bool handle_short_flag(char **av, int *i, int ac, server_t *server)
     if (strcmp(av[*i], "-f") == 0) {
         parse_freq(server, av + *i, ac - *i);
         ++(*i);
+        return true;
+    }
+    if (strcmp(av[*i], "-n") == 0) {
+        get_names(server, av, ac, i);
         return true;
     }
     return false;
