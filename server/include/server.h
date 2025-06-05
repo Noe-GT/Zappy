@@ -16,6 +16,15 @@
 
     #define PARAMETERS server->parameters
 
+typedef struct required_flags_s {
+    bool port;
+    bool width;
+    bool height;
+    bool teams;
+    bool clients;
+    bool freq;
+} required_flags_t;
+
 typedef struct parameters_s {
     uint16_t port;
     uint16_t width;
@@ -28,6 +37,7 @@ typedef struct parameters_s {
     bool auto_start;
     bool display_egg;
     bool verbose;
+    required_flags_t *required;
 } parameters_t;
 
 typedef struct server_s {
