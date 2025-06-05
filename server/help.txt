@@ -1,5 +1,4 @@
-USAGE: ./zappy_server -p port -x width -y height -n name1 name2 ... -c clientsNb -f freq --auto-start on|off --display-eggs true|false
- [-v | --verbose]--game_duration time
+USAGE: ./zappy_server -p port -x width -y height -n name1 name2 ... -c clientsNb -f freq --auto-start on|off --display-eggs true|false [-v | --verbose] --game_duration time
         port            is the port number
         width           is the width of the world
         height          is the height of the world
