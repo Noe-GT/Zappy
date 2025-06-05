@@ -39,19 +39,6 @@ client_list_t *cl_destroy(client_list_t *list)
     return NULL;
 }
 
-void cl_display(client_list_t *list)
-{
-    client_t *parse = list->begin;
-    size_t count = 0;
-
-    printf("CLIENT LIST:\n");
-    while (parse != NULL) {
-        count++;
-        printf("(%ld) id : %d\n", count, parse->id);
-        parse = parse->next;
-    }
-}
-
 static client_t *new_node(int id)
 {
     client_t *new = malloc(sizeof(client_t));
@@ -86,17 +73,16 @@ void cl_remove(client_list_t *list, int id)
     if (parse == NULL) {
         fprintf(stderr, "cl remove: id(%d) out of range\n", id);
         return;
-    } else {
-        if (previous != NULL) {
-            previous->next = parse->next;
-        } else {
-            list->begin = parse->next;
-            if (list->end == parse)
-                list->end = list->begin;
-        }
-        destroy_buffer(parse->read_buffer);
-        free(parse);
     }
+    if (previous != NULL) {
+        previous->next = parse->next;
+    } else {
+        list->begin = parse->next;
+        if (list->end == parse)
+            list->end = list->begin;
+    }
+    destroy_buffer(parse->read_buffer);
+    free(parse);
 }
 
 client_t *cl_get(client_list_t *list, int id)

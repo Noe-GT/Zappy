@@ -18,8 +18,7 @@ network_t *init_network(size_t max_clients)
     if (net->main_socket->fd == -1)
         return NULL;
     net->sockets = malloc(sizeof(struct pollfd));
-    memset(net->sockets, 0, sizeof(*net->sockets));
-    net->sockets_n = 0;
+    net->sockets_n = 1;
     net->sockets[0].fd = net->main_socket->fd;
     net->sockets[0].events = POLLIN;
     net->client_list = init_client_list();
@@ -60,9 +59,7 @@ static int check_event(network_t *net, int i)
 
 static int parse_clients(network_t *net)
 {
-    int sokets_n = net->sockets_n + 1;
-
-    for (int i = 0; i < sokets_n; i++) {
+    for (int i = 0; i < net->sockets_n; i++) {
         check_event(net, i);
     }
     return 0;
@@ -70,7 +67,7 @@ static int parse_clients(network_t *net)
 
 int network_handle(network_t *net)
 {
-    if (poll(net->sockets, net->sockets_n + 1, -1) < 0) {
+    if (poll(net->sockets, net->sockets_n, -1) < 0) {
         perror("ERROR: poll failed");
         return -1;
     }

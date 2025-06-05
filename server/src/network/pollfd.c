@@ -26,7 +26,8 @@ struct pollfd *pollfd_array_add(struct pollfd *array, int new_fd, int a_size)
     return temp;
 }
 
-struct pollfd *pollfd_array_remove(struct pollfd *array, int elem_i, int a_size)
+struct pollfd *pollfd_array_remove(struct pollfd *array,
+    int elem_i, int a_size)
 {
     struct pollfd *temp;
     int ti = 0;
