@@ -11,7 +11,7 @@
 #include "UI/shared/AGraphical.hpp"
 
 namespace zappyGUI {
-    class Zappy3D: public AGraphical {
+    class Zappy3D: public zappyGUI::AGraphical {
         public:
             Zappy3D();
     

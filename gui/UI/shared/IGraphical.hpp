@@ -11,14 +11,10 @@
 namespace zappyGUI {
     class IGraphical {
         public:
-            IGraphical();
-            ~IGraphical();
+            ~IGraphical() = default;
             virtual void display() = 0;
             virtual void update() = 0;
             virtual void handleEvents() = 0;
-    
-        protected:
-        private:
     };
 };
 
