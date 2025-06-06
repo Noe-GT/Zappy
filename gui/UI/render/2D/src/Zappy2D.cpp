@@ -11,6 +11,26 @@ zappyGUI::Zappy2D::Zappy2D()
 {
 }
 
+void zappyGUI::Zappy2D::initialize(std::shared_ptr<zappyGUI::Window> window, std::shared_ptr<zappyGUI::Game> game)
+{
+    size_t x = 0;
+    size_t y = 0;
+
+    zappyGUI::AGraphical::initialize(window, game);
+    for (std::vector<sf::RectangleShape> &tileLine : this->_tiles) {
+        for (sf::RectangleShape &tile : tileLine) {
+            tile.setSize(sf::Vector2f(50, 50));
+            tile.setFillColor(sf::Color::White);
+            tile.setOutlineThickness(2);
+            tile.setOutlineColor(sf::Color::Red);
+            tile.setPosition(sf::Vector2f(x * TILE_SIZE, y * TILE_SIZE));
+            x++;
+        }
+        y++;
+        x = 0;
+    }
+}
+
 extern "C" {
     zappyGUI::IGraphical* entryPoint() {
         return new zappyGUI::Zappy2D();

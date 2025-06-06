@@ -24,12 +24,8 @@ void zappyGUI::AGraphical::handleEvents()
 {
 }
 
-void zappyGUI::AGraphical::setWindow(std::shared_ptr<zappyGUI::Window> window)
+void zappyGUI::AGraphical::initialize(std::shared_ptr<zappyGUI::Window> window, std::shared_ptr<zappyGUI::Game> game)
 {
     this->_window = window;
-}
-
-void zappyGUI::AGraphical::setGame(std::shared_ptr<zappyGUI::Game> game)
-{
     this->_game = game;
 }

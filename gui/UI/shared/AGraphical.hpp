@@ -15,8 +15,7 @@ namespace zappyGUI {
             AGraphical();
             ~AGraphical() = default;
 
-            void setWindow(std::shared_ptr<zappyGUI::Window> window) final;
-            void setGame(std::shared_ptr<zappyGUI::Game> game) final;
+            virtual void initialize(std::shared_ptr<zappyGUI::Window> window, std::shared_ptr<zappyGUI::Game> game) override;
             virtual void display() override;
             virtual void update() override;
             virtual void handleEvents() override;

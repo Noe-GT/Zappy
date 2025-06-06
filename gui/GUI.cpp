@@ -53,8 +53,7 @@ zappyGUI::GUI::GUI(int port, std::string hostname): _window(std::make_shared<zap
         try {
             DLLoader pluginLoader(fullPath);
             auto renderer = pluginLoader.getInstance<IGraphical>("entryPoint");
-            renderer->setWindow(this->_window);
-            renderer->setGame(this->_game);
+            renderer->initialize(this->_window, this->_game);
             this->_renderers.push_back(std::move(renderer));
             std::cout << "loaded " << filename << std::endl;
         } catch (const std::exception& e) {

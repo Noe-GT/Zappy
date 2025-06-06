@@ -1,27 +1,15 @@
 #pragma once
 #include "../../../shared/AGraphical.hpp"
+#define TILE_SIZE 50
 
 namespace zappyGUI {
     class Zappy2D: public AGraphical {
-    public:
-        Zappy2D();
-        ~Zappy2D() = default;
-    private:
+        public:
+            Zappy2D();
+            ~Zappy2D() = default;
+            void initialize(std::shared_ptr<zappyGUI::Window> window, std::shared_ptr<zappyGUI::Game> game) final;
+
+        private:
+            std::vector<std::vector<sf::RectangleShape>> _tiles;
     };
 }
-
-// namespace zappyGUI {
-//     class Zappy2D: public zappyGUI::AGraphical {
-//         public:
-//             Zappy2D(zappyGUI::Window &window, zappyGUI::Game &game);
-//             ~Zappy2D() = default;
-
-//             void display() final;
-//             void update() final;
-//             void handleEvents() final;
-
-//         private:
-//             std::vector<std::vector<sf::RectangleShape>> _tiles;
-//     };
-// }
-
