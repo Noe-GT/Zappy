@@ -7,8 +7,10 @@
 #include "GUI.hpp"
 #include <iostream>
 #include <cstring>
+#include <dirent.h>
+#include <algorithm>
 
-zappyGUI::GUI::GUI(int port, std::string hostname): _window(), _client(port, hostname)
+zappyGUI::GUI::GUI(int port, std::string hostname): _window(), _client(port, hostname), _renderers()
 {
     _commands["seg"] = std::make_unique<Seg>();
     _commands["smg"] = std::make_unique<Smg>();
@@ -34,6 +36,30 @@ zappyGUI::GUI::GUI(int port, std::string hostname): _window(), _client(port, hos
     _commands["pgt"] = std::make_unique<Pgt>();
     _commands["sgt"] = std::make_unique<Sgt>();
     _commands["sst"] = std::make_unique<Sst>();
+    const std::string pluginsDir = "./gui/plugins";
+    DIR* dir = opendir(pluginsDir.c_str());
+
+    if (!dir) {
+        std::cerr << "Failed to open plugins directory: " << pluginsDir << std::endl;
+        return;
+    }
+
+    dirent* dirent;
+    while ((dirent = readdir(dir)) != nullptr) {
+        std::string filename(dirent->d_name);
+        if (filename == "." || filename == "..")
+            continue;
+        std::string fullPath = pluginsDir + "/" + filename;
+        try {
+            DLLoader pluginLoader(fullPath);
+            auto renderer = pluginLoader.getInstance<IGraphical>("entryPoint");
+            this->_renderers.push_back(std::move(renderer));
+            std::cout << "loaded " << filename << std::endl;
+        } catch (const std::exception& e) {
+            std::cerr << "Failed to load plugin " << filename << ": " << e.what() << std::endl;
+        }
+    }
+    closedir(dir);
 }
 
 void zappyGUI::GUI::display()
@@ -139,3 +165,9 @@ zappyGUI::Game &zappyGUI::GUI::getGame()
 {
     return this->_game;
 }
+
+std::vector <std::unique_ptr <zappyGUI::IGraphical>> &zappyGUI::GUI::getRenderers()
+{
+    return this->_renderers;
+}
+

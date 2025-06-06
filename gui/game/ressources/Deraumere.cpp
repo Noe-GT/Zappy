@@ -7,7 +7,7 @@
 
 #include "Deraumere.hpp"
 
-zappyGUI::Deraumere::~Deraumere()
-{
-}
+// zappyGUI::Deraumere::~Deraumere()
+// {
+// }
 

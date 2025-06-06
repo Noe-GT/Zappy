@@ -7,7 +7,7 @@
 
 #include "Linemate.hpp"
 
-zappyGUI::Linemate::~Linemate()
-{
-}
+// zappyGUI::Linemate::~Linemate()
+// {
+// }
 

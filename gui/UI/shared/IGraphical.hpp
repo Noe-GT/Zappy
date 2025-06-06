@@ -5,7 +5,6 @@
 ** IGraphical
 */
 
-
 #pragma once
 
 namespace zappyGUI {

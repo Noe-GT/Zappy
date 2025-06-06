@@ -7,6 +7,6 @@
 
 #include "Thystame.hpp"
 
-zappyGUI::Thystame::~Thystame()
-{
-}
+// zappyGUI::Thystame::~Thystame()
+// {
+// }

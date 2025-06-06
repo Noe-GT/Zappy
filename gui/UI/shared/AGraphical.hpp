@@ -14,7 +14,7 @@ namespace zappyGUI {
     class AGraphical: public IGraphical {
         public:
             // AGraphical();
-            AGraphical(zappyGUI::Window &window, zappyGUI::Game &game);
+            // AGraphical(zappyGUI::Window &window, zappyGUI::Game &game);
             ~AGraphical() = default;
 
             virtual void display() override;
@@ -22,7 +22,7 @@ namespace zappyGUI {
             virtual void handleEvents() override;
 
         protected:
-            zappyGUI::Window &_window;
-            zappyGUI::Game &_game;
+            // zappyGUI::Window &_window;
+            // zappyGUI::Game &_game;
     };
 }

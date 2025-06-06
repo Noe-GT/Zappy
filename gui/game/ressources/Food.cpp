@@ -7,7 +7,7 @@
 
 #include "Food.hpp"
 
-zappyGUI::Food::~Food()
-{
-}
+// zappyGUI::Food::~Food()
+// {
+// }
 

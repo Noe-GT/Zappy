@@ -7,7 +7,7 @@
 
 #include "Sibur.hpp"
 
-zappyGUI::Sibur::~Sibur()
-{
-}
+// zappyGUI::Sibur::~Sibur()
+// {
+// }
 

@@ -37,6 +37,8 @@
 #include <memory>
 #include <unordered_map>
 #include <utility>
+#include "DlLoader.hpp"
+#include "UI/shared/IGraphical.hpp"
 namespace zappyGUI {
     class Icommand;
     class GUI {
@@ -48,6 +50,8 @@ namespace zappyGUI {
             Window &getWindow();
             Client &getClient();
             Game &getGame();
+            DLLoader &getLoader();
+            std::vector <std::unique_ptr <IGraphical>> &getRenderers();
 
         private:
             void update();
@@ -57,6 +61,7 @@ namespace zappyGUI {
             Window _window;
             Client _client;
             Game _game;
+            std::vector <std::unique_ptr <IGraphical>> _renderers;
             std::unordered_map<std::string, std::unique_ptr<Icommand>> _commands;
             //FIXME: add the cirular buffer here
     };

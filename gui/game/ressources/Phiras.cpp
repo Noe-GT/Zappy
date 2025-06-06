@@ -7,7 +7,7 @@
 
 #include "Phiras.hpp"
 
-zappyGUI::Phiras::~Phiras()
-{
-}
+// zappyGUI::Phiras::~Phiras()
+// {
+// }
 
