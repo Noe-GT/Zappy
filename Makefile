@@ -11,13 +11,13 @@ GUI_SRC 	= 	$(wildcard gui/*.cpp) 								\
 				$(shell find gui/client -type f -name '*.cpp') 		\
 				$(shell find gui/game -type f -name '*.cpp') 		\
 
+RENDERS_SRC = 	$(shell find gui/UI/shared -type f -name '*.cpp')
+
 AI_SRC 		= 	$(wildcard ai/*.c)
 
 SERVER_OBJ 	= 	$(SERVER_SRC:.c=.o)
 GUI_OBJ 	= 	$(GUI_SRC:.cpp=.o)
 AI_OBJ 		= 	$(AI_SRC:.c=.o)
-
-RENDERS_SRC = 	$(shell find gui/UI/shared -type f -name '*.cpp')
 RENDERS_OBJ = 	$(RENDERS_SRC:.cpp=.plugin.o)
 
 SERVER_EXEC = 	zappy_server
@@ -33,7 +33,6 @@ CFLAGS 		+= 	-Wall -Wextra -g3
 CPPFLAGS 	= 	-std=c++17
 
 GUI_LDFLAGS = -lsfml-graphics -lsfml-window -lsfml-system -ldl
-
 
 all: server gui ai
 
@@ -66,6 +65,7 @@ fclean: clean
 	@for dir in $(shell find gui/UI/render -type f -name Makefile -exec dirname {} \;); do 	\
 		$(MAKE) -C $$dir fclean;															\
 	done
+	rm -f gui/plugins/*
 	rm -f $(SERVER_EXEC) $(GUI_EXEC) $(AI_EXEC)
 
 re: fclean all
