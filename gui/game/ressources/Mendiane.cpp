@@ -7,7 +7,7 @@
 
 #include "Mendiane.hpp"
 
-zappyGUI::Mendiane::~Mendiane()
-{
-}
+// zappyGUI::Mendiane::~Mendiane()
+// {
+// }
 

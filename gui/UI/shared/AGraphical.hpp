@@ -11,9 +11,10 @@
 namespace zappyGUI {
     class AGraphical: public IGraphical {
         public:
-            AGraphical();
-            ~AGraphical();
-            
+            virtual ~AGraphical() override;
+            virtual void display() override;
+            virtual void update() override;
+            virtual void handleEvents() override;
         private:
     };
 }
