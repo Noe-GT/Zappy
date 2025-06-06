@@ -24,7 +24,7 @@ void zappyGUI::Sst::receive(std::string command, zappyGUI::GUI &gui)
     int newFrequence;
 
     ss >> code >> newFrequence;
-    gui.getGame().setFrequence(newFrequence);
+    gui.getGame()->setFrequence(newFrequence);
     std::clog << "newFrequence set to " << newFrequence << std::endl;
 }
 

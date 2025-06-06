@@ -10,7 +10,7 @@
 #include <dirent.h>
 #include <algorithm>
 
-zappyGUI::GUI::GUI(int port, std::string hostname): _window(), _client(port, hostname), _renderers()
+zappyGUI::GUI::GUI(int port, std::string hostname): _window(std::make_shared<zappyGUI::Window>()), _client(port, hostname), _renderers()
 {
     _commands["seg"] = std::make_unique<Seg>();
     _commands["smg"] = std::make_unique<Smg>();
@@ -53,6 +53,8 @@ zappyGUI::GUI::GUI(int port, std::string hostname): _window(), _client(port, hos
         try {
             DLLoader pluginLoader(fullPath);
             auto renderer = pluginLoader.getInstance<IGraphical>("entryPoint");
+            renderer->setWindow(this->_window);
+            renderer->setGame(this->_game);
             this->_renderers.push_back(std::move(renderer));
             std::cout << "loaded " << filename << std::endl;
         } catch (const std::exception& e) {
@@ -65,8 +67,8 @@ zappyGUI::GUI::GUI(int port, std::string hostname): _window(), _client(port, hos
 void zappyGUI::GUI::display()
 {
     // FIXME: add the calls to the display of all elements of the map here
-    this->_window.clear();
-    this->_window.display();
+    this->_window->clear();
+    this->_window->display();
 }
 
 void zappyGUI::GUI::update()
@@ -88,7 +90,7 @@ void zappyGUI::GUI::update()
         if (bytesRead <= 0) {
             if (bytesRead == 0) {
                 std::cerr << "Connexion fermée par le serveur" << std::endl;
-                this->_window.close();
+                this->_window->close();
             }
             return;
         }
@@ -116,42 +118,42 @@ void zappyGUI::GUI::update()
     }
     if (pfd.revents & POLLERR) {
         std::cerr << "error detected on the socket" << std::endl;
-        this->_window.close();
+        this->_window->close();
     }
     if (pfd.revents & POLLHUP) {
         std::cerr << "Server closed" << std::endl;
-        this->_window.close();
+        this->_window->close();
     }
     if (pfd.revents & POLLNVAL) {
         std::cerr << "invalid socket" << std::endl;
-        this->_window.close();
+        this->_window->close();
     }
 }
 
 void zappyGUI::GUI::events()
 {
-    while (this->_window.pollEvent()) {
-        if (this->_window.getEvent().type == sf::Event::Closed) {
-            this->_window.close();
+    while (this->_window->pollEvent()) {
+        if (this->_window->getEvent().type == sf::Event::Closed) {
+            this->_window->close();
             return;
         }
-        if (this->_window.getEvent().type == sf::Event::KeyPressed) {
-            if (this->_window.getEvent().key.code == sf::Keyboard::Escape)
-                this->_window.switchFullscreen();
+        if (this->_window->getEvent().type == sf::Event::KeyPressed) {
+            if (this->_window->getEvent().key.code == sf::Keyboard::Escape)
+                this->_window->switchFullscreen();
         }
     }
 }
 
 void zappyGUI::GUI::loop()
 {
-    while (this->_window.isOpen()) {
+    while (this->_window->isOpen()) {
         this->events();
         this->update();
         this->display();
     }
 }
 
-zappyGUI::Window &zappyGUI::GUI::getWindow()
+std::shared_ptr<zappyGUI::Window> &zappyGUI::GUI::getWindow()
 {
     return this->_window;
 }
@@ -161,7 +163,7 @@ zappyGUI::Client &zappyGUI::GUI::getClient()
     return this->_client;
 }
 
-zappyGUI::Game &zappyGUI::GUI::getGame()
+std::shared_ptr<zappyGUI::Game> &zappyGUI::GUI::getGame()
 {
     return this->_game;
 }

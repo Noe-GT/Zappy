@@ -1,6 +1,4 @@
 #pragma once
-#include <SFML/Graphics.hpp>
-#include "../../../shared/Window.hpp"
 #include "../../../shared/AGraphical.hpp"
 
 namespace zappyGUI {

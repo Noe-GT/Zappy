@@ -35,13 +35,13 @@ void zappyGUI::Pin::receive(std::string command, zappyGUI::GUI &gui)
     ss >> code >> playerID >> x >> y >> q0 >> q1 >> q2 >> q3 >> q4 >> q5 >> q6;
     (void) x;
     (void) y;
-    gui.getGame().getPlayers()[playerID].getInventory()[0].second = q0;
-    gui.getGame().getPlayers()[playerID].getInventory()[1].second = q1;
-    gui.getGame().getPlayers()[playerID].getInventory()[2].second = q2;
-    gui.getGame().getPlayers()[playerID].getInventory()[3].second = q3;
-    gui.getGame().getPlayers()[playerID].getInventory()[4].second = q4;
-    gui.getGame().getPlayers()[playerID].getInventory()[5].second = q5;
-    gui.getGame().getPlayers()[playerID].getInventory()[6].second = q6;
+    gui.getGame()->getPlayers()[playerID].getInventory()[0].second = q0;
+    gui.getGame()->getPlayers()[playerID].getInventory()[1].second = q1;
+    gui.getGame()->getPlayers()[playerID].getInventory()[2].second = q2;
+    gui.getGame()->getPlayers()[playerID].getInventory()[3].second = q3;
+    gui.getGame()->getPlayers()[playerID].getInventory()[4].second = q4;
+    gui.getGame()->getPlayers()[playerID].getInventory()[5].second = q5;
+    gui.getGame()->getPlayers()[playerID].getInventory()[6].second = q6;
     std::clog << "player " << playerID << " have ressources " << q0 << " " << q1 << " " << q2 << " " << q3 << " " << q4 << " " << q5 << " " << q6 << std::endl;
 }
 

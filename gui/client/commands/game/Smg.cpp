@@ -20,7 +20,7 @@ zappyGUI::Smg::~Smg()
 void zappyGUI::Smg::receive(std::string command, zappyGUI::GUI &gui)
 {
     command.erase(0, 4);
-    gui.getGame().getLogs().push_back(command);
+    gui.getGame()->getLogs().push_back(command);
     std::clog << "server message receive: " << command << std::endl;
 }
 

@@ -24,11 +24,11 @@ void zappyGUI::Edi::receive(std::string command, zappyGUI::GUI &gui)
     int eggID;
 
     ss >> code >> eggID;
-    auto it = std::find_if(gui.getGame().getEggs().begin(), gui.getGame().getEggs().end(), [eggID](const auto& egg) {
+    auto it = std::find_if(gui.getGame()->getEggs().begin(), gui.getGame()->getEggs().end(), [eggID](const auto& egg) {
         return egg.second == eggID;
     });
-    if (it != gui.getGame().getEggs().end()) {
-        gui.getGame().getEggs().erase(it);
+    if (it != gui.getGame()->getEggs().end()) {
+        gui.getGame()->getEggs().erase(it);
         std::clog << "egg " << eggID << " has been destroyed" << std::endl;
     }
 }

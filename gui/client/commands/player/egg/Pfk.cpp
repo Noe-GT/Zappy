@@ -26,11 +26,11 @@ void zappyGUI::Pfk::receive(std::string command, zappyGUI::GUI &gui)
     Spell spell;
 
     ss >> code >> playerID;
-    pos = gui.getGame().getPlayers()[playerID].getPos();
+    pos = gui.getGame()->getPlayers()[playerID].getPos();
     spell.setLevel(-1);
-    spell.setCaster(std::make_shared <Player> (gui.getGame().getPlayers()[playerID]));
+    spell.setCaster(std::make_shared <Player> (gui.getGame()->getPlayers()[playerID]));
     spell.resetStartTime();
-    gui.getGame().getPlayers()[playerID].getSpellInProgress() = std::make_shared <Spell> (spell);
+    gui.getGame()->getPlayers()[playerID].getSpellInProgress() = std::make_shared <Spell> (spell);
     std::clog << "player " << playerID << " started to lay an egg in " << pos.first << " " << pos.second << std::endl;
 }
 

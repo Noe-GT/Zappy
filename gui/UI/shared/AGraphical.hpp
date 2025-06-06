@@ -7,22 +7,22 @@
 
 #pragma once
 #include "IGraphical.hpp"
-#include "../../game/Game.hpp"
-#include "Window.hpp"
+#include <SFML/Graphics.hpp>
 
 namespace zappyGUI {
     class AGraphical: public IGraphical {
         public:
-            // AGraphical();
-            // AGraphical(zappyGUI::Window &window, zappyGUI::Game &game);
+            AGraphical();
             ~AGraphical() = default;
 
+            void setWindow(std::shared_ptr<zappyGUI::Window> window) final;
+            void setGame(std::shared_ptr<zappyGUI::Game> game) final;
             virtual void display() override;
             virtual void update() override;
             virtual void handleEvents() override;
 
         protected:
-            // zappyGUI::Window &_window;
-            // zappyGUI::Game &_game;
+            std::shared_ptr<zappyGUI::Window> _window;
+            std::shared_ptr<zappyGUI::Game> _game;
     };
 }
