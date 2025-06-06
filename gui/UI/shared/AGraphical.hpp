@@ -23,6 +23,6 @@ namespace zappyGUI {
 
         protected:
             zappyGUI::Window &_window;
-            const zappyGUI::Game &_game;
+            zappyGUI::Game &_game;
     };
 }
