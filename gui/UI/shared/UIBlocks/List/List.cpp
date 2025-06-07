@@ -18,18 +18,19 @@ UIBlocks::List::List(std::vector<std::shared_ptr<IUIBlock>> &elements, std::pair
 void UIBlocks::List::draw(zappyGUI::Window &window)
 {
     this->_background.setPosition(this->_position.first, this->_position.second);
-    this->_background.setFillColor(sf::Color(50, 50, 50, 200));
+    this->_background.setFillColor(this->_backgroundColor);
     window.getRenderWindow().draw(_background);
 
     for (size_t i = 0; i < _elements.size(); ++i) {
+        _elements[i]->setPosition(std::pair<float, float>(_position.first, _position.second + i * 20));
         _elements[i]->draw(window);
     }
 }
 
-void UIBlocks::List::handleEvent(const sf::Event &event)
+void UIBlocks::List::handleEvent(const sf::Event &event, zappyGUI::Window &window)
 {
     for (auto &element : _elements) {
-        element->handleEvent(event);
+        element->handleEvent(event, window);
     }
 }
 
@@ -56,4 +57,20 @@ const std::variant<std::string, std::vector<std::shared_ptr<UIBlocks::IUIBlock>>
 {
     static std::variant<std::string, std::vector<std::shared_ptr<IUIBlock>>> value = this->_elements;
     return value;
+}
+
+void UIBlocks::List::setSize(const std::pair<float, float> &size)
+{
+    _size = size;
+    _background.setSize(sf::Vector2f(size.first, size.second));
+    for (size_t i = 0; i < _elements.size(); ++i) {
+        _elements[i]->setSize(size);
+    }
+}
+
+void UIBlocks::List::setSize(const int size)
+{
+    for (size_t i = 0; i < _elements.size(); ++i) {
+        _elements[i]->setSize(size);
+    }
 }

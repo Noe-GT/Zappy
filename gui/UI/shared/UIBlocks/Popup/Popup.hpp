@@ -7,21 +7,23 @@
 
 #pragma once
 
-#include "../IUIBlock.hpp"
+#include "../AUIBlock.hpp"
 #include "../Text/Text.hpp"
 #include <memory>
 
 namespace UIBlocks {
-    class Popup: public IUIBlock {
+    class Popup: public AUIBlock {
         public:
             Popup(std::string &content, std::pair<float, float> position, std::pair<float, float> size);
             ~Popup() = default;
             void draw(zappyGUI::Window &window) override;
             void setPosition(const std::pair<float, float> &position) override;
-            void handleEvent(const sf::Event &event) override;
+            void handleEvent(const sf::Event &event, zappyGUI::Window &window) override;
             void open();
             void close();
             const std::variant<std::string, std::vector<std::shared_ptr<IUIBlock>>> getValue() const override;
+            void setSize(const std::pair<float, float> &size) override;
+            void setSize(const int size) override;
 
         private:
             bool _isOpen;

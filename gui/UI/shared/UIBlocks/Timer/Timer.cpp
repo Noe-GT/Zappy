@@ -19,9 +19,10 @@ void UIBlocks::Timer::draw(zappyGUI::Window &window)
     this->_text.draw(window);
 }
 
-void UIBlocks::Timer::handleEvent(const sf::Event &event)
+void UIBlocks::Timer::handleEvent(const sf::Event &event, zappyGUI::Window &window)
 {
     (void)event;
+    (void)window;
 }
 
 const std::variant<std::string, std::vector<std::shared_ptr<UIBlocks::IUIBlock>>> UIBlocks::Timer::getValue() const
@@ -44,4 +45,14 @@ void UIBlocks::Timer::start()
 void UIBlocks::Timer::restart()
 {
     this->_timer.restart();
+}
+
+void UIBlocks::Timer::setSize(const std::pair<float, float> &size)
+{
+    (void)size;
+}
+
+void UIBlocks::Timer::setSize(const int size)
+{
+    this->_text.setSize(size);
 }

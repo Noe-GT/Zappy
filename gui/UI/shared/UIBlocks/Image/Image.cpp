@@ -37,8 +37,9 @@ bool UIBlocks::Image::isInside(int x, int y) const
 }
 
 
-void UIBlocks::Image::handleEvent(const sf::Event &event)
+void UIBlocks::Image::handleEvent(const sf::Event &event, zappyGUI::Window &window)
 {
+    (void)window;
     if (event.type == sf::Event::MouseMoved) {
         if (this->isInside(event.mouseMove.x, event.mouseMove.y)) {
             this->_alternativeText.open();
@@ -52,4 +53,19 @@ const std::variant<std::string, std::vector<std::shared_ptr<UIBlocks::IUIBlock>>
 {
     std::variant<std::string, std::vector<std::shared_ptr<UIBlocks::IUIBlock>>> value = this->_alternativeText.getValue();
     return value;
+}
+
+void UIBlocks::Image::setSize(const std::pair<float, float> &size)
+{
+    this->_size = size;
+    this->_sprite.setScale(size.first / this->_image.getSize().x,
+                           size.second / this->_image.getSize().y);
+}
+
+void UIBlocks::Image::setSize(const int size)
+{
+    this->_size = std::pair<float, float>(size, size);
+    this->_sprite.setScale(size / this->_image.getSize().x,
+                           size / this->_image.getSize().y);
+    this->_alternativeText.setSize(size);
 }

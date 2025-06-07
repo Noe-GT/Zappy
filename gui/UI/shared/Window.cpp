@@ -59,13 +59,12 @@ bool zappyGUI::Window::pollEvent()
 
 void zappyGUI::Window::display()
 {
-    this->_window.clear();
     this->_window.display();
 }
 
 void zappyGUI::Window::clear()
 {
-    this->_window.clear();
+    this->_window.clear(sf::Color::Red);
 }
 
 void zappyGUI::Window::close()
