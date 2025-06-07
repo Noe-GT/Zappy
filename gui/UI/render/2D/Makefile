@@ -17,6 +17,7 @@ SRC 		= 		$(shell find src -type f -name '*.cpp')				\
 
 OBJ 		= 		$(SRC:.cpp=.o)										\
 					$(shell find ../../shared -type f -name '*.plugin.o')
+					$(shell find ../../../game -type f -name '*.plugin.o')
 
 all: $(NAME)
 

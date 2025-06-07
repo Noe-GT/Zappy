@@ -64,7 +64,7 @@ zappyGUI::GUI::GUI(int port, std::string hostname): _window(), _client(port, hos
 
 void zappyGUI::GUI::display()
 {
-    // FIXME: add the calls to the display of all elements of the map here
+    this->_game.display(*this);
     this->_window.clear();
     this->_window.display();
 }

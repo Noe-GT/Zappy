@@ -11,6 +11,7 @@
 #include "../UI/shared/UIBlocks/PopupSelector/PopupSelector.hpp"
 
 namespace zappyGUI {
+    class GUI;
     class Player;
     class Tile {
         public:
@@ -26,7 +27,7 @@ namespace zappyGUI {
 
             void addPlayer(std::shared_ptr <Player> newVal);
             void addRessource(std::shared_ptr <IRessource> newVal);
-            void display();
+            void display(GUI &gui);
 
         private:
             std::vector <std::shared_ptr <Player>> _players;

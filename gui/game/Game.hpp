@@ -6,8 +6,8 @@
 */
 #pragma once
 #include "Tile.hpp"
-
 namespace zappyGUI {
+    class GUI;
     class Game {
         public:
             Game();
@@ -37,7 +37,7 @@ namespace zappyGUI {
             void setTeams(std::vector <std::string> newVal);
             void addTeam(std::string newVal);
 
-            void display();
+            void display(GUI &gui);
 
         private:
             int _frequence;

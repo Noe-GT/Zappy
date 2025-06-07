@@ -12,6 +12,7 @@
 #include "ressources/Mendiane.hpp"
 #include "ressources/Phiras.hpp"
 #include "ressources/Thystame.hpp"
+#include "../GUI.hpp"
 
 zappyGUI::Tile::Tile()
 {
@@ -63,7 +64,9 @@ void zappyGUI::Tile::addRessource(std::shared_ptr <zappyGUI::IRessource> newVal)
     this->_ressources.push_back({newVal, 1});
 }
 
-void zappyGUI::Tile::display()
+void zappyGUI::Tile::display(zappyGUI::GUI &gui)
 {
- //TODO: draw smthg
+    gui.getRenderers()[0]->display();
+    //TODO: display players
+    //TODO: display ressources
 }

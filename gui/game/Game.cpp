@@ -6,6 +6,7 @@
 */
 
 #include "Game.hpp"
+#include "../GUI.hpp"
 #include <iostream>
 zappyGUI::Game::Game() : _frequence(0), _teamNbr(0), _gameInProgess(false), _mapSize(0, 0)
 {
@@ -129,7 +130,11 @@ void zappyGUI::Game::addTeam(std::string newVal)
     this->_teams.push_back(newVal);
 }
 
-void zappyGUI::Game::display()
+void zappyGUI::Game::display(zappyGUI::GUI &gui)
 {
-    //TODO: implement the display method
+    for (std::size_t x = 0; x != this->_map.size(); x++) {
+        for (std::size_t y = 0; y != this->_map[x].size(); y++) {
+            this->_map[x][y].display(gui);
+        }
+    }
 }

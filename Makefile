@@ -8,10 +8,10 @@
 SERVER_SRC	=	$(wildcard server/*.c)
 
 GUI_SRC 	= 	$(wildcard gui/*.cpp) 								\
-				$(shell find gui/client -type f -name '*.cpp') 		\
 				$(shell find gui/game -type f -name '*.cpp') 		\
 
-RENDERS_SRC = 	$(shell find gui/UI/shared -type f -name '*.cpp')
+RENDERS_SRC = 	$(shell find gui/UI/shared -type f -name '*.cpp')	\
+				$(shell find gui/client -type f -name '*.cpp') 		\
 
 AI_SRC 		= 	$(wildcard ai/*.c)
 
