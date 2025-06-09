@@ -10,7 +10,7 @@
 #include <memory>
 #include <vector>
 #include <string>
-#include "Tile.hpp"
+#include "../shared/Tile.hpp"
 
 namespace zappyGUI {
     class Tile;

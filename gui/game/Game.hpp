@@ -5,7 +5,7 @@
 ** Game.cpp
 */
 #pragma once
-#include "Tile.hpp"
+#include "../shared/Tile.hpp"
 #include "../UI/shared/IGraphical.hpp"
 
 namespace zappyGUI {

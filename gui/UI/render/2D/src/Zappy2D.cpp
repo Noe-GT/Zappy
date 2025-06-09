@@ -20,7 +20,6 @@ void zappyGUI::Zappy2D::initialize(std::shared_ptr<zappyGUI::Window> window, std
         for (size_t x = 0; x < mapSize.first; x++)
             this->_tiles.back().emplace_back(x, y);
     }
-    // printf("tiles: %ld\n", this->_tiles.size());
 }
 
 void zappyGUI::Zappy2D::display()
@@ -40,10 +39,6 @@ void zappyGUI::Zappy2D::update()
 // }
 
 void zappyGUI::Zappy2D::displayTile(const zappyGUI::Tile &tile) {
-    printf("in\n");
-    const std::pair<size_t, size_t> &pos = tile.getPos();
-    printf("in\n");
-    printf("pos : %ld:%ld\n", pos.first, pos.second);
     this->_tiles[tile.getPos().second][tile.getPos().first].display(this->_window);
 }
 

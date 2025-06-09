@@ -5,13 +5,6 @@
 ** Tile.cpp
 */
 #include "Tile.hpp"
-#include "ressources/Food.hpp"
-#include "ressources/Linemate.hpp"
-#include "ressources/Deraumere.hpp"
-#include "ressources/Sibur.hpp"
-#include "ressources/Mendiane.hpp"
-#include "ressources/Phiras.hpp"
-#include "ressources/Thystame.hpp"
 
 zappyGUI::Tile::Tile(const std::pair<size_t, size_t> &pos):
     _pos(pos)

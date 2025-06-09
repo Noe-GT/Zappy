@@ -138,12 +138,8 @@ void zappyGUI::Game::addTeam(std::string newVal)
 
 void zappyGUI::Game::display(std::shared_ptr<zappyGUI::IGraphical> renderer) const
 {
-    printf("Game display\n");
     for (const std::vector<zappyGUI::Tile> &tileRow : this->_map) {
-        for (const zappyGUI::Tile &tile : tileRow) {
-            const std::pair<size_t, size_t> &pos = tile.getPos();
-            printf("test\n");
+        for (const zappyGUI::Tile &tile : tileRow)
             renderer->displayTile(tile);
-        }
     }
 }

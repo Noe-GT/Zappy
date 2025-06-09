@@ -7,7 +7,7 @@
 
 #pragma once
 #include "Window.hpp"
-#include "../../game/Tile.hpp"
+#include "../../shared/Tile.hpp"
 #include <memory>
 #include <vector>
 #include <string>
