@@ -58,6 +58,7 @@ namespace zappyGUI {
             void events();
             void display();
 
+            int _selectedRenderer;
             std::shared_ptr<zappyGUI::Window> _window;
             Client _client;
             std::shared_ptr<zappyGUI::Game> _game;

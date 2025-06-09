@@ -59,7 +59,6 @@ bool zappyGUI::Window::pollEvent()
 
 void zappyGUI::Window::display()
 {
-    this->_window.clear();
     this->_window.display();
 }
 

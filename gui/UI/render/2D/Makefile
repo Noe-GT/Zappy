@@ -16,7 +16,7 @@ NAME 		= 		libRender2d.so
 SRC 		= 		$(shell find src -type f -name '*.cpp')				\
 
 OBJ 		= 		$(SRC:.cpp=.o)										\
-					$(shell find ../../shared -type f -name '*.plugin.o')
+					$(shell find ../../shared -type f -name '*.plugin.o') \
 
 all: $(NAME)
 
@@ -27,7 +27,7 @@ $(NAME): $(OBJ)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJS)
+	rm -f $(OBJ)
 
 fclean: clean
 	rm -f $(NAME)

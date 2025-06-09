@@ -10,32 +10,38 @@
 #include <dirent.h>
 #include <algorithm>
 
-zappyGUI::GUI::GUI(int port, std::string hostname): _window(std::make_shared<zappyGUI::Window>()), _client(port, hostname), _renderers()
+zappyGUI::GUI::GUI(int port, std::string hostname):
+    _selectedRenderer(-1),
+    _window(std::make_shared<zappyGUI::Window>()),
+    _client(port, hostname),
+    _game(std::make_shared<zappyGUI::Game>()),
+    _renderers()
 {
-    _commands["seg"] = std::make_unique<Seg>();
-    _commands["smg"] = std::make_unique<Smg>();
-    _commands["tna"] = std::make_unique<Tna>();
-    _commands["bct"] = std::make_unique<Bct>();
-    _commands["mct"] = std::make_unique<Mct>();
-    _commands["msz"] = std::make_unique<Msz>();
-    _commands["suc"] = std::make_unique<Suc>();
-    _commands["ebo"] = std::make_unique<Ebo>();
-    _commands["edi"] = std::make_unique<Edi>();
-    _commands["enw"] = std::make_unique<Enw>();
-    _commands["pfk"] = std::make_unique<Pfk>();
-    _commands["pbc"] = std::make_unique<Pbc>();
-    _commands["pdi"] = std::make_unique<Pdi>();
-    _commands["pex"] = std::make_unique<Pex>();
-    _commands["pic"] = std::make_unique<Pic>();
-    _commands["pie"] = std::make_unique<Pie>();
-    _commands["pin"] = std::make_unique<Pin>();
-    _commands["plv"] = std::make_unique<Plv>();
-    _commands["pnw"] = std::make_unique<Pnw>();
-    _commands["ppo"] = std::make_unique<Ppo>();
-    _commands["pdr"] = std::make_unique<Pdr>();
-    _commands["pgt"] = std::make_unique<Pgt>();
-    _commands["sgt"] = std::make_unique<Sgt>();
-    _commands["sst"] = std::make_unique<Sst>();
+    printf("MAP:\nSize: %dx%d\n", this->_game->getMapSize().first, this->_game->getMapSize().second);
+    this->_commands["seg"] = std::make_unique<Seg>();
+    this->_commands["smg"] = std::make_unique<Smg>();
+    this->_commands["tna"] = std::make_unique<Tna>();
+    this->_commands["bct"] = std::make_unique<Bct>();
+    this->_commands["mct"] = std::make_unique<Mct>();
+    this->_commands["msz"] = std::make_unique<Msz>();
+    this->_commands["suc"] = std::make_unique<Suc>();
+    this->_commands["ebo"] = std::make_unique<Ebo>();
+    this->_commands["edi"] = std::make_unique<Edi>();
+    this->_commands["enw"] = std::make_unique<Enw>();
+    this->_commands["pfk"] = std::make_unique<Pfk>();
+    this->_commands["pbc"] = std::make_unique<Pbc>();
+    this->_commands["pdi"] = std::make_unique<Pdi>();
+    this->_commands["pex"] = std::make_unique<Pex>();
+    this->_commands["pic"] = std::make_unique<Pic>();
+    this->_commands["pie"] = std::make_unique<Pie>();
+    this->_commands["pin"] = std::make_unique<Pin>();
+    this->_commands["plv"] = std::make_unique<Plv>();
+    this->_commands["pnw"] = std::make_unique<Pnw>();
+    this->_commands["ppo"] = std::make_unique<Ppo>();
+    this->_commands["pdr"] = std::make_unique<Pdr>();
+    this->_commands["pgt"] = std::make_unique<Pgt>();
+    this->_commands["sgt"] = std::make_unique<Sgt>();
+    this->_commands["sst"] = std::make_unique<Sst>();
     const std::string pluginsDir = "./gui/plugins";
     DIR* dir = opendir(pluginsDir.c_str());
 
@@ -61,12 +67,16 @@ zappyGUI::GUI::GUI(int port, std::string hostname): _window(std::make_shared<zap
         }
     }
     closedir(dir);
+    if (!this->_renderers.empty())
+        this->_selectedRenderer = 0;
 }
 
 void zappyGUI::GUI::display()
 {
     // FIXME: add the calls to the display of all elements of the map here
     this->_window->clear();
+    if (this->_selectedRenderer != -1 && this->_renderers[this->_selectedRenderer] != nullptr)
+        this->_renderers[this->_selectedRenderer]->display();
     this->_window->display();
 }
 

@@ -13,7 +13,6 @@ zappyGUI::AGraphical::AGraphical()
 
 void zappyGUI::AGraphical::display()
 {
-
 }
 
 void zappyGUI::AGraphical::update()
