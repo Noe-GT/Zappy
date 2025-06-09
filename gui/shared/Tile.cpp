@@ -34,6 +34,11 @@ std::vector <std::shared_ptr <zappyGUI::Player>> &zappyGUI::Tile::getPlayers()
     return this->_players;
 }
 
+const std::vector <std::shared_ptr <zappyGUI::Player>> &zappyGUI::Tile::getPlayers() const
+{
+    return this->_players;
+}
+
 std::shared_ptr <zappyGUI::Player> &zappyGUI::Tile::getPlayer(int index)
 {
     return this->_players.at(index);

@@ -7,7 +7,7 @@
 
 #include "Game.hpp"
 #include <iostream>
-zappyGUI::Game::Game() : _frequence(0), _teamNbr(0), _gameInProgess(false), _mapSize(30, 30)
+zappyGUI::Game::Game() : _frequence(0), _teamNbr(0), _gameInProgess(false), _mapSize(10, 10)
 {
     for (size_t y = 0; y < this->_mapSize.second; y++) {
         this->_map.emplace_back();
@@ -139,7 +139,9 @@ void zappyGUI::Game::addTeam(std::string newVal)
 void zappyGUI::Game::display(std::shared_ptr<zappyGUI::IGraphical> renderer) const
 {
     for (const std::vector<zappyGUI::Tile> &tileRow : this->_map) {
-        for (const zappyGUI::Tile &tile : tileRow)
+        for (const zappyGUI::Tile &tile : tileRow) {
+            renderer->updateTile(tile);
             renderer->displayTile(tile);
+        }
     }
 }

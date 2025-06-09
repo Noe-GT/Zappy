@@ -27,6 +27,7 @@ namespace zappyGUI {
             ~Tile();
 
             std::vector <std::shared_ptr <Player>> &getPlayers();
+            const std::vector <std::shared_ptr <Player>> &getPlayers() const;
             std::shared_ptr <Player> &getPlayer(int index);
             std::vector <std::pair<std::shared_ptr <IRessource>, int>> &getRessource();
             const std::pair<size_t, size_t> &getPos() const;

@@ -18,37 +18,54 @@ void zappyGUI::Zappy2D::initialize(std::shared_ptr<zappyGUI::Window> window, std
     for (size_t y = 0; y < mapSize.second; y++) {
         this->_tiles.emplace_back();
         for (size_t x = 0; x < mapSize.first; x++)
-            this->_tiles.back().emplace_back(x, y);
+            this->_tiles.back().emplace_back(x, y, this->_zoomCoeff);
     }
+}
+
+void zappyGUI::Zappy2D::handleEvents()
+{
+    if (this->_window->getEvent().key.code == sf::Keyboard::Add)
+        this->updateZoom(false);
+    else if (this->_window->getEvent().key.code == sf::Keyboard::Subtract)
+        this->updateZoom(true);
+}
+
+void zappyGUI::Zappy2D::updateZoom(bool zoomOut)
+{
+    if (zoomOut && this->_zoomCoeff > ZOOM_COEFF_MIN) {
+        this->_zoomCoeff -= ZOOM_COEFF_SENSITIVITY;
+    } else if (!zoomOut && this->_zoomCoeff < ZOOM_COEFF_MAX) {
+        this->_zoomCoeff += ZOOM_COEFF_SENSITIVITY;
+    }
+    printf("Zooming %s : %lf\n", zoomOut ? "out" : "in", this->_zoomCoeff);
 }
 
 void zappyGUI::Zappy2D::display()
 {
-    // for (const std::vector<zappyGUI::Zappy2D::RTile> &tileRow : this->_tiles) {
-    //     for (const zappyGUI::Zappy2D::RTile &tile : tileRow)
-    //         tile.display(this->_window);
-    // }
 }
 
 void zappyGUI::Zappy2D::update()
 {
 }
 
-// void zappyGUI::Zappy2D::handleEvents()
-// {
-// }
+void zappyGUI::Zappy2D::updateTile(const zappyGUI::Tile &tile) {
+    this->_tiles[tile.getPos().second][tile.getPos().first].update(tile);
+}
 
 void zappyGUI::Zappy2D::displayTile(const zappyGUI::Tile &tile) {
     this->_tiles[tile.getPos().second][tile.getPos().first].display(this->_window);
 }
 
-zappyGUI::Zappy2D::RTile::RTile(int x, int y)
+zappyGUI::Zappy2D::RTile::RTile(int x, int y, double &zoomCoeff):
+    _zoomCoeff(zoomCoeff),
+    _back(),
+    _players()
 {
-    this->_back.setSize(sf::Vector2f(TILE_SIZE, TILE_SIZE));
+    this->_back.setSize(sf::Vector2f(BASE_TILE_SIZE * zoomCoeff, BASE_TILE_SIZE * zoomCoeff));
     this->_back.setFillColor(sf::Color::White);
     this->_back.setOutlineThickness(2);
     this->_back.setOutlineColor(sf::Color::Red);
-    this->_back.setPosition(sf::Vector2f(x * TILE_SIZE, y * TILE_SIZE));
+    this->_back.setPosition(sf::Vector2f(x * (BASE_TILE_SIZE * zoomCoeff), y * (BASE_TILE_SIZE * zoomCoeff)));
 }
 
 void zappyGUI::Zappy2D::RTile::display(std::shared_ptr<zappyGUI::Window> window) const
@@ -60,7 +77,20 @@ void zappyGUI::Zappy2D::RTile::display(std::shared_ptr<zappyGUI::Window> window)
 
 void zappyGUI::Zappy2D::RTile::update(const zappyGUI::Tile &tile)
 {
-    (void)tile;
+    this->_players.clear();
+    for (const std::shared_ptr<zappyGUI::Player> &player : tile.getPlayers()) {
+        sf::CircleShape playerShape(BASE_PLAYER_SIZE * this->_zoomCoeff);
+        playerShape.setFillColor(sf::Color::Green);
+        playerShape.setPosition(this->_back.getPosition().x + BASE_TILE_SIZE,
+                                this->_back.getPosition().y + BASE_TILE_SIZE);
+        this->_players.push_back(playerShape);
+        (void)player;
+    }
+    // printf("Updating tile at (%zu, %zu) with %d coeff\n", tile.getPos().first, tile.getPos().second, this->_zoomCoeff);
+    this->_back.setSize(sf::Vector2f(BASE_TILE_SIZE * this->_zoomCoeff, BASE_TILE_SIZE * this->_zoomCoeff));
+    this->_back.setPosition(sf::Vector2f(tile.getPos().first * (BASE_TILE_SIZE * this->_zoomCoeff),
+                                tile.getPos().second * (BASE_TILE_SIZE * this->_zoomCoeff)));
+    this->_back.setOutlineThickness(2 * this->_zoomCoeff);
 }
 
 extern "C" {

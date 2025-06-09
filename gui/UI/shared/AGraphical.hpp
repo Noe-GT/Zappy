@@ -18,6 +18,7 @@ namespace zappyGUI {
             virtual void initialize(std::shared_ptr<zappyGUI::Window> window, std::pair<size_t, size_t> mapSize) override;
             virtual void display() override;
             virtual void displayTile(const zappyGUI::Tile &tile) = 0;
+            virtual void updateTile(const zappyGUI::Tile &tile) = 0;
             virtual void update() override;
             virtual void handleEvents() override;
 
