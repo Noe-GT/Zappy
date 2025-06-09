@@ -8,47 +8,27 @@
 #include "Zappy2D.hpp"
 
 zappyGUI::Zappy2D::Zappy2D():
-    _tiles(std::vector<std::vector<sf::RectangleShape>>(30, std::vector<sf::RectangleShape>(30)))
+    _tiles()
 {
 }
 
-void zappyGUI::Zappy2D::initialize(std::shared_ptr<zappyGUI::Window> window, std::shared_ptr<zappyGUI::Game> game)
+void zappyGUI::Zappy2D::initialize(std::shared_ptr<zappyGUI::Window> window, std::pair<size_t, size_t> mapSize)
 {
-    size_t x = 0;
-    size_t y = 0;
-
-    zappyGUI::AGraphical::initialize(window, game);
-    for (std::vector<sf::RectangleShape> &tileLine : this->_tiles) {
-        for (sf::RectangleShape &tile : tileLine) {
-            tile.setSize(sf::Vector2f(TILE_SIZE, TILE_SIZE));
-            tile.setFillColor(sf::Color::White);
-            tile.setOutlineThickness(2);
-            tile.setOutlineColor(sf::Color::Red);
-            tile.setPosition(sf::Vector2f(x * TILE_SIZE, y * TILE_SIZE));
-            x++;
-        }
-        y++;
-        x = 0;
+    zappyGUI::AGraphical::initialize(window, mapSize);
+    for (size_t y = 0; y < mapSize.second; y++) {
+        this->_tiles.emplace_back();
+        for (size_t x = 0; x < mapSize.first; x++)
+            this->_tiles.back().emplace_back(x, y);
     }
-    printf("tiles: %ld\n", this->_tiles.size());
-
-    // printf("tiles: %ld | gsize : %dx%d\n", this->_tiles.size(), game->getMapSize().first, game->getMapSize().second);
-    // game->display();
+    // printf("tiles: %ld\n", this->_tiles.size());
 }
 
 void zappyGUI::Zappy2D::display()
 {
-    // std::vector<std::vector<zappyGUI::Tile>> &map = this->_game.getMap();
-    // for (const std::vector<zappyGUI::Tile>& tileLine: this->_game.getMap()) {
-    //     for (const zappyGUI::Tile &t : tileLine) {
-    //         this->
-    //     }
+    // for (const std::vector<zappyGUI::Zappy2D::RTile> &tileRow : this->_tiles) {
+    //     for (const zappyGUI::Zappy2D::RTile &tile : tileRow)
+    //         tile.display(this->_window);
     // }
-    for (const std::vector<sf::RectangleShape> &tileLine : this->_tiles) {
-        for (const sf::RectangleShape &tile : tileLine) {
-            this->_window->getRenderWindow().draw(tile);
-        }
-    }
 }
 
 void zappyGUI::Zappy2D::update()
@@ -58,6 +38,35 @@ void zappyGUI::Zappy2D::update()
 // void zappyGUI::Zappy2D::handleEvents()
 // {
 // }
+
+void zappyGUI::Zappy2D::displayTile(const zappyGUI::Tile &tile) {
+    printf("in\n");
+    const std::pair<size_t, size_t> &pos = tile.getPos();
+    printf("in\n");
+    printf("pos : %ld:%ld\n", pos.first, pos.second);
+    this->_tiles[tile.getPos().second][tile.getPos().first].display(this->_window);
+}
+
+zappyGUI::Zappy2D::RTile::RTile(int x, int y)
+{
+    this->_back.setSize(sf::Vector2f(TILE_SIZE, TILE_SIZE));
+    this->_back.setFillColor(sf::Color::White);
+    this->_back.setOutlineThickness(2);
+    this->_back.setOutlineColor(sf::Color::Red);
+    this->_back.setPosition(sf::Vector2f(x * TILE_SIZE, y * TILE_SIZE));
+}
+
+void zappyGUI::Zappy2D::RTile::display(std::shared_ptr<zappyGUI::Window> window) const
+{
+    window->getRenderWindow().draw(this->_back);
+    for (const sf::CircleShape &player : this->_players)
+        window->getRenderWindow().draw(player);
+}
+
+void zappyGUI::Zappy2D::RTile::update(const zappyGUI::Tile &tile)
+{
+    (void)tile;
+}
 
 extern "C" {
     zappyGUI::IGraphical* entryPoint() {

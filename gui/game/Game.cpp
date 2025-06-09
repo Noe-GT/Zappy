@@ -9,6 +9,11 @@
 #include <iostream>
 zappyGUI::Game::Game() : _frequence(0), _teamNbr(0), _gameInProgess(false), _mapSize(30, 30)
 {
+    for (size_t y = 0; y < this->_mapSize.second; y++) {
+        this->_map.emplace_back();
+        for (size_t x = 0; x < this->_mapSize.first; x++)
+            this->_map.back().emplace_back(std::pair<size_t, size_t>(x, y));
+    }
 }
 
 zappyGUI::Game::~Game()
@@ -40,7 +45,7 @@ std::vector <std::vector <zappyGUI::Tile>> &zappyGUI::Game::getMap()
     return this->_map;
 }
 
-std::pair<int, int> zappyGUI::Game::getMapSize()
+std::pair<size_t, size_t> zappyGUI::Game::getMapSize()
 {
     return this->_mapSize;
 }
@@ -92,11 +97,13 @@ void zappyGUI::Game::setMap(std::vector <std::vector <zappyGUI::Tile>> newVal)
 
 void zappyGUI::Game::setMapSize(int newX, int newY)
 {
-    this->_mapSize = {newX, newY};
-    this->_map.resize(newY);
-    for (auto& row : this->_map)
-        row.resize(newX, Tile());
-    std::clog << "map have now a size of " << this->_map.size() << "x" << this->_map[0].size() << std::endl;
+    (void)newX;
+    (void)newY;
+    // this->_mapSize = {newX, newY};
+    // this->_map.resize(newY);
+    // for (auto& row : this->_map)
+    //     row.resize(newX, Tile());
+    // std::clog << "map have now a size of " << this->_map.size() << "x" << this->_map[0].size() << std::endl;
 }
 
 void zappyGUI::Game::setPlayers(std::vector <zappyGUI::Player> newVal)
@@ -129,8 +136,14 @@ void zappyGUI::Game::addTeam(std::string newVal)
     this->_teams.push_back(newVal);
 }
 
-void zappyGUI::Game::display()
+void zappyGUI::Game::display(std::shared_ptr<zappyGUI::IGraphical> renderer) const
 {
     printf("Game display\n");
-    //TODO: implement the display method
+    for (const std::vector<zappyGUI::Tile> &tileRow : this->_map) {
+        for (const zappyGUI::Tile &tile : tileRow) {
+            const std::pair<size_t, size_t> &pos = tile.getPos();
+            printf("test\n");
+            renderer->displayTile(tile);
+        }
+    }
 }

@@ -51,7 +51,7 @@ namespace zappyGUI {
             Client &getClient();
             std::shared_ptr<zappyGUI::Game> &getGame();
             DLLoader &getLoader();
-            std::vector <std::unique_ptr <IGraphical>> &getRenderers();
+            std::vector<std::shared_ptr<IGraphical>> &getRenderers();
 
         private:
             void update();
@@ -62,7 +62,7 @@ namespace zappyGUI {
             std::shared_ptr<zappyGUI::Window> _window;
             Client _client;
             std::shared_ptr<zappyGUI::Game> _game;
-            std::vector <std::unique_ptr <IGraphical>> _renderers;
+            std::vector <std::shared_ptr<zappyGUI::IGraphical>> _renderers;
             std::unordered_map<std::string, std::unique_ptr<Icommand>> _commands;
             //FIXME: add the cirular buffer here
     };

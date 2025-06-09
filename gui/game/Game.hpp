@@ -6,6 +6,7 @@
 */
 #pragma once
 #include "Tile.hpp"
+#include "../UI/shared/IGraphical.hpp"
 
 namespace zappyGUI {
     class Game {
@@ -18,7 +19,7 @@ namespace zappyGUI {
             bool isGameInProgess();
             std::vector <std::string> &getLogs();
             std::vector <std::vector <Tile>> &getMap();
-            std::pair<int, int> getMapSize();
+            std::pair<size_t, size_t> getMapSize();
             std::vector <Player> &getPlayers();
             std::vector <std::pair<std::shared_ptr <Player>, int>> &getEggs();
             std::vector <std::string> &getTeams();
@@ -37,17 +38,17 @@ namespace zappyGUI {
             void setTeams(std::vector <std::string> newVal);
             void addTeam(std::string newVal);
 
-            void display();
+            void display(std::shared_ptr<zappyGUI::IGraphical> renderer) const;
 
         private:
             int _frequence;
             int _teamNbr;
             bool _gameInProgess;
-            std::vector <Player> _players;
-            std::vector <std::pair <std::shared_ptr <Player>, int>> _eggs;
-            std::vector <std::string> _logs;
-            std::pair <int, int> _mapSize;
-            std::vector <std::vector <Tile>> _map;
-            std::vector <std::string> _teams;
+            std::vector<Player> _players;
+            std::vector<std::pair <std::shared_ptr <Player>, int>> _eggs;
+            std::vector<std::string> _logs;
+            std::pair<size_t, size_t> _mapSize;
+            std::vector<std::vector <Tile>> _map;
+            std::vector<std::string> _teams;
     };
 };

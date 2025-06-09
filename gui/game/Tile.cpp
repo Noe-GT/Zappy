@@ -13,7 +13,8 @@
 #include "ressources/Phiras.hpp"
 #include "ressources/Thystame.hpp"
 
-zappyGUI::Tile::Tile()
+zappyGUI::Tile::Tile(const std::pair<size_t, size_t> &pos):
+    _pos(pos)
 {
     this->_ressources.push_back({std::make_shared<Food> (),0});
     this->_ressources.push_back({std::make_shared<Linemate> (),0});
@@ -23,6 +24,13 @@ zappyGUI::Tile::Tile()
     this->_ressources.push_back({std::make_shared<Phiras> (),0});
     this->_ressources.push_back({std::make_shared<Thystame> (),0});
 }
+
+// zappyGUI::Tile::Tile(const zappyGUI::Tile &other):
+//     _pos(other._pos),
+//     _players(other.getPlayers()),
+//     _ressources(other.getRessource())
+// {
+// }
 
 zappyGUI::Tile::~Tile()
 {
@@ -43,6 +51,11 @@ std::vector <std::pair<std::shared_ptr <zappyGUI::IRessource>, int>> &zappyGUI::
     return this->_ressources;
 }
 
+const std::pair<size_t, size_t> &zappyGUI::Tile::getPos() const
+{
+    return this->_pos;
+}
+
 void zappyGUI::Tile::setPlayer(std::vector <std::shared_ptr <zappyGUI::Player>> newVal)
 {
     this->_players = newVal;
@@ -61,9 +74,4 @@ void zappyGUI::Tile::addPlayer(std::shared_ptr <zappyGUI::Player> newVal)
 void zappyGUI::Tile::addRessource(std::shared_ptr <zappyGUI::IRessource> newVal)
 {
     this->_ressources.push_back({newVal, 1});
-}
-
-void zappyGUI::Tile::display()
-{
- //TODO: draw smthg
 }

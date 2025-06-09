@@ -12,23 +12,26 @@
 
 namespace zappyGUI {
     class Player;
+
     class Tile {
         public:
-            Tile();
+            Tile(const std::pair<size_t, size_t> &pos);
+            // Tile(const zappyGUI::Tile &other);
             ~Tile();
 
             std::vector <std::shared_ptr <Player>> &getPlayers();
             std::shared_ptr <Player> &getPlayer(int index);
             std::vector <std::pair<std::shared_ptr <IRessource>, int>> &getRessource();
+            const std::pair<size_t, size_t> &getPos() const;
 
             void setPlayer(std::vector <std::shared_ptr <Player>> newVal);
             void setRessource( std::vector <std::pair<std::shared_ptr <IRessource>, int>> newVal);
 
             void addPlayer(std::shared_ptr <Player> newVal);
             void addRessource(std::shared_ptr <IRessource> newVal);
-            void display();
 
         private:
+            std::pair<size_t, size_t> _pos;
             std::vector <std::shared_ptr <Player>> _players;
             std::vector <std::pair<std::shared_ptr <IRessource>, int>> _ressources;
     };

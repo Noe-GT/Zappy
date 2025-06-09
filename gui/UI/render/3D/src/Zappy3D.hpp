@@ -3,9 +3,11 @@
 
 namespace zappyGUI {
     class Zappy3D: public AGraphical {
-    public:
-        Zappy3D();
-        virtual ~Zappy3D() = default;
-    private:
+        public:
+            Zappy3D();
+            virtual ~Zappy3D() = default;
+
+            void displayTile(const zappyGUI::Tile &tile) final;
+        private:
     };
 }
