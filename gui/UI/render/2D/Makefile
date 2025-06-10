@@ -9,7 +9,7 @@ CXX  		= 		g++
 
 CXXFLAGS 	= 		-Wall -Wextra -std=c++17 -fPIC
 
-LDFLAGS 	= 		-shared
+LDFLAGS 	= 		-shared -lsfml-graphics -lsfml-window -lsfml-system
 
 NAME 		= 		libRender2d.so
 

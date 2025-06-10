@@ -14,7 +14,6 @@ GUI_SRC 	= 	$(wildcard gui/*.cpp) 								\
 RENDERS_SRC = 	$(shell find gui/UI/shared -type f -name '*.cpp') \
 				# $(shell find gui/shared -type f -name '*.cpp')
 GUI_SHARED_SRC = 	$(shell find gui/shared -type f -name '*.cpp') \
-				$(wildcard gui/UI/shared/UIBlocks/*.cpp)									\
 
 AI_SRC 		= 	$(wildcard ai/*.c)
 
