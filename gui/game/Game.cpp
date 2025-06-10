@@ -97,13 +97,15 @@ void zappyGUI::Game::setMap(std::vector <std::vector <zappyGUI::Tile>> newVal)
 
 void zappyGUI::Game::setMapSize(int newX, int newY)
 {
-    (void)newX;
-    (void)newY;
-    // this->_mapSize = {newX, newY};
-    // this->_map.resize(newY);
-    // for (auto& row : this->_map)
-    //     row.resize(newX, Tile());
-    // std::clog << "map have now a size of " << this->_map.size() << "x" << this->_map[0].size() << std::endl;
+    this->_mapSize = {newX, newY};
+    this->_map.clear();
+    this->_map.resize(newY);
+    for (int y = 0; y < newY; y++) {
+        this->_map[y].reserve(newX);
+        for (int x = 0; x < newX; x++)
+            this->_map[y].emplace_back(std::make_pair(x, y));
+    }
+    std::clog << "map have now a size of " << this->_map.size() << "x" << (this->_map.empty() ? 0 : this->_map[0].size()) << std::endl;
 }
 
 void zappyGUI::Game::setPlayers(std::vector <zappyGUI::Player> newVal)
