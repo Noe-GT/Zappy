@@ -76,3 +76,6 @@ zappy_ai
 
 # vscode
 .vscode
+
+#Mac OS
+.DS_Store

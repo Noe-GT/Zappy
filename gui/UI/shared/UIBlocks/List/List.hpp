@@ -7,21 +7,23 @@
 
 #pragma once
 
-#include "../IUIBlock.hpp"
+#include "../AUIBlock.hpp"
 #include <memory>
 
 namespace UIBlocks {
-    class List: public IUIBlock {
+    class List: public AUIBlock {
         public:
             List(std::vector<std::shared_ptr<IUIBlock>> &elements, std::pair<float, float> position, std::pair<float, float> size);
             ~List() = default;
             void draw(zappyGUI::Window &window) override;
             void setPosition(const std::pair<float, float> &position) override;
-            void handleEvent(const sf::Event &event) override;
+            void handleEvent(const sf::Event &event, zappyGUI::Window &window) override;
             
             void addElement(std::shared_ptr<IUIBlock> element);
             void removeElement(size_t index);
             const std::variant<std::string, std::vector<std::shared_ptr<IUIBlock>>> getValue() const override;
+            void setSize(const std::pair<float, float> &size) override;
+            void setSize(const int size) override;
 
         private:
             std::pair<float, float> _position;

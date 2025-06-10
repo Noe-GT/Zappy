@@ -64,7 +64,8 @@ void zappyGUI::Window::display()
 
 void zappyGUI::Window::clear()
 {
-    this->_window.clear();
+    // this->_window.clear(sf::Color(225, 247, 213));
+    this->_window.clear(sf::Color::Black);
 }
 
 void zappyGUI::Window::close()

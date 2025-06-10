@@ -8,16 +8,17 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "../utils/Scroller/Scroller.hpp"
-#include "../IUIBlock.hpp"
+#include "../AUIBlock.hpp"
 
 namespace UIBlocks {
-    class PopupSelector: public IUIBlock {
+    class PopupSelector: public AUIBlock {
         public:
+            PopupSelector(std::vector<std::shared_ptr<IUIBlock>> &options, std::pair<float, float> position);
             PopupSelector(std::vector<std::shared_ptr<IUIBlock>> &options, std::pair<float, float> position, std::pair<float, float> size);
             ~PopupSelector() = default;
 
             void draw(zappyGUI::Window &window) override;
-            void handleEvent(const sf::Event &event) override;
+            void handleEvent(const sf::Event &event, zappyGUI::Window &window) override;
             void setPosition(const std::pair<float, float> &position) override;
             const std::variant<std::string, std::vector<std::shared_ptr<IUIBlock>>> getValue() const override;
 
@@ -25,6 +26,10 @@ namespace UIBlocks {
             const std::shared_ptr<IUIBlock> &getSelected() const;
             void open();
             void close();
+
+            void setSize(const std::pair<float, float> &size) override;
+            void setSize(const int size) override;
+            void updateMaxVisibleOptions();
 
         private:
             std::pair<float, float> _position;

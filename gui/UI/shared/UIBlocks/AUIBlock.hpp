@@ -2,28 +2,31 @@
 ** EPITECH PROJECT, 2025
 ** Zappy
 ** File description:
-** Pair
+** AUIBlock
 */
 
 #pragma once
-
-#include "../AUIBlock.hpp"
-#include <memory>
+#include "IUIBlock.hpp"
 
 namespace UIBlocks {
-    class Pair: public AUIBlock {
+    class AUIBlock: public IUIBlock {
         public:
-            Pair(std::pair<std::shared_ptr<IUIBlock>, std::shared_ptr<IUIBlock>> &pair, std::pair<float, float> position);
-            ~Pair() = default;
+            AUIBlock();
+            ~AUIBlock() = default;
             void draw(zappyGUI::Window &window) override;
-            void setPosition(const std::pair<float, float> &position) override;
             void handleEvent(const sf::Event &event, zappyGUI::Window &window) override;
+            void setPosition(const std::pair<float, float> &position) override;
             const std::variant<std::string, std::vector<std::shared_ptr<IUIBlock>>> getValue() const override;
             void setSize(const std::pair<float, float> &size) override;
             void setSize(const int size) override;
-
+    
+        protected:
+            sf::Color _borderColor;
+            sf::Color _backgroundColor;
+            int _borderThickness;
+            sf::Color _textColor;
+            sf::Font _font;
         private:
-            std::pair<float, float> _position;
-            std::pair<std::shared_ptr<IUIBlock>, std::shared_ptr<IUIBlock>> _pair;
     };
 }
+

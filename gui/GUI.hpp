@@ -64,6 +64,7 @@ namespace zappyGUI {
             std::shared_ptr<zappyGUI::Game> _game;
             std::vector <std::shared_ptr<zappyGUI::IGraphical>> _renderers;
             std::unordered_map<std::string, std::unique_ptr<Icommand>> _commands;
+            std::vector<std::shared_ptr<UIBlocks::IUIBlock>> _elements;
             //FIXME: add the cirular buffer here
     };
 };
