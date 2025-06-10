@@ -21,11 +21,18 @@
 ## Network
 
 - [ ] Lecture Ecriture des commandes - Laurent
-- [ ] Gestion socket et client
+- [x] Gestion socket et client
 
 # GUI
 
-- [ ] Affichage de la map (2d / 3d)
+- [ ] Affichage de la map
+    - [ ] Affichage 2d
+        - [x] Affichage des tiles
+        - [ ] Affichage des clients
+        - [ ] Affichage des ressources
+        - [x] Zoom
+        - [ ] Déplacements
+    - [ ] Affichage 3d
 - [ ] Créer le plugin de Blocs UI
 - [ ] Passer les modes de rendu en plugins
 - [ ] Mettre en place l'affichage de l'interface commune au deux modes de rendu:
