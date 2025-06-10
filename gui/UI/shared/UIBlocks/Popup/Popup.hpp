@@ -31,6 +31,5 @@ namespace UIBlocks {
             std::pair<float, float> _size;
             Text _content;
             sf::RectangleShape _background;
-            std::pair<std::shared_ptr<IUIBlock>, std::shared_ptr<IUIBlock>> _pair;
     };
 }
