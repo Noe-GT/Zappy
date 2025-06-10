@@ -21,7 +21,7 @@ namespace zappyGUI {
         void clear();
         void close();
         bool isOpen();
-        const std::pair<size_t, size_t> &getSize() const;
+        std::pair<size_t, size_t> getSize() const;
 
         sf::RenderWindow& getRenderWindow();
         sf::Event &getEvent();

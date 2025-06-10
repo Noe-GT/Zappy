@@ -88,7 +88,7 @@ sf::Event &zappyGUI::Window::getEvent()
     return this->_event;
 }
 
-const std::pair<size_t, size_t> &zappyGUI::Window::getSize() const
+std::pair<size_t, size_t> zappyGUI::Window::getSize() const
 {
     return {this->_window.getSize().x, this->_window.getSize().y};
 }
