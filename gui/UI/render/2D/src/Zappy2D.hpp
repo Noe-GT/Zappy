@@ -11,14 +11,14 @@ namespace zappyGUI {
         public:
             class RTile {
                 public:
-                    RTile(int x, int y, double &zoomCoeff);
+                    RTile(int x, int y, std::shared_ptr<double> zoomCoeff);
                     ~RTile() = default;
 
                     void display(std::shared_ptr<zappyGUI::Window> window) const;
                     void update(const zappyGUI::Tile &tile);
 
                 private:
-                    double &_zoomCoeff;
+                    std::shared_ptr<double> _zoomCoeff;
                     sf::RectangleShape _back;
                     std::vector<sf::CircleShape> _players;
             };
@@ -36,6 +36,6 @@ namespace zappyGUI {
             void updateZoom(bool zoomOut);
 
             std::vector<std::vector<zappyGUI::Zappy2D::RTile>> _tiles;
-            double _zoomCoeff = 1;
+            std::shared_ptr<double> _zoomCoeff;
     };
 }

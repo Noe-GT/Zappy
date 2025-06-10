@@ -7,7 +7,7 @@
 
 #include "Game.hpp"
 #include <iostream>
-zappyGUI::Game::Game() : _frequence(0), _teamNbr(0), _gameInProgess(false), _mapSize(10, 10)
+zappyGUI::Game::Game() : _frequence(0), _teamNbr(0), _gameInProgess(false), _mapSize(30, 30)
 {
     for (size_t y = 0; y < this->_mapSize.second; y++) {
         this->_map.emplace_back();
