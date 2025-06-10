@@ -18,15 +18,33 @@ zappyGUI::Tile::Tile(const std::pair<size_t, size_t> &pos):
     this->_ressources.push_back({std::make_shared<Thystame> (),0});
 }
 
-// zappyGUI::Tile::Tile(const zappyGUI::Tile &other):
-//     _pos(other._pos),
-//     _players(other.getPlayers()),
-//     _ressources(other.getRessource())
-// {
-// }
-
-zappyGUI::Tile::~Tile()
+zappyGUI::Tile::Tile(const zappyGUI::Tile &other):
+    _pos(other._pos),
+    _players(other.getPlayers())
 {
+    this->_ressources.push_back({std::make_shared<Food> (),other._ressources[0].second});
+    this->_ressources.push_back({std::make_shared<Linemate> (),other._ressources[1].second});
+    this->_ressources.push_back({std::make_shared<Deraumere> (),other._ressources[2].second});
+    this->_ressources.push_back({std::make_shared<Sibur> (),other._ressources[3].second});
+    this->_ressources.push_back({std::make_shared<Mendiane> (),other._ressources[4].second});
+    this->_ressources.push_back({std::make_shared<Phiras> (),other._ressources[5].second});
+    this->_ressources.push_back({std::make_shared<Thystame> (),other._ressources[6].second});
+}
+
+zappyGUI::Tile& zappyGUI::Tile::operator=(const Tile& other)
+{
+    if (this != &other) {
+        this->_pos = other._pos;
+        this->_players = other._players;
+        this->_ressources.push_back({std::make_shared<Food> (),other._ressources[0].second});
+        this->_ressources.push_back({std::make_shared<Linemate> (),other._ressources[1].second});
+        this->_ressources.push_back({std::make_shared<Deraumere> (),other._ressources[2].second});
+        this->_ressources.push_back({std::make_shared<Sibur> (),other._ressources[3].second});
+        this->_ressources.push_back({std::make_shared<Mendiane> (),other._ressources[4].second});
+        this->_ressources.push_back({std::make_shared<Phiras> (),other._ressources[5].second});
+        this->_ressources.push_back({std::make_shared<Thystame> (),other._ressources[6].second});
+    }
+    return *this;
 }
 
 std::vector <std::shared_ptr <zappyGUI::Player>> &zappyGUI::Tile::getPlayers()

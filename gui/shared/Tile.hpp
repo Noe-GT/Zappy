@@ -23,8 +23,8 @@ namespace zappyGUI {
     class Tile {
         public:
             Tile(const std::pair<size_t, size_t> &pos);
-            // Tile(const zappyGUI::Tile &other);
-            ~Tile();
+            Tile(const zappyGUI::Tile &other);
+            ~Tile() = default;
 
             std::vector <std::shared_ptr <Player>> &getPlayers();
             const std::vector <std::shared_ptr <Player>> &getPlayers() const;
@@ -37,6 +37,8 @@ namespace zappyGUI {
 
             void addPlayer(std::shared_ptr <Player> newVal);
             void addRessource(std::shared_ptr <IRessource> newVal);
+
+            zappyGUI::Tile& operator=(const Tile& other);
 
         private:
             std::pair<size_t, size_t> _pos;
