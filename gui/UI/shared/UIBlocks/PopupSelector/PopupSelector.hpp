@@ -14,6 +14,7 @@ namespace UIBlocks {
     class PopupSelector: public AUIBlock {
         public:
             PopupSelector(std::vector<std::shared_ptr<IUIBlock>> &options, std::pair<float, float> position);
+            PopupSelector(std::vector<std::shared_ptr<IUIBlock>> &options, std::pair<float, float> position, std::pair<float, float> size);
             ~PopupSelector() = default;
 
             void draw(zappyGUI::Window &window) override;
@@ -28,6 +29,7 @@ namespace UIBlocks {
 
             void setSize(const std::pair<float, float> &size) override;
             void setSize(const int size) override;
+            void updateMaxVisibleOptions();
 
         private:
             std::pair<float, float> _position;

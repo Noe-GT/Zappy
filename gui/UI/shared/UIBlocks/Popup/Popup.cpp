@@ -9,7 +9,7 @@
 
 UIBlocks::Popup::Popup(std::string &content, std::pair<float, float> position, std::pair<float, float> size):
     _position(position),
-    _content(UIBlocks::Text(content, position, size.second / 2)),
+    _content(UIBlocks::Text(content, position, 20)),
     _background(sf::Vector2f(_size.first, _size.second)),
     _pair(nullptr, nullptr)
 {

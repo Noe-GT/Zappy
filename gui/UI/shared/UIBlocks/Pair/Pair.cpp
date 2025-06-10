@@ -34,7 +34,7 @@ void UIBlocks::Pair::handleEvent(const sf::Event &event, zappyGUI::Window &windo
 
 const std::variant<std::string, std::vector<std::shared_ptr<UIBlocks::IUIBlock>>> UIBlocks::Pair::getValue() const
 {
-    static std::variant<std::string, std::vector<std::shared_ptr<UIBlocks::IUIBlock>>> value = std::vector<std::shared_ptr<UIBlocks::IUIBlock>>{this->_pair.first, this->_pair.second};
+    std::variant<std::string, std::vector<std::shared_ptr<UIBlocks::IUIBlock>>> value = std::vector<std::shared_ptr<UIBlocks::IUIBlock>>{this->_pair.first, this->_pair.second};
     return value;
 }
 
