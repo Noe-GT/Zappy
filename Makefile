@@ -47,6 +47,7 @@ $(SERVER_EXEC): $(SERVER_OBJ)
 gui: $(GUI_SHARED_OBJ) $(RENDERS_OBJ) $(GUI_EXEC)
 
 $(GUI_EXEC): $(GUI_OBJ)
+	mkdir -p gui/plugins
 	@for dir in $(shell find gui/UI/render -type f -name Makefile -exec dirname {} \;); do 	\
 		$(MAKE) -C $$dir; 																	\
 		cp $$dir/*.so gui/plugins/;													 		\
