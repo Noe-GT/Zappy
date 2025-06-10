@@ -12,8 +12,6 @@ const std::pair<float, float> PopupSelectorDefaultSize = std::pair<float, float>
 const int OPTION_CHARACTER_SIZE = 20;
 const int OPTION_HORIZONTAL_SPACING = 10;
 const float OPTION_VERTICAL_SPACING = OPTION_CHARACTER_SIZE * 1.5f;
-const int OPTION_HEIGHT = OPTION_CHARACTER_SIZE + OPTION_VERTICAL_SPACING;
-
 
 UIBlocks::PopupSelector::PopupSelector(std::vector<std::shared_ptr<UIBlocks::IUIBlock>> &options, std::pair<float, float> position):
     _position(position),

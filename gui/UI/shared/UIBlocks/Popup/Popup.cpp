@@ -10,7 +10,7 @@
 UIBlocks::Popup::Popup(std::string &content, std::pair<float, float> position, std::pair<float, float> size):
     _position(position),
     _content(UIBlocks::Text(content, position, 20)),
-    _background(sf::Vector2f(_size.first, _size.second))
+    _background(sf::Vector2f(size.first, size.second))
 {
 }
 void UIBlocks::Popup::draw(zappyGUI::Window &window)
