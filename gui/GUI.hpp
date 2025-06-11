@@ -17,6 +17,7 @@
 #include "client/commands/map/Msz.hpp"
 #include "client/commands/misc/Sbp.hpp"
 #include "client/commands/misc/Suc.hpp"
+#include "client/commands/misc/WELCOME.hpp"
 #include "client/commands/player/egg/Ebo.hpp"
 #include "client/commands/player/egg/Edi.hpp"
 #include "client/commands/player/egg/Enw.hpp"

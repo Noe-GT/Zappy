@@ -48,6 +48,7 @@ zappyGUI::GUI::GUI(int port, std::string hostname):
     this->_commands["pgt"] = std::make_shared<Pgt>();
     this->_commands["sgt"] = std::make_shared<Sgt>();
     this->_commands["sst"] = std::make_shared<Sst>();
+    this->_commands["WELCOME"] = std::make_shared<WELCOME>();
     const std::string pluginsDir = "./gui/plugins";
     DIR* dir = opendir(pluginsDir.c_str());
 
