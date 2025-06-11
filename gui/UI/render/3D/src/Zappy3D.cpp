@@ -11,14 +11,13 @@ zappyGUI::Zappy3D::Zappy3D()
 {
 }
 
-void zappyGUI::Zappy3D::displayTile(const zappyGUI::Tile &tile)
+void zappyGUI::Zappy3D::display()
 {
-    (void)tile;
 }
 
-void zappyGUI::Zappy3D::updateTile(const zappyGUI::Tile &tile)
+void zappyGUI::Zappy3D::update()
 {
-    (void)tile;
+    // (void)tile;
 }
 
 extern "C" {

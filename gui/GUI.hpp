@@ -38,9 +38,9 @@
 #include <unordered_map>
 #include <utility>
 #include "DlLoader.hpp"
-#include "UI/shared/IGraphical.hpp"
 namespace zappyGUI {
     class Icommand;
+    class IGraphical;
     class GUI {
         public:
             GUI(int port, std::string hostname);
@@ -63,7 +63,7 @@ namespace zappyGUI {
             Client _client;
             std::shared_ptr<zappyGUI::Game> _game;
             std::vector <std::shared_ptr<zappyGUI::IGraphical>> _renderers;
-            std::unordered_map<std::string, std::unique_ptr<Icommand>> _commands;
+            std::unordered_map<std::string, std::shared_ptr<Icommand>> _commands;
             std::vector<std::shared_ptr<UIBlocks::IUIBlock>> _elements;
             //FIXME: add the cirular buffer here
     };

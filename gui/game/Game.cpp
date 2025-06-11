@@ -6,6 +6,7 @@
 */
 
 #include "Game.hpp"
+#include "../UI/shared/IGraphical.hpp"
 #include <iostream>
 zappyGUI::Game::Game() : _frequence(0), _teamNbr(0), _gameInProgess(false), _mapSize(30, 30)
 {
@@ -140,10 +141,6 @@ void zappyGUI::Game::addTeam(std::string newVal)
 
 void zappyGUI::Game::display(std::shared_ptr<zappyGUI::IGraphical> renderer) const
 {
-    for (const std::vector<zappyGUI::Tile> &tileRow : this->_map) {
-        for (const zappyGUI::Tile &tile : tileRow) {
-            renderer->updateTile(tile);
-            renderer->displayTile(tile);
-        }
-    }
+    renderer->update();
+    renderer->display();
 }

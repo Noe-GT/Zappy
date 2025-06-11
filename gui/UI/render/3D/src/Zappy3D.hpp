@@ -7,8 +7,8 @@ namespace zappyGUI {
             Zappy3D();
             virtual ~Zappy3D() = default;
 
-            void displayTile(const zappyGUI::Tile &tile) final;
-            void updateTile(const zappyGUI::Tile &tile) final;
+            void display() final;
+            void update() final;
         private:
     };
 }
