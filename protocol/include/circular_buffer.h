@@ -29,4 +29,6 @@ void destroy_buffer(circular_buffer_t *buffer);
 // This should be called to delete unused buffers every so often
 circular_buffer_t *clean_buffer(circular_buffer_t *buffer);
 
+void free_str(char *str);
+
 #endif /* !CIRCULAR_BUFFER_H_ */

@@ -1,11 +1,11 @@
 /*
-** EPITECH PROJECT, 2025
-** zappy
+** EPITECH PROJECT, 2024
+** zap
 ** File description:
-** ai/main.c
+** main.c
 */
 
-int main(void)
+int main(int argc, char const *argv[])
 {
     return 0;
 }
