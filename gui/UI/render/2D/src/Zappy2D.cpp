@@ -8,8 +8,10 @@
 #include "Zappy2D.hpp"
 
 zappyGUI::Zappy2D::Zappy2D():
+    _assets(std::make_shared<zappyGUI::Zappy2D::AssetPool>()),
     _tiles(),
-    _zoomCoeff(std::make_shared<double>(1.0))
+    _zoomCoeff(std::make_shared<double>(1.0)),
+    _mapOffset(std::make_shared<std::pair<double, double>>(std::pair<double, double>(200.00, 20.0)))
 {
 }
 
@@ -27,7 +29,7 @@ void zappyGUI::Zappy2D::initialize(std::shared_ptr<zappyGUI::Window> window, std
     for (size_t y = 0; y < mapSize.second; y++) {
         this->_tiles.emplace_back();
         for (size_t x = 0; x < mapSize.first; x++)
-            this->_tiles.back().emplace_back(x, y, this->_zoomCoeff);
+            this->_tiles.back().emplace_back(x, y, this->_zoomCoeff, this->_mapOffset, this->_assets);
     }
 }
 
@@ -65,41 +67,61 @@ void zappyGUI::Zappy2D::displayTile(const zappyGUI::Tile &tile) {
     this->_tiles[tile.getPos().second][tile.getPos().first].display(this->_window);
 }
 
-zappyGUI::Zappy2D::RTile::RTile(int x, int y, std::shared_ptr<double> zoomCoeff):
+zappyGUI::Zappy2D::RTile::RTile(int x, int y, std::shared_ptr<double> zoomCoeff,
+    std::shared_ptr<std::pair<double, double>> mapOffset, std::shared_ptr<zappyGUI::Zappy2D::AssetPool> assets):
     _zoomCoeff(zoomCoeff),
+    _mapOffset(mapOffset),
+    _assets(assets),
     _back(),
     _players()
 {
-    this->_back.setSize(sf::Vector2f(BASE_TILE_SIZE * (*zoomCoeff.get()), BASE_TILE_SIZE * (*zoomCoeff.get())));
-    this->_back.setFillColor(sf::Color::White);
-    this->_back.setOutlineThickness(2);
-    this->_back.setOutlineColor(sf::Color::Red);
-    this->_back.setPosition(sf::Vector2f(x * (BASE_TILE_SIZE * (*zoomCoeff.get())), y * (BASE_TILE_SIZE * (*zoomCoeff.get()))));
+    double winX;
+    double winY;
+
+    this->_back.setTexture(assets->_tileTexture);
+    // this->_back.setColor(sf::Color(255, 0, 0));
+    this->_back.setScale(sf::Vector2f(1.0, 1.0));
+    winX = x * (BASE_TILE_SIZE * (*zoomCoeff.get())) + (*mapOffset.get()).first;
+    winY = y * (BASE_TILE_SIZE * (*zoomCoeff.get())) + (*mapOffset.get()).second;
+    this->_back.setPosition(sf::Vector2f(winX, winY));
 }
 
 void zappyGUI::Zappy2D::RTile::display(std::shared_ptr<zappyGUI::Window> window) const
 {
     window->getRenderWindow().draw(this->_back);
-    for (const sf::CircleShape &player : this->_players)
-        window->getRenderWindow().draw(player);
+    // for (const sf::CircleShape &player : this->_players)
+    //     window->getRenderWindow().draw(player);
 }
 
 void zappyGUI::Zappy2D::RTile::update(const zappyGUI::Tile &tile)
 {
-    this->_players.clear();
-    for (const std::shared_ptr<zappyGUI::Player> &player : tile.getPlayers()) {
-        sf::CircleShape playerShape(BASE_PLAYER_SIZE * *this->_zoomCoeff.get());
-        playerShape.setFillColor(sf::Color::Green);
-        playerShape.setPosition(this->_back.getPosition().x + BASE_TILE_SIZE,
-                                this->_back.getPosition().y + BASE_TILE_SIZE);
-        this->_players.push_back(playerShape);
-        (void)player;
-    }
+    // this->_players.clear();
+    // for (const std::shared_ptr<zappyGUI::Player> &player : tile.getPlayers()) {
+    //     sf::CircleShape playerShape(BASE_PLAYER_SIZE * *this->_zoomCoeff.get());
+    //     playerShape.setFillColor(sf::Color::Green);
+    //     playerShape.setPosition(this->_back.getPosition().x + BASE_TILE_SIZE,
+    //                             this->_back.getPosition().y + BASE_TILE_SIZE);
+    //     this->_players.push_back(playerShape);
+    //     (void)player;
+    // }
     // printf("Updating tile at (%zu, %zu) with %d coeff\n", tile.getPos().first, tile.getPos().second, *this->_zoomCoeff.get());
-    this->_back.setSize(sf::Vector2f(BASE_TILE_SIZE * *this->_zoomCoeff.get(), BASE_TILE_SIZE * *this->_zoomCoeff.get()));
+    // this->_back.setSize(sf::Vector2f(BASE_TILE_SIZE * *this->_zoomCoeff.get(), BASE_TILE_SIZE * *this->_zoomCoeff.get()));
+    this->_back.setScale(sf::Vector2f(*this->_zoomCoeff.get(), *this->_zoomCoeff.get()));
     this->_back.setPosition(sf::Vector2f(tile.getPos().first * (BASE_TILE_SIZE * *this->_zoomCoeff.get()),
                                 tile.getPos().second * (BASE_TILE_SIZE * *this->_zoomCoeff.get())));
-    this->_back.setOutlineThickness(2 * *this->_zoomCoeff.get());
+    // this->_back.setOutlineThickness(2 * *this->_zoomCoeff.get());
+}
+
+zappyGUI::Zappy2D::AssetPool::AssetPool():
+    _tileTexture(),
+    _linemateTexture(),
+    _deraumereTexture(),
+    _siburTexture(),
+    _mendianeTexture(),
+    _phirasTexture(),
+    _thystameTexture()
+{
+    this->_tileTexture.loadFromFile((ASSETS_FOLDER + std::string("tile1.png")));
 }
 
 extern "C" {
