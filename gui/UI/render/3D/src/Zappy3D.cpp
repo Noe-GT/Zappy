@@ -21,7 +21,7 @@ void zappyGUI::Zappy3D::initialize(std::shared_ptr<zappyGUI::GUI> GUI)
     std::cout << "Zappy3D initialisé avec GUI" << std::endl;
     for (size_t y = 0; y < GUI->getGame()->getMap().size(); y++) {
         for (size_t x = 0; x < GUI->getGame()->getMap()[x].size(); x++) {
-            _engine.addObj("./model.obj", "./materials.mtl", {x, 0, y}, {0, 0, 0}, {1, 1, 1});
+            _engine.addObj("./model.obj", "./materials.mtl", {static_cast<float>(x), 0, static_cast<float>(y)}, {0, 0, 0}, {1, 1, 1});
             std::clog << _engine.getObjectCount()  << " " << x << " " << y << std::endl;
         }
     }
@@ -30,7 +30,6 @@ void zappyGUI::Zappy3D::initialize(std::shared_ptr<zappyGUI::GUI> GUI)
 void zappyGUI::Zappy3D::handleEvents()
 {
     if (_gui && _gui->getWindow()) {
-        sf::RenderWindow& window = _gui->getWindow()->getRenderWindow();
         const float speed = 0.1f;
         const float rotSpeed = 0.02f;
 
@@ -78,7 +77,7 @@ void zappyGUI::Zappy3D::update()
     if (this->_engine.getObjectCount() != mapSize.first * mapSize.second) {
         for (size_t y = 0; y < mapSize.second; y++) {
             for (size_t x = 0; x < mapSize.first; x++)
-            _engine.addObj("./assets/island.obj", "./assets/island_material.mtl", {x, 0, y}, {0, 0, 0}, {1, 1, 1});
+            _engine.addObj("./assets/island.obj", "./assets/island_material.mtl", {static_cast<float>(x), 0, static_cast<float>(y)}, {0, 0, 0}, {1, 1, 1});
         }
     }
     if (_gui && _gui->getWindow()) {

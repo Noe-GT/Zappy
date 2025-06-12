@@ -224,8 +224,6 @@ void Engine::processInstance(const Cache& Cache, const InstanceData& instance, c
     float sinY = std::sin(transform.rotation.y);
     float cosZ = std::cos(transform.rotation.z);
     float sinZ = std::sin(transform.rotation.z);
-    sf::Vector3f deltaPos = transform.position - camera.position;
-    float distanceSq = deltaPos.x * deltaPos.x + deltaPos.y * deltaPos.y + deltaPos.z * deltaPos.z;
     size_t faceStep = 1;
     //FIXME: do a good geometry simplification if needed here
     for (size_t i = 0; i < model.faces.size(); i += faceStep) {
