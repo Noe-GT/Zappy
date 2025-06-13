@@ -25,6 +25,7 @@ class Engine {
         void draw(sf::RenderWindow& window);
         void clearObjects();
         size_t getObjectCount() const;
+        std::unordered_map<std::string, std::shared_ptr<Cache>> getCache();
 
     private:
         bool loadResources(Cache& model);
@@ -33,8 +34,7 @@ class Engine {
         sf::Vector2f project(const sf::Vector3f& point, float width, float height, const Camera& camera) const;
         sf::Vector3f crossProduct(const sf::Vector3f& a, const sf::Vector3f& b) const;
         void processInstance(const Cache& Cache, const InstanceData& instance, const Camera& camera, float width, float height, float cosYaw, float sinYaw, float cosPitch, float sinPitch, float tanHalfFov, float aspectRatio);
-
-        std::unordered_map<std::string, std::shared_ptr<Cache>> modelCache;
-        std::vector<std::shared_ptr<Cache>> visibleModels;
-        std::vector<TriangleData> trianglesToRender;
+        std::unordered_map<std::string, std::shared_ptr<Cache>> _modelCache;
+        std::vector<std::shared_ptr<Cache>> _visibleModels;
+        std::vector<TriangleData> _trianglesToRender;
 };

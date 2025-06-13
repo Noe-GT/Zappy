@@ -8,7 +8,7 @@
 #include "Cache.hpp"
 Engine::Engine()
 {
-    trianglesToRender.reserve(10000);
+    _trianglesToRender.reserve(10000);
 }
 
 Engine::~Engine()
@@ -19,15 +19,15 @@ Engine::~Engine()
 bool Engine::addObj(const std::string& objPath, const std::string& mtlPath, sf::Vector3f position, sf::Vector3f rotation, sf::Vector3f scale)
 {
     std::string cacheKey = objPath + "|" + mtlPath;
-    auto cache = modelCache[cacheKey];
+    auto cache = _modelCache[cacheKey];
     if (!cache) {
         cache = std::make_shared<Cache>(objPath, mtlPath);
         if (!loadResources(*cache)) {
             std::cerr << "Failed to load resources for: " << objPath << std::endl;
-            modelCache.erase(cacheKey);
+            _modelCache.erase(cacheKey);
             return false;
         }
-        modelCache[cacheKey] = cache;
+        _modelCache[cacheKey] = cache;
     }
     InstanceData instance;
     instance.transform = Transform(position, rotation, scale);
@@ -163,7 +163,7 @@ bool Engine::loadResources(Cache& model)
 void Engine::update(const Camera& camera, float width, float height)
 {
     auto start = std::chrono::high_resolution_clock::now();
-    trianglesToRender.clear();
+    _trianglesToRender.clear();
     const float maxRenderDistance = 50.0f;
     const float maxRenderDistanceSq = maxRenderDistance * maxRenderDistance;
     float cosYaw = std::cos(camera.yaw);
@@ -173,7 +173,7 @@ void Engine::update(const Camera& camera, float width, float height)
     float fov = 60.0f * static_cast<float>(M_PI) / 180.0f;
     float aspectRatio = width / height;
     float tanHalfFov = std::tan(fov / 2.0f);
-    for (auto& pair : modelCache) {
+    for (auto& pair : _modelCache) {
         auto& Cache = pair.second;
         if (Cache->instances.empty())
             continue;
@@ -202,8 +202,8 @@ void Engine::update(const Camera& camera, float width, float height)
         }
     }
 
-    if (trianglesToRender.size() > 1) {
-        std::sort(trianglesToRender.begin(), trianglesToRender.end(),
+    if (_trianglesToRender.size() > 1) {
+        std::sort(_trianglesToRender.begin(), _trianglesToRender.end(),
             [](const TriangleData& a, const TriangleData& b) {
                 return a.depth > b.depth;
             });
@@ -289,7 +289,7 @@ void Engine::processInstance(const Cache& Cache, const InstanceData& instance, c
             float dot = normal.x * viewDir.x + normal.y * viewDir.y + normal.z * viewDir.z;
             if (dot < 0) {
                 triData.depth = avgZ / 3.0f;
-                trianglesToRender.push_back(std::move(triData));
+                _trianglesToRender.push_back(std::move(triData));
             }
         }
     }
@@ -297,7 +297,7 @@ void Engine::processInstance(const Cache& Cache, const InstanceData& instance, c
 
 void Engine::draw(sf::RenderWindow& window)
 {
-    for (auto& triData : trianglesToRender) {
+    for (auto& triData : _trianglesToRender) {
         sf::RenderStates states;
         if (triData.material->hasTexture)
             states.texture = &triData.material->diffuseTexture;
@@ -307,16 +307,21 @@ void Engine::draw(sf::RenderWindow& window)
 
 void Engine::clearObjects()
 {
-    modelCache.clear();
-    trianglesToRender.clear();
+    _modelCache.clear();
+    _trianglesToRender.clear();
 }
 
 size_t Engine::getObjectCount() const
 {
     size_t count = 0;
-    for (const auto& pair : modelCache)
+    for (const auto& pair : _modelCache)
         count += pair.second->instances.size();
     return count;
+}
+
+std::unordered_map<std::string, std::shared_ptr<Cache>> Engine::getCache()
+{
+    return this->_modelCache;
 }
 
 sf::Vector2f Engine::project(const sf::Vector3f& point, float width, float height, const Camera& camera) const
