@@ -3,10 +3,13 @@
 *.d
 
 # Object files
+bin/
 *.o
 *.ko
 *.obj
 *.elf
+*.gcda
+*.gcno
 
 # Linker output
 *.ilk
@@ -43,6 +46,9 @@
 *.idb
 *.pdb
 
+# Coding style files
+*.log
+
 # Kernel Module Compile Results
 *.mod*
 *.cmd
@@ -73,12 +79,19 @@ dkms.conf
 *.lai
 
 # Executables
+unit_tests
 zappy_server
 zappy_gui
 zappy_ai
 
+<<<<<<< HEAD
 # vscode
 .vscode
 
 #Mac OS
 .DS_Store
+=======
+## OTHER ###
+# vscode
+.vscode/
+>>>>>>> feat/network
