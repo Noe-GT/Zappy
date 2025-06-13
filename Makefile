@@ -44,7 +44,7 @@ CFLAGS 		+= 	-Wall -Wextra -g3 -fPIC -Iprotocol/include
 
 CPPFLAGS 	= 	-std=c++17
 
-GUI_LDFLAGS = 	-lsfml-graphics -lsfml-window -lsfml-system -ldl
+GUI_LDFLAGS = 	-lsfml-graphics -lsfml-window -lsfml-system -ldl -L. -lprotocol
 
 CRITERION	=	--coverage -lcriterion
 
@@ -65,7 +65,7 @@ $(PROTOCOL_EXEC): $(PROTOCOL_OBJ)
 $(SERVER_EXEC): $(SERVER_OBJ)
 	$(CC) $(SERVER_OBJ) -o $(SERVER_EXEC) -L. -lprotocol -shared -Wl,-rpath=.
 
-gui: $(RENDERS_OBJ) $(GUI_EXEC)
+gui: $(PROTOCOL_EXEC) $(RENDERS_OBJ) $(GUI_EXEC)
 
 $(GUI_EXEC): $(GUI_OBJ)
 	mkdir -p gui/plugins

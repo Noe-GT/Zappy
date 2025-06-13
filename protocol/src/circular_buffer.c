@@ -135,3 +135,8 @@ circular_buffer_t *clean_buffer(circular_buffer_t *buffer)
     }
     return buffer;
 }
+
+void free_str(char *str)
+{
+    free(str);
+}

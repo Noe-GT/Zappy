@@ -35,10 +35,14 @@
 #include "client/commands/ressources/Pgt.hpp"
 #include "client/commands/settings/Sgt.hpp"
 #include "client/commands/settings/Sst.hpp"
+extern "C" {
+    #include "../protocol/include/circular_buffer.h"
+}
 #include <memory>
 #include <unordered_map>
 #include <utility>
 #include "DlLoader.hpp"
+
 namespace zappyGUI {
     class Icommand;
     class IGraphical;
@@ -66,6 +70,7 @@ namespace zappyGUI {
             std::vector <std::shared_ptr<zappyGUI::IGraphical>> _renderers;
             std::unordered_map<std::string, std::shared_ptr<Icommand>> _commands;
             std::vector<std::shared_ptr<UIBlocks::IUIBlock>> _elements;
-            //FIXME: add the cirular buffer here
+            std::shared_ptr<circular_buffer_t> _circularBuffer;
+                      //FIXME: add the cirular buffer here
     };
 };
