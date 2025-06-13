@@ -5,10 +5,10 @@
 ** Game.cpp
 */
 #pragma once
-#include "../shared/Tile.hpp"
-#include "../UI/shared/IGraphical.hpp"
+#include "../Tile.hpp"
 
 namespace zappyGUI {
+    class IGraphical;
     class Game {
         public:
             Game();

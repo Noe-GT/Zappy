@@ -26,12 +26,15 @@ void zappyGUI::Enw::receive(std::string command, zappyGUI::GUI &gui)
     std::pair <int, int> pos;
     Spell spell;
     Player newPlayer;
-    ss >> code >> eggID >> playerID >> pos.first >> pos.second;
-    gui.getGame()->getPlayers()[playerID].getSpellInProgress() = nullptr;
+    char hash;
+    ss >> code >> hash >> eggID >> hash >> playerID >> pos.first >> pos.second;    std::clog << command << std::endl;
+    if (playerID != -1) {
+        gui.getGame()->getPlayers()[playerID].getSpellInProgress() = nullptr;
+        newPlayer.setName(gui.getGame()->getPlayers()[playerID].getName());
+    }
     newPlayer.setId(-1);
-    newPlayer.setLvl(0);
     newPlayer.setPos(pos);
-    newPlayer.setName(gui.getGame()->getPlayers()[playerID].getName());
+    newPlayer.setLvl(0);
     newPlayer.setOrientation(orientation::SOUTH);
     gui.getGame()->getEggs().push_back({std::make_shared <Player> (newPlayer), eggID});
     std::clog << "player " << playerID << " layed an egg (#" << eggID << ") in " << pos.first << " " << pos.second << std::endl;

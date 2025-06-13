@@ -7,13 +7,13 @@
 #include "GUI.hpp"
 #include <iostream>
 #include <cstring>
+#include "UI/shared/IGraphical.hpp"
 #include "UI/shared/UIBlocks/PopupSelector/PopupSelector.hpp"
 #include "UI/shared/UIBlocks/Text/Text.hpp"
 #include "UI/shared/UIBlocks/Timer/Timer.hpp"
 #include "UI/shared/UIBlocks/List/List.hpp"
 #include "UI/shared/UIBlocks/Pair/Pair.hpp"
 #include "UI/shared/UIBlocks/Image/Image.hpp"
-
 #include <dirent.h>
 #include <algorithm>
 
@@ -24,31 +24,31 @@ zappyGUI::GUI::GUI(int port, std::string hostname):
     _game(std::make_shared<zappyGUI::Game>()),
     _renderers()
 {
-    printf("MAP:\nSize: %dx%d\n", this->_game->getMapSize().first, this->_game->getMapSize().second);
-    this->_commands["seg"] = std::make_unique<Seg>();
-    this->_commands["smg"] = std::make_unique<Smg>();
-    this->_commands["tna"] = std::make_unique<Tna>();
-    this->_commands["bct"] = std::make_unique<Bct>();
-    this->_commands["mct"] = std::make_unique<Mct>();
-    this->_commands["msz"] = std::make_unique<Msz>();
-    this->_commands["suc"] = std::make_unique<Suc>();
-    this->_commands["ebo"] = std::make_unique<Ebo>();
-    this->_commands["edi"] = std::make_unique<Edi>();
-    this->_commands["enw"] = std::make_unique<Enw>();
-    this->_commands["pfk"] = std::make_unique<Pfk>();
-    this->_commands["pbc"] = std::make_unique<Pbc>();
-    this->_commands["pdi"] = std::make_unique<Pdi>();
-    this->_commands["pex"] = std::make_unique<Pex>();
-    this->_commands["pic"] = std::make_unique<Pic>();
-    this->_commands["pie"] = std::make_unique<Pie>();
-    this->_commands["pin"] = std::make_unique<Pin>();
-    this->_commands["plv"] = std::make_unique<Plv>();
-    this->_commands["pnw"] = std::make_unique<Pnw>();
-    this->_commands["ppo"] = std::make_unique<Ppo>();
-    this->_commands["pdr"] = std::make_unique<Pdr>();
-    this->_commands["pgt"] = std::make_unique<Pgt>();
-    this->_commands["sgt"] = std::make_unique<Sgt>();
-    this->_commands["sst"] = std::make_unique<Sst>();
+    this->_commands["seg"] = std::make_shared<Seg>();
+    this->_commands["smg"] = std::make_shared<Smg>();
+    this->_commands["tna"] = std::make_shared<Tna>();
+    this->_commands["bct"] = std::make_shared<Bct>();
+    this->_commands["mct"] = std::make_shared<Mct>();
+    this->_commands["msz"] = std::make_shared<Msz>();
+    this->_commands["suc"] = std::make_shared<Suc>();
+    this->_commands["ebo"] = std::make_shared<Ebo>();
+    this->_commands["edi"] = std::make_shared<Edi>();
+    this->_commands["enw"] = std::make_shared<Enw>();
+    this->_commands["pfk"] = std::make_shared<Pfk>();
+    this->_commands["pbc"] = std::make_shared<Pbc>();
+    this->_commands["pdi"] = std::make_shared<Pdi>();
+    this->_commands["pex"] = std::make_shared<Pex>();
+    this->_commands["pic"] = std::make_shared<Pic>();
+    this->_commands["pie"] = std::make_shared<Pie>();
+    this->_commands["pin"] = std::make_shared<Pin>();
+    this->_commands["plv"] = std::make_shared<Plv>();
+    this->_commands["pnw"] = std::make_shared<Pnw>();
+    this->_commands["ppo"] = std::make_shared<Ppo>();
+    this->_commands["pdr"] = std::make_shared<Pdr>();
+    this->_commands["pgt"] = std::make_shared<Pgt>();
+    this->_commands["sgt"] = std::make_shared<Sgt>();
+    this->_commands["sst"] = std::make_shared<Sst>();
+    this->_commands["WELCOME"] = std::make_shared<WELCOME>();
     const std::string pluginsDir = "./gui/plugins";
     DIR* dir = opendir(pluginsDir.c_str());
 
@@ -66,7 +66,7 @@ zappyGUI::GUI::GUI(int port, std::string hostname):
         try {
             DLLoader pluginLoader(fullPath);
             auto renderer = pluginLoader.getInstance<IGraphical>("entryPoint");
-            renderer->initialize(this->_window, this->_game->getMapSize());
+            renderer->initialize(std::make_shared<zappyGUI::GUI> (*this));
             this->_renderers.push_back(std::move(renderer));
             std::cout << "loaded " << filename << std::endl;
         } catch (const std::exception& e) {
@@ -76,16 +76,15 @@ zappyGUI::GUI::GUI(int port, std::string hostname):
     closedir(dir);
     if (!this->_renderers.empty())
         this->_selectedRenderer = 0;
-
-    
 }
 
 void zappyGUI::GUI::display()
 {
     // FIXME: add the calls to the display of all elements of the map here
     this->_window->clear();
-    if (this->_selectedRenderer != -1 && this->_renderers[this->_selectedRenderer] != nullptr)
+    if (this->_selectedRenderer != -1 && this->_renderers[this->_selectedRenderer] != nullptr) {
         this->_game->display(this->_renderers[this->_selectedRenderer]);
+    }
     this->_window->display();
 }
 
@@ -146,6 +145,7 @@ void zappyGUI::GUI::update()
         std::cerr << "invalid socket" << std::endl;
         this->_window->close();
     }
+    this->_renderers[this->_selectedRenderer]->update();
 }
 
 void zappyGUI::GUI::events()
@@ -163,10 +163,16 @@ void zappyGUI::GUI::events()
                     this->_renderers[this->_selectedRenderer]->handleEvents();
             }
         }
+        if (this->_window->getEvent().type == sf::Event::KeyPressed) {
+            if (this->_window->getEvent().key.code == sf::Keyboard::Space) {
+                this->_selectedRenderer ++;
+                this->_selectedRenderer %= this->_renderers.size();
+            }
+        }
         // for (auto &element : this->_elements) {
         //     element->handleEvent(this->_window.getEvent(), this->_window);
         // }
-        
+
     }
 }
 
@@ -238,7 +244,7 @@ void zappyGUI::GUI::loop()
         //     selected.get()->setText("Selected: " + std::get<std::string>(std::get<std::vector<std::shared_ptr<UIBlocks::IUIBlock>>>(selector.get()->getSelected()->getValue()).at(1).get()->getValue()));
         this->_window->clear();
         this->events();
-        
+
         this->update();
         // for (auto &element : this->_elements)
         //     element->draw(this->_window);

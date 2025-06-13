@@ -6,100 +6,152 @@
 */
 
 #include "Zappy2D.hpp"
+#include <iostream>
 
 zappyGUI::Zappy2D::Zappy2D():
     _tiles(),
-    _zoomCoeff(std::make_shared<double>(1.0))
+    _zoomCoeff(1.0),
+    _mapOffsetX(0.0f),
+    _mapOffsetY(0.0f)
 {
 }
 
-void zappyGUI::Zappy2D::initialize(std::shared_ptr<zappyGUI::Window> window, std::pair<size_t, size_t> mapSize)
+void zappyGUI::Zappy2D::initialize(std::shared_ptr<zappyGUI::GUI> GUI)
 {
-    zappyGUI::AGraphical::initialize(window, mapSize);
-    // if (mapSize.first * BASE_TILE_SIZE > window->getSize().first ||
-    //     mapSize.second * BASE_TILE_SIZE > window->getSize().second) {
-    //     *this->_zoomCoeff.get() = std::min(
-    //         static_cast<double>(window->getSize().first) / (mapSize.first * BASE_TILE_SIZE),
-    //         static_cast<double>(window->getSize().second) / (mapSize.second * BASE_TILE_SIZE));
-    // } else {
-    //     *this->_zoomCoeff.get() = 1.0;
-    // }
-    for (size_t y = 0; y < mapSize.second; y++) {
-        this->_tiles.emplace_back();
-        for (size_t x = 0; x < mapSize.first; x++)
-            this->_tiles.back().emplace_back(x, y, this->_zoomCoeff);
+    zappyGUI::AGraphical::initialize(GUI);
+
+    this->_GUI = GUI;
+    computeZoom();
+    this->_tiles.resize(GUI->getGame()->getMapSize().second);
+    for (size_t y = 0; y < GUI->getGame()->getMapSize().second; y++) {
+        this->_tiles[y].reserve(GUI->getGame()->getMapSize().first);
+        for (size_t x = 0; x < GUI->getGame()->getMapSize().first; x++)
+            this->_tiles[y].emplace_back(x, y, this->_zoomCoeff);
     }
+    computeMapOffsets();
+}
+
+void zappyGUI::Zappy2D::computeZoom()
+{
+    std::pair<size_t, size_t> mapSize = _GUI->getGame()->getMapSize();
+    if (mapSize.first == 0 || mapSize.second == 0)
+        return;
+    double windowWidth = static_cast<double>(_window->getSize().first);
+    double windowHeight = static_cast<double>(_window->getSize().second);
+    double availableWidth = windowWidth * (1.0 - 2 * MARGIN_HORIZONTAL_RATIO);
+    double availableHeight = windowHeight - (2 * MARGIN_VERTICAL);
+    availableHeight = std::max(availableHeight, 1.0);
+    double widthRatio = availableWidth / (mapSize.first * BASE_TILE_SIZE);
+    double heightRatio = availableHeight / (mapSize.second * BASE_TILE_SIZE);
+    this->_zoomCoeff = std::min(widthRatio, heightRatio);
+    this->_zoomCoeff = std::max(std::min(this->_zoomCoeff, ZOOM_COEFF_MAX), ZOOM_COEFF_MIN);
+    std::clog << _zoomCoeff << std::endl;
+}
+
+void zappyGUI::Zappy2D::computeMapOffsets()
+{
+    if (!_GUI || _tiles.empty() || _tiles[0].empty())
+        return;
+
+    auto mapSize = _GUI->getGame()->getMapSize();
+    float totalMapWidth = mapSize.first * BASE_TILE_SIZE * this->_zoomCoeff;
+    float totalMapHeight = mapSize.second * BASE_TILE_SIZE * this->_zoomCoeff;
+    this->_mapOffsetX = (_window->getSize().first - totalMapWidth) / 2;
+    float availableVerticalSpace = _window->getSize().second - (2 * MARGIN_VERTICAL);
+    this->_mapOffsetY = MARGIN_VERTICAL + (availableVerticalSpace - totalMapHeight) / 2;
 }
 
 void zappyGUI::Zappy2D::handleEvents()
 {
-    if (this->_window->getEvent().key.code == sf::Keyboard::Add)
-        this->updateZoom(false);
-    else if (this->_window->getEvent().key.code == sf::Keyboard::Subtract)
-        this->updateZoom(true);
+    //TODO: handle mouse event to draw popup
 }
 
-void zappyGUI::Zappy2D::updateZoom(bool zoomOut)
+std::vector<std::vector<zappyGUI::Zappy2D::RTile>> &zappyGUI::Zappy2D::getTiles()
 {
-    if (zoomOut && *this->_zoomCoeff.get() > ZOOM_COEFF_MIN) {
-        *this->_zoomCoeff.get() -= ZOOM_COEFF_SENSITIVITY;
-    } else if (!zoomOut && *this->_zoomCoeff.get() < ZOOM_COEFF_MAX) {
-        *this->_zoomCoeff.get() += ZOOM_COEFF_SENSITIVITY;
-    }
-    // printf("Zooming %s : %lf\n", zoomOut ? "out" : "in", *this->_zoomCoeff.get());
+    return this->_tiles;
 }
 
-void zappyGUI::Zappy2D::display()
+zappyGUI::Zappy2D::RTile &zappyGUI::Zappy2D::getTile(int x, int y)
 {
+    return this->_tiles[y][x];
 }
 
 void zappyGUI::Zappy2D::update()
 {
-}
-
-void zappyGUI::Zappy2D::updateTile(const zappyGUI::Tile &tile) {
-    this->_tiles[tile.getPos().second][tile.getPos().first].update(tile);
-}
-
-void zappyGUI::Zappy2D::displayTile(const zappyGUI::Tile &tile) {
-    this->_tiles[tile.getPos().second][tile.getPos().first].display(this->_window);
-}
-
-zappyGUI::Zappy2D::RTile::RTile(int x, int y, std::shared_ptr<double> zoomCoeff):
-    _zoomCoeff(zoomCoeff),
-    _back(),
-    _players()
-{
-    this->_back.setSize(sf::Vector2f(BASE_TILE_SIZE * (*zoomCoeff.get()), BASE_TILE_SIZE * (*zoomCoeff.get())));
-    this->_back.setFillColor(sf::Color::White);
-    this->_back.setOutlineThickness(2);
-    this->_back.setOutlineColor(sf::Color::Red);
-    this->_back.setPosition(sf::Vector2f(x * (BASE_TILE_SIZE * (*zoomCoeff.get())), y * (BASE_TILE_SIZE * (*zoomCoeff.get()))));
-}
-
-void zappyGUI::Zappy2D::RTile::display(std::shared_ptr<zappyGUI::Window> window) const
-{
-    window->getRenderWindow().draw(this->_back);
-    for (const sf::CircleShape &player : this->_players)
-        window->getRenderWindow().draw(player);
-}
-
-void zappyGUI::Zappy2D::RTile::update(const zappyGUI::Tile &tile)
-{
-    this->_players.clear();
-    for (const std::shared_ptr<zappyGUI::Player> &player : tile.getPlayers()) {
-        sf::CircleShape playerShape(BASE_PLAYER_SIZE * *this->_zoomCoeff.get());
-        playerShape.setFillColor(sf::Color::Green);
-        playerShape.setPosition(this->_back.getPosition().x + BASE_TILE_SIZE,
-                                this->_back.getPosition().y + BASE_TILE_SIZE);
-        this->_players.push_back(playerShape);
-        (void)player;
+    auto mapSize = this->_GUI->getGame()->getMapSize();
+    if (_tiles.size() != mapSize.second || (_tiles.size() > 0 && this->_tiles[0].size() != mapSize.first)) {
+        computeZoom();
+        this->_tiles.clear();
+        this->_tiles.resize(mapSize.second);
+        for (size_t y = 0; y < mapSize.second; y++) {
+            this->_tiles[y].reserve(mapSize.first);
+            for (size_t x = 0; x < mapSize.first; x++) {
+                this->_tiles[y].emplace_back(x, y, this->_zoomCoeff);
+            }
+        }
+        computeMapOffsets();
     }
-    // printf("Updating tile at (%zu, %zu) with %d coeff\n", tile.getPos().first, tile.getPos().second, *this->_zoomCoeff.get());
-    this->_back.setSize(sf::Vector2f(BASE_TILE_SIZE * *this->_zoomCoeff.get(), BASE_TILE_SIZE * *this->_zoomCoeff.get()));
-    this->_back.setPosition(sf::Vector2f(tile.getPos().first * (BASE_TILE_SIZE * *this->_zoomCoeff.get()),
-                                tile.getPos().second * (BASE_TILE_SIZE * *this->_zoomCoeff.get())));
-    this->_back.setOutlineThickness(2 * *this->_zoomCoeff.get());
+    const auto& gameMap = _GUI->getGame()->getMap();
+    if (gameMap.size() != mapSize.first || (gameMap.size() > 0 && gameMap[0].size() != mapSize.second)) {
+        return;
+    }
+
+    for (size_t y = 0; y < this->_tiles.size() && y < mapSize.second; y++) {
+        for (size_t x = 0; x < this->_tiles[y].size() && x < mapSize.first; x++) {
+            if (x < gameMap.size() && y < gameMap[x].size()) {
+                this->_tiles[y][x].update(gameMap[x][y]);
+            }
+        }
+    }
+}
+
+void zappyGUI::Zappy2D::updateZoom(bool zoomOut)
+{
+    double oldZoom = this->_zoomCoeff;
+
+    if (zoomOut && this->_zoomCoeff > ZOOM_COEFF_MIN)
+        this->_zoomCoeff -= ZOOM_COEFF_SENSITIVITY;
+    if (!zoomOut && this->_zoomCoeff < ZOOM_COEFF_MAX)
+        this->_zoomCoeff += ZOOM_COEFF_SENSITIVITY;
+
+    std::pair<size_t, size_t> mapSize = _GUI->getGame()->getMapSize();
+    double windowWidth = static_cast<double>(_window->getSize().first);
+    double windowHeight = static_cast<double>(_window->getSize().second);
+    double availableWidth = windowWidth * (1.0 - 2 * MARGIN_HORIZONTAL_RATIO);
+    double availableHeight = windowHeight - (2 * MARGIN_VERTICAL);
+    double requiredWidth = mapSize.first * BASE_TILE_SIZE * _zoomCoeff;
+    double requiredHeight = mapSize.second * BASE_TILE_SIZE * _zoomCoeff;
+    if (requiredWidth > availableWidth || requiredHeight > availableHeight) {
+        computeZoom();
+    }
+    if (oldZoom != this->_zoomCoeff) {
+        for (auto& row : this->_tiles) {
+            for (auto& tile : row)
+                tile.updateZoom(_zoomCoeff);
+        }
+        computeMapOffsets();
+    }
+}
+
+void zappyGUI::Zappy2D::display()
+{
+    if (_tiles.empty() || this->_tiles[0].empty())
+        return;
+    computeMapOffsets();
+    for (auto& row : this->_tiles) {
+        for (auto& tile : row) {
+            tile.display(_window, _mapOffsetX, _mapOffsetY);
+        }
+    }
+}
+
+void zappyGUI::Zappy2D::updateTile(const zappyGUI::Tile &tile)
+{
+    auto pos = tile.getPos();
+
+    if (pos.second < _tiles.size() && pos.first < _tiles[pos.second].size()) {
+        this->_tiles[pos.second][pos.first].update(tile);
+    }
 }
 
 extern "C" {
