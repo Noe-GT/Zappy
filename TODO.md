@@ -49,4 +49,6 @@
 
 # AI
 
-- [ ] Faire l'ai
+- [ ] Implementer le protocole de communication Serveur <-> IA -> IN PROGRESS
+- [ ] Faire varier les comportements
+- [ ] Etablir une base pour les IA (2 cases, 1 fork et 1 incantation) = IA sedentaire
