@@ -2,6 +2,7 @@
 #include "../../../shared/AGraphical.hpp"
 #define BASE_TILE_SIZE 32
 #define BASE_PLAYER_SIZE 10
+#define BASE_RESSOURCE_SIZE 16
 #define ZOOM_COEFF_MAX 5
 #define ZOOM_COEFF_MIN 0.1
 #define ZOOM_COEFF_SENSITIVITY 0.1
@@ -16,12 +17,14 @@ namespace zappyGUI {
                     ~AssetPool() = default;
 
                     sf::Texture _tileTexture;
+                    sf::Texture _playerTexture;
                     sf::Texture _linemateTexture;
                     sf::Texture _deraumereTexture;
                     sf::Texture _siburTexture;
                     sf::Texture _mendianeTexture;
                     sf::Texture _phirasTexture;
                     sf::Texture _thystameTexture;
+                    sf::Texture _foodTexture;
             };
 
             class RTile {
@@ -33,14 +36,13 @@ namespace zappyGUI {
                     void update(const zappyGUI::Tile &tile);
 
                 private:
+                    void handleRessouces(const zappyGUI::Tile &tile);
+
                     std::shared_ptr<double> _zoomCoeff;
                     std::shared_ptr<std::pair<double, double>> _mapOffset;
-                    // sf::RectangleShape _back;
                     std::shared_ptr<zappyGUI::Zappy2D::AssetPool> _assets;
-
-
                     sf::Sprite _back;
-                    std::vector<sf::CircleShape> _players;
+                    sf::Sprite _ressource;
             };
 
             Zappy2D();
