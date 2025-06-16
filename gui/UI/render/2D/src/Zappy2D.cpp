@@ -23,14 +23,36 @@ void zappyGUI::Zappy2D::initialize(std::shared_ptr<zappyGUI::Window> window, std
         for (size_t x = 0; x < mapSize.first; x++)
             this->_tiles.back().emplace_back(x, y, this->_zoomCoeff, this->_mapOffset, this->_assets);
     }
+    this->_mapOffset->first = (window->getSize().first - (mapSize.first * BASE_TILE_SIZE)) / 2.0;
+    this->_mapOffset->second = (window->getSize().second - (mapSize.second * BASE_TILE_SIZE)) / 2.0;
 }
 
 void zappyGUI::Zappy2D::handleEvents()
 {
-    if (this->_window->getEvent().key.code == sf::Keyboard::Add)
-        this->updateZoom(false);
-    else if (this->_window->getEvent().key.code == sf::Keyboard::Subtract)
-        this->updateZoom(true);
+    sf::Keyboard::Key eventCode = this->_window->getEvent().key.code;
+
+    switch (eventCode) {
+        case sf::Keyboard::Add:
+            this->updateZoom(false);
+            break;
+        case sf::Keyboard::Subtract:
+            this->updateZoom(true);
+            break;
+        case sf::Keyboard::Left:
+            this->updatePosition(eventCode);
+            break;
+        case sf::Keyboard::Right:
+            this->updatePosition(eventCode);
+            break;
+        case sf::Keyboard::Up:
+            this->updatePosition(eventCode);
+            break;
+        case sf::Keyboard::Down:
+            this->updatePosition(eventCode);
+            break;
+        default:
+            break;
+    }
 }
 
 void zappyGUI::Zappy2D::updateZoom(bool zoomOut)
@@ -39,6 +61,19 @@ void zappyGUI::Zappy2D::updateZoom(bool zoomOut)
         *this->_zoomCoeff.get() -= ZOOM_COEFF_SENSITIVITY;
     } else if (!zoomOut && *this->_zoomCoeff.get() < ZOOM_COEFF_MAX) {
         *this->_zoomCoeff.get() += ZOOM_COEFF_SENSITIVITY;
+    }
+}
+
+void zappyGUI::Zappy2D::updatePosition(sf::Keyboard::Key eventCode)
+{
+    if (eventCode == sf::Keyboard::Right) {
+        (*this->_mapOffset.get()).first += MAP_OFFSET_SENSITIVITY * (*this->_zoomCoeff.get());
+    } else if (eventCode == sf::Keyboard::Left) {
+        (*this->_mapOffset.get()).first -= MAP_OFFSET_SENSITIVITY * (*this->_zoomCoeff.get());
+    } else if (eventCode == sf::Keyboard::Up) {
+        (*this->_mapOffset.get()).second -= MAP_OFFSET_SENSITIVITY * (*this->_zoomCoeff.get());
+    } else if (eventCode == sf::Keyboard::Down) {
+        (*this->_mapOffset.get()).second += MAP_OFFSET_SENSITIVITY * (*this->_zoomCoeff.get());
     }
 }
 
@@ -87,8 +122,8 @@ void zappyGUI::Zappy2D::RTile::handleRessouces(const zappyGUI::Tile &tile)
     zappyGUI::IRessource *ressource = tile.getRessourcesConst()[0].first.get();
     float tileSize = BASE_TILE_SIZE * *this->_zoomCoeff.get();
     float ressourceSize = BASE_RESSOURCE_SIZE * *this->_zoomCoeff.get();
-    float x = tile.getPos().first * tileSize + (tileSize / 2 - ressourceSize / 2);
-    float y = tile.getPos().second * tileSize + (tileSize / 2 - ressourceSize / 2);
+    float x = this->_back.getPosition().x + (tileSize / 2 - ressourceSize / 2);
+    float y = this->_back.getPosition().y + (tileSize / 2 - ressourceSize / 2);
 
     this->_ressource.setScale(sf::Vector2f(*this->_zoomCoeff.get(), *this->_zoomCoeff.get()));
     this->_ressource.setPosition(x, y);
@@ -111,6 +146,9 @@ void zappyGUI::Zappy2D::RTile::handleRessouces(const zappyGUI::Tile &tile)
 
 void zappyGUI::Zappy2D::RTile::update(const zappyGUI::Tile &tile)
 {
+    float x = tile.getPos().first * (BASE_TILE_SIZE * *this->_zoomCoeff.get()) + (*this->_mapOffset.get()).first;
+    float y = tile.getPos().second * (BASE_TILE_SIZE * *this->_zoomCoeff.get()) + (*this->_mapOffset.get()).second;
+
     if (tile.getPlayers().size() >= 1) {
         this->_back.setTexture(this->_assets->_playerTexture);
         this->_back.setColor(sf::Color::Red);
@@ -121,8 +159,7 @@ void zappyGUI::Zappy2D::RTile::update(const zappyGUI::Tile &tile)
         }
     }
     this->_back.setScale(sf::Vector2f(*this->_zoomCoeff.get(), *this->_zoomCoeff.get()));
-    this->_back.setPosition(sf::Vector2f(tile.getPos().first * (BASE_TILE_SIZE * *this->_zoomCoeff.get()),
-        tile.getPos().second * (BASE_TILE_SIZE * *this->_zoomCoeff.get())));
+    this->_back.setPosition(x, y);
 }
 
 zappyGUI::Zappy2D::AssetPool::AssetPool():
@@ -138,11 +175,11 @@ zappyGUI::Zappy2D::AssetPool::AssetPool():
     this->_tileTexture.loadFromFile((ASSETS_FOLDER + std::string("tile1.png")));
     this->_playerTexture.loadFromFile((ASSETS_FOLDER + std::string("player1.png")));
     this->_linemateTexture.loadFromFile((ASSETS_FOLDER + std::string("ore1.png")));
-    this->_deraumereTexture.loadFromFile((ASSETS_FOLDER + std::string("ore2.png")));
+    this->_deraumereTexture.loadFromFile((ASSETS_FOLDER + std::string("ore7.png")));
     this->_siburTexture.loadFromFile((ASSETS_FOLDER + std::string("ore3.png")));
-    this->_mendianeTexture.loadFromFile((ASSETS_FOLDER + std::string("ore4.png")));
-    this->_phirasTexture.loadFromFile((ASSETS_FOLDER + std::string("ore4.png")));
-    this->_thystameTexture.loadFromFile((ASSETS_FOLDER + std::string("ore4.png")));
+    this->_mendianeTexture.loadFromFile((ASSETS_FOLDER + std::string("ore2.png")));
+    this->_phirasTexture.loadFromFile((ASSETS_FOLDER + std::string("ore5.png")));
+    this->_thystameTexture.loadFromFile((ASSETS_FOLDER + std::string("ore6.png")));
     this->_foodTexture.loadFromFile((ASSETS_FOLDER + std::string("food.png")));
 }
 

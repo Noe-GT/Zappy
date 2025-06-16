@@ -6,6 +6,7 @@
 #define ZOOM_COEFF_MAX 5
 #define ZOOM_COEFF_MIN 0.1
 #define ZOOM_COEFF_SENSITIVITY 0.1
+#define MAP_OFFSET_SENSITIVITY 10
 #define ASSETS_FOLDER "gui/UI/render/2D/assets/"
 
 namespace zappyGUI {
@@ -56,6 +57,7 @@ namespace zappyGUI {
 
         private:
             void updateZoom(bool zoomOut);
+            void updatePosition(sf::Keyboard::Key eventCode);
 
             std::shared_ptr<zappyGUI::Zappy2D::AssetPool> _assets;
             std::vector<std::vector<zappyGUI::Zappy2D::RTile>> _tiles;
