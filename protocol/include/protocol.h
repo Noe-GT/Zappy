@@ -10,7 +10,7 @@
     #include "circular_buffer.h"
     #include <stdbool.h>
 
-bool send_message(int fd, char *string);
+bool send_message(int fd, char *fmt, ...);
 bool receive(int fd, circular_buffer_t *buffer);
 
 #endif /* !PROTOCOL_H_ */

@@ -10,11 +10,18 @@
 #include <stdio.h>
 #include <string.h>
 #include <poll.h>
+#include <stdarg.h>
+#include <stdlib.h>
 
-bool send_message(int fd, char *string)
+bool send_message(int fd, char *fmt, ...)
 {
     struct pollfd pfd = {fd, POLLOUT, 0};
+    va_list list;
+    char *string = NULL;
 
+    va_start(list, fmt);
+    vasprintf(&string, fmt, list);
+    va_end(list);
     if (poll(&pfd, 1, 100) <= 0 || !(pfd.revents & POLLOUT)) {
         perror("[PROTOCOL] Poll failed\n");
         return false;
@@ -23,6 +30,7 @@ bool send_message(int fd, char *string)
         perror("[PROTOCOL] Write failed\n");
         return false;
     }
+    free(string);
     return true;
 }
 
