@@ -7,7 +7,7 @@
 
 #include "../../include/commands.h"
 
-void message_plv(server_t *server, client_t *client, char *message)
+void command_plv(server_t *server, client_t *client, char *message)
 {
     (void)server;
     (void)client;

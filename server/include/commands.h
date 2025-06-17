@@ -15,7 +15,7 @@ typedef struct command_s {
     void (*function)(server_t *, client_t *, char *);
 } command_t;
 
-void handle_client_commands(network_t *net);
+void handle_client_commands(server_t *server);
 
 // COMMANDS
 void command_msz(server_t *server, client_t *client, char *message);
@@ -23,7 +23,8 @@ void command_bct(server_t *server, client_t *client, char *message);
 void command_mct(server_t *server, client_t *client, char *message);
 void command_tna(server_t *server, client_t *client, char *message);
 void command_ppo(server_t *server, client_t *client, char *message);
-void message_pin(server_t *server, client_t *client, char *message);
+void command_pin(server_t *server, client_t *client, char *message);
+void command_plv(server_t *server, client_t *client, char *message);
 void command_sgt(server_t *server, client_t *client, char *message);
 void command_sst(server_t *server, client_t *client, char *message);
 

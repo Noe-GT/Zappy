@@ -31,7 +31,7 @@ void server_run(server_t *server)
 {
     while (true) {
         network_handle(server->network);
-        handle_client_commands(server->network);
+        handle_client_commands(server);
     }
     free_server(server);
 }
