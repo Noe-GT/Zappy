@@ -14,6 +14,6 @@ void command_msz(server_t *server, client_t *client, char *message)
         fprintf(stderr, "[MSZ] invalid map size command\n");
         return;
     }
-    send_message(client->id, "msz %u %u\n",
+    send_message(client->fd, "msz %u %u\n",
         PARAMETERS->width, PARAMETERS->height);
 }

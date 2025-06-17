@@ -38,24 +38,25 @@ client_list_t *cl_destroy(client_list_t *list)
     return NULL;
 }
 
-static client_t *new_node(int id)
+static client_t *new_node(int fd)
 {
     client_t *new = malloc(sizeof(client_t));
 
-    new->id = id;
+    new->id = fd;
+    new->fd = fd;
     new->next = NULL;
     new->buffer = create_buffer();
     return new;
 }
 
-void cl_add_end(client_list_t *list, int id)
+void cl_add_end(client_list_t *list, int fd)
 {
     if (list->begin == NULL) {
-        list->begin = new_node(id);
+        list->begin = new_node(fd);
         list->end = list->begin;
         return;
     }
-    list->end->next = new_node(id);
+    list->end->next = new_node(fd);
     list->end = list->end->next;
 }
 

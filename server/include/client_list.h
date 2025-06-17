@@ -26,7 +26,7 @@ typedef struct client_list_s {
 
 client_list_t *init_client_list(void);
 client_list_t *cl_destroy(client_list_t *list);
-void cl_add_end(client_list_t *list, int id);
+void cl_add_end(client_list_t *list, int fd);
 void cl_remove(client_list_t *list, int id);
 client_t *cl_get(client_list_t *list, int id);
 
