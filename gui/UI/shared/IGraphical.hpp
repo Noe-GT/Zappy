@@ -11,6 +11,7 @@
 #include <memory>
 #include <vector>
 #include <string>
+#include <iostream>
 
 namespace zappyGUI {
     class IGraphical {
