@@ -1,3 +1,7 @@
+import socket
+import argparse
+import threading
+import sys
 from ctypes import *
 import os
 
@@ -35,24 +39,90 @@ class CircularBuffer:
     def __del__(self):
         lib.destroy_buffer(self.ptr)
 
-def test_circular_buffer():
+class ZappyClient:
+    def __init__(self, host, port, team_name):
+        self.host = host
+        self.port = port
+        self.team_name = team_name
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.buffer = CircularBuffer()
+        self.running = False
+        self.initialized = False
 
-    buf = CircularBuffer()
-    buf.write("hello ")
+    def connect(self):
+        try:
+            self.socket.connect((self.host, self.port))
+            print(f"Connected to server {self.host}:{self.port}")
+            self.running = True
+            threading.Thread(target=self.receive_data, daemon=True).start()
+            while not self.initialized:
+                pass
+            self.interactive_loop()
+        except Exception as e:
+            print(f"Connection error: {e}")
+            sys.exit(1)
 
-    while True:
-        msg = buf.read()
-        if msg is None:
-            break
-        print(f"{msg.strip()}")\
+    def send_command(self, command):
+        if not command.endswith('\n'):
+            command += '\n'
+        self.socket.send(command.encode('utf-8'))
 
-    buf.write("world \n")
+    def receive_data(self):
+        while self.running:
+            try:
+                data = self.socket.recv(1024)
+                if not data:
+                    print("Server disconnected")
+                    self.running = False
+                    sys.exit(0)
+                self.buffer.write(data.decode('utf-8'))
+                while True:
+                    message = self.buffer.read()
+                    if not message:
+                        break
+                    print(f"\n <-- {message.strip()}")
+                    if not self.initialized:
+                        if "WELCOME" in message:
+                            self.send_command(self.team_name)
+                            self.initialized = True
+                    else:
+                        sys.stdout.write("> ")
+                        sys.stdout.flush()
 
-    while True:
-        msg = buf.read()
-        if msg is None:
-            break
-        print(f"-> {msg.strip()}")
+            except Exception as e:
+                print(f"\nReceive error: {e}")
+                self.running = False
+                sys.exit(1)
+
+    def interactive_loop(self):
+        while self.running:
+            try:
+                command = input("> ")
+                if command.lower() == 'exit':
+                    self.running = False
+                    self.socket.close()
+                    sys.exit(0)
+
+                self.send_command(command)
+
+            except KeyboardInterrupt:
+                print("\nClosing connection...")
+                self.running = False
+                self.socket.close()
+                sys.exit(0)
+            except Exception as e:
+                print(f"Error: {e}")
+
+def parse_arguments():
+    parser = argparse.ArgumentParser(description='Zappy AI Client', add_help=False)
+    parser.add_argument('-p', '--port', type=int, required=True, help='Port number')
+    parser.add_argument('-n', '--name', required=True, help='Team name')
+    parser.add_argument('-h', '--host', default='localhost', help='Host machine (default: localhost)')
+    parser.add_argument('--help', action='store_true', help='USAGE: ./zappy_ai -p port -n name -h machine')
+    return parser.parse_args()
 
 if __name__ == "__main__":
-    test_circular_buffer()
+    args = parse_arguments()
+    client = ZappyClient(args.host, args.port, args.name)
+    client.connect()
+
