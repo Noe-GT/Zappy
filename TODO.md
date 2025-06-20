@@ -16,6 +16,13 @@
 
 ## Applicatif
 
+- [ ] Game Logic
+    - [ ] Resource management
+    - [ ] Elevation management
+    - [ ] Vision management
+    - [ ] Map management
+    - [ ] Activitie management
+
 - [ ] Interpretation des commandes / logiques
 
 ## Network
