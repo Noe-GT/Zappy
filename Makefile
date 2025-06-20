@@ -44,8 +44,7 @@ CFLAGS 		+= 	-Wall -Wextra -g3 -fPIC -Iprotocol/include
 
 CPPFLAGS 	= 	-std=c++17
 
-GUI_LDFLAGS = 	-lsfml-graphics -lsfml-window -lsfml-system -ldl -L. -lprotocol
-
+GUI_LDFLAGS =	-Wl,--no-as-needed -lGLEW -lglfw -lOpenGL -lsfml-graphics -lsfml-window -lsfml-system -ldl -L. -lprotocol -Wl,--export-dynamic -Wl,-rpath,'$$ORIGIN/plugins'
 CRITERION	=	--coverage -lcriterion
 
 SERVER_FLAGS=	$(CFLAGS) -Iserver/include

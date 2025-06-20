@@ -1,44 +1,51 @@
 /*
-** EPITECH PROJECT, 2024
-** zap
-** File description:
-** Camera.cpp
+*** EPITECH PROJECT, 2024
+*** zap
+*** File description:
+*** Camera.cpp
 */
 #include "Camera.hpp"
+#include <iostream>
 
-Camera::Camera(): position(0, 0, 0), pitch(0), yaw(0)
+Camera::Camera(): position(0.0f, 0.0f, 0.0f), pitch(0.0f), yaw(-90.0f), _worldUp(0.0f, 1.0f, 0.0f)
 {
+    updateVectors();
 }
 
-sf::Vector3f Camera::getForwardVector() const
+glm::vec3 Camera::getFront() const
 {
-    return sf::Vector3f(
-        std::sin(yaw) * std::cos(pitch),
-        -std::sin(pitch),
-        std::cos(yaw) * std::cos(pitch)
-    );
+    return _front;
 }
 
-sf::Vector3f Camera::getRightVector() const
+glm::vec3 Camera::getRight() const
 {
-    return sf::Vector3f(
-        std::cos(yaw),
-        0,
-        -std::sin(yaw)
-    );
+    return _right;
+}
+
+glm::vec3 Camera::getUp() const
+{
+    return _up;
 }
 
 void Camera::move(float forward, float right, float up, float speed)
 {
-    sf::Vector3f forwardVec = getForwardVector();
-    sf::Vector3f rightVec = getRightVector();
+    position += _front * forward * speed;
+    position += _right * right * speed;
+    position += _worldUp * up * speed;
+}
 
-    position.x += forwardVec.x * forward * speed;
-    position.y += forwardVec.y * forward * speed;
-    position.z += forwardVec.z * forward * speed;
+glm::mat4 Camera::getViewMatrix() const
+{
+    return glm::lookAt(position, position + _front, _up);
+}
 
-    position.x += rightVec.x * right * speed;
-    position.z += rightVec.z * right * speed;
-
-    position.y += up * speed;
+void Camera::updateVectors()
+{
+    glm::vec3 front;
+    front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+    front.y = sin(glm::radians(pitch));
+    front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+    _front = glm::normalize(front);
+    _right = glm::normalize(glm::cross(_front, _worldUp));
+    _up = glm::normalize(glm::cross(_right, _front));
 }

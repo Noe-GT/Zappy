@@ -15,5 +15,13 @@ namespace zappyGUI {
             std::shared_ptr<GUI> _gui;
             Engine _engine;
             Camera _camera;
+            bool _fullscreen;
+            bool _displayRessources;
+            bool _mousePressed;
+            sf::Vector2i _lastMousePos;
+            glm::vec3 _mapCenter;
+            int _selectedResourceType;
+
+            bool shouldDisplayResource(int resourceType);
     };
 }

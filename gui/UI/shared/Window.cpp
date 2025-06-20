@@ -5,10 +5,19 @@
 *** Window.cpp*
 */
 #include "Window.hpp"
-
+#include <SFML/OpenGL.hpp>
+#include <SFML/Graphics/RenderStates.hpp>
 zappyGUI::Window::Window(): _isFullscreen(false)
 {
-    this->_window.create(sf::VideoMode(1920, 1080), "Zappy - GUI");
+    glEnable(GL_TEXTURE_2D);
+    sf::ContextSettings settings;
+    settings.depthBits = 24;
+    settings.stencilBits = 8;
+    settings.antialiasingLevel = 4;
+    settings.majorVersion = 3;
+    settings.minorVersion = 0;
+
+    this->_window.create(sf::VideoMode(1920, 1080), "Zappy - GUI", sf::Style::Default, settings);
     this->_window.setFramerateLimit(60);
 }
 
@@ -21,10 +30,18 @@ zappyGUI::Window::~Window()
 
 zappyGUI::Window::Window(const zappyGUI::Window &other) : _isFullscreen(other._isFullscreen)
 {
+    glEnable(GL_TEXTURE_2D);
+    sf::ContextSettings settings;
+    settings.depthBits = 24;
+    settings.stencilBits = 8;
+    settings.antialiasingLevel = 4;
+    settings.majorVersion = 3;
+    settings.minorVersion = 0;
+
     if (other._isFullscreen) {
-        this->_window.create(sf::VideoMode(1920, 1080), "Zappy - GUI", sf::Style::Fullscreen);
+        this->_window.create(sf::VideoMode(1920, 1080), "Zappy - GUI", sf::Style::Fullscreen, settings);
     } else {
-        this->_window.create(sf::VideoMode(1920, 1080), "Zappy - GUI", sf::Style::Default);
+        this->_window.create(sf::VideoMode(1920, 1080), "Zappy - GUI", sf::Style::Default, settings);
     }
     this->_window.setFramerateLimit(60);
 }
@@ -32,12 +49,20 @@ zappyGUI::Window::Window(const zappyGUI::Window &other) : _isFullscreen(other._i
 zappyGUI::Window& zappyGUI::Window::operator=(const zappyGUI::Window &other)
 {
     if (this != &other) {
+        glEnable(GL_TEXTURE_2D);
+        sf::ContextSettings settings;
+        settings.depthBits = 24;
+        settings.stencilBits = 8;
+        settings.antialiasingLevel = 4;
+        settings.majorVersion = 3;
+        settings.minorVersion = 0;
+
         this->_isFullscreen = other._isFullscreen;
 
         if (other._isFullscreen) {
-            this->_window.create(sf::VideoMode(1920, 1080), "Zappy - GUI", sf::Style::Fullscreen);
+            this->_window.create(sf::VideoMode(1920, 1080), "Zappy - GUI", sf::Style::Fullscreen, settings);
         } else {
-            this->_window.create(sf::VideoMode(1920, 1080), "Zappy - GUI", sf::Style::Default);
+            this->_window.create(sf::VideoMode(1920, 1080), "Zappy - GUI", sf::Style::Default, settings);
         }
         this->_window.setFramerateLimit(60);
     }
@@ -46,9 +71,17 @@ zappyGUI::Window& zappyGUI::Window::operator=(const zappyGUI::Window &other)
 
 void zappyGUI::Window::switchFullscreen()
 {
+    glEnable(GL_TEXTURE_2D);
+    sf::ContextSettings settings;
+    settings.depthBits = 24;
+    settings.stencilBits = 8;
+    settings.antialiasingLevel = 4;
+    settings.majorVersion = 3;
+    settings.minorVersion = 0;
+
     this->_isFullscreen = !this->_isFullscreen;
     auto style = this->_isFullscreen ? sf::Style::Fullscreen : sf::Style::Default;
-    this->_window.create(sf::VideoMode(1920, 1080), "Zappy - GUI", style);
+    this->_window.create(sf::VideoMode(1920, 1080), "Zappy - GUI", style, settings);
     this->_window.setFramerateLimit(60);
 }
 
@@ -64,7 +97,6 @@ void zappyGUI::Window::display()
 
 void zappyGUI::Window::clear()
 {
-    // this->_window.clear(sf::Color(225, 247, 213));
     this->_window.clear(sf::Color::Black);
 }
 
@@ -76,6 +108,11 @@ void zappyGUI::Window::close()
 bool zappyGUI::Window::isOpen()
 {
     return this->_window.isOpen();
+}
+
+bool zappyGUI::Window::isFullScreen()
+{
+    return this->_isFullscreen;
 }
 
 sf::RenderWindow& zappyGUI::Window::getRenderWindow()

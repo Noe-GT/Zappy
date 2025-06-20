@@ -21,8 +21,8 @@ namespace zappyGUI {
         void clear();
         void close();
         bool isOpen();
+        bool isFullScreen();
         std::pair<size_t, size_t> getSize() const;
-
         sf::RenderWindow& getRenderWindow();
         sf::Event &getEvent();
 
