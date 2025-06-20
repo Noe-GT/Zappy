@@ -1,9 +1,10 @@
 import socket
 import argparse
-import threading
 import sys
+import select
 from ctypes import *
 import os
+from collections import deque
 
 lib = CDLL(os.path.abspath("./libprotocol.so"))
 
@@ -45,73 +46,114 @@ class ZappyClient:
         self.port = port
         self.team_name = team_name
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.socket.setblocking(False)
         self.buffer = CircularBuffer()
         self.running = False
         self.initialized = False
+        self.poll = select.poll()
+        self.send_queue = deque()
+        self.pending_send = b""
 
     def connect(self):
         try:
-            self.socket.connect((self.host, self.port))
-            print(f"Connected to server {self.host}:{self.port}")
-            self.running = True
-            threading.Thread(target=self.receive_data, daemon=True).start()
-            while not self.initialized:
+            try:
+                self.socket.connect((self.host, self.port))
+            except BlockingIOError:
                 pass
-            self.interactive_loop()
+            print(f"Connecting to {self.host}:{self.port}...")
+            self.poll.register(self.socket, select.POLLIN | select.POLLOUT | select.POLLERR)
+            self.poll.register(sys.stdin, select.POLLIN)
+            self.running = True
+            self.main_loop()
         except Exception as e:
             print(f"Connection error: {e}")
             sys.exit(1)
 
-    def send_command(self, command):
+    def queue_command(self, command):
         if not command.endswith('\n'):
             command += '\n'
-        self.socket.send(command.encode('utf-8'))
+        self.send_queue.append(command.encode('utf-8'))
+        self._update_poll_registration()
 
-    def receive_data(self):
-        while self.running:
-            try:
-                data = self.socket.recv(1024)
-                if not data:
-                    print("Server disconnected")
-                    self.running = False
-                    sys.exit(0)
-                self.buffer.write(data.decode('utf-8'))
-                while True:
-                    message = self.buffer.read()
-                    if not message:
-                        break
-                    print(f"\n <-- {message.strip()}")
-                    if not self.initialized:
-                        if "WELCOME" in message:
-                            self.send_command(self.team_name)
-                            self.initialized = True
-                    else:
-                        sys.stdout.write("> ")
-                        sys.stdout.flush()
+    def _update_poll_registration(self):
+        self.poll.unregister(self.socket)
+        events = select.POLLIN | select.POLLERR
+        if self.send_queue or self.pending_send:
+            events |= select.POLLOUT
+        self.poll.register(self.socket, events)
 
-            except Exception as e:
-                print(f"\nReceive error: {e}")
+    def _handle_send(self):
+        if not self.pending_send:
+            if self.send_queue:
+                self.pending_send = self.send_queue.popleft()
+            else:
+                self._update_poll_registration()
+                return
+        try:
+            sent = self.socket.send(self.pending_send)
+            self.pending_send = self.pending_send[sent:]
+            if not self.pending_send:
+                self._update_poll_registration()
+        except BlockingIOError:
+            pass
+        except Exception as e:
+            print(f"Send error: {e}")
+            self.running = False
+
+    def _handle_receive(self):
+        try:
+            data = self.socket.recv(4096)
+            if not data:
+                print("Server disconnected")
                 self.running = False
-                sys.exit(1)
+                return
+            self.buffer.write(data.decode('utf-8'))
+            while True:
+                message = self.buffer.read()
+                if not message:
+                    break
+                print(f"\n<-- {message.strip()}")
+                if not self.initialized and "WELCOME" in message:
+                    self.queue_command(self.team_name)
+                    self.initialized = True
+        except BlockingIOError:
+            pass
+        except Exception as e:
+            print(f"Receive error: {e}")
+            self.running = False
 
-    def interactive_loop(self):
+    def _handle_stdin(self):
+        command = sys.stdin.readline().strip()
+        if command.lower() == 'exit':
+            self.running = False
+        else:
+            self.queue_command(command)
+
+    def main_loop(self):
         while self.running:
             try:
-                command = input("> ")
-                if command.lower() == 'exit':
-                    self.running = False
-                    self.socket.close()
-                    sys.exit(0)
-
-                self.send_command(command)
-
+                events = self.poll.poll(100)
+                for fd, event in events:
+                    if fd == self.socket.fileno():
+                        if event & select.POLLERR:
+                            print("Socket error")
+                            self.running = False
+                            break
+                        if event & select.POLLIN:
+                            self._handle_receive()
+                        if event & select.POLLOUT:
+                            self._handle_send()
+                    elif fd == sys.stdin.fileno() and event & select.POLLIN:
+                        self._handle_stdin()
             except KeyboardInterrupt:
                 print("\nClosing connection...")
                 self.running = False
-                self.socket.close()
-                sys.exit(0)
             except Exception as e:
-                print(f"Error: {e}")
+                print(f"\nError: {e}")
+                self.running = False
+
+        self.socket.close()
+        sys.exit(0)
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description='Zappy AI Client', add_help=False)
@@ -125,4 +167,3 @@ if __name__ == "__main__":
     args = parse_arguments()
     client = ZappyClient(args.host, args.port, args.name)
     client.connect()
-
