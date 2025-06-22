@@ -18,7 +18,10 @@ ROOT_DIR	=	../../../../
 SRC 		= 		$(shell find src -type f -name '*.cpp')				\
 
 OBJ 		= 		$(SRC:.cpp=.o)										\
-					$(shell find ../../../../ -type f -name '*.plugin.o') \
+					$(shell find ../../../../gui/UI/shared -type f -name '*.plugin.o') \
+					$(shell find ../../../../gui/game -type f -name '*.plugin.o') \
+					$(shell find ../../../../gui -maxdepth 1 -type f -name '*.plugin.o') \
+					$(shell find ../../../../gui/client -type f -name '*.o') \
 
 all: $(NAME)
 
