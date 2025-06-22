@@ -65,7 +65,7 @@ zappyGUI::GUI::GUI(int port, std::string hostname):
         try {
             DLLoader pluginLoader(fullPath);
             auto renderer = pluginLoader.getInstance<IGraphical>("entryPoint");
-            renderer->initialize(this->_window, this->_game->getMapSize());
+            renderer->initialize(std::shared_ptr<zappyGUI::GUI>(this));
             this->_renderers.push_back(std::move(renderer));
             std::cout << "loaded " << filename << std::endl;
         } catch (const std::exception& e) {
@@ -75,8 +75,6 @@ zappyGUI::GUI::GUI(int port, std::string hostname):
     closedir(dir);
     if (!this->_renderers.empty())
         this->_selectedRenderer = 0;
-
-    
 }
 
 void zappyGUI::GUI::display()

@@ -5,10 +5,10 @@
 ** Game.cpp
 */
 #pragma once
-#include "../shared/Tile.hpp"
-#include "../UI/shared/IGraphical.hpp"
+#include "../Tile.hpp"
 
 namespace zappyGUI {
+    class IGraphical;
     class Game {
         public:
             Game();
@@ -19,7 +19,7 @@ namespace zappyGUI {
             bool isGameInProgess();
             std::vector <std::string> &getLogs();
             std::vector <std::vector <Tile>> &getMap();
-            std::pair<size_t, size_t> getMapSize();
+            const std::pair<size_t, size_t> &getMapSize() const;
             std::vector <Player> &getPlayers();
             std::vector <std::pair<std::shared_ptr <Player>, int>> &getEggs();
             std::vector <std::string> &getTeams();

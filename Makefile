@@ -7,20 +7,17 @@
 
 SERVER_SRC	=	$(wildcard server/*.c)
 
-GUI_SRC 	= 	$(wildcard gui/*.cpp) 								\
-				$(shell find gui/client -type f -name '*.cpp') 		\
-				$(shell find gui/game -type f -name '*.cpp') 		\
+GUI_SRC 	= 	$(shell find gui/client -type f -name '*.cpp') 		\
 
 RENDERS_SRC = 	$(shell find gui/UI/shared -type f -name '*.cpp') \
-				# $(shell find gui/shared -type f -name '*.cpp')
-GUI_SHARED_SRC = 	$(shell find gui/shared -type f -name '*.cpp') \
+				$(wildcard gui/*.cpp)								\
+				$(shell find gui/game -type f -name '*.cpp') 		\
 
 AI_SRC 		= 	$(wildcard ai/*.c)
 
 SERVER_OBJ 	= 	$(SERVER_SRC:.c=.o)
 GUI_OBJ 	= 	$(GUI_SRC:.cpp=.o)
 AI_OBJ 		= 	$(AI_SRC:.c=.o)
-GUI_SHARED_OBJ = 	$(GUI_SHARED_SRC:.cpp=.shared.o)
 RENDERS_OBJ = 	$(RENDERS_SRC:.cpp=.plugin.o)
 
 SERVER_EXEC = 	zappy_server
@@ -44,15 +41,14 @@ server: $(SERVER_EXEC)
 $(SERVER_EXEC): $(SERVER_OBJ)
 	$(CC) $(SERVER_OBJ) -o $(SERVER_EXEC) $(CFLAGS)
 
-gui: $(GUI_SHARED_OBJ) $(RENDERS_OBJ) $(GUI_EXEC)
+gui: $(RENDERS_OBJ) $(GUI_EXEC)
 
 $(GUI_EXEC): $(GUI_OBJ)
 	@for dir in $(shell find gui/UI/render -type f -name Makefile -exec dirname {} \;); do 	\
 		$(MAKE) -C $$dir; 																	\
 		cp $$dir/*.so gui/plugins/;													 		\
 	done
-	$(CPPC) $(GUI_OBJ) $(GUI_SHARED_OBJ) $(RENDERS_OBJ) -o $(GUI_EXEC) $(CFLAGS) $(CPPFLAGS) $(GUI_LDFLAGS)
-
+	$(CPPC) $(GUI_OBJ) $(RENDERS_OBJ) -o $(GUI_EXEC) $(CFLAGS) $(CPPFLAGS) $(GUI_LDFLAGS)
 
 ai: $(AI_EXEC)
 
