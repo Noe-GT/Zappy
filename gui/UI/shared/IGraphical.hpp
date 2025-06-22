@@ -23,6 +23,7 @@ namespace zappyGUI {
             virtual void updateTile(const zappyGUI::Tile &tile) = 0;
             virtual void update() = 0;
             virtual void handleEvents() = 0;
+            virtual std::shared_ptr<zappyGUI::Window> getWindow() const = 0;
     };
 };
 
