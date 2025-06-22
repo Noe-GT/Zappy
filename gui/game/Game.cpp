@@ -6,7 +6,8 @@
 */
 
 #include "Game.hpp"
-#include <iostream>
+#include "../UI/shared/IGraphical.hpp"
+
 zappyGUI::Game::Game() : _frequence(0), _teamNbr(0), _gameInProgess(false), _mapSize(30, 30)
 {
     for (size_t y = 0; y < this->_mapSize.second; y++) {
@@ -45,7 +46,7 @@ std::vector <std::vector <zappyGUI::Tile>> &zappyGUI::Game::getMap()
     return this->_map;
 }
 
-std::pair<size_t, size_t> zappyGUI::Game::getMapSize()
+const std::pair<size_t, size_t> &zappyGUI::Game::getMapSize() const
 {
     return this->_mapSize;
 }

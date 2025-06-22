@@ -6,16 +6,16 @@
 */
 #pragma once
 
-#include "../game/ressources/IRessource.hpp"
-#include "../game/Player.hpp"
-#include "../UI/shared/UIBlocks/PopupSelector/PopupSelector.hpp"
-#include "../game/ressources/Food.hpp"
-#include "../game/ressources/Linemate.hpp"
-#include "../game/ressources/Deraumere.hpp"
-#include "../game/ressources/Sibur.hpp"
-#include "../game/ressources/Mendiane.hpp"
-#include "../game/ressources/Phiras.hpp"
-#include "../game/ressources/Thystame.hpp"
+#include "game/ressources/IRessource.hpp"
+#include "game/Player.hpp"
+#include "UI/shared/UIBlocks/PopupSelector/PopupSelector.hpp"
+#include "game/ressources/Food.hpp"
+#include "game/ressources/Linemate.hpp"
+#include "game/ressources/Deraumere.hpp"
+#include "game/ressources/Sibur.hpp"
+#include "game/ressources/Mendiane.hpp"
+#include "game/ressources/Phiras.hpp"
+#include "game/ressources/Thystame.hpp"
 
 namespace zappyGUI {
     class Player;

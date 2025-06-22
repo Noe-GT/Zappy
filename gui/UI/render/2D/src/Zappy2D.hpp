@@ -59,6 +59,7 @@ namespace zappyGUI {
                     void handleRessouces(const zappyGUI::Tile &tile);
                     void setRessource();
                     void setRessourceTexture();
+                    void updatePlayers(const zappyGUI::Tile &tile);
 
                     std::shared_ptr<float> _zoomCoeff;
                     std::shared_ptr<std::pair<float, float>> _mapOffset;
@@ -70,7 +71,7 @@ namespace zappyGUI {
 
             Zappy2D();
             ~Zappy2D() = default;
-            void initialize(std::shared_ptr<zappyGUI::Window> window, std::pair<size_t, size_t> mapSize) final;
+            void initialize(std::shared_ptr<zappyGUI::GUI> gui) final;
             void displayTile(const zappyGUI::Tile &tile) final;
             void updateTile(const zappyGUI::Tile &tile) final;
             void display() final;

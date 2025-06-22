@@ -13,11 +13,12 @@ LDFLAGS 	= 		-shared -lsfml-graphics -lsfml-window -lsfml-system
 
 NAME 		= 		libRender3d.so
 
-SRC 		= 		$(shell find src -type f -name '*.cpp')
+ROOT_DIR	=	../../../../
 
-OBJ 		= 		$(SRC:.cpp=.o)											\
-					$(shell find ../../shared -type f -name '*.plugin.o')	\
-					$(shell find ../../../shared -type f -name '*.shared.o') \
+SRC 		= 		$(shell find src -type f -name '*.cpp')				\
+
+OBJ 		= 		$(SRC:.cpp=.o)										\
+					$(shell find ../../../../ -type f -name '*.plugin.o') \
 
 all: $(NAME)
 
