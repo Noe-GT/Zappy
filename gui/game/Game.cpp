@@ -6,14 +6,21 @@
 */
 
 #include "Game.hpp"
+#include "Player.hpp"
 #include <iostream>
-zappyGUI::Game::Game() : _frequence(0), _teamNbr(0), _gameInProgess(false), _mapSize(30, 30)
+zappyGUI::Game::Game() : _frequence(0), _teamNbr(0), _gameInProgess(false), _mapSize(30, 30), _selectedPlayer(nullptr)
 {
     for (size_t y = 0; y < this->_mapSize.second; y++) {
         this->_map.emplace_back();
         for (size_t x = 0; x < this->_mapSize.first; x++)
             this->_map.back().emplace_back(std::pair<size_t, size_t>(x, y));
     }
+    
+    std::vector<std::shared_ptr<UIBlocks::IUIBlock>> emptyList;
+    this->_playersListUI = std::make_shared<UIBlocks::List>(emptyList, std::pair<float, float>(50, 300), std::pair<float, float>(200, 400));
+    this->_selectedPlayerLevelText = std::make_shared<UIBlocks::Text>("Level: 0", std::pair<float, float>(960, 50), 24);
+    this->_inventoryBarUI = std::make_shared<UIBlocks::List>(emptyList, std::pair<float, float>(760, 900), std::pair<float, float>(400, 100));
+    this->_spellsListUI = std::make_shared<UIBlocks::List>(emptyList, std::pair<float, float>(1670, 300), std::pair<float, float>(200, 400));
 }
 
 zappyGUI::Game::~Game()
@@ -138,7 +145,7 @@ void zappyGUI::Game::addTeam(std::string newVal)
     this->_teams.push_back(newVal);
 }
 
-void zappyGUI::Game::display(std::shared_ptr<zappyGUI::IGraphical> renderer) const
+void zappyGUI::Game::display(std::shared_ptr<zappyGUI::IGraphical> renderer)
 {
     for (const std::vector<zappyGUI::Tile> &tileRow : this->_map) {
         for (const zappyGUI::Tile &tile : tileRow) {
@@ -146,4 +153,77 @@ void zappyGUI::Game::display(std::shared_ptr<zappyGUI::IGraphical> renderer) con
             renderer->displayTile(tile);
         }
     }
+    this->displayUI(renderer->getWindow());
+}
+
+void zappyGUI::Game::displayUI(std::shared_ptr<zappyGUI::Window> window)
+{
+    std::vector<std::shared_ptr<UIBlocks::IUIBlock>> playerTexts;
+    for (size_t i = 0; i < this->_players.size(); ++i) {
+        std::string playerInfo = "Player " + std::to_string(this->_players[i].getId()) + " - " + this->_players[i].getName();
+        std::shared_ptr<UIBlocks::Text> playerText = std::make_shared<UIBlocks::Text>(playerInfo, std::pair<float, float>(0, 0), 16);
+        playerTexts.push_back(playerText);
+    }
+    this->_playersListUI = std::make_shared<UIBlocks::List>(playerTexts, std::pair<float, float>(50, 300), std::pair<float, float>(200, 400));
+    if (this->_selectedPlayer) {
+        std::string levelText = "Level: " + std::to_string(this->_selectedPlayer->getLvl());
+        this->_selectedPlayerLevelText->setText(levelText);
+        std::vector<std::shared_ptr<UIBlocks::IUIBlock>> inventoryTexts;
+        std::__1::vector<std::__1::pair<std::__1::shared_ptr<zappyGUI::IRessource>, int>> &inventory = this->_selectedPlayer->getInventory();
+        std::vector<std::string> resourceNames = {"Food", "Linemate", "Deraumere", "Sibur", "Mendiane", "Phiras", "Thystame"};
+        for (size_t i = 0; i < inventory.size() && i < resourceNames.size(); ++i) {
+            std::string itemText = resourceNames[i] + ": " + std::to_string(inventory[i].second);
+            std::shared_ptr<UIBlocks::Text> itemDisplay = std::make_shared<UIBlocks::Text>(itemText, std::pair<float, float>(0, 0), 14);
+            inventoryTexts.push_back(itemDisplay);
+        }
+        this->_inventoryBarUI = std::make_shared<UIBlocks::List>(inventoryTexts, std::pair<float, float>(760, 900), std::pair<float, float>(400, 100));
+    }
+    std::vector<std::shared_ptr<UIBlocks::IUIBlock>> spellTexts;
+    for (auto& player : this->_players) {
+        if (player.getSpellInProgress() != nullptr) {
+            std::string spellText = "Player " + std::to_string(player.getId()) + " - Casting Spell";
+            std::shared_ptr<UIBlocks::Text> spellDisplay = std::make_shared<UIBlocks::Text>(spellText, std::pair<float, float>(0, 0), 16);
+            spellTexts.push_back(spellDisplay);
+        }
+    }
+    this->_spellsListUI = std::make_shared<UIBlocks::List>(spellTexts, std::pair<float, float>(1670, 300), std::pair<float, float>(200, 400));
+    this->_playersListUI->draw(window);
+    this->_selectedPlayerLevelText->draw(window);
+    this->_inventoryBarUI->draw(window);
+    this->_spellsListUI->draw(window);
+}
+
+void zappyGUI::Game::handleUIEvents(const sf::Event& event, std::shared_ptr<zappyGUI::Window> window)
+{
+    // Handle player selection from the players list
+    // if (event.type == sf::Event::MouseButtonPressed) {
+    //     if (event.mouseButton.button == sf::Mouse::Left) {
+    //         // Check if click is within players list bounds
+    //         sf::Vector2i mousePos(event.mouseButton.x, event.mouseButton.y);
+            
+    //         // Simple click detection for player list (middle left area)
+    //         if (mousePos.x >= 50 && mousePos.x <= 250 && mousePos.y >= 300 && mousePos.y <= 700) {
+    //             // Calculate which player was clicked based on position
+    //             int playerIndex = (mousePos.y - 300) / 25; // Assuming 25 pixel height per player entry
+    //             if (playerIndex >= 0 && playerIndex < static_cast<int>(_players.size())) {
+    //                 _selectedPlayer = _players[playerIndex];
+    //             }
+    //         }
+    //     }
+    // }
+    
+    // // Let UI blocks handle their own events
+    if (this->_playersListUI)
+        this->_playersListUI->handleEvent(event, window);
+    if (this->_selectedPlayerLevelText)
+        this->_selectedPlayerLevelText->handleEvent(event, window);
+    if (this->_inventoryBarUI)
+        this->_inventoryBarUI->handleEvent(event, window);
+    if (this->_spellsListUI)
+        this->_spellsListUI->handleEvent(event, window);
+}
+
+std::shared_ptr<zappyGUI::Player> zappyGUI::Game::getSelectedPlayer()
+{
+    return _selectedPlayer;
 }

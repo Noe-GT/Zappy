@@ -21,6 +21,7 @@ namespace zappyGUI {
             virtual void updateTile(const zappyGUI::Tile &tile) = 0;
             virtual void update() override;
             virtual void handleEvents() override;
+            virtual std::shared_ptr<zappyGUI::Window> getWindow() const override;
 
         protected:
             std::shared_ptr<zappyGUI::Window> _window;

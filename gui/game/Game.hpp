@@ -7,8 +7,14 @@
 #pragma once
 #include "../shared/Tile.hpp"
 #include "../UI/shared/IGraphical.hpp"
+#include "../UI/shared/UIBlocks/List/List.hpp"
+#include "../UI/shared/UIBlocks/Text/Text.hpp"
+#include "../UI/shared/Window.hpp"
+#include <memory>
+#include <SFML/Graphics.hpp>
 
 namespace zappyGUI {
+    class Player;
     class Game {
         public:
             Game();
@@ -38,7 +44,11 @@ namespace zappyGUI {
             void setTeams(std::vector <std::string> newVal);
             void addTeam(std::string newVal);
 
-            void display(std::shared_ptr<zappyGUI::IGraphical> renderer) const;
+            void display(std::shared_ptr<zappyGUI::IGraphical> renderer);
+            void displayUI(std::shared_ptr<zappyGUI::Window> window);
+            void handleUIEvents(const sf::Event& event, std::shared_ptr<zappyGUI::Window> window);
+
+            std::shared_ptr<zappyGUI::Player> getSelectedPlayer();
 
         private:
             int _frequence;
@@ -50,5 +60,11 @@ namespace zappyGUI {
             std::pair<size_t, size_t> _mapSize;
             std::vector<std::vector <Tile>> _map;
             std::vector<std::string> _teams;
+            
+            std::shared_ptr<Player> _selectedPlayer;
+            std::shared_ptr<UIBlocks::List> _playersListUI;
+            std::shared_ptr<UIBlocks::Text> _selectedPlayerLevelText;
+            std::shared_ptr<UIBlocks::List> _inventoryBarUI;
+            std::shared_ptr<UIBlocks::List> _spellsListUI;
     };
 };
