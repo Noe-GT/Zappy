@@ -24,7 +24,6 @@ zappyGUI::GUI::GUI(int port, std::string hostname):
     _game(std::make_shared<zappyGUI::Game>()),
     _renderers()
 {
-    printf("MAP:\nSize: %dx%d\n", this->_game->getMapSize().first, this->_game->getMapSize().second);
     this->_commands["seg"] = std::make_unique<Seg>();
     this->_commands["smg"] = std::make_unique<Smg>();
     this->_commands["tna"] = std::make_unique<Tna>();
