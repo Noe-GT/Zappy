@@ -39,8 +39,10 @@ bool receive(int fd, circular_buffer_t *buffer)
     char buf[4096];
     ssize_t n = read(fd, buf, 4095);
 
-    if (n == -1)
+    if (n == -1) {
         perror("[PROTOCOL] Read failed\n");
+        return false;
+    }
     if (n == 0)
         return false;
     buf[n] = '\0';

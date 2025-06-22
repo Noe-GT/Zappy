@@ -5,6 +5,8 @@
 ** server/src/parser/parse_end.c
 */
 
+#include <string.h>
+
 #include "../../include/server.h"
 #include "../../include/utils.h"
 

@@ -7,8 +7,9 @@
 
 #ifndef COMMANDS_H_
     #define COMMANDS_H_
-    #include "network.h"
     #include "server.h"
+
+    #include <string.h>
 
 typedef struct command_s {
     char *name;

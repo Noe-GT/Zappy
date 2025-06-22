@@ -5,6 +5,9 @@
 ** server/src/commands.c
 */
 
+#include <string.h>
+#include <poll.h>
+
 #include "../include/commands.h"
 
 const command_t client_commands[] = {
@@ -19,13 +22,10 @@ const command_t client_commands[] = {
     { "sst", command_sst },
 };
 
-static void handle_message(server_t *server, client_t *client)
+static void handle_message(server_t *server, client_t *client, char *message)
 {
-    char *message;
-
     if (client == NULL)
         return;
-    message = read_string(client->buffer);
     printf("Handling massage: %s", message);
     for (size_t i = 0; i < sizeof(client_commands) / sizeof(command_t); ++i) {
         if (strncmp(message, client_commands[i].name,
@@ -33,15 +33,16 @@ static void handle_message(server_t *server, client_t *client)
             client_commands[i].function(server, client, message);
         }
     }
-    free(message);
 }
 
 void handle_client_commands(server_t *server)
 {
-    for (size_t i = 0; i < server->network->sockets_n + 1; ++i) {
-        if (server->network->sockets[i].revents == POLLIN) {
-            handle_message(server, cl_get(server->network->client_list,
-                server->network->sockets[i].fd));
-        }
+    for (size_t i = 0; i < server->cons - 1; ++i) {
+        if (server->clients[i]->message == NULL)
+            continue;
+        handle_message(server, server->clients[i],
+            server->clients[i]->message);
+        free(server->clients[i]->message);
+        server->clients[i]->message = NULL;
     }
 }

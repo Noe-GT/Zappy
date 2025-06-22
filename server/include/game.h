@@ -7,7 +7,8 @@
 
 #ifndef GAME_H_
     #define GAME_H_
-    #include "external.h"
+
+    #include <stdlib.h>
 
 typedef struct player_s {
     int id;
