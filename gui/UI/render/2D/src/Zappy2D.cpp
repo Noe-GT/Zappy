@@ -68,6 +68,7 @@ void zappyGUI::Zappy2D::handleEvents()
             break;
         case sf::Keyboard::Down:
             this->updatePosition(eventCode);
+            break;
         case sf::Keyboard::Numpad1:
             *this->_displayRessourceType.get() = zappyGUI::Zappy2D::FOOD;
             break;
@@ -182,9 +183,6 @@ void zappyGUI::Zappy2D::RTile::handleRessouces(const zappyGUI::Tile &tile)
 {
     const std::vector<std::pair<std::shared_ptr<zappyGUI::IRessource>, int>> &ressources = tile.getRessourcesConst();
 
-    if (tile.getPos().first == 0 && tile.getPos().second == 0) {
-        std::cout << "ressource:" << ressources[*this->_displayRessourceType.get()].second << std::endl;
-    }
     if (ressources[*this->_displayRessourceType.get()].second <= 0)
         this->_ressource.setColor(sf::Color::Transparent);
     else
