@@ -13,13 +13,13 @@ UIBlocks::Timer::Timer(std::pair<float, float> position, int size): _text("0", p
     this->_timer.restart();
 }
 
-void UIBlocks::Timer::draw(zappyGUI::Window &window)
+void UIBlocks::Timer::draw(std::shared_ptr<zappyGUI::Window> &window)
 {
     this->_text.setText(std::to_string(_timer.getElapsedTime().asSeconds()));
     this->_text.draw(window);
 }
 
-void UIBlocks::Timer::handleEvent(const sf::Event &event, zappyGUI::Window &window)
+void UIBlocks::Timer::handleEvent(const sf::Event &event, std::shared_ptr<zappyGUI::Window> &window)
 {
     (void)event;
     (void)window;

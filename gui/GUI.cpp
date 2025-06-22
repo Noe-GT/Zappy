@@ -83,7 +83,6 @@ zappyGUI::GUI::GUI(int port, std::string hostname):
 void zappyGUI::GUI::display()
 {
     // FIXME: add the calls to the display of all elements of the map here
-    this->_window->clear();
     if (this->_selectedRenderer != -1 && this->_renderers[this->_selectedRenderer] != nullptr)
         this->_game->display(this->_renderers[this->_selectedRenderer]);
     this->_window->display();
@@ -163,85 +162,20 @@ void zappyGUI::GUI::events()
                     this->_renderers[this->_selectedRenderer]->handleEvents();
             }
         }
-        // for (auto &element : this->_elements) {
-        //     element->handleEvent(this->_window.getEvent(), this->_window);
-        // }
-        
+        for (auto &element : this->_elements) {
+            element->handleEvent(this->_window.get()->getEvent(), this->_window);
+        }
     }
 }
 
 void zappyGUI::GUI::loop()
 {
-    // std::shared_ptr<UIBlocks::IUIBlock> player1 = std::make_shared<UIBlocks::Text>("Dembele", std::pair<float, float>(0, 0), 50);
-    // std::shared_ptr<UIBlocks::IUIBlock> player2 = std::make_shared<UIBlocks::Text>("Yamal", std::pair<float, float>(0, 0), 50);
-    // std::shared_ptr<UIBlocks::IUIBlock> player3 = std::make_shared<UIBlocks::Text>("Mbappe", std::pair<float, float>(0, 0), 50);
-    // std::shared_ptr<UIBlocks::IUIBlock> player4 = std::make_shared<UIBlocks::Text>("Doue", std::pair<float, float>(0, 0), 50);
-    // std::shared_ptr<UIBlocks::IUIBlock> player5 = std::make_shared<UIBlocks::Text>("Pogba", std::pair<float, float>(0, 0), 50);
-    // std::shared_ptr<UIBlocks::IUIBlock> player6 = std::make_shared<UIBlocks::Text>("Kante", std::pair<float, float>(0, 0), 50);
-    // std::shared_ptr<UIBlocks::IUIBlock> player7 = std::make_shared<UIBlocks::Text>("Messi", std::pair<float, float>(0, 0), 50);
-    // std::shared_ptr<UIBlocks::IUIBlock> player8 = std::make_shared<UIBlocks::Text>("Ronaldo", std::pair<float, float>(0, 0), 50);
-    // std::shared_ptr<UIBlocks::IUIBlock> player9 = std::make_shared<UIBlocks::Text>("Maradona", std::pair<float, float>(0, 0), 50);
-    // std::shared_ptr<UIBlocks::IUIBlock> player10 = std::make_shared<UIBlocks::Text>("Pele", std::pair<float, float>(0, 0), 50);
-    // std::shared_ptr<UIBlocks::IUIBlock> rank1 = std::make_shared<UIBlocks::Text>("1.", std::pair<float, float>(550, 650), 50);
-    // std::shared_ptr<UIBlocks::IUIBlock> rank2 = std::make_shared<UIBlocks::Text>("2.", std::pair<float, float>(550, 650), 50);
-    // std::shared_ptr<UIBlocks::IUIBlock> rank3 = std::make_shared<UIBlocks::Text>("3.", std::pair<float, float>(550, 650), 50);
-    // std::shared_ptr<UIBlocks::IUIBlock> rank4 = std::make_shared<UIBlocks::Text>("4.", std::pair<float, float>(550, 650), 50);
-    // std::shared_ptr<UIBlocks::IUIBlock> rank5 = std::make_shared<UIBlocks::Text>("5.", std::pair<float, float>(550, 650), 50);
-    // std::shared_ptr<UIBlocks::IUIBlock> rank6 = std::make_shared<UIBlocks::Text>("6.", std::pair<float, float>(550, 650), 50);
-    // std::shared_ptr<UIBlocks::IUIBlock> rank7 = std::make_shared<UIBlocks::Text>("7.", std::pair<float, float>(550, 650), 50);
-    // std::shared_ptr<UIBlocks::IUIBlock> rank8 = std::make_shared<UIBlocks::Text>("8.", std::pair<float, float>(550, 650), 50);
-    // std::shared_ptr<UIBlocks::IUIBlock> rank9 = std::make_shared<UIBlocks::Text>("9.", std::pair<float, float>(550, 650), 50);
-    // std::shared_ptr<UIBlocks::IUIBlock> rank10 = std::make_shared<UIBlocks::Text>("10.", std::pair<float, float>(550, 650), 50);
-
-    // auto pair_value1 = std::pair<std::shared_ptr<UIBlocks::IUIBlock>, std::shared_ptr<UIBlocks::IUIBlock>>(rank1, player1);
-    // std::shared_ptr<UIBlocks::Pair> pair1 = std::make_shared<UIBlocks::Pair>(pair_value1, std::pair<float, float>(0, 0));
-    // auto pair_value2 = std::pair<std::shared_ptr<UIBlocks::IUIBlock>, std::shared_ptr<UIBlocks::IUIBlock>>(rank2, player2);
-    // std::shared_ptr<UIBlocks::Pair> pair2 = std::make_shared<UIBlocks::Pair>(pair_value2, std::pair<float, float>(0, 0));
-    // auto pair_value3 = std::pair<std::shared_ptr<UIBlocks::IUIBlock>, std::shared_ptr<UIBlocks::IUIBlock>>(rank3, player3);
-    // std::shared_ptr<UIBlocks::Pair> pair3 = std::make_shared<UIBlocks::Pair>(pair_value3, std::pair<float, float>(0, 0));
-    // auto pair_value4 = std::pair<std::shared_ptr<UIBlocks::IUIBlock>, std::shared_ptr<UIBlocks::IUIBlock>>(rank4, player4);
-    // std::shared_ptr<UIBlocks::Pair> pair4 = std::make_shared<UIBlocks::Pair>(pair_value4, std::pair<float, float>(0, 0));
-    // auto pair_value5 = std::pair<std::shared_ptr<UIBlocks::IUIBlock>, std::shared_ptr<UIBlocks::IUIBlock>>(rank5, player5);
-    // std::shared_ptr<UIBlocks::Pair> pair5 = std::make_shared<UIBlocks::Pair>(pair_value5, std::pair<float, float>(0, 0));
-    // auto pair_value6 = std::pair<std::shared_ptr<UIBlocks::IUIBlock>, std::shared_ptr<UIBlocks::IUIBlock>>(rank6, player6);
-    // std::shared_ptr<UIBlocks::Pair> pair6 = std::make_shared<UIBlocks::Pair>(pair_value6, std::pair<float, float>(0, 0));
-    // auto pair_value7 = std::pair<std::shared_ptr<UIBlocks::IUIBlock>, std::shared_ptr<UIBlocks::IUIBlock>>(rank7, player7);
-    // std::shared_ptr<UIBlocks::Pair> pair7 = std::make_shared<UIBlocks::Pair>(pair_value7, std::pair<float, float>(0, 0));
-    // auto pair_value8 = std::pair<std::shared_ptr<UIBlocks::IUIBlock>, std::shared_ptr<UIBlocks::IUIBlock>>(rank8, player8);
-    // std::shared_ptr<UIBlocks::Pair> pair8 = std::make_shared<UIBlocks::Pair>(pair_value8, std::pair<float, float>(0, 0));
-    // auto pair_value9 = std::pair<std::shared_ptr<UIBlocks::IUIBlock>, std::shared_ptr<UIBlocks::IUIBlock>>(rank9, player9);
-    // std::shared_ptr<UIBlocks::Pair> pair9 = std::make_shared<UIBlocks::Pair>(pair_value9, std::pair<float, float>(0, 0));
-    // auto pair_value10 = std::pair<std::shared_ptr<UIBlocks::IUIBlock>, std::shared_ptr<UIBlocks::IUIBlock>>(rank10, player10);
-    // std::shared_ptr<UIBlocks::Pair> pair10 = std::make_shared<UIBlocks::Pair>(pair_value10, std::pair<float, float>(0, 0));
-
-    // std::vector<std::shared_ptr<UIBlocks::IUIBlock>> options = {
-    //     pair1, pair2, pair3, pair4, pair5,
-    //     pair6, pair7, pair8, pair9, pair10
-    // };
-    // std::shared_ptr<UIBlocks::List> list = std::make_shared<UIBlocks::List>(options, std::pair<float, float>(1300, 200), std::pair<float, float>(100, 200));
-    // std::shared_ptr<UIBlocks::PopupSelector> selector = std::make_shared<UIBlocks::PopupSelector>(options, std::pair<float, float>(500, 200));
-    // selector.get()->open();
-    // std::shared_ptr<UIBlocks::Timer> timer = std::make_shared<UIBlocks::Timer>(std::pair<float, float>(20, 20), 30);
-    // timer.get()->start();
-    // std::shared_ptr<UIBlocks::Text> title = std::make_shared<UIBlocks::Text>("Level 5", std::pair<float, float>(700, 20), 50);
-    // std::shared_ptr<UIBlocks::Text> selected = std::make_shared<UIBlocks::Text>("Empty", std::pair<float, float>(700, 800), 50);
-    // std::string alternativeText = "Rickroll";
-    // std::shared_ptr<UIBlocks::Image> rickroll = std::make_shared<UIBlocks::Image>("gui/UI/shared/UIBlocks/assets/Rickrolling.png", std::pair<float, float>(20, 500), std::pair<float, float>(584, 729), alternativeText);
-    // this->_elements.push_back(selector);
-    // this->_elements.push_back(timer);
-    // this->_elements.push_back(list);
-    // this->_elements.push_back(title);
-    // this->_elements.push_back(selected);
-    // this->_elements.push_back(rickroll);
     while (this->_window->isOpen()) {
-        // if (selector.get()->getSelected() != nullptr && std::holds_alternative<std::string>(std::get<std::vector<std::shared_ptr<UIBlocks::IUIBlock>>>(selector.get()->getSelected()->getValue()).at(1).get()->getValue()))
-        //     selected.get()->setText("Selected: " + std::get<std::string>(std::get<std::vector<std::shared_ptr<UIBlocks::IUIBlock>>>(selector.get()->getSelected()->getValue()).at(1).get()->getValue()));
         this->_window->clear();
         this->events();
-        
         this->update();
-        // for (auto &element : this->_elements)
-        //     element->draw(this->_window);
+        for (auto &element : this->_elements)
+            element->draw(this->_window);
         this->display();
     }
 }

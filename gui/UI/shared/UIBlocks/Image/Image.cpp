@@ -22,13 +22,13 @@ UIBlocks::Image::Image(const std::string &path, std::pair<float, float> position
 }
 
 
-void UIBlocks::Image::draw(zappyGUI::Window &window)
+void UIBlocks::Image::draw(std::shared_ptr<zappyGUI::Window> &window)
 {
     this->_sprite.setPosition(this->_position.first, this->_position.second);
     this->_sprite.setScale(this->_size.first / this->_image.getSize().x,
                            this->_size.second / this->_image.getSize().y);
     this->_sprite.setTexture(this->_texture);
-    window.getRenderWindow().draw(this->_sprite);
+    window.get()->getRenderWindow().draw(this->_sprite);
     this->_alternativeText.draw(window);
 }
 
@@ -44,7 +44,7 @@ bool UIBlocks::Image::isInside(int x, int y) const
 }
 
 
-void UIBlocks::Image::handleEvent(const sf::Event &event, zappyGUI::Window &window)
+void UIBlocks::Image::handleEvent(const sf::Event &event, std::shared_ptr<zappyGUI::Window> &window)
 {
     (void)window;
     if (event.type == sf::Event::MouseMoved) {

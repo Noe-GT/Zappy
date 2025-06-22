@@ -48,7 +48,7 @@ void UIBlocks::PopupSelector::updateMaxVisibleOptions()
     _options.setMaxVisibleOptions(maxOptions);
 }
 
-void UIBlocks::PopupSelector::draw(zappyGUI::Window &window)
+void UIBlocks::PopupSelector::draw(std::shared_ptr<zappyGUI::Window> &window)
 {
     if (!_isOpen)
         return;
@@ -57,7 +57,7 @@ void UIBlocks::PopupSelector::draw(zappyGUI::Window &window)
     this->_background.setOutlineColor(this->_borderColor);
     this->_background.setOutlineThickness(this->_borderThickness);
     this->_background.setFillColor(this->_backgroundColor);
-    window.getRenderWindow().draw(this->_background);
+    window.get()->getRenderWindow().draw(this->_background);
 
     std::vector<std::shared_ptr<UIBlocks::IUIBlock>> visibleOptions = this->_options.getVisibleOptions();
     for (size_t i = 0; i < visibleOptions.size(); ++i) {
@@ -88,9 +88,9 @@ bool UIBlocks::PopupSelector::isInside(int x, int y) const
 }
 
 
-void UIBlocks::PopupSelector::handleEvent(const sf::Event &event, zappyGUI::Window &window)
+void UIBlocks::PopupSelector::handleEvent(const sf::Event &event, std::shared_ptr<zappyGUI::Window> &window)
 {
-    sf::Vector2i mousePosition = sf::Mouse::getPosition(window.getRenderWindow());
+    sf::Vector2i mousePosition = sf::Mouse::getPosition(window.get()->getRenderWindow());
     if (event.type == sf::Event::MouseButtonPressed) {
         if (event.mouseButton.button == sf::Mouse::Left) {
             if (isInside(event.mouseButton.x, event.mouseButton.y)) {
