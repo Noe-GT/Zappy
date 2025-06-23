@@ -18,33 +18,73 @@ zappyGUI::Zappy2D::Zappy2D():
 
 void zappyGUI::Zappy2D::initialize(std::shared_ptr<zappyGUI::GUI> gui)
 {
-    zappyGUI::AGraphical::initialize(gui);
-    const std::pair<size_t, size_t> &mapSize = this->_gui->getGame()->getMapSize();
+    const std::pair<size_t, size_t> &mapSize = gui->getGame()->getMapSize();
 
+    zappyGUI::AGraphical::initialize(gui);
+    this->zoomFill();
     for (size_t y = 0; y < mapSize.second; y++) {
         this->_tiles.emplace_back();
         for (size_t x = 0; x < mapSize.first; x++)
             this->_tiles.back().emplace_back(x, y, this->_zoomCoeff, this->_mapOffset, this->_assets, this->_displayRessourceType);
     }
-    this->_mapOffset->first = (this->_window->getSize().first - (mapSize.first * zappyGUI::BASE_TILE_SIZE)) / 2.0;
-    this->_mapOffset->second = (this->_window->getSize().second - (mapSize.second * zappyGUI::BASE_TILE_SIZE)) / 2.0;
+    this->_mapOffset->first = (this->_window->getSize().first - (mapSize.first * zappyGUI::BASE_TILE_SIZE * *this->_zoomCoeff.get())) / 2.0;
+    this->_mapOffset->second = (this->_window->getSize().second - (mapSize.second * zappyGUI::BASE_TILE_SIZE * *this->_zoomCoeff.get())) / 2.0;
 }
 
-void zappyGUI::Zappy2D::computeZoom(std::pair<size_t, size_t> mapSize)
+void zappyGUI::Zappy2D::zoomFill()
 {
-    if (mapSize.first == 0 || mapSize.second == 0)
-        return;
+    const std::pair<size_t, size_t> &mapSize = this->_gui->getGame()->getMapSize();
     float windowWidth = this->_window->getSize().first;
     float windowHeight = this->_window->getSize().second;
-    // double availableWidth = windowWidth * (1.0 - 2 * MARGIN_HORIZONTAL);
-    // double availableHeight = windowHeight - (2 * MARGIN_VERTICAL);
+    float widthRatio;
+    float heightRatio;
+
+    if (mapSize.first == 0 || mapSize.second == 0)
+        return;
     if (windowHeight < 1.0)
         windowHeight = 1.0;
-    float widthRatio = windowWidth / (mapSize.first * zappyGUI::BASE_TILE_SIZE);
-    float heightRatio = windowHeight / (mapSize.second * zappyGUI::BASE_TILE_SIZE);
+    widthRatio = windowWidth / (mapSize.first * zappyGUI::BASE_TILE_SIZE);
+    heightRatio = windowHeight / (mapSize.second * zappyGUI::BASE_TILE_SIZE);
     *this->_zoomCoeff.get() = std::min(widthRatio, heightRatio);
     *this->_zoomCoeff.get() = std::max(std::min(*this->_zoomCoeff.get(), zappyGUI::ZOOM_COEFF_MAX), zappyGUI::ZOOM_COEFF_MIN);
-    // std::cout << _zoomCoeff << std::endl;
+}
+
+void zappyGUI::Zappy2D::updateZoom(bool zoomOut)
+{
+    if (zoomOut && *this->_zoomCoeff.get() > zappyGUI::ZOOM_COEFF_MIN) {
+        *this->_zoomCoeff.get() -= zappyGUI::ZOOM_COEFF_SENSITIVITY;
+    } else if (!zoomOut && *this->_zoomCoeff.get() < zappyGUI::ZOOM_COEFF_MAX) {
+        *this->_zoomCoeff.get() += zappyGUI::ZOOM_COEFF_SENSITIVITY;
+    }
+}
+
+void zappyGUI::Zappy2D::updatePosition(sf::Keyboard::Key eventCode)
+{
+    if (eventCode == sf::Keyboard::Right) {
+        (*this->_mapOffset.get()).first += zappyGUI::MAP_OFFSET_SENSITIVITY * (*this->_zoomCoeff.get());
+    } else if (eventCode == sf::Keyboard::Left) {
+        (*this->_mapOffset.get()).first -= zappyGUI::MAP_OFFSET_SENSITIVITY * (*this->_zoomCoeff.get());
+    } else if (eventCode == sf::Keyboard::Up) {
+        (*this->_mapOffset.get()).second -= zappyGUI::MAP_OFFSET_SENSITIVITY * (*this->_zoomCoeff.get());
+    } else if (eventCode == sf::Keyboard::Down) {
+        (*this->_mapOffset.get()).second += zappyGUI::MAP_OFFSET_SENSITIVITY * (*this->_zoomCoeff.get());
+    }
+}
+
+void zappyGUI::Zappy2D::display()
+{
+}
+
+void zappyGUI::Zappy2D::update()
+{
+}
+
+void zappyGUI::Zappy2D::updateTile(const zappyGUI::Tile &tile) {
+    this->_tiles[tile.getPos().second][tile.getPos().first].update(tile);
+}
+
+void zappyGUI::Zappy2D::displayTile(const zappyGUI::Tile &tile) {
+    this->_tiles[tile.getPos().second][tile.getPos().first].display(this->_window);
 }
 
 void zappyGUI::Zappy2D::handleEvents()
@@ -115,44 +155,6 @@ void zappyGUI::Zappy2D::handleEvents()
         default:
             break;
     }
-}
-
-void zappyGUI::Zappy2D::updateZoom(bool zoomOut)
-{
-    if (zoomOut && *this->_zoomCoeff.get() > zappyGUI::ZOOM_COEFF_MIN) {
-        *this->_zoomCoeff.get() -= zappyGUI::ZOOM_COEFF_SENSITIVITY;
-    } else if (!zoomOut && *this->_zoomCoeff.get() < zappyGUI::ZOOM_COEFF_MAX) {
-        *this->_zoomCoeff.get() += zappyGUI::ZOOM_COEFF_SENSITIVITY;
-    }
-}
-
-void zappyGUI::Zappy2D::updatePosition(sf::Keyboard::Key eventCode)
-{
-    if (eventCode == sf::Keyboard::Right) {
-        (*this->_mapOffset.get()).first += zappyGUI::MAP_OFFSET_SENSITIVITY * (*this->_zoomCoeff.get());
-    } else if (eventCode == sf::Keyboard::Left) {
-        (*this->_mapOffset.get()).first -= zappyGUI::MAP_OFFSET_SENSITIVITY * (*this->_zoomCoeff.get());
-    } else if (eventCode == sf::Keyboard::Up) {
-        (*this->_mapOffset.get()).second -= zappyGUI::MAP_OFFSET_SENSITIVITY * (*this->_zoomCoeff.get());
-    } else if (eventCode == sf::Keyboard::Down) {
-        (*this->_mapOffset.get()).second += zappyGUI::MAP_OFFSET_SENSITIVITY * (*this->_zoomCoeff.get());
-    }
-}
-
-void zappyGUI::Zappy2D::display()
-{
-}
-
-void zappyGUI::Zappy2D::update()
-{
-}
-
-void zappyGUI::Zappy2D::updateTile(const zappyGUI::Tile &tile) {
-    this->_tiles[tile.getPos().second][tile.getPos().first].update(tile);
-}
-
-void zappyGUI::Zappy2D::displayTile(const zappyGUI::Tile &tile) {
-    this->_tiles[tile.getPos().second][tile.getPos().first].display(this->_window);
 }
 
 zappyGUI::Zappy2D::AssetPool::AssetPool():

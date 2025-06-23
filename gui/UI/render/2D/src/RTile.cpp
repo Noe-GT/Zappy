@@ -87,18 +87,15 @@ void zappyGUI::Zappy2D::RTile::update(const zappyGUI::Tile &tile)
     float x = tile.getPos().first * (zappyGUI::BASE_TILE_SIZE * *this->_zoomCoeff.get()) + (*this->_mapOffset.get()).first;
     float y = tile.getPos().second * (zappyGUI::BASE_TILE_SIZE * *this->_zoomCoeff.get()) + (*this->_mapOffset.get()).second;
 
-    if (tile.getPlayers().size() >= 1) {
+    if (tile.getPlayers().size() >= 1)
         this->updatePlayers(tile);
-    } else {
+    else
         this->_back.setTexture(this->_assets->_tileTexture);
-        if (tile.getRessourcesConst().size() >= 1) {
-            this->handleRessouces(tile);
-        }
-    }
+    if (tile.getRessourcesConst().size() >= 1)
+        this->handleRessouces(tile);
     this->_back.setScale(sf::Vector2f(*this->_zoomCoeff.get(), *this->_zoomCoeff.get()));
     this->_back.setPosition(x, y);
 }
-// letter * 255 / 26
 
 void zappyGUI::Zappy2D::RTile::updatePlayers(const zappyGUI::Tile &tile)
 {
