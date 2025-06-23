@@ -11,3 +11,7 @@
 // {
 // }
 
+std::string zappyGUI::Deraumere::getName() const
+{
+    return "Deraumere";
+}

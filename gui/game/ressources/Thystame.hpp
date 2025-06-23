@@ -10,5 +10,7 @@ namespace zappyGUI {
     class Thystame: public IRessource{
         public:
             ~Thystame() override = default;
+            std::string getName() const override;
     };
 }
+

@@ -10,3 +10,8 @@
 // zappyGUI::Thystame::~Thystame()
 // {
 // }
+
+std::string zappyGUI::Thystame::getName() const
+{
+    return "Thystame";
+}

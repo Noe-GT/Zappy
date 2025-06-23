@@ -11,3 +11,8 @@
 // {
 // }
 
+
+std::string zappyGUI::Sibur::getName() const
+{
+    return "Sibur";
+}

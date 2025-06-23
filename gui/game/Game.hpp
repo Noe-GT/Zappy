@@ -8,6 +8,7 @@
 #include "../Tile.hpp"
 #include "../UI/shared/UIBlocks/List/List.hpp"
 #include "../UI/shared/UIBlocks/Text/Text.hpp"
+#include "../UI/shared/UIBlocks/Pair/Pair.hpp"
 #include "../UI/shared/Window.hpp"
 #include <memory>
 #include <SFML/Graphics.hpp>
@@ -62,9 +63,9 @@ namespace zappyGUI {
             std::vector<std::string> _teams;
             
             std::shared_ptr<Player> _selectedPlayer;
-            std::shared_ptr<UIBlocks::List> _playersListUI;
+            std::shared_ptr<UIBlocks::PopupSelector> _playersListUI;
             std::shared_ptr<UIBlocks::Text> _selectedPlayerLevelText;
-            std::shared_ptr<UIBlocks::List> _inventoryBarUI;
             std::shared_ptr<UIBlocks::List> _spellsListUI;
+            std::map<std::string, std::pair<UIBlocks::Text, UIBlocks::Text>> _inventoryUI;
     };
 };

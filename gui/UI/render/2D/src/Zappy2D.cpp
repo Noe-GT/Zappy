@@ -152,6 +152,7 @@ void zappyGUI::Zappy2D::updateTile(const zappyGUI::Tile &tile) {
 }
 
 void zappyGUI::Zappy2D::displayTile(const zappyGUI::Tile &tile) {
+    std::cout << "Displaying tile at position: (" << tile.getPos().first << ", " << tile.getPos().second << ")" << std::endl;
     this->_tiles[tile.getPos().second][tile.getPos().first].display(this->_window);
 }
 

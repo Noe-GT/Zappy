@@ -80,8 +80,9 @@ zappyGUI::GUI::GUI(int port, std::string hostname):
 void zappyGUI::GUI::display()
 {
     // FIXME: add the calls to the display of all elements of the map here
-    if (this->_selectedRenderer != -1 && this->_renderers[this->_selectedRenderer] != nullptr)
+    if (this->_selectedRenderer != -1 && this->_renderers[this->_selectedRenderer] != nullptr) {
         this->_game->display(this->_renderers[this->_selectedRenderer]);
+    }
     this->_window->display();
 }
 
