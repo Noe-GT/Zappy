@@ -25,6 +25,11 @@ void destroy_tab(char **tab)
     free(tab);
 }
 
+static void free_client(client_t *client)
+{
+    free(client->position);
+}
+
 void remove_client(server_t *server, size_t index)
 {
     client_t *client = server->clients[index - 1];
@@ -41,7 +46,16 @@ void remove_client(server_t *server, size_t index)
         server->clients = realloc(server->clients,
             sizeof(client_t *) * server->cons);
     }
+    free_client(client);
     free(client);
+}
+
+// TODO: random position and direction
+static void init_player(client_t *client)
+{
+    client->position = (vector2_t *)malloc(sizeof(vector2_t));
+    memset(client->position, 0, sizeof(vector2_t));
+    client->direction = UP;
 }
 
 static void new_connection(server_t *server, int confd)
@@ -60,6 +74,7 @@ static void new_connection(server_t *server, int confd)
     client = server->clients[server->cons - 1];
     client->buffer = create_buffer();
     client->message = NULL;
+    init_player(client);
     ++server->cons;
 }
 

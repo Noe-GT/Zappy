@@ -14,6 +14,7 @@
 
     #include "../../protocol/include/protocol.h"
     #include "game.h"
+    #include "vector.h"
 
 typedef struct client_s {
     int id;
@@ -24,6 +25,8 @@ typedef struct client_s {
     struct client_s *next;
     circular_buffer_t *buffer;
     char *message;
+    vector2_t *position;
+    direction_t direction;
 } client_t;
 
 #endif /* !CLIENT_H_ */
