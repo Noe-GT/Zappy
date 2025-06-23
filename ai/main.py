@@ -27,6 +27,8 @@ class ZappyClient:
         self.command_handler = CommandHandler(self.state)
         self.running = False
         self.remaining_slots = 0
+        self.looking_for_food = False
+        self.last_look_time = 0
 
     def connect(self):
         try:
@@ -112,6 +114,8 @@ class ZappyClient:
                     self.state.update_inventory(data)
                 elif response_type == ResponseType.VISION:
                     self.state.update_vision(data)
+                    if self.looking_for_food:
+                        self._handle_food_search()
                 elif response_type == ResponseType.LEVEL:
                     self.state.update_level(data)
 
@@ -139,18 +143,38 @@ class ZappyClient:
         if not hasattr(self, '_last_inventory_time'):
             self._last_inventory_time = 0
         current_time = time.time() * 1000
-        if self.state.has_low_food():
-            self._execute_command("Look")
-            food_info = self.state.find_closest_resource('food')
-            if food_info:
-                distance, direction = food_info
-                commands = self.command_handler.go_to_resource('food', distance, direction)
-                for cmd in commands.split("|"):
-                    self._execute_command(cmd)
-                    time.sleep(0.1)
-        elif current_time - self._last_inventory_time >= 1000:
+        if current_time - self._last_inventory_time >= 1000:
             self._execute_command("Inventory")
             self._last_inventory_time = current_time
+        if self.state.has_low_food():
+            if not self.looking_for_food:
+                self.looking_for_food = True
+                self.last_look_time = current_time
+                print(f"[AI] Low food detected, looking around...")
+                self._execute_command("Look")
+        else:
+            self._execute_command("Fork")
+            time.sleep(0.2)
+            self._fork_new_instance()
+
+    def _handle_food_search(self):
+        if not self.looking_for_food:
+            return
+        food_info = self.state.find_closest_resource('food')
+        if food_info:
+            distance, direction = food_info
+            print(f"[AI] Food found at distance {distance} in direction {direction}")
+            commands = self.command_handler.go_to_resource('food', distance, direction)
+            for cmd in commands.split("|"):
+                if cmd.strip():
+                    print(f"[AI] Executing: {cmd.strip()}")
+                    self._execute_command(cmd.strip())
+                    time.sleep(0.2)
+            self.looking_for_food = False
+        else:
+            print("[AI] No food visible, moving forward to explore")
+            self._execute_command("Forward")
+            self.looking_for_food = False
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description='Zappy AI Client', add_help=False)

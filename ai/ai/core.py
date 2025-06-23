@@ -43,7 +43,8 @@ class PlayerState:
         self.direction = direction
 
     def update_inventory(self, inventory: dict):
-        self.inventory.update(inventory)
+        if inventory:
+            self.inventory.update(inventory)
 
     def update_vision(self, vision: list):
         if vision is None:
@@ -58,34 +59,66 @@ class PlayerState:
         self.last_command = command
         self.last_args = args
 
-    def has_low_food(self, threshold=7) -> bool:
+    def has_low_food(self, threshold = 15) -> bool:
         return self.inventory.get('food', 0) < threshold
 
     def find_closest_resource(self, resource_name: str):
         if not self.vision:
             return None
+
         for i, tile in enumerate(self.vision):
-            if resource_name in tile:
+            if isinstance(tile, list) and resource_name in tile:
                 distance = self._get_distance_for_tile(i)
                 direction = self._get_direction_for_tile(i)
                 return (distance, direction)
+
         return None
 
     def _get_distance_for_tile(self, tile_index: int) -> int:
+        """Calcule la distance d'une case basée sur son index dans la vision"""
         if tile_index == 0:
             return 0
-        ring = 0
-        while tile_index >= (ring + 1) * (2 * ring + 1):
-            ring += 1
-        return ring
+
+        # Calculer le niveau/ring de la case
+        level = 1
+        total_tiles = 1  # Case 0 (position actuelle)
+
+        while tile_index >= total_tiles:
+            tiles_in_level = 8 * level  # Chaque niveau a 8 * niveau cases
+            if tile_index < total_tiles + tiles_in_level:
+                return level
+            total_tiles += tiles_in_level
+            level += 1
+
+        return level
 
     def _get_direction_for_tile(self, tile_index: int) -> str:
+        """Détermine la direction d'une case basée sur son index dans la vision"""
         if tile_index == 0:
             return "here"
 
-        ring = self._get_distance_for_tile(tile_index)
-        positions_in_ring = 8 * ring
-        position_in_ring = tile_index - (ring - 1) * (2 * (ring - 1) + 1)
-        directions = ["front", "front-right", "right", "back-right", "back", "back-left", "left", "front-left"]
+        level = self._get_distance_for_tile(tile_index)
 
-        return directions[(position_in_ring - 1) // ring]
+        # Calculer la position dans le niveau
+        tiles_before_level = 1  # Case 0
+        for i in range(1, level):
+            tiles_before_level += 8 * i
+
+        position_in_level = tile_index - tiles_before_level
+        tiles_per_direction = level
+        if position_in_level < tiles_per_direction:
+            return "front"
+        elif position_in_level < 2 * tiles_per_direction:
+            return "front-right"
+        elif position_in_level < 3 * tiles_per_direction:
+            return "right"
+        elif position_in_level < 4 * tiles_per_direction:
+            return "back-right"
+        elif position_in_level < 5 * tiles_per_direction:
+            return "back"
+        elif position_in_level < 6 * tiles_per_direction:
+            return "back-left"
+        elif position_in_level < 7 * tiles_per_direction:
+            return "left"
+        else:
+            return "front-left"

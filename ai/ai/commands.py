@@ -5,9 +5,10 @@
 ## commands.py
 ##
 
-from .core import PlayerState
+from .core import PlayerState, Direction
 from enum import Enum, auto
 from typing import Optional
+
 class CommandStatus(Enum):
     SUCCESS = auto()
     FAILURE = auto()
@@ -88,9 +89,9 @@ class CommandHandler:
         elif cmd in ["Right", "Left"]:
             self._handle_turn_ok(cmd == "Right")
         elif cmd == "Take":
-            self._handle_take_ok(args[0])
+            self._handle_take_ok(args[0] if args else None)
         elif cmd == "Set":
-            self._handle_set_ok(args[0])
+            self._handle_set_ok(args[0] if args else None)
         elif cmd == "Incantation":
             self.state.elevating = True
 
@@ -120,32 +121,53 @@ class CommandHandler:
         self.state.update_direction(new_dir)
 
     def _handle_take_ok(self, obj):
-        if obj in self.state.inventory:
+        if obj and obj in self.state.inventory:
             self.state.inventory[obj] += 1
+            print(f"[AI] Successfully took {obj}, now have {self.state.inventory[obj]}")
 
     def _handle_set_ok(self, obj):
-        if obj in self.state.inventory and self.state.inventory[obj] > 0:
+        if obj and obj in self.state.inventory and self.state.inventory[obj] > 0:
             self.state.inventory[obj] -= 1
+            print(f"[AI] Successfully set {obj}, now have {self.state.inventory[obj]}")
 
     def go_to_resource(self, resource: str, distance: int, direction: str) -> str:
         commands = []
+
         if direction == "here":
             commands.append(f"Take {resource}")
             return "|".join(commands)
-        elif direction == "front":
+        if direction == "front":
             for _ in range(distance):
                 commands.append("Forward")
-        elif direction in ["front-right", "right"]:
+        elif direction == "front-right":
             commands.append("Right")
             for _ in range(distance):
                 commands.append("Forward")
-        elif direction in ["front-left", "left"]:
+        elif direction == "right":
+            commands.append("Right")
+            for _ in range(distance):
+                commands.append("Forward")
+        elif direction == "back-right":
+            commands.append("Right")
+            commands.append("Right")
+            for _ in range(distance):
+                commands.append("Forward")
+        elif direction == "back":
+            commands.append("Right")
+            commands.append("Right")
+            for _ in range(distance):
+                commands.append("Forward")
+        elif direction == "back-left":
+            commands.append("Right")
+            commands.append("Right")
+            for _ in range(distance):
+                commands.append("Forward")
+        elif direction == "left":
             commands.append("Left")
             for _ in range(distance):
                 commands.append("Forward")
-        elif direction in ["back-right", "back", "back-left"]:
-            commands.append("Right")
-            commands.append("Right")
+        elif direction == "front-left":
+            commands.append("Left")
             for _ in range(distance):
                 commands.append("Forward")
         commands.append(f"Take {resource}")
