@@ -82,6 +82,7 @@ namespace zappyGUI {
             void updateZoom(bool zoomOut);
             void updatePosition(sf::Keyboard::Key eventCode);
             void zoomFill();
+            void centerMap();
 
             std::shared_ptr<zappyGUI::Zappy2D::AssetPool> _assets;
             std::vector<std::vector<zappyGUI::Zappy2D::RTile>> _tiles;

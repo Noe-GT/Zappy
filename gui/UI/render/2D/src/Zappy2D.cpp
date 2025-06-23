@@ -27,8 +27,7 @@ void zappyGUI::Zappy2D::initialize(std::shared_ptr<zappyGUI::GUI> gui)
         for (size_t x = 0; x < mapSize.first; x++)
             this->_tiles.back().emplace_back(x, y, this->_zoomCoeff, this->_mapOffset, this->_assets, this->_displayRessourceType);
     }
-    this->_mapOffset->first = (this->_window->getSize().first - (mapSize.first * zappyGUI::BASE_TILE_SIZE * *this->_zoomCoeff.get())) / 2.0;
-    this->_mapOffset->second = (this->_window->getSize().second - (mapSize.second * zappyGUI::BASE_TILE_SIZE * *this->_zoomCoeff.get())) / 2.0;
+    this->centerMap();
 }
 
 void zappyGUI::Zappy2D::zoomFill()
@@ -47,6 +46,14 @@ void zappyGUI::Zappy2D::zoomFill()
     heightRatio = windowHeight / (mapSize.second * zappyGUI::BASE_TILE_SIZE);
     *this->_zoomCoeff.get() = std::min(widthRatio, heightRatio);
     *this->_zoomCoeff.get() = std::max(std::min(*this->_zoomCoeff.get(), zappyGUI::ZOOM_COEFF_MAX), zappyGUI::ZOOM_COEFF_MIN);
+}
+
+void zappyGUI::Zappy2D::centerMap()
+{
+    const std::pair<size_t, size_t> &mapSize = this->_gui->getGame()->getMapSize();
+
+    this->_mapOffset->first = (this->_window->getSize().first - (mapSize.first * zappyGUI::BASE_TILE_SIZE * *this->_zoomCoeff.get())) / 2.0;
+    this->_mapOffset->second = (this->_window->getSize().second - (mapSize.second * zappyGUI::BASE_TILE_SIZE * *this->_zoomCoeff.get())) / 2.0;
 }
 
 void zappyGUI::Zappy2D::updateZoom(bool zoomOut)
@@ -92,6 +99,10 @@ void zappyGUI::Zappy2D::handleEvents()
     sf::Keyboard::Key eventCode = this->_window->getEvent().key.code;
 
     switch (eventCode) {
+        case sf::Keyboard::C:
+            this->zoomFill();
+            this->centerMap();
+            break;
         case sf::Keyboard::Add:
             this->updateZoom(false);
             break;
