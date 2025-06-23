@@ -1,0 +1,13 @@
+/*
+** EPITECH PROJECT, 2025
+** zappy
+** File description:
+** server/src/game.c
+*/
+
+#include "../include/server.h"
+
+void game_logic(server_t *server)
+{
+    handle_ressource(server);
+}

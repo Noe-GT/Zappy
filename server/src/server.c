@@ -5,7 +5,6 @@
 ** server
 */
 
-
 #include <netinet/in.h>
 #include <stdio.h>
 #include <errno.h>
@@ -65,7 +64,16 @@ static void main_loop(server_t *server)
     while (true) {
         network_events(server);
         handle_client_commands(server);
+        game_logic(server);
     }
+}
+
+static void initialize(server_t *server)
+{
+    server->game = malloc(sizeof(game_t));
+    if (!server->game)
+        exit(84);
+    init_map(&MAP, PARAMETERS->width, PARAMETERS->height);
 }
 
 void run_server(server_t *server)
@@ -87,5 +95,6 @@ void run_server(server_t *server)
     server->clfds = malloc(sizeof(struct pollfd));
     server->clfds[0] = (struct pollfd){.fd = server->sockfd, .events = POLLIN};
     server->cons = 1;
+    initialize(server);
     main_loop(server);
 }

@@ -35,12 +35,12 @@ CRITERION	=	--coverage -lcriterion
 
 all:	$(SERVER_EXEC)	$(GUI_EXEC)	$(AI_EXEC)
 
-tests_run:	$(TEST_OBJ)	$(TEST_SERVER)
-	$(CC) $(CFLAGS) -o $(TEST_EXEC) $(TEST_OBJ) $(TEST_SERVER) $(CRITERION)
-	./$(TEST_EXEC)
-
 $(PROTOCOL_EXEC): $(PROTOCOL_OBJ)
 	$(CC) $(PROTOCOL_OBJ) -o $(PROTOCOL_EXEC) $(CFLAGS) -shared
+
+tests_run:	$(PROTOCOL_EXEC) $(TEST_OBJ)	$(TEST_SERVER)
+	$(CC) $(CFLAGS) -o $(TEST_EXEC) $(TEST_OBJ) $(TEST_SERVER) $(CRITERION) -L. -lprotocol
+	./$(TEST_EXEC)
 
 $(SERVER_EXEC): $(SERVER_OBJ) $(PROTOCOL_EXEC)
 	$(CC) $(SERVER_OBJ) $(CFLAGS) -o $(SERVER_EXEC) -L. -lprotocol

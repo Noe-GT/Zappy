@@ -39,7 +39,7 @@ void remove_client(server_t *server, size_t index)
         server->clfds = realloc(server->clfds,
             sizeof(struct pollfd) * server->cons);
         server->clients = realloc(server->clients,
-            sizeof(player_t *) * server->cons);
+            sizeof(client_t *) * server->cons);
     }
     free(client);
 }
@@ -54,7 +54,7 @@ static void new_connection(server_t *server, int confd)
     server->clfds[server->cons].events = POLLIN;
     server->clfds[server->cons].revents = 0;
     server->clients = realloc(server->clients,
-        sizeof(player_t *) * (server->cons + 1));
+        sizeof(client_t *) * (server->cons + 1));
     server->clients[server->cons - 1] = (client_t *)malloc(sizeof(client_t));
     server->clients[server->cons] = NULL;
     client = server->clients[server->cons - 1];

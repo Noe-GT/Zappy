@@ -7,7 +7,6 @@
 
 #ifndef SERVER_HP_
     #define SERVER_HP_
-    #define CLIENTS_MAX 1000
 
     #include "game.h"
     #include "client.h"
@@ -47,6 +46,7 @@ typedef struct server_s {
     struct pollfd *clfds;
     uint64_t cons;
     client_t **clients;
+    game_t *game;
 } server_t;
 
 void run_server(server_t *server);
@@ -64,5 +64,15 @@ void parse_freq(server_t *server, char **av, int len);
 void parse_auto_start(server_t *server, char **av, int len);
 void parse_display_egg(server_t *server, char **av, int len);
 void parse_match_duration(server_t *server, char **av, int len);
+
+// Game
+void game_logic(server_t *server);
+void init_map(map_t *map, size_t width, size_t height);
+void free_map(map_t *map);
+void handle_ressource(server_t *server);
+void elevate_players(tile_t *tile, server_t *server,
+    client_t *client, int level);
+void start_elevation(client_t *client, int level);
+void elevation(client_t *client, tile_t *tile, int level);
 
 #endif /* !SERVER_HP_ */
