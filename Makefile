@@ -44,9 +44,10 @@ $(SERVER_EXEC): $(SERVER_OBJ)
 gui: $(RENDERS_OBJ) $(GUI_EXEC)
 
 $(GUI_EXEC): $(GUI_OBJ)
+	mkdir gui/plugins/
 	@for dir in $(shell find gui/UI/render -type f -name Makefile -exec dirname {} \;); do 	\
 		$(MAKE) -C $$dir; 																	\
-		cp $$dir/*.so gui/plugins/;													 		\
+		mv $$dir/*.so gui/plugins/;													 		\
 	done
 	$(CPPC) $(GUI_OBJ) $(RENDERS_OBJ) -o $(GUI_EXEC) $(CFLAGS) $(CPPFLAGS) $(GUI_LDFLAGS)
 
@@ -65,7 +66,7 @@ fclean: clean
 	@for dir in $(shell find gui/UI/render -type f -name Makefile -exec dirname {} \;); do 	\
 		$(MAKE) -C $$dir fclean;															\
 	done
-	rm -f gui/plugins/*
+	rm -rf gui/plugins/
 	rm -f $(SERVER_EXEC) $(GUI_EXEC) $(AI_EXEC)
 
 re: fclean all

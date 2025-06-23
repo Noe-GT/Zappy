@@ -48,8 +48,7 @@ namespace zappyGUI {
 
             class RTile {
                 public:
-                    RTile(int x, int y, std::shared_ptr<float> zoomCoeff, std::shared_ptr<std::pair<float, float>> mapOffset,
-                        std::shared_ptr<zappyGUI::Zappy2D::AssetPool> assets, std::shared_ptr<zappyGUI::Zappy2D::ressourceType> displayRessourceType);
+                    RTile(int x, int y, std::shared_ptr<zappyGUI::Zappy2D> ui);
                     ~RTile() = default;
 
                     void display(std::shared_ptr<zappyGUI::Window> window) const;
@@ -61,12 +60,9 @@ namespace zappyGUI {
                     void setRessourceTexture();
                     void updatePlayers(const zappyGUI::Tile &tile);
 
-                    std::shared_ptr<float> _zoomCoeff;
-                    std::shared_ptr<std::pair<float, float>> _mapOffset;
-                    std::shared_ptr<zappyGUI::Zappy2D::ressourceType> _displayRessourceType;
-                    std::shared_ptr<zappyGUI::Zappy2D::AssetPool> _assets;
                     sf::Sprite _back;
                     sf::Sprite _ressource;
+                    std::shared_ptr<zappyGUI::Zappy2D> _ui;
             };
 
             Zappy2D();
@@ -78,16 +74,23 @@ namespace zappyGUI {
             void update() final;
             void handleEvents() final;
 
+            const std::string &getDisplayTeam() const;
+            const float &getZoomCoeff() const;
+            const std::pair<float, float> &getMapOffset() const;
+            const zappyGUI::Zappy2D::ressourceType &getDisplayRessourceType() const;
+            const zappyGUI::Zappy2D::AssetPool &getAssets() const;
+
         private:
             void updateZoom(bool zoomOut);
             void updatePosition(sf::Keyboard::Key eventCode);
             void zoomFill();
             void centerMap();
 
-            std::shared_ptr<zappyGUI::Zappy2D::AssetPool> _assets;
+            zappyGUI::Zappy2D::AssetPool _assets;
             std::vector<std::vector<zappyGUI::Zappy2D::RTile>> _tiles;
-            std::shared_ptr<float> _zoomCoeff;
-            std::shared_ptr<std::pair<float, float>> _mapOffset;
-            std::shared_ptr<zappyGUI::Zappy2D::ressourceType> _displayRessourceType;
+            float _zoomCoeff;
+            std::pair<float, float> _mapOffset;
+            zappyGUI::Zappy2D::ressourceType _displayRessourceType;
+            std::string _displayTeam;
     };
 }
