@@ -74,7 +74,7 @@ re: fclean all
 	$(CC) $(CFLAGS) -c $< -o $@
 
 %.o: %.cpp
-	$(CPPC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
+	$(CPPC) $(CFLAGS) $(CPPFLAGS) -fPIC -c $< -o $@
 
 %.plugin.o: %.cpp
 	$(CPPC) $(CFLAGS) $(CPPFLAGS) -fPIC -c $< -o $@

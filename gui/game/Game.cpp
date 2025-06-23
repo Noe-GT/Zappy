@@ -205,7 +205,7 @@ void zappyGUI::Game::displayUI(std::shared_ptr<zappyGUI::Window> window)
             inventoryTexts.push_back(itemDisplay);
         }
         for (auto& item : this->_inventoryUI) {
-            for (const auto ressource : this->_selectedPlayer->getInventory()) {
+            for (const auto& ressource : this->_selectedPlayer->getInventory()) {
                 if (ressource.first->getName() == item.first) {
                     item.second.second.setText(std::to_string(ressource.second));
                     break;
@@ -266,8 +266,6 @@ void zappyGUI::Game::handleUIEvents(const sf::Event& event, std::shared_ptr<zapp
                 break;
             }
         }
-    }
-    for (auto &player: this->_players) {
     }
 }
 
