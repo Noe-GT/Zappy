@@ -54,7 +54,7 @@ static void out_of_bound(server_t *server, int *x, int *y)
 }
 
 static void append_resources(char *buffer, int buffer_size,
-    int *len, int count)
+    int *len)
 {
     if (*len > 0)
         *len += snprintf(buffer + *len, buffer_size - *len, " ");
@@ -73,10 +73,10 @@ static char *get_tile_content(server_t *server, int x, int y)
 
     buffer[0] = '\0';
     out_of_bound(server, &x, &y);
-    tile = &MAP.tiles[y][x];
+    tile = &MAP->tiles[y][x];
     for (int i = 0; i < RESOURCE_TYPES; ++i) {
         for (int j = 0; j < tile->resources[i]; ++j) {
-            append_resources(buffer, 256, &len, tile->resources[i]);
+            append_resources(buffer, 256, &len);
             len += snprintf(buffer + len, 256 - len, "%s", names[i]);
         }
     }
@@ -109,7 +109,7 @@ static void append_content(char *result, int *len, char *content, bool is_last)
         *len += snprintf(result + *len, 4096 - *len, "%s, ", content);
 }
 
-static bool is_last_tile(client_t *client, size_t y, size_t x)
+static bool is_last_tile(client_t *client, int y, int x)
 {
     return (y == client->level - 1 && x == (2 * (y + 1)));
 }
