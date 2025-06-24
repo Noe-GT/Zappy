@@ -134,6 +134,5 @@ char *handle_vision(server_t *server, client_t *client)
             free(content);
         }
     }
-    printf("%s\n", result);
     return result;
 }
