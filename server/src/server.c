@@ -31,13 +31,13 @@ static size_t handle_event(server_t *server, client_t *client, size_t i)
         remove_client(server, i);
         return -1;
     }
-    client->message = read_string(client->buffer);
+    client->queue = add_queue(client->queue, read_string(client->buffer));
     return 0;
 }
 
 static void network_events(server_t *server)
 {
-    int events = poll((struct pollfd *)server->clfds, server->cons, 100);
+    int events = poll((struct pollfd *)server->clfds, server->cons, DOWNTIME);
 
     printf("clients: %lu - events: %d\n", server->cons - 1, events);
     if (events == 0)

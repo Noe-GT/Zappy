@@ -56,6 +56,8 @@ static void init_player(client_t *client)
     client->position = (vector2_t *)malloc(sizeof(vector2_t));
     memset(client->position, 0, sizeof(vector2_t));
     client->direction = UP;
+    client->cooldown = 0;
+    client->queue = NULL;
 }
 
 static void new_connection(server_t *server, int confd)
@@ -73,7 +75,7 @@ static void new_connection(server_t *server, int confd)
     server->clients[server->cons] = NULL;
     client = server->clients[server->cons - 1];
     client->buffer = create_buffer();
-    client->message = NULL;
+    client->fd = confd;
     init_player(client);
     ++server->cons;
 }

@@ -9,5 +9,6 @@
 
 void command_ok(int fd)
 {
+    printf("is it one : %d\n", fd);
     send_message(fd, "ok\n");
 }

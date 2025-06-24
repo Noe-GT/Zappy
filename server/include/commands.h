@@ -14,6 +14,7 @@
 typedef struct command_s {
     char *name;
     void (*function)(server_t *, client_t *, char *);
+    uint32_t cooldown;
 } command_t;
 
 void handle_client_commands(server_t *server);

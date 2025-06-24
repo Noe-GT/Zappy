@@ -16,6 +16,12 @@
     #include "game.h"
     #include "vector.h"
 
+typedef struct queue_s {
+    char *command;
+    bool pending;
+    struct queue_s *next;
+} queue_t;
+
 typedef struct client_s {
     int id;
     int fd;
@@ -24,9 +30,15 @@ typedef struct client_s {
     int inventory[RESOURCE_TYPES];
     struct client_s *next;
     circular_buffer_t *buffer;
-    char *message;
     vector2_t *position;
     direction_t direction;
+    uint64_t cooldown;
+    queue_t *queue;
 } client_t;
+
+queue_t *init_queue(char *command);
+queue_t *add_queue(queue_t *queue, char *command);
+void destroy_queue(queue_t *queue);
+queue_t *shift_queue(queue_t *queue);
 
 #endif /* !CLIENT_H_ */

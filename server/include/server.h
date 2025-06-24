@@ -15,6 +15,7 @@
     #include <stdint.h>
 
     #define PARAMETERS server->parameters
+    #define DOWNTIME calculate_downtime(server)
 
 typedef struct required_flags_s {
     bool port;
@@ -74,5 +75,7 @@ void elevate_players(tile_t *tile, server_t *server,
     client_t *client, int level);
 void start_elevation(client_t *client, int level);
 void elevation(client_t *client, tile_t *tile, int level);
+
+int calculate_downtime(server_t *server);
 
 #endif /* !SERVER_HP_ */
