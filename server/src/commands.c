@@ -21,14 +21,13 @@ const command_t client_commands[] = {
     { "pin", command_pin, 0 },
     { "sgt", command_sgt, 0 },
     { "sst", command_sst, 0 },
-    { "Right\n", command_right, 1000 },
+    { "Right\n", command_right, 7 },
     { "Left\n", command_left, 7 },
     { "Forward\n", command_forward, 7 },
 };
 
 void find_command(command_t *command, char *message)
 {
-    printf("%d\n", strncmp(message, "Right\n", strlen("Right\n")));
     for (size_t i = 0; i < sizeof(client_commands) / sizeof(command_t); ++i) {
         if (strncmp(message, client_commands[i].name,
             strlen(client_commands[i].name)) == 0) {
@@ -36,7 +35,6 @@ void find_command(command_t *command, char *message)
             return;
         }
     }
-    printf("why\n");
     memset(command, 0, sizeof(command_t));
 }
 
