@@ -68,7 +68,6 @@ static bool handle_short_flag(char **av, int *i, int ac, server_t *server)
     if (strcmp(av[*i], "-f") == 0) {
         parse_freq(server, av + *i, ac - *i);
         ++(*i);
-        PARAMETERS->required->freq = true;
         return true;
     }
     if (strcmp(av[*i], "-n") == 0) {
@@ -115,8 +114,6 @@ static void check_required_flags(required_flags_t *flags)
         usage("Missing -n (team names) flag");
     if (!flags->clients)
         usage("Missing -c (clientsNb) flag");
-    if (!flags->freq)
-        usage("Missing -f (freq) flag");
 }
 
 static void parse_flag(char **av, int *i, int ac, server_t *server)

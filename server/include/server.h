@@ -23,7 +23,6 @@ typedef struct required_flags_s {
     bool height;
     bool teams;
     bool clients;
-    bool freq;
 } required_flags_t;
 
 typedef struct parameters_s {
@@ -75,6 +74,7 @@ void elevate_players(tile_t *tile, server_t *server,
     client_t *client, int level);
 void start_elevation(client_t *client, int level);
 void elevation(client_t *client, tile_t *tile, int level);
+char *handle_vision(server_t *server, client_t *client);
 
 int calculate_downtime(server_t *server);
 
