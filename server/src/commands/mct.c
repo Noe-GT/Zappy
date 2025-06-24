@@ -9,7 +9,10 @@
 
 void command_mct(server_t *server, client_t *client, char *message)
 {
-    (void)server;
-    (void)client;
     (void)message;
+    for (uint32_t i = 0; i < server->parameters->height; ++i) {
+        for (uint32_t j = 0; j < server->parameters->width; ++j) {
+            bct(server, client, j, i);
+        }
+    }
 }

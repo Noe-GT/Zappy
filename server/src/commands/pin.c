@@ -10,6 +10,11 @@
 void command_pin(server_t *server, client_t *client, char *message)
 {
     (void)server;
-    (void)client;
     (void)message;
+    send_message(client->fd, "pin #%d %u %u %d %d %d %d %d %d %d\n",
+        client->id,
+        client->position->x, client->position->y, client->inventory[FOOD],
+        client->inventory[LINEMATE], client->inventory[DERAUMERE],
+        client->inventory[SIBUR], client->inventory[MENDIANE],
+        client->inventory[PHIRAS], client->inventory[THYSTAME]);
 }

@@ -12,14 +12,14 @@
 #include "../include/commands.h"
 
 const command_t client_commands[] = {
-    { "msz", command_msz, 0 },
+    { "msz\n", command_msz, 0 },
     { "bct", command_bct, 0 },
-    { "mct", command_mct, 0 },
-    { "tna", command_tna, 0 },
+    { "mct\n", command_mct, 0 },
+    { "tna\n", command_tna, 0 },
     { "ppo", command_ppo, 0 },
     { "plv", command_plv, 0 },
     { "pin", command_pin, 0 },
-    { "sgt", command_sgt, 0 },
+    { "sgt\n", command_sgt, 0 },
     { "sst", command_sst, 0 },
     { "Right\n", command_right, 7 },
     { "Left\n", command_left, 7 },

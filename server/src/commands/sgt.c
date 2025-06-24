@@ -9,7 +9,6 @@
 
 void command_sgt(server_t *server, client_t *client, char *message)
 {
-    (void)server;
-    (void)client;
     (void)message;
+    send_message(client->fd, "sst %u\n", PARAMETERS->freq);
 }

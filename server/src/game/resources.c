@@ -39,22 +39,22 @@ void free_map(map_t *map)
 
 static void count_resources(server_t *server, int *current)
 {
-    size_t nb_tiles = MAP.width * MAP.height;
+    size_t nb_tiles = MAP->width * MAP->height;
     size_t x = 0;
     size_t y = 0;
 
     memset(current, 0, sizeof(int) * RESOURCE_TYPES);
     for (size_t i = 0; i < nb_tiles; ++i) {
-        y = i / MAP.width;
-        x = i % MAP.width;
+        y = i / MAP->width;
+        x = i % MAP->width;
         for (int j = 0; j < RESOURCE_TYPES; ++j)
-            current[j] += MAP.tiles[y][x].resources[j];
+            current[j] += MAP->tiles[y][x].resources[j];
     }
 }
 
 static void get_required(server_t *server, int *required)
 {
-    size_t nb_tiles = MAP.width * MAP.height;
+    size_t nb_tiles = MAP->width * MAP->height;
 
     for (int i = 0; i < RESOURCE_TYPES; ++i)
         required[i] = (int)(nb_tiles * resource_densities[i]);
@@ -69,9 +69,9 @@ static void respawn_resources(server_t *server, int *required, int *current)
     for (int i = 0; i < RESOURCE_TYPES; ++i) {
         add = required[i] - current[i];
         for (; add > 0; --add) {
-            x = rand() % MAP.width;
-            y = rand() % MAP.height;
-            MAP.tiles[y][x].resources[i]++;
+            x = rand() % MAP->width;
+            y = rand() % MAP->height;
+            MAP->tiles[y][x].resources[i]++;
         }
     }
 }

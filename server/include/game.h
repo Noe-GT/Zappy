@@ -12,7 +12,7 @@
 
     #define RESOURCE_TYPES 7
 
-    #define MAP server->game->map
+    #define MAP server->map
     #define CLIENT server->network->client_list
 
 typedef enum resource_s {
@@ -36,10 +36,6 @@ typedef struct map_s {
     size_t height;
     tile_t **tiles;
 } map_t;
-
-typedef struct game_s {
-    map_t map;
-} game_t;
 
 static const float resource_densities[RESOURCE_TYPES] = {
     0.5,    // Food

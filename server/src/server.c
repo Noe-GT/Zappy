@@ -70,10 +70,10 @@ static void main_loop(server_t *server)
 
 static void initialize(server_t *server)
 {
-    server->game = malloc(sizeof(game_t));
-    if (!server->game)
+    server->map = (map_t *)malloc(sizeof(map_t));
+    if (!server->map)
         exit(84);
-    init_map(&MAP, PARAMETERS->width, PARAMETERS->height);
+    init_map(MAP, PARAMETERS->width, PARAMETERS->height);
 }
 
 void run_server(server_t *server)

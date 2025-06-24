@@ -15,6 +15,7 @@
 #include <stdlib.h>
 
 #include "../include/server.h"
+#include "../include/commands.h"
 
 void destroy_tab(char **tab)
 {
@@ -51,6 +52,7 @@ void remove_client(server_t *server, size_t index)
 }
 
 // TODO: random position and direction
+// TODO: assign a team
 static void init_player(client_t *client)
 {
     client->position = (vector2_t *)malloc(sizeof(vector2_t));
@@ -58,6 +60,7 @@ static void init_player(client_t *client)
     client->direction = UP;
     client->cooldown = 0;
     client->queue = NULL;
+    client->team = "hell";
 }
 
 static void new_connection(server_t *server, int confd)
@@ -76,8 +79,10 @@ static void new_connection(server_t *server, int confd)
     client = server->clients[server->cons - 1];
     client->buffer = create_buffer();
     client->fd = confd;
+    client->id = server->cons - 1;
     init_player(client);
     ++server->cons;
+    command_pnw(client);
 }
 
 void attach_clients(server_t *server)

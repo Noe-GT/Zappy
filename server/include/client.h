@@ -34,6 +34,7 @@ typedef struct client_s {
     direction_t direction;
     uint64_t cooldown;
     queue_t *queue;
+    char *team;
 } client_t;
 
 queue_t *init_queue(char *command);

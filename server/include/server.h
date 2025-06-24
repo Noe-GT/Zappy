@@ -47,7 +47,7 @@ typedef struct server_s {
     struct pollfd *clfds;
     uint64_t cons;
     client_t **clients;
-    game_t *game;
+    map_t *map;
 } server_t;
 
 void run_server(server_t *server);
