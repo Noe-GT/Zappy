@@ -29,4 +29,11 @@ void command_plv(server_t *server, client_t *client, char *message);
 void command_sgt(server_t *server, client_t *client, char *message);
 void command_sst(server_t *server, client_t *client, char *message);
 
+void command_left(server_t *server, client_t *client, char *message);
+void command_right(server_t *server, client_t *client, char *message);
+void command_forward(server_t *server, client_t *client, char *message);
+
+void command_ok(int fd);
+void command_ko(int fd);
+
 #endif /* !COMMANDS_H_ */
