@@ -11,6 +11,8 @@
 
     #include <string.h>
 
+    #define COMMAND client->queue->command
+
 typedef struct command_s {
     char *name;
     void (*function)(server_t *, client_t *, char *);
@@ -50,10 +52,12 @@ void command_sbp(client_t *client);
 void command_left(server_t *server, client_t *client, char *message);
 void command_right(server_t *server, client_t *client, char *message);
 void command_forward(server_t *server, client_t *client, char *message);
+void command_look(server_t *server, client_t *client, char *message);
 
 // SERVER
 void command_ok(int fd);
 void command_ko(int fd);
+void command_aic(server_t *server, client_t *client);
 
 void bct(server_t *server, client_t *client, uint32_t x, uint32_t y);
 

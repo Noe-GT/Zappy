@@ -80,5 +80,6 @@ char *handle_vision(server_t *server, client_t *client);
 int calculate_downtime(server_t *server);
 
 bool team_exists(server_t *server, char *team);
+uint16_t count_team_members(server_t *server, char *team);
 
 #endif /* !SERVER_HP_ */

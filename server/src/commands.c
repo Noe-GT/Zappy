@@ -27,6 +27,7 @@ const command_t ai_commands[] = {
     { "Right\n", command_right, 7 },
     { "Left\n", command_left, 7 },
     { "Forward\n", command_forward, 7 },
+    { "Look\n", command_look, 7 },
 };
 
 void find_gui_command(command_t *command, char *message)
@@ -91,7 +92,7 @@ static void handle_ai_message(server_t *server, client_t *client, uint64_t now)
     printf("Handling massage: %s", client->queue->command);
     find_ai_command(&command, client->queue->command);
     if (command.name == 0)
-        return command_suc(client);
+        return command_ko(client->fd);
     if (client->queue->pending) {
         command.function(server, client, client->queue->command);
         client->queue = shift_queue(client->queue);
@@ -105,15 +106,18 @@ static void handle_ai_message(server_t *server, client_t *client, uint64_t now)
 static bool connection_process(server_t *server, client_t *client)
 {
     if (client->is_gui == false && client->is_ai == false) {
-        if (strcmp(client->queue->command, "GRAHPIC\n") == 0) {
+        if (strcmp(client->queue->command, "GRAPHIC\n") == 0) {
             client->is_gui = true;
+            client->id = server->players;
+            ++server->players;
             client->queue = shift_queue(client->queue);
             return true;
         }
         if (team_exists(server, client->queue->command)) {
-            client->team = strndup(client->queue->command,
-                strlen(client->queue->command) - 1);
+            client->is_ai = true;
+            client->team = strndup(COMMAND, strlen(COMMAND) - 1);
             client->queue = shift_queue(client->queue);
+            command_aic(server, client);
             return true;
         }
         client->queue = shift_queue(client->queue);
@@ -128,11 +132,11 @@ void handle_client_commands(server_t *server)
     uint64_t now = get_time_milliseconds();
 
     for (size_t i = 0; i < server->cons - 1; ++i) {
-        if (connection_process(server, server->clients[i]))
-            continue;
         if (now < server->clients[i]->cooldown)
             continue;
         if (server->clients[i]->queue == NULL)
+            continue;
+        if (connection_process(server, server->clients[i]))
             continue;
         if (server->clients[i]->is_gui)
             handle_gui_message(server, server->clients[i], now);
