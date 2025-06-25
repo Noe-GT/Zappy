@@ -57,6 +57,7 @@ static void init_player(server_t *server, client_t *client)
     client->position->x = rand() % MAP->width;
     client->position->y = rand() % MAP->height;
     client->direction = rand() % 4;
+    client->level = 1;
     client->cooldown = 0;
     client->queue = NULL;
     client->team = NULL;
