@@ -326,7 +326,7 @@ void zappyGUI::Game::setSelectedTile(std::pair<float, float> windowPos, std::pai
         playerTexts.push_back(playerText);
     }
     std::shared_ptr<UIBlocks::PopupSelector> playerSelector = std::make_shared<UIBlocks::PopupSelector>(playerTexts, windowPos, std::pair<float, float>(100, 50));
-    std::vector<std::shared_ptr<UIBlocks::Text>> ressourcesTexts;
+    std::vector<std::shared_ptr<UIBlocks::IUIBlock>> ressourcesTexts;
     for (auto &ressource: this->_map.at(mapPos.first).at(mapPos.second).getRessources()) {
         std::string ressourceInfo = ressource.first->getName() + ": " + std::to_string(ressource.second);
         std::shared_ptr<UIBlocks::Text> ressourceText = std::make_shared<UIBlocks::Text>(ressourceInfo, std::pair<float, float>(0, 0), 16);
