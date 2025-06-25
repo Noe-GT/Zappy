@@ -1,5 +1,6 @@
 #pragma once
 #include "../../../shared/AGraphical.hpp"
+#include "../../../../game/Game.hpp"
 // #define BASE_TILE_SIZE 32
 // #define BASE_PLAYER_SIZE 10
 // #define BASE_RESSOURCE_SIZE 16
@@ -72,13 +73,15 @@ namespace zappyGUI {
             void updateTile(const zappyGUI::Tile &tile) final;
             void display() final;
             void update() final;
-            void handleEvents() final;
+            void handleEvents(Game &game) final;
 
             const std::string &getDisplayTeam() const;
             const float &getZoomCoeff() const;
             const std::pair<float, float> &getMapOffset() const;
             const zappyGUI::Zappy2D::ressourceType &getDisplayRessourceType() const;
             const zappyGUI::Zappy2D::AssetPool &getAssets() const;
+
+            void tileSelection(Game &game);
 
         private:
             void updateZoom(bool zoomOut);

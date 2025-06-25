@@ -21,6 +21,8 @@ namespace UIBlocks {
             const std::variant<std::string, std::vector<std::shared_ptr<IUIBlock>>> getValue() const override;
             void setSize(const std::pair<float, float> &size) override;
             void setSize(const int size) override;
+            void setFirst(std::shared_ptr<IUIBlock> newFirst);
+            void setSecond(std::shared_ptr<IUIBlock> newSecond);
 
         private:
             std::pair<float, float> _position;

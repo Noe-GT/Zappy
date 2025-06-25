@@ -51,6 +51,8 @@ namespace zappyGUI {
             void handleUIEvents(const sf::Event& event, std::shared_ptr<zappyGUI::Window> window);
             void update();
 
+            void setSelectedTile(std::pair<float, float> windowPos, std::pair<int, int> mapPos);
+
             std::shared_ptr<zappyGUI::Player> getSelectedPlayer();
 
         private:
@@ -74,6 +76,8 @@ namespace zappyGUI {
             std::shared_ptr<UIBlocks::Text> _playersListTitle;
             std::shared_ptr<UIBlocks::Text> _spellsListTitle;
             std::shared_ptr<UIBlocks::Text> _logsTitle;
+            std::shared_ptr<UIBlocks::Pair> _selectedTileSelector;
+
 
 
     };

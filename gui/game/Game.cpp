@@ -36,6 +36,7 @@ zappyGUI::Game::Game() : _frequence(0), _teamNbr(0), _gameInProgess(false), _map
     this->_playersListTitle = std::make_shared<UIBlocks::Text>("Players", std::pair<float, float>(110, 270), 24);
     this->_spellsListTitle = std::make_shared<UIBlocks::Text>("Spells", std::pair<float, float>(1355, 70), 24);
     this->_logsTitle = std::make_shared<UIBlocks::Text>("Logs", std::pair<float, float>(1360, 465), 24);
+    this->_selectedTileSelector = nullptr;
     this->_timerUI->start();
     this->_playersListUI->open();
     this->_logsUI->open();
@@ -282,6 +283,8 @@ void zappyGUI::Game::displayUI(std::shared_ptr<zappyGUI::Window> window)
     this->_playersListTitle->draw(window);
     this->_spellsListTitle->draw(window);
     this->_logsTitle->draw(window);
+    if (this->_selectedTileSelector)
+        this->_selectedTileSelector->draw(window);
 }
 
 void zappyGUI::Game::handleUIEvents(const sf::Event& event, std::shared_ptr<zappyGUI::Window> window)
@@ -294,6 +297,9 @@ void zappyGUI::Game::handleUIEvents(const sf::Event& event, std::shared_ptr<zapp
         this->_spellsListUI->handleEvent(event, window);
     if (this->_logsUI)
         this->_logsUI->handleEvent(event, window);
+    if (this->_selectedTileSelector)
+        this->_selectedTileSelector->handleEvent(event, window);
+
     if (std::holds_alternative<std::string>(this->_playersListUI->getValue())) {
         std::string selectedPlayerName = std::get<std::string>(this->_playersListUI->getValue());
         for (auto &player : this->_players) {
@@ -310,6 +316,28 @@ void zappyGUI::Game::handleUIEvents(const sf::Event& event, std::shared_ptr<zapp
         }
     }
 }
+
+void zappyGUI::Game::setSelectedTile(std::pair<float, float> windowPos, std::pair<int, int> mapPos)
+{
+    std::vector<std::shared_ptr<UIBlocks::IUIBlock>> playerTexts;
+    for (auto &player: this->_map.at(mapPos.first).at(mapPos.second).getPlayers()) {
+        std::string playerInfo = "Player " + std::to_string(player->getId()) + " - " + player->getName();
+        std::shared_ptr<UIBlocks::Text> playerText = std::make_shared<UIBlocks::Text>(playerInfo, std::pair<float, float>(0, 0), 16);
+        playerTexts.push_back(playerText);
+    }
+    std::shared_ptr<UIBlocks::PopupSelector> playerSelector = std::make_shared<UIBlocks::PopupSelector>(playerTexts, windowPos, std::pair<float, float>(100, 50));
+    std::vector<std::shared_ptr<UIBlocks::Text>> ressourcesTexts;
+    for (auto &ressource: this->_map.at(mapPos.first).at(mapPos.second).getRessources()) {
+        std::string ressourceInfo = ressource.first->getName() + ": " + std::to_string(ressource.second);
+        std::shared_ptr<UIBlocks::Text> ressourceText = std::make_shared<UIBlocks::Text>(ressourceInfo, std::pair<float, float>(0, 0), 16);
+        ressourcesTexts.push_back(ressourceText);
+    }
+    std::shared_ptr<UIBlocks::List> ressourceList = std::make_shared<UIBlocks::List>(ressourcesTexts, windowPos, std::pair<float, float>(100, 50));
+    this->_selectedTileSelector->setFirst(playerSelector);
+    this->_selectedTileSelector->setSecond(ressourceList);
+    this->_selectedTileSelector->setPosition(windowPos);
+}
+
 
 std::shared_ptr<zappyGUI::Player> zappyGUI::Game::getSelectedPlayer()
 {

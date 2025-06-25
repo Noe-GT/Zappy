@@ -119,7 +119,7 @@ const zappyGUI::Zappy2D::AssetPool &zappyGUI::Zappy2D::getAssets() const
     return this->_assets;
 }
 
-void zappyGUI::Zappy2D::handleEvents()
+void zappyGUI::Zappy2D::handleEvents(Game &game)
 {
     sf::Keyboard::Key eventCode = this->_window->getEvent().key.code;
 
@@ -190,7 +190,14 @@ void zappyGUI::Zappy2D::handleEvents()
             break;
         default:
             break;
+        
     }
+    this->tileSelection(game);
+}
+
+void zappyGUI::Zappy2D::tileSelection(Game &game)
+{
+    
 }
 
 zappyGUI::Zappy2D::AssetPool::AssetPool():

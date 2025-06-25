@@ -50,3 +50,12 @@ void UIBlocks::Pair::setSize(const int size)
     this->_pair.second->setSize(size);
 }
 
+void UIBlocks::Pair::setFirst(std::shared_ptr<IUIBlock> newFirst)
+{
+    this->_pair.first = newFirst;
+}
+
+void UIBlocks::Pair::setSecond(std::shared_ptr<IUIBlock> newSecond)
+{
+    this->_pair.second = newSecond;
+}
