@@ -73,7 +73,7 @@ namespace zappyGUI {
             void updateTile(const zappyGUI::Tile &tile) final;
             void display() final;
             void update() final;
-            void handleEvents(Game &game) final;
+            void handleEvents() final;
 
             const std::string &getDisplayTeam() const;
             const float &getZoomCoeff() const;

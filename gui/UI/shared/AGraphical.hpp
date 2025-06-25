@@ -20,7 +20,7 @@ namespace zappyGUI {
             virtual void displayTile(const zappyGUI::Tile &tile) override = 0;
             virtual void updateTile(const zappyGUI::Tile &tile) override = 0;
             virtual void update() override;
-            virtual void handleEvents(Game &game) override;
+            virtual void handleEvents() override;
             virtual std::shared_ptr<zappyGUI::Window> getWindow() const override;
 
         protected:
