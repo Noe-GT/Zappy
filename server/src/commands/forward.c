@@ -7,8 +7,17 @@
 
 #include "../../include/commands.h"
 
+static void fuck_it(server_t *server, client_t *client, vector2_t *old)
+{
+    remove_player_tile(server, client, old);
+    add_player_tile(server, client, client->position);
+    command_ok(client->fd);
+}
+
 void command_forward(server_t *server, client_t *client, char *message)
 {
+    vector2_t old = {.x = client->position->x, .y = client->position->y};
+
     (void)message;
     if (client->direction == UP) {
         if (client->position->y == 0)
@@ -26,5 +35,5 @@ void command_forward(server_t *server, client_t *client, char *message)
     } else if (client->direction == RIGHT)
         client->position->x = client->position->x + 1
             % server->parameters->width;
-    command_ok(client->fd);
+    fuck_it(server, client, &old);
 }

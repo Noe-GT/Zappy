@@ -35,7 +35,7 @@ void remove_client(server_t *server, size_t index)
     client_t *client = server->clients[index - 1];
 
     close(server->clfds[index].fd);
-    for (size_t i = index; i < server->cons - 1; i++) {
+    for (size_t i = index; i < server->cons - 1; ++i) {
         server->clfds[i] = server->clfds[i + 1];
         server->clients[i - 1] = server->clients[i];
     }

@@ -53,6 +53,9 @@ void command_left(server_t *server, client_t *client, char *message);
 void command_right(server_t *server, client_t *client, char *message);
 void command_forward(server_t *server, client_t *client, char *message);
 void command_look(server_t *server, client_t *client, char *message);
+void command_inventory(server_t *server, client_t *client, char *message);
+void command_broadcast(server_t *server, client_t *client, char *message);
+void command_nbr(server_t *server, client_t *client, char *message);
 
 // SERVER
 void command_ok(int fd);

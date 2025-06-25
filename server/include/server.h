@@ -81,5 +81,8 @@ int calculate_downtime(server_t *server);
 
 bool team_exists(server_t *server, char *team);
 uint16_t count_team_members(server_t *server, char *team);
+void add_player_tile(server_t *server, client_t *client, vector2_t *position);
+void remove_player_tile(server_t *server, client_t *client,
+    vector2_t *position);
 
 #endif /* !SERVER_HP_ */

@@ -28,6 +28,10 @@ const command_t ai_commands[] = {
     { "Left\n", command_left, 7 },
     { "Forward\n", command_forward, 7 },
     { "Look\n", command_look, 7 },
+    { "Inventory\n", command_inventory, 1 },
+    { "Broadcast", command_broadcast, 7 },
+    { "Connect_nbr", command_broadcast, 0 },
+    { "Eject", command_eject, 7 },
 };
 
 void find_gui_command(command_t *command, char *message)
