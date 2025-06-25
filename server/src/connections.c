@@ -15,7 +15,6 @@
 #include <stdlib.h>
 
 #include "../include/server.h"
-#include "../include/commands.h"
 
 void destroy_tab(char **tab)
 {
@@ -51,13 +50,13 @@ void remove_client(server_t *server, size_t index)
     free(client);
 }
 
-// TODO: random position and direction
-// TODO: assign a team
-static void init_player(client_t *client)
+static void init_player(server_t *server, client_t *client)
 {
     client->position = (vector2_t *)malloc(sizeof(vector2_t));
     memset(client->position, 0, sizeof(vector2_t));
-    client->direction = UP;
+    client->position->x = rand() % MAP->width;
+    client->position->y = rand() % MAP->height;
+    client->direction = rand() % 4;
     client->cooldown = 0;
     client->queue = NULL;
     client->team = NULL;
@@ -81,7 +80,7 @@ static void new_connection(server_t *server, int confd)
     client->fd = confd;
     client->is_gui = false;
     client->is_ai = false;
-    init_player(client);
+    init_player(server, client);
     ++server->cons;
     send_message(client->fd, "welcome\n");
 }
