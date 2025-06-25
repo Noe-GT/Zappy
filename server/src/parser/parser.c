@@ -128,6 +128,7 @@ void parser(int ac, char **av, server_t *server)
 {
     server->parameters = malloc(sizeof(parameters_t));
     server->parameters->required = malloc(sizeof(parameters_t));
+    server->players = 0;
     for (int i = 1; i < ac; ++i)
         parse_flag(av, &i, ac, server);
     check_required_flags(PARAMETERS->required);

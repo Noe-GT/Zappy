@@ -60,7 +60,7 @@ static void init_player(client_t *client)
     client->direction = UP;
     client->cooldown = 0;
     client->queue = NULL;
-    client->team = "hell";
+    client->team = NULL;
 }
 
 static void new_connection(server_t *server, int confd)
@@ -79,10 +79,11 @@ static void new_connection(server_t *server, int confd)
     client = server->clients[server->cons - 1];
     client->buffer = create_buffer();
     client->fd = confd;
-    client->id = server->cons - 1;
+    client->is_gui = false;
+    client->is_ai = false;
     init_player(client);
     ++server->cons;
-    command_pnw(client);
+    send_message(client->fd, "welcome\n");
 }
 
 void attach_clients(server_t *server)

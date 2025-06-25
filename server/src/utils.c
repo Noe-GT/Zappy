@@ -8,6 +8,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
+
+#include "../include/server.h"
 
 void help(void)
 {
@@ -38,4 +41,15 @@ bool is_number(char *str)
         return false;
     }
     return true;
+}
+
+bool team_exists(server_t *server, char *team)
+{
+    for (uint16_t i = 0; i < server->parameters->team_count; ++i) {
+        if (strncmp(server->parameters->team_names[i], team,
+            strlen(team) - 1) == 0) {
+            return true;
+        }
+    }
+    return false;
 }

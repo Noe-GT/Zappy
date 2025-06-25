@@ -45,6 +45,7 @@ typedef struct server_s {
     int32_t sockfd;
     struct pollfd *clfds;
     uint64_t cons;
+    uint64_t players;
     client_t **clients;
     map_t *map;
 } server_t;
@@ -77,5 +78,7 @@ void elevation(client_t *client, tile_t *tile, int level);
 char *handle_vision(server_t *server, client_t *client);
 
 int calculate_downtime(server_t *server);
+
+bool team_exists(server_t *server, char *team);
 
 #endif /* !SERVER_HP_ */
