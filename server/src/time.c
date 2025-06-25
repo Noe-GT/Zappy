@@ -11,5 +11,5 @@ int calculate_downtime(server_t *server)
 {
     if (server->cons == 1)
         return -1;
-    return 1 / server->parameters->freq;
+    return 1000 / server->parameters->freq;
 }
