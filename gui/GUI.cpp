@@ -160,9 +160,7 @@ void zappyGUI::GUI::events()
                     this->_renderers[this->_selectedRenderer]->handleEvents();
             }
         }
-        for (auto &element : this->_elements) {
-            element->handleEvent(this->_window.get()->getEvent(), this->_window);
-        }
+        this->_game->handleUIEvents(this->_window->getEvent(), this->_window);
     }
 }
 

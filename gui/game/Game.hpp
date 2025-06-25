@@ -9,6 +9,7 @@
 #include "../UI/shared/UIBlocks/List/List.hpp"
 #include "../UI/shared/UIBlocks/Text/Text.hpp"
 #include "../UI/shared/UIBlocks/Pair/Pair.hpp"
+#include "../UI/shared/UIBlocks/Timer/Timer.hpp"
 #include "../UI/shared/Window.hpp"
 #include <memory>
 #include <SFML/Graphics.hpp>
@@ -48,6 +49,7 @@ namespace zappyGUI {
             void display(std::shared_ptr<zappyGUI::IGraphical> renderer);
             void displayUI(std::shared_ptr<zappyGUI::Window> window);
             void handleUIEvents(const sf::Event& event, std::shared_ptr<zappyGUI::Window> window);
+            void update();
 
             std::shared_ptr<zappyGUI::Player> getSelectedPlayer();
 
@@ -65,7 +67,11 @@ namespace zappyGUI {
             std::shared_ptr<Player> _selectedPlayer;
             std::shared_ptr<UIBlocks::PopupSelector> _playersListUI;
             std::shared_ptr<UIBlocks::Text> _selectedPlayerLevelText;
-            std::shared_ptr<UIBlocks::List> _spellsListUI;
+            std::shared_ptr<UIBlocks::PopupSelector> _spellsListUI;
+            std::shared_ptr<UIBlocks::PopupSelector> _logsUI;
             std::map<std::string, std::pair<UIBlocks::Text, UIBlocks::Text>> _inventoryUI;
+            std::shared_ptr<UIBlocks::Timer> _timerUI;
+
+
     };
 };

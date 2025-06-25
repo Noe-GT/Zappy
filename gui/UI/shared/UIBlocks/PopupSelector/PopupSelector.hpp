@@ -21,6 +21,8 @@ namespace UIBlocks {
             void handleEvent(const sf::Event &event, std::shared_ptr<zappyGUI::Window> &window) override;
             void setPosition(const std::pair<float, float> &position) override;
             const std::variant<std::string, std::vector<std::shared_ptr<IUIBlock>>> getValue() const override;
+            void setOptions(std::vector<std::shared_ptr<UIBlocks::IUIBlock>> options);
+
 
             bool isInside(int x, int y) const;
             const std::shared_ptr<IUIBlock> &getSelected() const;
