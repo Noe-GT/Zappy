@@ -66,7 +66,7 @@ namespace zappyGUI {
             };
 
             Zappy2D();
-            ~Zappy2D() = default;
+            virtual ~Zappy2D() = default;
             void initialize(std::shared_ptr<zappyGUI::GUI> gui) final;
             void displayTile(const zappyGUI::Tile &tile) final;
             void updateTile(const zappyGUI::Tile &tile) final;

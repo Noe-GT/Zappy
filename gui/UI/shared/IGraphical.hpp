@@ -16,7 +16,7 @@
 namespace zappyGUI {
     class IGraphical {
         public:
-            ~IGraphical() = default;
+            virtual ~IGraphical() = default;
             virtual void initialize(std::shared_ptr<zappyGUI::GUI> gui) = 0;
             virtual void display() = 0;
             virtual void displayTile(const zappyGUI::Tile &tile) = 0;

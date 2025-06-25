@@ -9,7 +9,7 @@ SERVER_SRC	=	$(wildcard server/*.c)
 
 GUI_SRC 	= 	$(shell find gui/client -type f -name '*.cpp') 		\
 
-RENDERS_SRC = 	$(shell find gui/UI/shared -type f -name '*.cpp') \
+RENDERS_SRC = 	$(shell find gui/UI/shared -type f -name '*.cpp') 	\
 				$(wildcard gui/*.cpp)								\
 				$(shell find gui/game -type f -name '*.cpp') 		\
 
@@ -44,7 +44,7 @@ $(SERVER_EXEC): $(SERVER_OBJ)
 gui: $(RENDERS_OBJ) $(GUI_EXEC)
 
 $(GUI_EXEC): $(GUI_OBJ)
-	mkdir gui/plugins/
+	mkdir -p gui/plugins/
 	@for dir in $(shell find gui/UI/render -type f -name Makefile -exec dirname {} \;); do 	\
 		$(MAKE) -C $$dir; 																	\
 		mv $$dir/*.so gui/plugins/;													 		\

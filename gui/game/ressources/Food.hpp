@@ -10,6 +10,6 @@ namespace zappyGUI {
     class Food: public IRessource{
         public:
             ~Food() override = default;
-            std::string getName() const;
+            std::string getName() const override;
     };
 }

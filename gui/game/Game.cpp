@@ -33,6 +33,9 @@ zappyGUI::Game::Game() : _frequence(0), _teamNbr(0), _gameInProgess(false), _map
         {"Thystame", {UIBlocks::Text("Thystame: ", std::pair<float, float>(50, 150), 16), UIBlocks::Text("0", std::pair<float, float>(150, 150), 16)}}
     };
     this->_timerUI = std::make_shared<UIBlocks::Timer>(std::pair<float, float>(1290, 30), 24);
+    this->_playersListTitle = std::make_shared<UIBlocks::Text>("Players", std::pair<float, float>(110, 270), 24);
+    this->_spellsListTitle = std::make_shared<UIBlocks::Text>("Spells", std::pair<float, float>(1355, 70), 24);
+    this->_logsTitle = std::make_shared<UIBlocks::Text>("Logs", std::pair<float, float>(1360, 465), 24);
     this->_timerUI->start();
     this->_playersListUI->open();
     this->_logsUI->open();
@@ -276,6 +279,9 @@ void zappyGUI::Game::displayUI(std::shared_ptr<zappyGUI::Window> window)
     this->_spellsListUI->draw(window);
     this->_logsUI->draw(window);
     this->_timerUI->draw(window);
+    this->_playersListTitle->draw(window);
+    this->_spellsListTitle->draw(window);
+    this->_logsTitle->draw(window);
 }
 
 void zappyGUI::Game::handleUIEvents(const sf::Event& event, std::shared_ptr<zappyGUI::Window> window)
@@ -294,21 +300,14 @@ void zappyGUI::Game::handleUIEvents(const sf::Event& event, std::shared_ptr<zapp
             std::smatch match;
             std::regex regexPattern(R"(Player (\d+) - )");
             if (std::regex_search(selectedPlayerName, match, regexPattern) && match.size() > 1) {
-                std::cout << "Selected player: " << selectedPlayerName << std::endl;
                 int playerId = std::stoi(match[1].str());
-                std::cout << "Player ID: " << playerId << std::endl;
                 if (player.getId() == playerId) {
-                    std::cout << "Found matching player: " << player.getName() << std::endl;
                     this->_selectedPlayer = std::make_shared<zappyGUI::Player>(player);
                     break;
                 }
                 continue;
-            } else {
-                std::cerr << "Error: Invalid player name format: " << selectedPlayerName << std::endl;
             }
         }
-    } else {
-        std::cout << "No player selected" << std::endl;
     }
 }
 

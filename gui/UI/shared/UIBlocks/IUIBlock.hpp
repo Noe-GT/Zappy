@@ -17,6 +17,7 @@
 namespace UIBlocks {
     class IUIBlock {
         public:
+        virtual ~IUIBlock() = default;
         virtual void draw(std::shared_ptr<zappyGUI::Window> &window) = 0;
         virtual void handleEvent(const sf::Event &event, std::shared_ptr<zappyGUI::Window> &window) = 0;
         virtual void setPosition(const std::pair<float, float> &position) = 0;

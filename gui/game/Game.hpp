@@ -71,6 +71,9 @@ namespace zappyGUI {
             std::shared_ptr<UIBlocks::PopupSelector> _logsUI;
             std::map<std::string, std::pair<UIBlocks::Text, UIBlocks::Text>> _inventoryUI;
             std::shared_ptr<UIBlocks::Timer> _timerUI;
+            std::shared_ptr<UIBlocks::Text> _playersListTitle;
+            std::shared_ptr<UIBlocks::Text> _spellsListTitle;
+            std::shared_ptr<UIBlocks::Text> _logsTitle;
 
 
     };
