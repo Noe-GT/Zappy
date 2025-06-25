@@ -4,6 +4,7 @@
 *** File description:*
 *** Window.cpp*
 */
+
 #include "Window.hpp"
 
 zappyGUI::Window::Window(): _isFullscreen(false)

@@ -121,6 +121,18 @@ const zappyGUI::Zappy2D::AssetPool &zappyGUI::Zappy2D::getAssets() const
 
 void zappyGUI::Zappy2D::handleEvents()
 {
+    const sf::Event &event = this->_window->getEvent();
+
+    std::cout << "event: " << event.type << std::endl;
+    if (event.type == sf::Event::MouseButtonPressed) {
+        std::cout << "mouse click" << std::endl;
+        this->handleEventMouse(event);
+    } else
+        this->handleEventKey(event);
+}
+
+void zappyGUI::Zappy2D::handleEventKey(const sf::Event &event)
+{
     sf::Keyboard::Key eventCode = this->_window->getEvent().key.code;
 
     switch (eventCode) {
@@ -190,14 +202,18 @@ void zappyGUI::Zappy2D::handleEvents()
             break;
         default:
             break;
-        
     }
-    // this->tileSelection(game);
 }
 
-void zappyGUI::Zappy2D::tileSelection(Game &game)
+void zappyGUI::Zappy2D::handleEventMouse(const sf::Event &event)
 {
+    const int mx = event.mouseButton.x;
+    const int my = event.mouseButton.y;
+    const int tilex = (mx + this->_mapOffset.first) /  (BASE_TILE_SIZE * this->_zoomCoeff);
+    const int tiley = (my + this->_mapOffset.second) /  (BASE_TILE_SIZE * this->_zoomCoeff);
 
+    std::cout << "mouse click: " << mx << ":" << my << std::endl;
+    std::cout << "tile: " << tilex << ":" << tiley << std::endl;
 }
 
 zappyGUI::Zappy2D::AssetPool::AssetPool():

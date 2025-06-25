@@ -81,13 +81,13 @@ namespace zappyGUI {
             const zappyGUI::Zappy2D::ressourceType &getDisplayRessourceType() const;
             const zappyGUI::Zappy2D::AssetPool &getAssets() const;
 
-            void tileSelection(Game &game);
-
         private:
             void updateZoom(bool zoomOut);
             void updatePosition(sf::Keyboard::Key eventCode);
             void zoomFill();
             void centerMap();
+            void handleEventKey(const sf::Event &event);
+            void handleEventMouse(const sf::Event &event);
 
             zappyGUI::Zappy2D::AssetPool _assets;
             std::vector<std::vector<zappyGUI::Zappy2D::RTile>> _tiles;
