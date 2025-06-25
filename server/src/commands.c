@@ -7,7 +7,6 @@
 
 #include <string.h>
 #include <poll.h>
-#include <time.h>
 
 #include "../include/commands.h"
 
@@ -58,14 +57,6 @@ void find_ai_command(command_t *command, char *message)
     memset(command, 0, sizeof(command_t));
 }
 
-static uint64_t get_time_milliseconds(void)
-{
-    struct timespec spec;
-
-    clock_gettime(1, &spec);
-    return spec.tv_sec * 1000 + spec.tv_nsec / 1e6;
-}
-
 static void handle_gui_message(server_t *server, client_t *client,
     uint64_t now)
 {
@@ -112,13 +103,13 @@ static bool connection_process(server_t *server, client_t *client)
     if (client->is_gui == false && client->is_ai == false) {
         if (strcmp(client->queue->command, "GRAPHIC\n") == 0) {
             client->is_gui = true;
-            client->id = server->players;
-            ++server->players;
             client->queue = shift_queue(client->queue);
             return true;
         }
         if (team_exists(server, client->queue->command)) {
             client->is_ai = true;
+            client->id = server->players;
+            ++server->players;
             client->team = strndup(COMMAND, strlen(COMMAND) - 1);
             client->queue = shift_queue(client->queue);
             command_aic(server, client);

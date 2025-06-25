@@ -61,6 +61,7 @@ static void init_player(server_t *server, client_t *client)
     client->cooldown = 0;
     client->queue = NULL;
     client->team = NULL;
+    client->entry_tick = server->ticks;
 }
 
 static void new_connection(server_t *server, int confd)

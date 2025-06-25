@@ -39,7 +39,7 @@ void command_pic(server_t *server, client_t *client); // TODO: pic
 void command_pie(client_t *client);
 void command_pfk(client_t *client);
 void command_pdr(client_t *client); // TODO: resource number
-void command_pdi(client_t *client);
+void command_pdi(server_t *server, client_t *client);
 void command_enw(client_t *client, uint32_t egg_number, vector2_t *position);
 void command_ebo(client_t *client, uint32_t egg_number);
 void command_edi(client_t *client, uint32_t egg_number);
@@ -56,6 +56,7 @@ void command_look(server_t *server, client_t *client, char *message);
 void command_inventory(server_t *server, client_t *client, char *message);
 void command_broadcast(server_t *server, client_t *client, char *message);
 void command_nbr(server_t *server, client_t *client, char *message);
+void command_eject(server_t *server, client_t *client, char *message);
 
 // SERVER
 void command_ok(int fd);

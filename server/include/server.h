@@ -46,6 +46,8 @@ typedef struct server_s {
     struct pollfd *clfds;
     uint64_t cons;
     uint64_t players;
+    uint64_t tick_timer;
+    uint64_t ticks;
     client_t **clients;
     map_t *map;
 } server_t;
@@ -78,11 +80,13 @@ void elevation(client_t *client, tile_t *tile, int level);
 char *handle_vision(server_t *server, client_t *client);
 
 int calculate_downtime(server_t *server);
+uint64_t get_time_milliseconds(void);
 
 bool team_exists(server_t *server, char *team);
 uint16_t count_team_members(server_t *server, char *team);
 void add_player_tile(server_t *server, client_t *client, vector2_t *position);
 void remove_player_tile(server_t *server, client_t *client,
     vector2_t *position);
+void forward(server_t *server, client_t *client);
 
 #endif /* !SERVER_HP_ */

@@ -11,5 +11,6 @@ void command_nbr(server_t *server, client_t *client, char *message)
 {
     uint16_t count = count_team_members(server, client->team);
 
+    (void)message;
     send_message(client->fd, "%d\n", PARAMETERS->nb_clients - count);
 }

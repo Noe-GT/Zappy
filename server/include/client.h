@@ -37,6 +37,8 @@ typedef struct client_s {
     char *team;
     bool is_gui;
     bool is_ai;
+    bool is_dead;
+    uint64_t entry_tick;
 } client_t;
 
 queue_t *init_queue(char *command);
