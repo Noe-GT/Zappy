@@ -60,7 +60,7 @@ static void append_resources(char *buffer, int buffer_size,
         *len += snprintf(buffer + *len, buffer_size - *len, " ");
 }
 
-static void append_players_and_eggs(server_t *server, tile_t *tile, vector2_t pos, char *buffer)
+static void append_players_and_eggs(server_t *server, tile_t *tile, vector2_t *pos, char *buffer)
 {
     int len = strlen(buffer);
 
@@ -69,7 +69,7 @@ static void append_players_and_eggs(server_t *server, tile_t *tile, vector2_t po
         len += snprintf(buffer + len, 256 - len, "player");
     }
     for (egg_t *egg = server->egg; egg != NULL; egg = egg->next) {
-        if (egg->position->x == pos.x && egg->position->y == pos.y) {
+        if (egg->position->x == pos->x && egg->position->y == pos->y) {
             append_resources(buffer, 256, &len);
             len += snprintf(buffer + len, 256 - len, "egg");
         }
@@ -90,7 +90,7 @@ static char *get_tile_content(server_t *server, int x, int y)
 
     buffer[0] = '\0';
     out_of_bound(server, &x, &y);
-    append_players_and_eggs(server, tile, pos, buffer);
+    append_players_and_eggs(server, tile, &pos, buffer);
     len = strlen(buffer);
     for (int i = 0; i < RESOURCE_TYPES; ++i) {
         for (int j = 0; j < tile->resources[i]; ++j) {
