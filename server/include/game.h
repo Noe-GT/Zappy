@@ -16,6 +16,7 @@
 
     #define MAP server->map
     #define CLIENT server->network->client_list
+    #define TILES server->map->tiles[client->position->y][client->position->x]
 
 typedef enum resource_s {
     FOOD,
