@@ -42,6 +42,10 @@
 #include "DlLoader.hpp"
 #include "UI/shared/IGraphical.hpp"
 
+extern "C" {
+    #include "../protocol/include/protocol.h"
+}
+
 namespace zappyGUI {
     class Icommand;
     class GUI {
@@ -68,6 +72,6 @@ namespace zappyGUI {
             std::vector <std::shared_ptr<zappyGUI::IGraphical>> _renderers;
             std::unordered_map<std::string, std::unique_ptr<Icommand>> _commands;
             std::vector<std::shared_ptr<UIBlocks::IUIBlock>> _elements;
-            //FIXME: add the cirular buffer here
+            std::shared_ptr<circular_buffer_t> _circularBuffer;
     };
 };

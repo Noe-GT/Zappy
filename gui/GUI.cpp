@@ -22,7 +22,8 @@ zappyGUI::GUI::GUI(int port, std::string hostname):
     _window(std::make_shared<zappyGUI::Window>()),
     _client(port, hostname),
     _game(std::make_shared<zappyGUI::Game>()),
-    _renderers()
+    _renderers(),
+    _circularBuffer(create_buffer(), destroy_buffer)
 {
     this->_commands["seg"] = std::make_unique<Seg>();
     this->_commands["smg"] = std::make_unique<Smg>();
@@ -48,7 +49,7 @@ zappyGUI::GUI::GUI(int port, std::string hostname):
     this->_commands["pgt"] = std::make_unique<Pgt>();
     this->_commands["sgt"] = std::make_unique<Sgt>();
     this->_commands["sst"] = std::make_unique<Sst>();
-    // this->_commands["WELCOME"] = std::make_unique<WELCOME>();
+    this->_commands["WELCOME"] = std::make_unique<WELCOME>();
     const std::string pluginsDir = "./gui/plugins";
     DIR* dir = opendir(pluginsDir.c_str());
 
@@ -95,7 +96,6 @@ void zappyGUI::GUI::update()
     pfd.events = POLLIN;
     pfd.revents = 0;
     int result = poll(&pfd, 1, 0);
-
     if (result <= 0)
         return;
     if (pfd.revents & POLLIN) {
@@ -103,6 +103,7 @@ void zappyGUI::GUI::update()
         char buffer[BUFFER_SIZE];
         std::memset(buffer, 0, BUFFER_SIZE);
         ssize_t bytesRead = read(socket_fd, buffer, BUFFER_SIZE - 1);
+
         if (bytesRead <= 0) {
             if (bytesRead == 0) {
                 std::cerr << "Connexion fermée par le serveur" << std::endl;
@@ -110,27 +111,31 @@ void zappyGUI::GUI::update()
             }
             return;
         }
-        std::string receivedData(buffer, bytesRead);
-        std::istringstream iss(receivedData);
-        std::string line;
-
-        while (std::getline(iss, line)) {
-            if (!line.empty()) {
-                size_t spacePos = line.find(' ');
-                std::string commandName = (spacePos == std::string::npos) ? line : line.substr(0, spacePos);
-                std::string args = (spacePos == std::string::npos) ? "" : line.substr(spacePos + 1);
-
+        write_string(this->_circularBuffer.get(), buffer);
+        char* line;
+        while ((line = read_string(this->_circularBuffer.get())) != nullptr) {
+            std::string strLine(line);
+            free_str(line);
+            if (!strLine.empty()) {
+                size_t spacePos = strLine.find(' ');
+                std::string commandName = (spacePos == std::string::npos) ? strLine : strLine.substr(0, spacePos);
+                // std::clog << commandName.length() << std::endl;
+                if (commandName.back() == '\n')
+                commandName.pop_back();
+                std::string args = (spacePos == std::string::npos) ? "" : strLine.substr(spacePos + 1);
                 auto it = _commands.find(commandName);
                 if (it != _commands.end()) {
                     try {
-                        it->second->receive(line, *this);
+                        it->second->receive(strLine, *this);
                     } catch (const std::exception& e) {
                         std::cerr << "error on the " << commandName << " execution: " << e.what() << std::endl;
                     }
-                } else
+                } else {
                     std::cerr << "unknow command: " << commandName << std::endl;
+                }
             }
         }
+        // this->_circularBuffer.get() = clean_buffer(this->_circularBuffer.get());
     }
     if (pfd.revents & POLLERR) {
         std::cerr << "error detected on the socket" << std::endl;

@@ -29,7 +29,7 @@ GUI_OBJ 	= 	$(GUI_SRC:.cpp=.o)
 AI_OBJ 		= 	$(AI_SRC:.c=.o)
 RENDERS_OBJ = 	$(RENDERS_SRC:.cpp=.plugin.o)
 
-CFLAGS	+=	-Wall -Wextra -g3 -Iprotocol/include
+CFLAGS	+=	-Wall -Wextra -g3 -fPIC -Iprotocol/include
 
 CC 			= 	gcc
 
@@ -37,7 +37,7 @@ CPPC 		= 	g++
 
 CPPFLAGS 	= 	-std=c++17
 
-GUI_LDFLAGS = -lsfml-graphics -lsfml-window -lsfml-system -ldl
+GUI_LDFLAGS = -lsfml-graphics -lsfml-window -lsfml-system -ldl -L. -lprotocol
 
 CRITERION	=	--coverage -lcriterion
 
@@ -90,7 +90,7 @@ fclean: clean
 re: fclean all
 
 %.o: %.c
-	$(CC) $(CFLAGS) -fPIC -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 %.o: %.cpp
 	$(CPPC) $(CFLAGS) $(CPPFLAGS) -fPIC -c $< -o $@
