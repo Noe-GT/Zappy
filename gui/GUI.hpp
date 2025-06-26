@@ -17,6 +17,7 @@
 #include "client/commands/map/Msz.hpp"
 #include "client/commands/misc/Sbp.hpp"
 #include "client/commands/misc/Suc.hpp"
+#include "client/commands/misc/WELCOME.hpp"
 #include "client/commands/player/egg/Ebo.hpp"
 #include "client/commands/player/egg/Edi.hpp"
 #include "client/commands/player/egg/Enw.hpp"
@@ -34,11 +35,13 @@
 #include "client/commands/ressources/Pgt.hpp"
 #include "client/commands/settings/Sgt.hpp"
 #include "client/commands/settings/Sst.hpp"
+
 #include <memory>
 #include <unordered_map>
 #include <utility>
 #include "DlLoader.hpp"
 #include "UI/shared/IGraphical.hpp"
+
 namespace zappyGUI {
     class Icommand;
     class GUI {
