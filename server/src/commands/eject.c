@@ -33,7 +33,8 @@ void command_eject(server_t *server, client_t *client, char *message)
         if (TILES.players[j]->id == client->id)
             continue;
         else
-            send_message(TILES.players[j]->fd, "eject: %d\n", client->direction + 1);
+            send_message(TILES.players[j]->fd, "eject: %d\n",
+                client->direction + 1);
     }
     for (size_t i = 0; i < server->cons; ++i) {
         if (server->clients[i]->is_gui)

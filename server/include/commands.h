@@ -58,6 +58,7 @@ void command_inventory(server_t *server, client_t *client, char *message);
 void command_broadcast(server_t *server, client_t *client, char *message);
 void command_nbr(server_t *server, client_t *client, char *message);
 void command_eject(server_t *server, client_t *client, char *message);
+void command_fork(server_t *server, client_t *client, char *message);
 
 // SERVER
 void command_ok(int fd);

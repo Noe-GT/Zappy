@@ -32,6 +32,7 @@ const command_t ai_commands[] = {
     { "Broadcast", command_broadcast, 7 },
     { "Connect_nbr", command_broadcast, 0 },
     { "Eject", command_eject, 7 },
+    { "Fork\n", command_fork, 42 },
 };
 
 void find_gui_command(command_t *command, char *message)
