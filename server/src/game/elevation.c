@@ -6,63 +6,57 @@
 */
 
 #include "../../include/server.h"
+#include "../../include/commands.h"
 
-static bool has_required_resources(client_t *client, int level)
+static bool tile_has_required_resources(tile_t *tile, int level)
 {
     if (level < 1 || level > 7)
-        return true;
-    for (int i = 1; i < RESOURCE_TYPES; ++i)
-        if (client->inventory[i] < elevation_requirements[level - 1][i])
-            return true;
-    return false;
+        return false;
+    for (int i = 0; i < RESOURCE_TYPES; ++i) {
+        if (tile->resources[i] < elevation_requirements[level - 1][i])
+            return false;
+    }
+    return true;
 }
 
-static void remove_elevation_resources(client_t *client, int level)
+static void remove_elevation_resources_from_tile(tile_t *tile, int level)
 {
-    for (int i = 1; i < RESOURCE_TYPES; ++i)
-        client->inventory[i] -= elevation_requirements[level - 1][i];
+    for (int i = 0; i < RESOURCE_TYPES; ++i)
+        tile->resources[i] -= elevation_requirements[level - 1][i];
 }
 
-static bool number_players_level(server_t *server, int level)
+static bool count_players_on_map(server_t *server, int level)
 {
     int count = 0;
     int required = elevation_requirements[level - 1][0];
 
     for (size_t i = 0; i < server->cons - 1; ++i) {
-        if (server->clients[i] && server->clients[i]->level == level)
+        if (server->clients[i] && server->clients[i]->level ==
+            level && server->clients[i]->is_ai)
             ++count;
     }
     return (count >= required);
 }
 
-void start_elevation(client_t *client, int level)
-{
-    if (!client->is_elevating) {
-        if (has_required_resources(client, level))
-            return;
-        client->is_elevating = true;
-    }
-}
-
-void elevation(client_t *client, tile_t *tile, int level)
-{
-    for (size_t i = 0; i < tile->player_count; ++i) {
-        if (tile->players[i]->level == level &&
-            tile->players[i]->is_elevating) {
-            ++tile->players[i]->level;
-            tile->players[i]->is_elevating = false;
-            remove_elevation_resources(tile->players[i], level);
-        }
-        if (tile->players[i]->level == level) {
-            start_elevation(client, level);
-        }
-    }
-}
-
 void elevate_players(tile_t *tile, server_t *server,
     client_t *client, int level)
 {
-    if (!number_players_level(server, level))
+    int required_players = elevation_requirements[level - 1][0];
+    int present_players_map = count_players_on_map(server, level);
+
+    if (present_players_map < required_players) {
+        command_ko(client->fd);
         return;
-    elevation(client, tile, level);
+    }
+    if (!tile_has_required_resources(tile, level)) {
+        command_ko(client->fd);
+        return;
+    }
+    for (size_t i = 0; i < tile->player_count; ++i) {
+        if (tile->players[i] && tile->players[i]->level == level) {
+            ++tile->players[i]->level;
+            tile->players[i]->is_elevating = false;
+        }
+    }
+    remove_elevation_resources_from_tile(tile, level);
 }
