@@ -10,7 +10,7 @@
 #include "../UI/shared/IGraphical.hpp"
 #include <regex>
 
-zappyGUI::Game::Game() : _frequence(0), _teamNbr(0), _gameInProgess(false), _mapSize(30, 30), _selectedPlayer(nullptr)
+zappyGUI::Game::Game() : _frequence(0), _teamNbr(0), _gameInProgess(false), _mapSize(20, 10), _selectedPlayer(nullptr)
 {
     for (size_t y = 0; y < this->_mapSize.second; y++) {
         this->_map.emplace_back();

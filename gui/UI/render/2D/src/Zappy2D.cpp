@@ -125,6 +125,9 @@ void zappyGUI::Zappy2D::handleEvents()
 
     switch (eventCode) {
         case sf::Keyboard::C:
+            this->centerMap();
+            break;
+        case sf::Keyboard::F:
             this->zoomFill();
             this->centerMap();
             break;
@@ -190,7 +193,6 @@ void zappyGUI::Zappy2D::handleEvents()
             break;
         default:
             break;
-        
     }
     // this->tileSelection(game);
 }

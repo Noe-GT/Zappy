@@ -48,7 +48,7 @@ zappyGUI::GUI::GUI(int port, std::string hostname):
     this->_commands["pgt"] = std::make_unique<Pgt>();
     this->_commands["sgt"] = std::make_unique<Sgt>();
     this->_commands["sst"] = std::make_unique<Sst>();
-    this->_commands["WELCOME"] = std::make_unique<WELCOME>();
+    // this->_commands["WELCOME"] = std::make_unique<WELCOME>();
     const std::string pluginsDir = "./gui/plugins";
     DIR* dir = opendir(pluginsDir.c_str());
 
