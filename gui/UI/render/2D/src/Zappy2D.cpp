@@ -11,7 +11,7 @@ zappyGUI::Zappy2D::Zappy2D():
     _assets(),
     _tiles(),
     _zoomCoeff(1.0),
-    _mapOffset(std::pair<float, float>(200.00, 20.0)),
+    _mapOffset(std::pair<int, int>(200, 20)),
     _displayRessourceType(zappyGUI::Zappy2D::FOOD)
 {
 }
@@ -19,6 +19,7 @@ zappyGUI::Zappy2D::Zappy2D():
 void zappyGUI::Zappy2D::initialize(std::shared_ptr<zappyGUI::GUI> gui)
 {
     const std::pair<size_t, size_t> &mapSize = gui->getGame()->getMapSize();
+    std::cout << "mapsize: " << mapSize.first << ":" << mapSize.second << std::endl;
 
     zappyGUI::AGraphical::initialize(gui);
     this->zoomFill();
@@ -52,8 +53,8 @@ void zappyGUI::Zappy2D::centerMap()
 {
     const std::pair<size_t, size_t> &mapSize = this->_gui->getGame()->getMapSize();
 
-    this->_mapOffset.first = (this->_window->getSize().first - (mapSize.first * zappyGUI::BASE_TILE_SIZE * this->_zoomCoeff)) / 2.0;
-    this->_mapOffset.second = (this->_window->getSize().second - (mapSize.second * zappyGUI::BASE_TILE_SIZE * this->_zoomCoeff)) / 2.0;
+    this->_mapOffset.first = static_cast<int>((this->_window->getSize().first - (mapSize.first * zappyGUI::BASE_TILE_SIZE * this->_zoomCoeff)) / 2.0);
+    this->_mapOffset.second = static_cast<int>((this->_window->getSize().second - (mapSize.second * zappyGUI::BASE_TILE_SIZE * this->_zoomCoeff)) / 2.0);
 }
 
 void zappyGUI::Zappy2D::updateZoom(bool zoomOut)
@@ -104,7 +105,7 @@ const float &zappyGUI::Zappy2D::getZoomCoeff() const
     return this->_zoomCoeff;
 }
 
-const std::pair<float, float> &zappyGUI::Zappy2D::getMapOffset() const
+const std::pair<int, int> &zappyGUI::Zappy2D::getMapOffset() const
 {
     return this->_mapOffset;
 }
@@ -207,12 +208,17 @@ void zappyGUI::Zappy2D::handleEventKey(const sf::Event &event)
 
 void zappyGUI::Zappy2D::handleEventMouse(const sf::Event &event)
 {
-    const int mx = event.mouseButton.x;
-    const int my = event.mouseButton.y;
-    const int tilex = (mx + this->_mapOffset.first) /  (BASE_TILE_SIZE * this->_zoomCoeff);
-    const int tiley = (my + this->_mapOffset.second) /  (BASE_TILE_SIZE * this->_zoomCoeff);
+    const float mx = event.mouseButton.x;
+    const float my = event.mouseButton.y;
+    const int offadjx = (mx - this->_mapOffset.first);
+    const int offadjy = (my - this->_mapOffset.second);
+    const int tilex = offadjx / (BASE_TILE_SIZE * this->_zoomCoeff);
+    const int tiley =  offadjy / (BASE_TILE_SIZE * this->_zoomCoeff);
 
+    std::cout << "======" << std::endl;
     std::cout << "mouse click: " << mx << ":" << my << std::endl;
+    std::cout << "offset: " << this->_mapOffset.first << ":" << this->_mapOffset.second << std::endl;
+    std::cout << "-offset: " << offadjx << ":" << offadjy << std::endl;
     std::cout << "tile: " << tilex << ":" << tiley << std::endl;
 }
 

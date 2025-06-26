@@ -48,6 +48,7 @@ zappyGUI::GUI::GUI(int port, std::string hostname):
     this->_commands["pgt"] = std::make_unique<Pgt>();
     this->_commands["sgt"] = std::make_unique<Sgt>();
     this->_commands["sst"] = std::make_unique<Sst>();
+    this->_commands["WELCOME"] = std::make_unique<WELCOME>();
     const std::string pluginsDir = "./gui/plugins";
     DIR* dir = opendir(pluginsDir.c_str());
 
@@ -65,7 +66,7 @@ zappyGUI::GUI::GUI(int port, std::string hostname):
         try {
             DLLoader pluginLoader(fullPath);
             auto renderer = pluginLoader.getInstance<IGraphical>("entryPoint");
-            renderer->initialize(std::shared_ptr<zappyGUI::GUI>(this));
+            renderer->initialize(std::make_shared<zappyGUI::GUI> (*this));
             this->_renderers.push_back(std::move(renderer));
             std::cout << "loaded " << filename << std::endl;
         } catch (const std::exception& e) {
