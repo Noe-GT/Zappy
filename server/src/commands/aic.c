@@ -8,6 +8,7 @@
 #include "../../include/commands.h"
 
 // add_player_tile should be done when the egg is placed
+// TODO: and everywhere that uses count_team_members
 void command_aic(server_t *server, client_t *client)
 {
     uint16_t count = count_team_members(server, client->team);

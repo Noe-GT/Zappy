@@ -28,7 +28,6 @@ typedef struct client_s {
     uint8_t level;
     bool is_elevating;
     int inventory[RESOURCE_TYPES];
-    struct client_s *next;
     circular_buffer_t *buffer;
     vector2_t *position;
     direction_t direction;
@@ -37,7 +36,6 @@ typedef struct client_s {
     char *team;
     bool is_gui;
     bool is_ai;
-    bool is_dead;
     uint64_t entry_tick;
 } client_t;
 

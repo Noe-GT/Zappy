@@ -45,10 +45,11 @@ typedef struct server_s {
     int32_t sockfd;
     struct pollfd *clfds;
     uint64_t cons;
-    uint64_t players;
     uint64_t tick_timer;
     uint64_t ticks;
     client_t **clients;
+    egg_t *egg;
+    uint64_t egg_count;
     map_t *map;
 } server_t;
 
@@ -56,6 +57,7 @@ void run_server(server_t *server);
 
 void attach_clients(server_t *server);
 void remove_client(server_t *server, size_t index);
+void init_player(server_t *server, client_t *client);
 
 // My parser shit
 void parser(int ac, char **av, server_t *server);

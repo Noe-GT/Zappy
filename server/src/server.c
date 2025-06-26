@@ -68,14 +68,6 @@ static void main_loop(server_t *server)
     }
 }
 
-static void initialize(server_t *server)
-{
-    server->map = (map_t *)malloc(sizeof(map_t));
-    if (!server->map)
-        exit(84);
-    init_map(MAP, PARAMETERS->width, PARAMETERS->height);
-}
-
 void run_server(server_t *server)
 {
     struct sockaddr_in servaddr = {0};
@@ -95,6 +87,5 @@ void run_server(server_t *server)
     server->clfds = malloc(sizeof(struct pollfd));
     server->clfds[0] = (struct pollfd){.fd = server->sockfd, .events = POLLIN};
     server->cons = 1;
-    initialize(server);
     main_loop(server);
 }

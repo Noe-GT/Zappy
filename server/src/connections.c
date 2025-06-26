@@ -15,6 +15,7 @@
 #include <stdlib.h>
 
 #include "../include/server.h"
+#include "../include/game.h"
 
 void destroy_tab(char **tab)
 {
@@ -50,13 +51,10 @@ void remove_client(server_t *server, size_t index)
     free(client);
 }
 
-static void init_player(server_t *server, client_t *client)
+void init_player(server_t *server, client_t *client)
 {
-    client->position = (vector2_t *)malloc(sizeof(vector2_t));
-    memset(client->position, 0, sizeof(vector2_t));
-    client->position->x = rand() % MAP->width;
-    client->position->y = rand() % MAP->height;
-    client->direction = rand() % 4;
+    client->position = NULL;
+    client->direction = 0;
     client->level = 1;
     client->cooldown = 0;
     client->queue = NULL;

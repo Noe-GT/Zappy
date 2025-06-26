@@ -29,7 +29,7 @@ void add_player_tile(server_t *server, client_t *client, vector2_t *position)
 void remove_player_tile(server_t *server, client_t *client,
     vector2_t *position)
 {
-    tile_t tile = server->map->tiles[client->position->y][client->position->x];
+    tile_t tile = server->map->tiles[position->y][position->x];
     size_t index = player_index(&tile, client);
 
     if (index == tile.player_count - 1) {
