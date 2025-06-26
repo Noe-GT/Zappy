@@ -26,11 +26,11 @@ void zappyGUI::Pie::receive(std::string command, zappyGUI::GUI &gui)
     int sucessStatus;
 
     ss >> code >> x >> y >> sucessStatus;
-    for (std::size_t i = 0; i != gui.getGame()->getMap()[x][y].getPlayers().size(); i++) {
-        if (gui.getGame()->getMap()[x][y].getPlayers()[i]->getSpellInProgress() != nullptr) {
-            gui.getGame()->getMap()[x][y].getPlayers()[i]->getSpellInProgress() = nullptr;
-            gui.getGame()->getMap()[x][y].getPlayers()[i]->setLastSpellSucess(sucessStatus);
-            std::clog << "the spell of the player " << gui.getGame()->getMap()[x][y].getPlayers()[i]->getId() << " finished with status " << sucessStatus << std::endl;
+    for (std::size_t i = 0; i != gui.getGame()->getMap()[y][x].getPlayers().size(); i++) {
+        if (gui.getGame()->getMap()[y][x].getPlayers()[i]->getSpellInProgress() != nullptr) {
+            gui.getGame()->getMap()[y][x].getPlayers()[i]->getSpellInProgress() = nullptr;
+            gui.getGame()->getMap()[y][x].getPlayers()[i]->setLastSpellSucess(sucessStatus);
+            std::clog << "the spell of the player " << gui.getGame()->getMap()[y][x].getPlayers()[i]->getId() << " finished with status " << sucessStatus << std::endl;
             gui.getClient().getCserver().send("plv %d\n", i);
         }
     }

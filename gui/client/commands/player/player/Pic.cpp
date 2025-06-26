@@ -34,12 +34,12 @@ void zappyGUI::Pic::receive(std::string command, zappyGUI::GUI &gui)
     spell.setCaster(std::make_shared <Player> (gui.getGame()->getPlayers()[casterID]));
     spell.setPos(x, y);
     spell.resetStartTime();
-    gui.getGame()->getMap()[x][y].getPlayers()[casterID]->setSpellInProgress(std::make_shared <Spell> (spell));
+    gui.getGame()->getMap()[y][x].getPlayers()[casterID]->setSpellInProgress(std::make_shared <Spell> (spell));
     std::clog << "a new incentation start in " << x << " " << y << " to reach lvl " << spell.getLevel() << " initiated by player " << casterID << std::endl;
 
     while (ss >> playerID) {
         spell.getParticipant().push_back(std::make_shared <Player> (gui.getGame()->getPlayers()[playerID]));
-        gui.getGame()->getMap()[x][y].getPlayers()[playerID]->setSpellInProgress(std::make_shared <Spell> (spell));
+        gui.getGame()->getMap()[y][x].getPlayers()[playerID]->setSpellInProgress(std::make_shared <Spell> (spell));
         std::clog << "    player " << playerID << " take part of it !" << std::endl;
     }
 }
