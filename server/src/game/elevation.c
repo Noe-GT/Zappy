@@ -8,10 +8,12 @@
 #include "../../include/server.h"
 #include "../../include/commands.h"
 
-static bool tile_has_required_resources(tile_t *tile, int level)
+static bool tile_has_required_resources(server_t *server, client_t *client)
 {
+    int level = client->level;
     if (level < 1 || level > 7)
         return false;
+    tile_t *tile = &server->map->tiles[client->position->y][client->position->x];
     for (int i = 0; i < RESOURCE_TYPES; ++i) {
         if (tile->resources[i] < elevation_requirements[level - 1][i])
             return false;
@@ -48,7 +50,7 @@ void elevate_players(tile_t *tile, server_t *server,
         command_ko(client->fd);
         return;
     }
-    if (!tile_has_required_resources(tile, level)) {
+    if (!tile_has_required_resources(server, client)) {
         command_ko(client->fd);
         return;
     }
@@ -59,4 +61,13 @@ void elevate_players(tile_t *tile, server_t *server,
         }
     }
     remove_elevation_resources_from_tile(tile, level);
+}
+
+void command_elevation(server_t *server, client_t *client, char *message)
+{
+    (void)message;
+    int level = client->level;
+    tile_t *tile = &server->map->tiles[client->position->y][client->position->x];
+
+    elevate_players(tile, server, client, level);
 }
