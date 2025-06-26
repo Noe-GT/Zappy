@@ -10,6 +10,7 @@
     #include "server.h"
 
     #include <string.h>
+    #include <stdbool.h>
 
     #define COMMAND client->queue->command
 
