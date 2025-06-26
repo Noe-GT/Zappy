@@ -27,11 +27,13 @@ void zappyGUI::Enw::receive(std::string command, zappyGUI::GUI &gui)
     Spell spell;
     Player newPlayer;
     ss >> code >> eggID >> playerID >> pos.first >> pos.second;
-    gui.getGame()->getPlayers()[playerID].getSpellInProgress() = nullptr;
+    if (playerID < gui.getGame()->getPlayers().size()) {
+        gui.getGame()->getPlayers()[playerID].getSpellInProgress() = nullptr;
+        newPlayer.setName(gui.getGame()->getPlayers()[playerID].getName());
+    }
     newPlayer.setId(-1);
     newPlayer.setLvl(0);
     newPlayer.setPos(pos);
-    newPlayer.setName(gui.getGame()->getPlayers()[playerID].getName());
     newPlayer.setOrientation(orientation::SOUTH);
     gui.getGame()->getEggs().push_back({std::make_shared <Player> (newPlayer), eggID});
     std::clog << "player " << playerID << " layed an egg (#" << eggID << ") in " << pos.first << " " << pos.second << std::endl;
