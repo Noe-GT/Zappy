@@ -131,6 +131,7 @@ void parser(int ac, char **av, server_t *server)
     server->ticks = 0;
     server->tick_timer = 0;
     server->egg_count = 0;
+    server->egg = NULL;
     for (int i = 1; i < ac; ++i)
         parse_flag(av, &i, ac, server);
     check_required_flags(PARAMETERS->required);

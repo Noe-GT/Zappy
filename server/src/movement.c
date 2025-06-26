@@ -24,6 +24,7 @@ void add_player_tile(server_t *server, client_t *client, vector2_t *position)
         * (tile.player_count + 1));
     tile.players[tile.player_count] = client;
     ++tile.player_count;
+    printf("Init : %lu\n", tile.player_count);
 }
 
 void remove_player_tile(server_t *server, client_t *client,
