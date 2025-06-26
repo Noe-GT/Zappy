@@ -27,8 +27,9 @@ void zappyGUI::Pnw::receive(std::string command, zappyGUI::GUI &gui)
     int lvl;
     std::string teamName;
     Player newPlayer;
+    char hash;
 
-    ss >> code >> playerID >> playerPos.first >> playerPos.second >> orientation >> lvl >> teamName;
+    ss >> code >> hash >> playerID >> playerPos.first >> playerPos.second >> orientation >> lvl >> teamName;
     newPlayer.setId(playerID);
     newPlayer.setLvl(lvl);
     newPlayer.setPos(playerPos);
@@ -45,7 +46,7 @@ void zappyGUI::Pnw::receive(std::string command, zappyGUI::GUI &gui)
         gui.getGame()->getPlayers()[playerID].revive();
     }
     gui.getGame()->getMap()[playerPos.first][playerPos.second].addPlayer(std::make_shared <Player> (newPlayer));
-    std::clog << "added new player " << playerID << ", lvl " << lvl <<", of the team " << teamName << " in " << newPlayer.getPos().first << " " << playerPos.second << std::endl;
+    std::clog << "added new player " << playerID << ", lvl " << lvl <<", of the team " << teamName << " in " << playerPos.first << " " << playerPos.second << std::endl;
 }
 
 void zappyGUI::Pnw::send(std::string, zappyGUI::GUI &, zappyGUI::Cserver &)

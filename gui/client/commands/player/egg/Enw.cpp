@@ -26,7 +26,9 @@ void zappyGUI::Enw::receive(std::string command, zappyGUI::GUI &gui)
     std::pair <int, int> pos;
     Spell spell;
     Player newPlayer;
-    ss >> code >> eggID >> playerID >> pos.first >> pos.second;
+    char hash;
+    char hash2;
+    ss >> code >> hash >> eggID >> hash2 >> playerID >> pos.first >> pos.second;
     if (playerID < gui.getGame()->getPlayers().size()) {
         gui.getGame()->getPlayers()[playerID].getSpellInProgress() = nullptr;
         newPlayer.setName(gui.getGame()->getPlayers()[playerID].getName());

@@ -24,8 +24,8 @@ void zappyGUI::Pfk::receive(std::string command, zappyGUI::GUI &gui)
     int playerID;
     std::pair <int, int> pos;
     Spell spell;
-
-    ss >> code >> playerID;
+    char hash;
+    ss >> code >> hash >> playerID;
     pos = gui.getGame()->getPlayers()[playerID].getPos();
     spell.setLevel(-1);
     spell.setCaster(std::make_shared <Player> (gui.getGame()->getPlayers()[playerID]));

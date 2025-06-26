@@ -24,8 +24,8 @@ void zappyGUI::Pdr::receive(std::string command, zappyGUI::GUI &gui)
     int playerID;
     int ressourceID;
     std::pair <int, int> playerPos;
-
-    ss >> code >> playerID >> ressourceID;
+    char hash;
+    ss >> code >> hash >> playerID >> ressourceID;
     playerPos = gui.getGame()->getPlayers()[playerID].getPos();
     gui.getGame()->getPlayers()[playerID].getInventory()[ressourceID].second --;
     if (gui.getGame()->getPlayers()[playerID].getInventory()[ressourceID].second < 0)

@@ -28,8 +28,8 @@ void zappyGUI::Pic::receive(std::string command, zappyGUI::GUI &gui)
     int casterID;
     int playerID;
     Spell spell;
-
-    ss >> code >> x >> y >> lvl >> casterID;
+    char hash;
+    ss >> code >> x >> y >> lvl >> hash >> casterID;
     spell.setLevel(gui.getGame()->getPlayers()[casterID].getLvl() + 1);
     spell.setCaster(std::make_shared <Player> (gui.getGame()->getPlayers()[casterID]));
     spell.setPos(x, y);
@@ -37,7 +37,7 @@ void zappyGUI::Pic::receive(std::string command, zappyGUI::GUI &gui)
     gui.getGame()->getMap()[x][y].getPlayers()[casterID]->setSpellInProgress(std::make_shared <Spell> (spell));
     std::clog << "a new incentation start in " << x << " " << y << " to reach lvl " << spell.getLevel() << " initiated by player " << casterID << std::endl;
 
-    while (ss >> playerID) {
+    while (ss >> hash >> playerID) {
         spell.getParticipant().push_back(std::make_shared <Player> (gui.getGame()->getPlayers()[playerID]));
         gui.getGame()->getMap()[x][y].getPlayers()[playerID]->setSpellInProgress(std::make_shared <Spell> (spell));
         std::clog << "    player " << playerID << " take part of it !" << std::endl;

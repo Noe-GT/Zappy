@@ -23,8 +23,8 @@ void zappyGUI::Pbc::receive(std::string command, zappyGUI::GUI &)
     std::string code;
     int playerID;
     std::string message;
-
-    ss >> code >> playerID;
+    char hash;
+    ss >> code >> hash >> playerID;
     std::getline(ss >> std::ws, message);
     std::clog << "player " << playerID << " sayed: " << message << std::endl;
 }

@@ -22,8 +22,8 @@ void zappyGUI::Ebo::receive(std::string command, zappyGUI::GUI &gui)
     std::stringstream ss(command);
     std::string code;
     int eggID;
-
-    ss >> code >> eggID;
+    char hash;
+    ss >> code >> hash >> eggID;
     auto it = std::find_if(gui.getGame()->getEggs().begin(), gui.getGame()->getEggs().end(), [eggID](const auto& egg) {
         return egg.second == eggID;
     });
