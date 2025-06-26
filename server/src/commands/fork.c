@@ -11,4 +11,5 @@ void command_fork(server_t *server, client_t *client, char *message)
 {
     (void)message;
     new_egg(server, client->team);
+    command_enw(server, client, server->egg);
 }

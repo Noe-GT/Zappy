@@ -7,8 +7,12 @@
 
 #include "../../include/commands.h"
 
-// TODO: resource number
-void command_pdr(client_t *client)
+void command_pdr(server_t *server, client_t *client, int resid)
 {
-    send_message(client->fd, "pdr #%d i\n");
+    for (size_t i = 0; i < server->cons - 1; ++i) {
+        if (!server->clients[i]->is_gui)
+            continue;
+        send_message(server->clients[i]->fd, "pdr #%d %d\n",
+            client->id, resid);
+    }
 }
