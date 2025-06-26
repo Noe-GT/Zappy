@@ -15,11 +15,11 @@ UIBlocks::List::List(std::vector<std::shared_ptr<IUIBlock>> &elements, std::pair
 {
 }
 
-void UIBlocks::List::draw(zappyGUI::Window &window)
+void UIBlocks::List::draw(std::shared_ptr<zappyGUI::Window> &window)
 {
     this->_background.setPosition(this->_position.first, this->_position.second);
     this->_background.setFillColor(this->_backgroundColor);
-    window.getRenderWindow().draw(_background);
+    window.get()->getRenderWindow().draw(_background);
 
     for (size_t i = 0; i < _elements.size(); ++i) {
         _elements[i]->setPosition(std::pair<float, float>(_position.first, _position.second + i * 20));
@@ -27,7 +27,7 @@ void UIBlocks::List::draw(zappyGUI::Window &window)
     }
 }
 
-void UIBlocks::List::handleEvent(const sf::Event &event, zappyGUI::Window &window)
+void UIBlocks::List::handleEvent(const sf::Event &event, std::shared_ptr<zappyGUI::Window> &window)
 {
     for (auto &element : _elements) {
         element->handleEvent(event, window);

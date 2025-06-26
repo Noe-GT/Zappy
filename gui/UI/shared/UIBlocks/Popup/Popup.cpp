@@ -13,12 +13,12 @@ UIBlocks::Popup::Popup(std::string &content, std::pair<float, float> position, s
     _background(sf::Vector2f(size.first, size.second))
 {
 }
-void UIBlocks::Popup::draw(zappyGUI::Window &window)
+void UIBlocks::Popup::draw(std::shared_ptr<zappyGUI::Window> &window)
 {
     if (!this->_isOpen)
         return;
     this->_background.setFillColor(this->_backgroundColor);
-    window.getRenderWindow().draw(this->_background);
+    window.get()->getRenderWindow().draw(this->_background);
     this->_content.setPosition(std::pair<float, float>(this->_position.first + 10, this->_position.second + 10));
     this->_content.draw(window);
 }
@@ -26,7 +26,7 @@ void UIBlocks::Popup::setPosition(const std::pair<float, float> &position)
 {
     this->_background.setPosition(static_cast<float>(position.first), static_cast<float>(position.second));
 }
-void UIBlocks::Popup::handleEvent(const sf::Event &event, zappyGUI::Window &window)
+void UIBlocks::Popup::handleEvent(const sf::Event &event, std::shared_ptr<zappyGUI::Window> &window)
 {
     (void)event;
     (void)window;

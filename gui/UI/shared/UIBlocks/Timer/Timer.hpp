@@ -15,8 +15,8 @@ namespace UIBlocks {
         public:
             Timer(std::pair<float, float> position, int size);
             ~Timer() = default;
-            void draw(zappyGUI::Window &window) override;
-            void handleEvent(const sf::Event &event, zappyGUI::Window &window) override;
+            void draw(std::shared_ptr<zappyGUI::Window> &window) override;
+            void handleEvent(const sf::Event &event, std::shared_ptr<zappyGUI::Window> &window) override;
             void setPosition(const std::pair<float, float> &position) override;
             void start();
             void restart();

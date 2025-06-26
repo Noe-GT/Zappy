@@ -10,5 +10,6 @@ namespace zappyGUI {
     class Linemate: public IRessource{
         public:
             ~Linemate() override = default;
+            std::string getName() const override;
     };
 }

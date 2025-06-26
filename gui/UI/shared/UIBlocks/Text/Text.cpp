@@ -32,13 +32,13 @@ void UIBlocks::Text::setText(const std::string &text)
     this->_text.setString(text);
 }
 
-void UIBlocks::Text::draw(zappyGUI::Window &window)
+void UIBlocks::Text::draw(std::shared_ptr<zappyGUI::Window> &window)
 {
     this->_text.setFont(this->_font);
     this->_text.setFillColor(this->_textColor);
     this->_text.setOutlineThickness(this->_borderThickness);
     this->_text.setOutlineColor(this->_borderColor);
-    window.getRenderWindow().draw(this->_text);
+    window.get()->getRenderWindow().draw(this->_text);
 }
 
 void UIBlocks::Text::setPosition(const std::pair<float, float> &position)
@@ -46,7 +46,7 @@ void UIBlocks::Text::setPosition(const std::pair<float, float> &position)
     this->_text.setPosition(sf::Vector2f(position.first, position.second));
 }
 
-void UIBlocks::Text::handleEvent(const sf::Event &event, zappyGUI::Window &window)
+void UIBlocks::Text::handleEvent(const sf::Event &event, std::shared_ptr<zappyGUI::Window> &window)
 {
     (void)event;
     (void)window;

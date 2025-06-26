@@ -11,3 +11,8 @@
 // {
 // }
 
+std::string zappyGUI::Food::getName() const
+{
+    return "Food";
+}
+

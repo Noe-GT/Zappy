@@ -10,5 +10,6 @@ namespace zappyGUI {
     class Mendiane: public IRessource{
         public:
             ~Mendiane() override = default;
+            std::string getName() const override;
     };
 }

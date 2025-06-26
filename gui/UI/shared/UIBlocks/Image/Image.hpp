@@ -19,9 +19,9 @@ namespace UIBlocks {
         public:
             Image(const std::string &path, std::pair<float, float> position, std::pair<float, float> size, std::string &alternativeText);
             ~Image() = default;
-            void draw(zappyGUI::Window &window) override;
+            void draw(std::shared_ptr<zappyGUI::Window> &window) override;
             void setPosition(const std::pair<float, float> &position) override;
-            void handleEvent(const sf::Event &event, zappyGUI::Window &window) override;
+            void handleEvent(const sf::Event &event, std::shared_ptr<zappyGUI::Window> &window) override;
             bool isInside(int x, int y) const;
             const std::variant<std::string, std::vector<std::shared_ptr<IUIBlock>>> getValue() const override;
             void setSize(const std::pair<float, float> &size) override;

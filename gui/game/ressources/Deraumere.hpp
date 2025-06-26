@@ -10,5 +10,6 @@ namespace zappyGUI {
     class Deraumere: public IRessource{
         public:
             ~Deraumere() override = default;
+            std::string getName() const override;
     };
 }
