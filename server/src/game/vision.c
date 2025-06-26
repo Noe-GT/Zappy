@@ -65,15 +65,17 @@ static char *get_tile_content(server_t *server, int x, int y)
 {
     char *names[RESOURCE_TYPES] = {
         "food", "linemate", "deraumere", "sibur",
-        "mendiane", "phiras", "thystame"
-    };
+        "mendiane", "phiras", "thystame"};
     char *buffer = malloc(256);
     int len = 0;
-    tile_t *tile;
+    tile_t *tile = &MAP->tiles[y][x];
 
     buffer[0] = '\0';
     out_of_bound(server, &x, &y);
-    tile = &MAP->tiles[y][x];
+    for (size_t p = 0; p < tile->player_count; ++p) {
+        append_resources(buffer, 256, &len);
+        len += snprintf(buffer + len, 256 - len, "player");
+    }
     for (int i = 0; i < RESOURCE_TYPES; ++i) {
         for (int j = 0; j < tile->resources[i]; ++j) {
             append_resources(buffer, 256, &len);
