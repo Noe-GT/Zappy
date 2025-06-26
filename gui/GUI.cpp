@@ -158,8 +158,9 @@ void zappyGUI::GUI::events()
             this->_window->close();
             return;
         }
-        if (this->_window->getEvent().type == sf::Event::KeyPressed) {
-            if (this->_window->getEvent().key.code == sf::Keyboard::Escape)
+        if (this->_window->getEvent().type == sf::Event::KeyPressed ||
+            this->_window->getEvent().type == sf::Event::MouseButtonPressed) {
+            if (this->_window->getEvent().key.code == sf::Keyboard::Space)
                 this->_window->switchFullscreen();
             else {
                 if (this->_selectedRenderer != -1 && this->_renderers[this->_selectedRenderer] != nullptr)

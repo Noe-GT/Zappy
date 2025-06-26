@@ -119,11 +119,38 @@ const zappyGUI::Zappy2D::AssetPool &zappyGUI::Zappy2D::getAssets() const
     return this->_assets;
 }
 
+
 void zappyGUI::Zappy2D::handleEvents()
 {
-    sf::Keyboard::Key eventCode = this->_window->getEvent().key.code;
+    if (this->_window->getEvent().type == sf::Event::MouseButtonPressed)
+        this->handleEventMouse();
+    else
+        this->handleEventKey();
+}
 
-    switch (eventCode) {
+void zappyGUI::Zappy2D::handleEventMouse()
+{
+    const std::pair<size_t, size_t> &mapSize = this->_gui->getGame()->getMapSize();
+    int mx = this->_window->getEvent().mouseButton.x;
+    int my = this->_window->getEvent().mouseButton.y;
+    int omx = mx - this->_mapOffset.first;
+    int omy = my - this->_mapOffset.second;
+    int tilex = omx / (this->_zoomCoeff * zappyGUI::BASE_TILE_SIZE);
+    int tiley = omy / (this->_zoomCoeff * zappyGUI::BASE_TILE_SIZE);
+
+    std::cout << "mouse: " << mx << ":" << my << std::endl;
+    std::cout << "-off: " << omx << ":" << omy << std::endl;
+    std::cout << "tile: " << tilex << ":" << tiley << std::endl;
+    // if ((tilex >= 0 && tilex < mapSize.first) &&
+    //     (tiley >= 0 && tiley < mapSize.second))
+    //     this->_gui->getGame()->setSelectedTile(std::pair<float, float>(mx, my), std::pair<int, int>(tilex, tiley));
+}
+
+void zappyGUI::Zappy2D::handleEventKey()
+{
+    const sf::Keyboard::Key &keyCode = this->_window->getEvent().key.code;
+
+    switch (keyCode) {
         case sf::Keyboard::C:
             this->centerMap();
             break;
@@ -138,16 +165,16 @@ void zappyGUI::Zappy2D::handleEvents()
             this->updateZoom(true);
             break;
         case sf::Keyboard::Left:
-            this->updatePosition(eventCode);
+            this->updatePosition(keyCode);
             break;
         case sf::Keyboard::Right:
-            this->updatePosition(eventCode);
+            this->updatePosition(keyCode);
             break;
         case sf::Keyboard::Up:
-            this->updatePosition(eventCode);
+            this->updatePosition(keyCode);
             break;
         case sf::Keyboard::Down:
-            this->updatePosition(eventCode);
+            this->updatePosition(keyCode);
             break;
         case sf::Keyboard::Numpad1:
             this->_displayRessourceType = zappyGUI::Zappy2D::FOOD;
@@ -194,7 +221,6 @@ void zappyGUI::Zappy2D::handleEvents()
         default:
             break;
     }
-    // this->tileSelection(game);
 }
 
 void zappyGUI::Zappy2D::tileSelection(Game &game)
