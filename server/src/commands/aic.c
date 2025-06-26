@@ -19,4 +19,5 @@ void command_aic(server_t *server, client_t *client)
         send_message(client->fd, "%d\n%u %u\n", PARAMETERS->nb_clients - count,
             PARAMETERS->width, PARAMETERS->height);
     add_player_tile(server, client, client->position);
+    printf("AFTER ADD %lu\n", MAP->tiles[client->position->y][client->position->x].player_count);
 }
