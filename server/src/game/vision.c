@@ -60,18 +60,38 @@ static void append_resources(char *buffer, int buffer_size,
         *len += snprintf(buffer + *len, buffer_size - *len, " ");
 }
 
-static void append_players_and_eggs(server_t *server, tile_t *tile, vector2_t *pos, char *buffer)
+static void append_players(tile_t *tile, char *buffer, int *len)
+{
+    for (size_t p = 0; p < tile->player_count; ++p) {
+        append_resources(buffer, 256, len);
+        *len += snprintf(buffer + *len, 256 - *len, "player");
+    }
+}
+
+static void append_eggs(server_t *server, vector2_t pos, char *buffer, int *len)
+{
+    for (egg_t *egg = server->egg; egg != NULL; egg = egg->next) {
+        if (egg->position->x == pos.x && egg->position->y == pos.y) {
+            append_resources(buffer, 256, len);
+            *len += snprintf(buffer + *len, 256 - *len, "egg");
+        }
+    }
+}
+
+static void append_tile_content(server_t *server, tile_t *tile, vector2_t pos, char *buffer)
 {
     int len = strlen(buffer);
+    char *names[RESOURCE_TYPES] = {
+        "food", "linemate", "deraumere", "sibur",
+        "mendiane", "phiras", "thystame"
+    };
 
-    for (size_t p = 0; p < tile->player_count; ++p) {
-        append_resources(buffer, 256, &len);
-        len += snprintf(buffer + len, 256 - len, "player");
-    }
-    for (egg_t *egg = server->egg; egg != NULL; egg = egg->next) {
-        if (egg->position->x == pos->x && egg->position->y == pos->y) {
+    append_players(tile, buffer, &len);
+    append_eggs(server, pos, buffer, &len);
+    for (int i = 0; i < RESOURCE_TYPES; ++i) {
+        for (int j = 0; j < tile->resources[i]; ++j) {
             append_resources(buffer, 256, &len);
-            len += snprintf(buffer + len, 256 - len, "egg");
+            len += snprintf(buffer + len, 256 - len, "%s", names[i]);
         }
     }
     buffer[len] = '\0';
@@ -79,25 +99,16 @@ static void append_players_and_eggs(server_t *server, tile_t *tile, vector2_t *p
 
 static char *get_tile_content(server_t *server, int x, int y)
 {
-    char *names[RESOURCE_TYPES] = {
-        "food", "linemate", "deraumere", "sibur",
-        "mendiane", "phiras", "thystame"
-    };
     char *buffer = malloc(256);
-    int len = 0;
-    tile_t *tile = &MAP->tiles[y][x];
-    vector2_t pos = {x, y};
+    tile_t *tile;
+    vector2_t pos;
 
     buffer[0] = '\0';
     out_of_bound(server, &x, &y);
-    append_players_and_eggs(server, tile, &pos, buffer);
-    len = strlen(buffer);
-    for (int i = 0; i < RESOURCE_TYPES; ++i) {
-        for (int j = 0; j < tile->resources[i]; ++j) {
-            append_resources(buffer, 256, &len);
-            len += snprintf(buffer + len, 256 - len, "%s", names[i]);
-        }
-    }
+    tile = &MAP->tiles[y][x];
+    pos.x = x;
+    pos.y = y;
+    append_tile_content(server, tile, pos, buffer);
     return buffer;
 }
 
@@ -141,8 +152,7 @@ char *handle_vision(server_t *server, client_t *client)
     result[0] = '\0';
     if (!client->position)
         return strdup("[]");
-    content = get_content(client, server,
-        client->position->x, client->position->y);
+    content = get_tile_content(server, client->position->x, client->position->y);
     len += snprintf(result + len, 4096 - len, "[%s, ", content);
     free(content);
     for (size_t y = 0; y < client->level; ++y) {
