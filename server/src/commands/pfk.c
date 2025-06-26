@@ -7,7 +7,11 @@
 
 #include "../../include/commands.h"
 
-void command_pfk(client_t *client)
+void command_pfk(server_t *server, client_t *client)
 {
-    send_message(client->fd, "pfk #%d\n", client->id);
+    for (size_t i = 0; i < server->cons - 1; ++i) {
+        if (!server->clients[i]->is_gui)
+            continue;
+        send_message(client->fd, "pfk #%d\n", client->id);
+    }
 }

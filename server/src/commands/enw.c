@@ -7,8 +7,12 @@
 
 #include "../../include/commands.h"
 
-void command_enw(client_t *client, uint32_t egg_number, vector2_t *position)
+void command_enw(server_t *server, client_t *client, egg_t *egg)
 {
-    send_message(client->fd, "enw #%u #%d %u %u", egg_number, client->id,
-        position->x, position->y);
+    for (size_t i = 0; i < server->cons - 1; ++i) {
+        if (!server->clients[i]->is_gui)
+            continue;
+        send_message(client->fd, "enw #%u #%d %u %u", egg->id, client->id,
+            egg->position->x, egg->position->y);
+    }
 }

@@ -75,10 +75,6 @@ void game_logic(server_t *server);
 void init_map(map_t *map, size_t width, size_t height);
 void free_map(map_t *map);
 void handle_ressource(server_t *server);
-void elevate_players(tile_t *tile, server_t *server,
-    client_t *client, int level);
-void start_elevation(client_t *client, int level);
-void elevation(client_t *client, tile_t *tile, int level);
 char *handle_vision(server_t *server, client_t *client);
 
 int calculate_downtime(server_t *server);

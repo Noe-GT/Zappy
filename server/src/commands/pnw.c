@@ -7,9 +7,13 @@
 
 #include "../../include/commands.h"
 
-void command_pnw(client_t *client)
+void command_pnw(server_t *server, client_t *client)
 {
-    send_message(client->fd, "pnw #%d %u %u %d %u %s\n", client->id,
-        client->position->x, client->position->y, client->direction + 1,
-        client->level, client->team);
+    for (size_t i = 0; i < server->cons - 1; ++i) {
+        if (!server->clients[i]->is_gui)
+            continue;
+        send_message(server->clients[i]->fd, "pnw #%d %u %u %d %u %s\n",
+            client->id, client->position->x, client->position->y,
+            client->direction + 1, client->level, client->team);
+    }
 }
