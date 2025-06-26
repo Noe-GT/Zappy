@@ -45,11 +45,11 @@ void game_logic(server_t *server)
 
     if (now < server->tick_timer)
         return;
+    if (server->ticks % 20 == 0)
+        handle_ressource(server);
     ++server->ticks;
     server->tick_timer = now + (1000 / server->parameters->freq);
     if (!server || !server->clients)
         return;
     eat(server);
-    if (server->ticks % 20 == 0)
-        handle_ressource(server);
 }
