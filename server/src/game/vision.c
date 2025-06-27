@@ -6,6 +6,7 @@
 */
 
 #include "../../include/server.h"
+#include "../../include/utils.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -35,24 +36,6 @@ static void get_vision_coordinates(client_t *client, size_t y,
     }
 }
 
-static void out_of_bound(server_t *server, int *x, int *y)
-{
-    int diff = 0;
-
-    if (*x < 0)
-        *x = PARAMETERS->width + *x;
-    if (*x > PARAMETERS->width - 1) {
-        diff = *x - PARAMETERS->width;
-        *x = 0 + diff;
-    }
-    if (*y < 0)
-        *y = PARAMETERS->height + *y;
-    if (*y > PARAMETERS->height - 1) {
-        diff = *y - PARAMETERS->height;
-        *y = 0 + diff;
-    }
-}
-
 static void append_resources(char *buffer, int buffer_size,
     int *len)
 {
@@ -60,28 +43,57 @@ static void append_resources(char *buffer, int buffer_size,
         *len += snprintf(buffer + *len, buffer_size - *len, " ");
 }
 
-// TODO: Handle player detection
-static char *get_tile_content(server_t *server, int x, int y)
+static void append_players(tile_t *tile, char *buffer, int *len)
 {
+    for (size_t p = 0; p < tile->player_count; ++p) {
+        append_resources(buffer, 256, len);
+        *len += snprintf(buffer + *len, 256 - *len, "player");
+    }
+}
+
+static void append_eggs(server_t *server, vector2_t *pos,
+    char *buffer, int *len)
+{
+    for (egg_t *egg = server->egg; egg != NULL; egg = egg->next) {
+        if (egg->position->x == pos->x && egg->position->y == pos->y) {
+            append_resources(buffer, 256, len);
+            *len += snprintf(buffer + *len, 256 - *len, "egg");
+        }
+    }
+}
+
+static void append_tile_content(server_t *server, tile_t *tile,
+    vector2_t *pos, char *buffer)
+{
+    int len = strlen(buffer);
     char *names[RESOURCE_TYPES] = {
         "food", "linemate", "deraumere", "sibur",
-        "mendiane", "phiras", "thystame"};
-    char *buffer = malloc(256);
-    int len = 0;
-    tile_t *tile = &MAP->tiles[y][x];
+        "mendiane", "phiras", "thystame"
+    };
 
-    buffer[0] = '\0';
-    out_of_bound(server, &x, &y);
-    for (size_t p = 0; p < tile->player_count; ++p) {
-        append_resources(buffer, 256, &len);
-        len += snprintf(buffer + len, 256 - len, "player");
-    }
+    append_players(tile, buffer, &len);
+    append_eggs(server, pos, buffer, &len);
     for (int i = 0; i < RESOURCE_TYPES; ++i) {
         for (int j = 0; j < tile->resources[i]; ++j) {
             append_resources(buffer, 256, &len);
             len += snprintf(buffer + len, 256 - len, "%s", names[i]);
         }
     }
+    buffer[len] = '\0';
+}
+
+static char *get_tile_content(server_t *server, int x, int y)
+{
+    char *buffer = malloc(256);
+    tile_t *tile;
+    vector2_t pos;
+
+    buffer[0] = '\0';
+    out_of_bound(server, &x, &y);
+    tile = &MAP->tiles[y][x];
+    pos.x = x;
+    pos.y = y;
+    append_tile_content(server, tile, &pos, buffer);
     return buffer;
 }
 
@@ -125,8 +137,8 @@ char *handle_vision(server_t *server, client_t *client)
     result[0] = '\0';
     if (!client->position)
         return strdup("[]");
-    content = get_content(client, server,
-        client->position->x, client->position->y);
+    content = get_tile_content(server, client->position->x,
+        client->position->y);
     len += snprintf(result + len, 4096 - len, "[%s, ", content);
     free(content);
     for (size_t y = 0; y < client->level; ++y) {

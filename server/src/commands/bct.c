@@ -9,7 +9,7 @@
 
 void bct(server_t *server, client_t *client, uint32_t x, uint32_t y)
 {
-    dprintf(client->fd, "bct %u %u %d %d %d %d %d %d %d\n", x, y,
+    send_message(client->fd, "bct %u %u %d %d %d %d %d %d %d\n", x, y,
         MAP->tiles[y][x].resources[FOOD],
         MAP->tiles[y][x].resources[LINEMATE],
         MAP->tiles[y][x].resources[DERAUMERE],
@@ -26,6 +26,8 @@ void command_bct(server_t *server, client_t *client, char *message)
 
     (void)server;
     (void)message;
-    sscanf(message, "bct %u %u\n", &x, &y);
-    bct(server, client, x, y);
+    if (sscanf(message, "bct %u %u\n", &x, &y) == 2)
+        bct(server, client, x, y);
+    else
+        command_sbp(client);
 }

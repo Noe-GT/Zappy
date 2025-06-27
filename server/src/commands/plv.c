@@ -9,7 +9,15 @@
 
 void command_plv(server_t *server, client_t *client, char *message)
 {
-    (void)server;
-    (void)message;
-    send_message(client->fd, "plv #%d %d\n", client->id, client->level);
+    int id = 0;
+
+    if (sscanf(message, "plv #%d\n", &id) != 1)
+        return command_sbp(client);
+    for (size_t i = 0; i < server->cons - 1; ++i) {
+        if (server->clients[i]->id == id) {
+            return (void)send_message(client->fd, "plv #%d %d\n",
+                id, server->clients[i]->level);
+        }
+    }
+    return command_sbp(client);
 }

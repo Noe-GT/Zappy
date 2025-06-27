@@ -7,8 +7,12 @@
 
 #include "../../include/commands.h"
 
-void command_pie(client_t *client)
+void command_pie(server_t *server, client_t *client, bool success)
 {
-    send_message(client->fd, "pie %u %u %d\n", client->position->x,
-        client->position->y, client->level + 1);
+    for (size_t i = 0; i < server->cons - 1; ++i) {
+        if (!server->clients[i]->is_gui)
+            continue;
+        send_message(client->fd, "pie %u %u %d\n", client->position->x,
+            client->position->y, success);
+    }
 }

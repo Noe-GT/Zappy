@@ -9,11 +9,12 @@
     #define GAME_H_
 
     #include <stdlib.h>
+    #include <stdbool.h>
+    #include "vector.h"
 
     #define RESOURCE_TYPES 7
 
     #define MAP server->map
-    #define CLIENT server->network->client_list
 
 typedef enum resource_s {
     FOOD,
@@ -37,6 +38,14 @@ typedef struct map_s {
     tile_t **tiles;
 } map_t;
 
+typedef struct egg_s {
+    int id;
+    char *team;
+    vector2_t *position;
+    direction_t direction;
+    struct egg_s *next;
+} egg_t;
+
 static const float resource_densities[RESOURCE_TYPES] = {
     0.5,    // Food
     0.3,    // Linemate
@@ -56,5 +65,18 @@ static const int elevation_requirements[7][RESOURCE_TYPES] = {
     {6, 1, 2, 3, 0, 1, 0},  // Level 6 -> Level 7
     {6, 2, 2, 2, 2, 2, 1}   // Level 7 -> Level 8
 };
+
+typedef struct server_s server_t;
+
+typedef struct client_s client_t;
+
+void new_egg(server_t *server, char *team);
+egg_t *pop_egg(egg_t **egg, char *team);
+size_t count_eggs(egg_t *egg, char *team);
+bool replace_egg(server_t *server, client_t *client);
+void new_egg_position(server_t *server, char *team, vector2_t *position);
+void crack_egg(egg_t *egg);
+void destroy_eggs(egg_t *egg);
+void eject_eggs(egg_t **head, server_t *server, vector2_t *position);
 
 #endif /* !GAME_H_ */
