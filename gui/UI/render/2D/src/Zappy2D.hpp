@@ -86,8 +86,8 @@ namespace zappyGUI {
             void updatePosition(sf::Keyboard::Key eventCode);
             void zoomFill();
             void centerMap();
-            void handleEventKey(const sf::Event &event);
-            void handleEventMouse(const sf::Event &event);
+            void handleEventKey();
+            void handleEventMouse();
 
             zappyGUI::Zappy2D::AssetPool _assets;
             std::vector<std::vector<zappyGUI::Zappy2D::RTile>> _tiles;

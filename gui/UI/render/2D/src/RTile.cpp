@@ -12,8 +12,8 @@ zappyGUI::Zappy2D::RTile::RTile(int x, int y, std::shared_ptr<zappyGUI::Zappy2D>
     _ressource(),
     _ui(ui)
 {
-    float winX = x * (zappyGUI::BASE_TILE_SIZE * ui->getZoomCoeff() + ui->getMapOffset().first);
-    float winY = y * (zappyGUI::BASE_TILE_SIZE * ui->getZoomCoeff() + ui->getMapOffset().second);
+    float winX = x * (zappyGUI::BASE_TILE_SIZE * ui->getZoomCoeff()) + ui->getMapOffset().first;
+    float winY = y * (zappyGUI::BASE_TILE_SIZE * ui->getZoomCoeff()) + ui->getMapOffset().second;
 
     this->_back.setTexture(ui->getAssets()._tileTexture);
     this->_back.setScale(sf::Vector2f(1.0, 1.0));

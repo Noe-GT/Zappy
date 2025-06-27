@@ -126,6 +126,7 @@ void zappyGUI::GUI::update()
                 auto it = _commands.find(commandName);
                 if (it != _commands.end()) {
                     try {
+                        std::clog << strLine << std::endl;
                         it->second->receive(strLine, *this);
                     } catch (const std::exception& e) {
                         std::cerr << "error on the " << commandName << " execution: " << e.what() << std::endl;
@@ -160,7 +161,7 @@ void zappyGUI::GUI::events()
         }
         if (this->_window->getEvent().type == sf::Event::KeyPressed ||
             this->_window->getEvent().type == sf::Event::MouseButtonPressed) {
-            if (this->_window->getEvent().key.code == sf::Keyboard::Escape)
+            if (this->_window->getEvent().key.code == sf::Keyboard::Space)
                 this->_window->switchFullscreen();
             else {
                 if (this->_selectedRenderer != -1 && this->_renderers[this->_selectedRenderer] != nullptr)

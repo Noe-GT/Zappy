@@ -26,6 +26,8 @@ void zappyGUI::Pfk::receive(std::string command, zappyGUI::GUI &gui)
     std::pair <int, int> pos;
     Spell spell;
     char hash;
+
+    std::clog << "pfk" << std::endl;
     ss >> code >> hash >> playerID;
     pos = gui.getGame()->getPlayers()[playerID].getPos();
     spell.setLevel(-1);

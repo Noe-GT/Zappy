@@ -19,20 +19,27 @@ zappyGUI::Pdr::~Pdr()
 
 void zappyGUI::Pdr::receive(std::string command, zappyGUI::GUI &gui)
 {
+    std::clog << "pdr" << std::endl;
     std::stringstream ss(command);
     std::string code;
     int playerID;
     int ressourceID;
     std::pair <int, int> playerPos;
     char hash;
+
     ss >> code >> hash >> playerID >> ressourceID;
     playerPos = gui.getGame()->getPlayers()[playerID].getPos();
-    gui.getGame()->getPlayers()[playerID].getInventory()[ressourceID].second --;
-    if (gui.getGame()->getPlayers()[playerID].getInventory()[ressourceID].second < 0)
+    std::clog << "pdr1" << std::endl;
+    if (gui.getGame()->getPlayers().size() > playerID) {
+        gui.getGame()->getPlayers()[playerID].getInventory()[ressourceID].second --;
+        // if (gui.getGame()->getPlayers()[playerID].getInventory()[ressourceID].second < 0)
+        std::clog << "pdr2" << std::endl;
         gui.getGame()->getPlayers()[playerID].getInventory()[ressourceID].second = 0;
-    else
-        gui.getGame()->getMap()[playerPos.first][playerPos.second].addRessource(gui.getGame()->getPlayers()[playerID].getInventory()[ressourceID].first);
-    std::clog << "player " << playerID << " droped " << ressourceID << " in tile " << playerPos.first << " " << playerPos.second << " now have " << gui.getGame()->getPlayers()[playerID].getInventory()[ressourceID].second << " left" << std::endl;
+        // else
+        std::clog << "pdr3" << std::endl;
+        gui.getGame()->getMap()[playerPos.second][playerPos.first].getRessources()[ressourceID].second ++;
+        std::clog << "player " << playerID << " droped " << ressourceID << " in tile " << playerPos.first << " " << playerPos.second << " now have " << gui.getGame()->getPlayers()[playerID].getInventory()[ressourceID].second << " left" << std::endl;
+    }
 }
 
 void zappyGUI::Pdr::send(std::string, zappyGUI::GUI &, zappyGUI::Cserver &)

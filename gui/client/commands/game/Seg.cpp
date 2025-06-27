@@ -24,8 +24,8 @@ void zappyGUI::Seg::receive(std::string command, zappyGUI::GUI &gui)
     std::string teamName;
 
     ss >> code >> teamName;
-    gui.getWindow()->close();
     std::clog << "end of the game team " << teamName << " won" << std::endl;
+    // gui.getWindow()->close();
 }
 
 void zappyGUI::Seg::send(std::string, zappyGUI::GUI &, zappyGUI::Cserver &)

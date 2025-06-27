@@ -62,11 +62,14 @@ void zappyGUI::Pex::receive(std::string command, zappyGUI::GUI &gui)
     int playerID;
     std::vector <int> playerToMove;
     char hash;
+    std::clog << "pex" << std::endl;
     ss >> code >> hash >> playerID;
-    playerToMove = getPlayerToMove(gui.getGame(), playerID);
-    for (std::size_t i = 0; i != playerToMove.size(); i++) {
-        std::clog << "player " << playerID << " expulsed player " << playerToMove[i] << std::endl;
-        gui.getClient().getCserver().send("ppo %d\n", playerToMove[i]);
+    if (playerID < gui.getGame()->getPlayers().size()) {
+        playerToMove = getPlayerToMove(gui.getGame(), playerID);
+        for (std::size_t i = 0; i != playerToMove.size(); i++) {
+            std::clog << "player " << playerID << " expulsed player " << playerToMove[i] << std::endl;
+            gui.getClient().getCserver().send("ppo %d\n", playerToMove[i]);
+        }
     }
 }
 

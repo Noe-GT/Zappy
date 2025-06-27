@@ -24,8 +24,9 @@ void zappyGUI::Pdi::receive(std::string command, zappyGUI::GUI &gui)
     int playerID;
     char hash;
     ss >> code >> hash >> playerID;
-    gui.getGame()->getPlayers()[playerID].kill();
     std::clog << "player " << playerID << " is dead" << std::endl;
+    if (playerID < gui.getGame()->getPlayers().size())
+        gui.getGame()->getPlayers()[playerID].kill();
 }
 
 void zappyGUI::Pdi::send(std::string, zappyGUI::GUI &, zappyGUI::Cserver &)

@@ -33,6 +33,7 @@ void zappyGUI::Pin::receive(std::string command, zappyGUI::GUI &gui)
     int y;
     char hash;
 
+    std::clog << "pin" << std::endl;
     ss >> code >> hash >> playerID >> x >> y >> q0 >> q1 >> q2 >> q3 >> q4 >> q5 >> q6;
     (void) x;
     (void) y;

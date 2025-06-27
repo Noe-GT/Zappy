@@ -25,8 +25,10 @@ void zappyGUI::Plv::receive(std::string command, zappyGUI::GUI &gui)
     int lvl;
     char hash;
     ss >> code >> hash >> playerID >> lvl;
-    gui.getGame()->getPlayers()[playerID].setLvl(lvl);
-    std::clog << "player " << playerID << " is lvl " << lvl << std::endl;
+    if (playerID < gui.getGame()->getPlayers().size()) {
+        gui.getGame()->getPlayers()[playerID].setLvl(lvl);
+        std::clog << "player " << playerID << " is lvl " << lvl << std::endl;
+    }
 }
 
 void zappyGUI::Plv::send(std::string command, zappyGUI::GUI &, zappyGUI::Cserver &sender)
@@ -35,6 +37,7 @@ void zappyGUI::Plv::send(std::string command, zappyGUI::GUI &, zappyGUI::Cserver
     std::string code;
     int playerID;
 
+    std::clog << "pin" << std::endl;
     ss >> code >> playerID;
     sender.send("plv %d\n", playerID);
 }

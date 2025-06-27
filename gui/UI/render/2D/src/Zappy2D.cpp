@@ -120,23 +120,38 @@ const zappyGUI::Zappy2D::AssetPool &zappyGUI::Zappy2D::getAssets() const
     return this->_assets;
 }
 
+
 void zappyGUI::Zappy2D::handleEvents()
 {
-    const sf::Event &event = this->_window->getEvent();
-
-    std::cout << "event: " << event.type << std::endl;
-    if (event.type == sf::Event::MouseButtonPressed) {
-        std::cout << "mouse click" << std::endl;
-        this->handleEventMouse(event);
-    } else
-        this->handleEventKey(event);
+    if (this->_window->getEvent().type == sf::Event::MouseButtonPressed)
+        this->handleEventMouse();
+    else
+        this->handleEventKey();
 }
 
-void zappyGUI::Zappy2D::handleEventKey(const sf::Event &event)
+void zappyGUI::Zappy2D::handleEventMouse()
 {
-    sf::Keyboard::Key eventCode = this->_window->getEvent().key.code;
+    const std::pair<size_t, size_t> &mapSize = this->_gui->getGame()->getMapSize();
+    int mx = this->_window->getEvent().mouseButton.x;
+    int my = this->_window->getEvent().mouseButton.y;
+    int omx = mx - this->_mapOffset.first;
+    int omy = my - this->_mapOffset.second;
+    int tilex = omx / (this->_zoomCoeff * zappyGUI::BASE_TILE_SIZE);
+    int tiley = omy / (this->_zoomCoeff * zappyGUI::BASE_TILE_SIZE);
 
-    switch (eventCode) {
+    std::cout << "mouse: " << mx << ":" << my << std::endl;
+    std::cout << "-off: " << omx << ":" << omy << std::endl;
+    std::cout << "tile: " << tilex << ":" << tiley << std::endl;
+    // if ((tilex >= 0 && tilex < mapSize.first) &&
+    //     (tiley >= 0 && tiley < mapSize.second))
+    //     this->_gui->getGame()->setSelectedTile(std::pair<float, float>(mx, my), std::pair<int, int>(tilex, tiley));
+}
+
+void zappyGUI::Zappy2D::handleEventKey()
+{
+    const sf::Keyboard::Key &keyCode = this->_window->getEvent().key.code;
+
+    switch (keyCode) {
         case sf::Keyboard::C:
             this->centerMap();
             break;
@@ -151,16 +166,16 @@ void zappyGUI::Zappy2D::handleEventKey(const sf::Event &event)
             this->updateZoom(true);
             break;
         case sf::Keyboard::Left:
-            this->updatePosition(eventCode);
+            this->updatePosition(keyCode);
             break;
         case sf::Keyboard::Right:
-            this->updatePosition(eventCode);
+            this->updatePosition(keyCode);
             break;
         case sf::Keyboard::Up:
-            this->updatePosition(eventCode);
+            this->updatePosition(keyCode);
             break;
         case sf::Keyboard::Down:
-            this->updatePosition(eventCode);
+            this->updatePosition(keyCode);
             break;
         case sf::Keyboard::Numpad1:
             this->_displayRessourceType = zappyGUI::Zappy2D::FOOD;
@@ -207,22 +222,6 @@ void zappyGUI::Zappy2D::handleEventKey(const sf::Event &event)
         default:
             break;
     }
-}
-
-void zappyGUI::Zappy2D::handleEventMouse(const sf::Event &event)
-{
-    const float mx = event.mouseButton.x;
-    const float my = event.mouseButton.y;
-    const int offadjx = (mx - this->_mapOffset.first);
-    const int offadjy = (my - this->_mapOffset.second);
-    const int tilex = offadjx / (BASE_TILE_SIZE * this->_zoomCoeff);
-    const int tiley =  offadjy / (BASE_TILE_SIZE * this->_zoomCoeff);
-
-    std::cout << "======" << std::endl;
-    std::cout << "mouse click: " << mx << ":" << my << std::endl;
-    std::cout << "offset: " << this->_mapOffset.first << ":" << this->_mapOffset.second << std::endl;
-    std::cout << "-offset: " << offadjx << ":" << offadjy << std::endl;
-    std::cout << "tile: " << tilex << ":" << tiley << std::endl;
 }
 
 zappyGUI::Zappy2D::AssetPool::AssetPool():

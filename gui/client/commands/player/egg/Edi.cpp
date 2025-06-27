@@ -24,6 +24,7 @@ void zappyGUI::Edi::receive(std::string command, zappyGUI::GUI &gui)
     int eggID;
     char hash;
     ss >> code >> hash >> eggID;
+    std::clog << "edi" << std::endl;
     auto it = std::find_if(gui.getGame()->getEggs().begin(), gui.getGame()->getEggs().end(), [eggID](const auto& egg) {
         return egg.second == eggID;
     });
