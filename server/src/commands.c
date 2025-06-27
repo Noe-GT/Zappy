@@ -79,6 +79,8 @@ static void handle_gui_message(server_t *server, client_t *client)
 static void queue_ai_command(server_t *server, client_t *client,
     command_t *command, uint64_t now)
 {
+    if (strcmp(client->queue->command, "Fork\n") == 0)
+        command_pfk(server, client);
     if (strcmp(client->queue->command, "Incantation\n") == 0) {
         command_pic(server, client);
         if (can_start_incantation(server, client)) {

@@ -11,7 +11,8 @@ void command_sst(server_t *server, client_t *client, char *message)
 {
     uint32_t freq = PARAMETERS->freq;
 
-    sscanf(message, "sst %u\n", &freq);
+    if (sscanf(message, "sst %u\n", &freq) != 1)
+        return command_sbp(client);
     for (size_t i = 0; i < server->cons - 1; ++i) {
         if (server->clients[i]->is_gui)
             send_message(client->fd, "sst %u\n", freq);
