@@ -39,6 +39,13 @@ static void eat(server_t *server)
     } while (i != 0);
 }
 
+static void clean_buffers(server_t *server)
+{
+    for (size_t i = 0; i < server->cons - 1; ++i) {
+        server->clients[i]->buffer = clean_buffer(server->clients[i]->buffer);
+    }
+}
+
 void game_logic(server_t *server)
 {
     uint64_t now = get_time_milliseconds();
@@ -47,6 +54,8 @@ void game_logic(server_t *server)
         return;
     if (server->ticks % 20 == 0)
         handle_ressource(server);
+    if (server->ticks % 500 == 0)
+        clean_buffers(server);
     ++server->ticks;
     server->tick_timer = now + (1000 / server->parameters->freq);
     if (!server || !server->clients)
