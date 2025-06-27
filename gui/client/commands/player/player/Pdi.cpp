@@ -22,10 +22,11 @@ void zappyGUI::Pdi::receive(std::string command, zappyGUI::GUI &gui)
     std::stringstream ss(command);
     std::string code;
     int playerID;
-
-    ss >> code >> playerID;
-    gui.getGame()->getPlayers()[playerID].kill();
+    char hash;
+    ss >> code >> hash >> playerID;
     std::clog << "player " << playerID << " is dead" << std::endl;
+    if (playerID < gui.getGame()->getPlayers().size())
+        gui.getGame()->getPlayers()[playerID].kill();
 }
 
 void zappyGUI::Pdi::send(std::string, zappyGUI::GUI &, zappyGUI::Cserver &)

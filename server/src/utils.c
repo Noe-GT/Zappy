@@ -53,16 +53,3 @@ bool team_exists(server_t *server, char *team)
     }
     return false;
 }
-
-uint16_t count_team_members(server_t *server, char *team)
-{
-    uint16_t count = 0;
-
-    for (uint16_t i = 0; i < server->cons - 1; ++i) {
-        if (!server->clients[i]->is_ai)
-            continue;
-        if (strcmp(server->clients[i]->team, team) == 0)
-            ++count;
-    }
-    return count;
-}

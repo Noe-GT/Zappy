@@ -45,17 +45,20 @@ typedef struct server_s {
     int32_t sockfd;
     struct pollfd *clfds;
     uint64_t cons;
-    uint64_t players;
     uint64_t tick_timer;
     uint64_t ticks;
     client_t **clients;
+    egg_t *egg;
+    uint64_t egg_count;
     map_t *map;
+    bool end;
 } server_t;
 
 void run_server(server_t *server);
 
 void attach_clients(server_t *server);
 void remove_client(server_t *server, size_t index);
+void init_player(server_t *server, client_t *client);
 
 // My parser shit
 void parser(int ac, char **av, server_t *server);
@@ -73,20 +76,18 @@ void game_logic(server_t *server);
 void init_map(map_t *map, size_t width, size_t height);
 void free_map(map_t *map);
 void handle_ressource(server_t *server);
-void elevate_players(tile_t *tile, server_t *server,
-    client_t *client, int level);
-void start_elevation(client_t *client, int level);
-void elevation(client_t *client, tile_t *tile, int level);
 char *handle_vision(server_t *server, client_t *client);
 
 int calculate_downtime(server_t *server);
 uint64_t get_time_milliseconds(void);
 
 bool team_exists(server_t *server, char *team);
-uint16_t count_team_members(server_t *server, char *team);
 void add_player_tile(server_t *server, client_t *client, vector2_t *position);
 void remove_player_tile(server_t *server, client_t *client,
     vector2_t *position);
 void forward(server_t *server, client_t *client);
+void move_player(server_t *server, client_t *client, direction_t direction);
+
+bool is_game_done(server_t *server);
 
 #endif /* !SERVER_HP_ */

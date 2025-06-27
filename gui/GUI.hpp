@@ -16,6 +16,7 @@
 #include "client/commands/map/Mct.hpp"
 #include "client/commands/map/Msz.hpp"
 #include "client/commands/misc/Sbp.hpp"
+#include "client/commands/misc/WELCOME.hpp"
 #include "client/commands/misc/Suc.hpp"
 #include "client/commands/misc/WELCOME.hpp"
 #include "client/commands/player/egg/Ebo.hpp"
@@ -70,7 +71,7 @@ namespace zappyGUI {
             Client _client;
             std::shared_ptr<zappyGUI::Game> _game;
             std::vector <std::shared_ptr<zappyGUI::IGraphical>> _renderers;
-            std::unordered_map<std::string, std::unique_ptr<Icommand>> _commands;
+            std::unordered_map<std::string, std::shared_ptr<Icommand>> _commands;
             std::vector<std::shared_ptr<UIBlocks::IUIBlock>> _elements;
             std::shared_ptr<circular_buffer_t> _circularBuffer;
     };

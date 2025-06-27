@@ -7,7 +7,11 @@
 
 #include "../../include/commands.h"
 
-void command_seg(client_t *client, char *team)
+void command_seg(server_t *server, char *team)
 {
-    send_message(client->fd, "seg %s\n", team);
+    for (size_t i = 0; i < server->cons - 1; ++i) {
+        if (!server->clients[i]->is_gui)
+            continue;
+        send_message(server->clients[i]->fd, "seg %s\n", team);
+    }
 }

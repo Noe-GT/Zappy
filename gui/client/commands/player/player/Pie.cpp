@@ -25,6 +25,7 @@ void zappyGUI::Pie::receive(std::string command, zappyGUI::GUI &gui)
     int y;
     int sucessStatus;
 
+    std::clog << "pie" << std::endl;
     ss >> code >> x >> y >> sucessStatus;
     for (std::size_t i = 0; i != gui.getGame()->getMap()[y][x].getPlayers().size(); i++) {
         if (gui.getGame()->getMap()[y][x].getPlayers()[i]->getSpellInProgress() != nullptr) {

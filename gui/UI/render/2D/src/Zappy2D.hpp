@@ -17,7 +17,7 @@ namespace zappyGUI {
     constexpr float BASE_RESSOURCE_SIZE = 16.0f;
     constexpr float ZOOM_COEFF_MAX = 5.0f;
     constexpr float ZOOM_COEFF_SENSITIVITY = 0.1f;
-    constexpr float MAP_OFFSET_SENSITIVITY = 10.0f;
+    constexpr int MAP_OFFSET_SENSITIVITY = 10;
 
     class Zappy2D: public AGraphical {
         public:
@@ -77,11 +77,9 @@ namespace zappyGUI {
 
             const std::string &getDisplayTeam() const;
             const float &getZoomCoeff() const;
-            const std::pair<float, float> &getMapOffset() const;
+            const std::pair<int, int> &getMapOffset() const;
             const zappyGUI::Zappy2D::ressourceType &getDisplayRessourceType() const;
             const zappyGUI::Zappy2D::AssetPool &getAssets() const;
-
-            void tileSelection(Game &game);
 
         private:
             void updateZoom(bool zoomOut);
@@ -94,7 +92,7 @@ namespace zappyGUI {
             zappyGUI::Zappy2D::AssetPool _assets;
             std::vector<std::vector<zappyGUI::Zappy2D::RTile>> _tiles;
             float _zoomCoeff;
-            std::pair<float, float> _mapOffset;
+            std::pair<int, int> _mapOffset;
             zappyGUI::Zappy2D::ressourceType _displayRessourceType;
             std::string _displayTeam;
     };

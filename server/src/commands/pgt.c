@@ -7,8 +7,12 @@
 
 #include "../../include/commands.h"
 
-// TODO: resource number
-void command_pgt(client_t *client)
+void command_pgt(server_t *server, client_t *client, int resid)
 {
-    send_message(client->fd, "pgt #%d i\n", client->id);
+    for (size_t i = 0; i < server->cons - 1; ++i) {
+        if (!server->clients[i]->is_gui)
+            continue;
+        send_message(server->clients[i]->fd, "pgt #%d %d\n",
+            client->id, resid);
+    }
 }

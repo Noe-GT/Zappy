@@ -10,14 +10,14 @@
 #include "../UI/shared/IGraphical.hpp"
 #include <regex>
 
-zappyGUI::Game::Game() : _frequence(0), _teamNbr(0), _gameInProgess(false), _mapSize(20, 10), _selectedPlayer(nullptr)
+zappyGUI::Game::Game() : _frequence(0), _teamNbr(0), _gameInProgess(false), _mapSize(42, 42), _selectedPlayer(nullptr)
 {
     for (size_t y = 0; y < this->_mapSize.second; y++) {
         this->_map.emplace_back();
         for (size_t x = 0; x < this->_mapSize.first; x++)
             this->_map.back().emplace_back(std::pair<size_t, size_t>(x, y));
     }
-    
+
     std::vector<std::shared_ptr<UIBlocks::IUIBlock>> emptyList;
     this->_playersListUI = std::make_shared<UIBlocks::PopupSelector>(emptyList, std::pair<float, float>(50, 300), std::pair<float, float>(200, 400));
     this->_selectedPlayerLevelText = std::make_shared<UIBlocks::Text>("Level -1", std::pair<float, float>(700, 30), 24);
@@ -112,7 +112,7 @@ std::vector <std::vector <zappyGUI::Tile>> &zappyGUI::Game::getMap()
     return this->_map;
 }
 
-const std::pair<size_t, size_t> &zappyGUI::Game::getMapSize() const
+const std::pair<unsigned int, unsigned int> &zappyGUI::Game::getMapSize() const
 {
     return this->_mapSize;
 }
@@ -162,14 +162,14 @@ void zappyGUI::Game::setMap(std::vector <std::vector <zappyGUI::Tile>> newVal)
     this->_map = newVal;
 }
 
-void zappyGUI::Game::setMapSize(int newX, int newY)
+void zappyGUI::Game::setMapSize(unsigned int newX, unsigned int newY)
 {
     this->_mapSize = {newX, newY};
     this->_map.clear();
     this->_map.resize(newY);
-    for (int y = 0; y < newY; y++) {
+    for (unsigned int y = 0; y < newY; y++) {
         this->_map[y].reserve(newX);
-        for (int x = 0; x < newX; x++)
+        for (unsigned int x = 0; x < newX; x++)
             this->_map[y].emplace_back(std::make_pair(x, y));
     }
     std::clog << "map have now a size of " << this->_map.size() << "x" << (this->_map.empty() ? 0 : this->_map[0].size()) << std::endl;

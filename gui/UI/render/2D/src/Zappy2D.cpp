@@ -19,14 +19,15 @@ zappyGUI::Zappy2D::Zappy2D():
 void zappyGUI::Zappy2D::initialize(std::shared_ptr<zappyGUI::GUI> gui)
 {
     const std::pair<size_t, size_t> &mapSize = gui->getGame()->getMapSize();
+    std::cout << "mapsize: " << mapSize.first << ":" << mapSize.second << std::endl;
 
     zappyGUI::AGraphical::initialize(gui);
-    this->zoomFill();
     for (size_t y = 0; y < mapSize.second; y++) {
         this->_tiles.emplace_back();
         for (size_t x = 0; x < mapSize.first; x++)
-            this->_tiles.back().emplace_back(x, y, std::shared_ptr<zappyGUI::Zappy2D>(this));
+        this->_tiles.back().emplace_back(x, y, std::shared_ptr<zappyGUI::Zappy2D>(this));
     }
+    this->zoomFill();
     this->centerMap();
 }
 
@@ -52,8 +53,8 @@ void zappyGUI::Zappy2D::centerMap()
 {
     const std::pair<size_t, size_t> &mapSize = this->_gui->getGame()->getMapSize();
 
-    this->_mapOffset.first = (this->_window->getSize().first - (mapSize.first * zappyGUI::BASE_TILE_SIZE * this->_zoomCoeff)) / 2.0;
-    this->_mapOffset.second = (this->_window->getSize().second - (mapSize.second * zappyGUI::BASE_TILE_SIZE * this->_zoomCoeff)) / 2.0;
+    this->_mapOffset.first = static_cast<int>((this->_window->getSize().first - (mapSize.first * zappyGUI::BASE_TILE_SIZE * this->_zoomCoeff)) / 2.0);
+    this->_mapOffset.second = static_cast<int>((this->_window->getSize().second - (mapSize.second * zappyGUI::BASE_TILE_SIZE * this->_zoomCoeff)) / 2.0);
 }
 
 void zappyGUI::Zappy2D::updateZoom(bool zoomOut)
@@ -104,7 +105,7 @@ const float &zappyGUI::Zappy2D::getZoomCoeff() const
     return this->_zoomCoeff;
 }
 
-const std::pair<float, float> &zappyGUI::Zappy2D::getMapOffset() const
+const std::pair<int, int> &zappyGUI::Zappy2D::getMapOffset() const
 {
     return this->_mapOffset;
 }
@@ -143,8 +144,8 @@ void zappyGUI::Zappy2D::handleEventMouse()
     // std::cout << "off: " << this->_mapOffset.first << ":" << this->_mapOffset.second << std::endl;
     // std::cout << "-off: " << omx << ":" << omy << std::endl;
     // std::cout << "tile: " << tilex << ":" << tiley << std::endl;
-    if ((tilex >= 0 && tilex < mapSize.first) &&
-        (tiley >= 0 && tiley < mapSize.second))
+    if ((tilex >= 0 && tilex < static_cast<int>(mapSize.first)) &&
+        (tiley >= 0 && tiley < static_cast<int>(mapSize.second)))
         this->_gui->getGame()->setSelectedTile(std::pair<float, float>(mx, my), std::pair<int, int>(tilex, tiley));
 }
 
@@ -223,11 +224,6 @@ void zappyGUI::Zappy2D::handleEventKey()
         default:
             break;
     }
-}
-
-void zappyGUI::Zappy2D::tileSelection(Game &game)
-{
-
 }
 
 zappyGUI::Zappy2D::AssetPool::AssetPool():

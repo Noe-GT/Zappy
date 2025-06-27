@@ -59,21 +59,29 @@ static void network_events(server_t *server)
     }
 }
 
+static void game_end(server_t *server)
+{
+    destroy_eggs(server->egg);
+    for (size_t i = server->cons - 2; true; ++i) {
+        if (server->clients[i]->is_ai)
+            remove_client(server, i + 1);
+        if (i == 0)
+            break;
+    }
+}
+
 static void main_loop(server_t *server)
 {
     while (true) {
         network_events(server);
         handle_client_commands(server);
-        game_logic(server);
+        if (!server->end)
+            game_logic(server);
+        if (is_game_done(server)) {
+            server->end = true;
+            game_end(server);
+        }
     }
-}
-
-static void initialize(server_t *server)
-{
-    server->map = (map_t *)malloc(sizeof(map_t));
-    if (!server->map)
-        exit(84);
-    init_map(MAP, PARAMETERS->width, PARAMETERS->height);
 }
 
 void run_server(server_t *server)
@@ -95,6 +103,5 @@ void run_server(server_t *server)
     server->clfds = malloc(sizeof(struct pollfd));
     server->clfds[0] = (struct pollfd){.fd = server->sockfd, .events = POLLIN};
     server->cons = 1;
-    initialize(server);
     main_loop(server);
 }
