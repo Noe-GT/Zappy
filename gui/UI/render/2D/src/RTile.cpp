@@ -10,11 +10,15 @@
 zappyGUI::Zappy2D::RTile::RTile(int x, int y, std::shared_ptr<zappyGUI::Zappy2D> ui):
     _back(),
     _ressource(),
+    _ressourceAmount(),
     _ui(ui)
 {
     float winX = x * (zappyGUI::BASE_TILE_SIZE * ui->getZoomCoeff()) + ui->getMapOffset().first;
     float winY = y * (zappyGUI::BASE_TILE_SIZE * ui->getZoomCoeff()) + ui->getMapOffset().second;
 
+    this->_ressourceAmount.setFont(ui->_assets._font);
+    this->_ressourceAmount.setScale(1.0, 1.0);
+    this->_ressourceAmount.setColor(sf::Color::White);
     this->_back.setTexture(ui->getAssets()._tileTexture);
     this->_back.setScale(sf::Vector2f(1.0, 1.0));
     this->_back.setPosition(sf::Vector2f(winX, winY));
@@ -24,6 +28,7 @@ void zappyGUI::Zappy2D::RTile::display(std::shared_ptr<zappyGUI::Window> window)
 {
     window->getRenderWindow().draw(this->_back);
     window->getRenderWindow().draw(this->_ressource);
+    window->getRenderWindow().draw(this->_ressourceAmount);
 }
 
 void zappyGUI::Zappy2D::RTile::update(const zappyGUI::Tile &tile)
@@ -33,9 +38,6 @@ void zappyGUI::Zappy2D::RTile::update(const zappyGUI::Tile &tile)
 
     if (tile.getPlayers().size() >= 1) {
         this->updatePlayers(tile);
-    } else {
-        this->_back.setTexture(this->_ui->getAssets()._tileTexture);
-        this->_back.setColor(sf::Color::White);
     }
     if (tile.getRessourcesConst().size() >= 1)
         this->handleRessouces(tile);
@@ -44,6 +46,18 @@ void zappyGUI::Zappy2D::RTile::update(const zappyGUI::Tile &tile)
 }
 
 void zappyGUI::Zappy2D::RTile::updatePlayers(const zappyGUI::Tile &tile)
+{
+    for (const std::shared_ptr<zappyGUI::Player> &player : tile.getPlayers()) {
+        if (player->isAlive()) {
+            this->updatePlayer(tile, player);
+            return;
+        }
+    }
+    this->_back.setTexture(this->_ui->getAssets()._tileTexture);
+    this->_back.setColor(sf::Color::White);
+}
+
+void zappyGUI::Zappy2D::RTile::updatePlayer(const zappyGUI::Tile &tile, const  std::shared_ptr<zappyGUI::Player> &player)
 {
     std::string team = tile.getPlayers().front()->getName();
     sf::Color color;
@@ -63,17 +77,18 @@ void zappyGUI::Zappy2D::RTile::handleRessouces(const zappyGUI::Tile &tile)
     if (this->_ui->getDisplayRessourceType() == zappyGUI::Zappy2D::ressourceType::ALL) {
         for (int type = 0; type < 7; type ++) {
             if (ressources[type].second > 0) {
-                this->setRessource(static_cast<zappyGUI::Zappy2D::ressourceType>(type));
+                this->setRessource(static_cast<zappyGUI::Zappy2D::ressourceType>(type), ressources[type].second);
                 return;
             }
         }
-    } else if (ressources[this->_ui->getDisplayRessourceType()].second <= 0)
+    } else if (ressources[this->_ui->getDisplayRessourceType()].second <= 0) {
         this->_ressource.setColor(sf::Color::Transparent);
-    else
-        this->setRessource(this->_ui->getDisplayRessourceType());
+        this->_ressourceAmount.setColor(sf::Color::Transparent);
+    } else
+        this->setRessource(this->_ui->getDisplayRessourceType(), ressources[this->_ui->getDisplayRessourceType()].second);
 }
 
-void zappyGUI::Zappy2D::RTile::setRessource(zappyGUI::Zappy2D::ressourceType ressourceType)
+void zappyGUI::Zappy2D::RTile::setRessource(zappyGUI::Zappy2D::ressourceType ressourceType, int amount)
 {
     float tileSize = zappyGUI::BASE_TILE_SIZE * this->_ui->getZoomCoeff();
     float ressourceSize = zappyGUI::BASE_RESSOURCE_SIZE * this->_ui->getZoomCoeff();
@@ -82,6 +97,10 @@ void zappyGUI::Zappy2D::RTile::setRessource(zappyGUI::Zappy2D::ressourceType res
 
     this->_ressource.setScale(sf::Vector2f(this->_ui->getZoomCoeff(), this->_ui->getZoomCoeff()));
     this->_ressource.setPosition(x, y);
+    this->_ressourceAmount.setColor(sf::Color::White);
+    this->_ressourceAmount.setPosition(x, y);
+    this->_ressourceAmount.setCharacterSize(RESSOURCE_FONT_SIZE);
+    this->_ressourceAmount.setString(std::to_string(5));
     this->setRessourceTexture(ressourceType);
     this->_ressource.setColor(sf::Color::White);
 }

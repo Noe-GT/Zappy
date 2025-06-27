@@ -240,7 +240,8 @@ zappyGUI::Zappy2D::AssetPool::AssetPool():
     _siburTexture(),
     _mendianeTexture(),
     _phirasTexture(),
-    _thystameTexture()
+    _thystameTexture(),
+    _font()
 {
     this->_tileTexture.loadFromFile((ASSETS_FOLDER + std::string("tile1.png")));
     this->_playerTexture.loadFromFile((ASSETS_FOLDER + std::string("player1.png")));
@@ -251,6 +252,7 @@ zappyGUI::Zappy2D::AssetPool::AssetPool():
     this->_phirasTexture.loadFromFile((ASSETS_FOLDER + std::string("ore5.png")));
     this->_thystameTexture.loadFromFile((ASSETS_FOLDER + std::string("ore6.png")));
     this->_foodTexture.loadFromFile((ASSETS_FOLDER + std::string("food.png")));
+    this->_font.loadFromFile(GLOBAL_ASSETS_FOLDER + std::string("island_material.mtl"));
 }
 
 extern "C" {
