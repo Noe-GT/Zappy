@@ -7,7 +7,11 @@
 
 #include "../../include/commands.h"
 
-void command_edi(client_t *client, uint32_t egg_number)
+void command_edi(server_t *server, egg_t *egg)
 {
-    send_message(client->fd, "edi #%u\n", egg_number);
+    for (size_t i = 0; i < server->cons - 1; ++i) {
+        if (!server->clients[i]->is_gui)
+            continue;
+        send_message(server->clients[i]->fd, "edi #%u\n", egg->id);
+    }
 }

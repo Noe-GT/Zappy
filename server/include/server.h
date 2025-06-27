@@ -86,6 +86,7 @@ void add_player_tile(server_t *server, client_t *client, vector2_t *position);
 void remove_player_tile(server_t *server, client_t *client,
     vector2_t *position);
 void forward(server_t *server, client_t *client);
+void move_player(server_t *server, client_t *client, direction_t direction);
 
 bool is_game_done(server_t *server);
 

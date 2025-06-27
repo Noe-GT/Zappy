@@ -77,5 +77,6 @@ bool replace_egg(server_t *server, client_t *client);
 void new_egg_position(server_t *server, char *team, vector2_t *position);
 void crack_egg(egg_t *egg);
 void destroy_eggs(egg_t *egg);
+void eject_eggs(egg_t **head, server_t *server, vector2_t *position);
 
 #endif /* !GAME_H_ */

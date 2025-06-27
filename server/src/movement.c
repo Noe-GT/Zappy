@@ -66,3 +66,23 @@ void forward(server_t *server, client_t *client)
         client->position->x = client->position->x + 1
             % server->parameters->width;
 }
+
+void move_player(server_t *server, client_t *client, direction_t direction)
+{
+    if (direction == UP) {
+        if (client->position->y == 0)
+            client->position->y = server->parameters->height - 1;
+        else
+            client->position->y -= 1;
+    } else if (direction == DOWN)
+        client->position->y = client->position->y + 1
+            % server->parameters->height;
+    if (direction == LEFT) {
+        if (client->position->x == 0)
+            client->position->x = server->parameters->width - 1;
+        else
+            client->position->x -= 1;
+    } else if (direction == RIGHT)
+        client->position->x = client->position->x + 1
+            % server->parameters->width;
+}
