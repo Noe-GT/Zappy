@@ -44,7 +44,7 @@ void command_pdr(server_t *server, client_t *client, int resid);
 void command_pdi(server_t *server, client_t *client);
 void command_enw(server_t *server, client_t *client, egg_t *egg);
 void command_ebo(client_t *client, uint32_t egg_number);
-void command_edi(client_t *client, uint32_t egg_number);
+void command_edi(server_t *server, egg_t *egg);
 void command_seg(server_t *server, char *team);
 void command_smg(client_t *client, const char *fmt, ...);
 void command_suc(client_t *client);
