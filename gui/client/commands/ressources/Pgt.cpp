@@ -24,8 +24,8 @@ void zappyGUI::Pgt::receive(std::string command, zappyGUI::GUI &gui)
     int playerID;
     int ressourceID;
     std::pair <int, int> playerPos;
-
-    ss >> code >> playerID >> ressourceID;
+    char hash;
+    ss >> code >> hash >> playerID >> ressourceID;
     playerPos = gui.getGame()->getPlayers()[playerID].getPos();
     gui.getGame()->getPlayers()[playerID].getInventory()[ressourceID].second ++;
     gui.getGame()->getMap()[playerPos.first][playerPos.second].getRessources()[ressourceID].second --;

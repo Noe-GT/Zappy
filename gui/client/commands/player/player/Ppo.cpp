@@ -24,8 +24,9 @@ void zappyGUI::Ppo::receive(std::string command, zappyGUI::GUI &gui)
     std::pair<int, int> pos;
     std::pair<int, int> oldPos;
     int orientation;
+    char hash;
 
-    ss >> code >> playerID >> pos.first >> pos.second >> orientation;
+    ss >> code >> hash >> playerID >> pos.first >> pos.second >> orientation;
     oldPos = gui.getGame()->getPlayers()[playerID].getPos();
     std::vector<std::shared_ptr<zappyGUI::Player>>& playersOnTile = gui.getGame()->getMap()[oldPos.first][oldPos.second].getPlayers();
     auto it = std::find_if(playersOnTile.begin(), playersOnTile.end(), [playerID](const auto& player) {
@@ -44,7 +45,7 @@ void zappyGUI::Ppo::send(std::string command, zappyGUI::GUI &, zappyGUI::Cserver
     std::stringstream ss(command);
     std::string code;
     int playerID;
-
-    ss >> code >> playerID;
-    sender.send("ppo %d\n", playerID);
+    char hash;
+    ss >> code >> hash >> playerID;
+    sender.send("ppo #%d\n", playerID);
 }

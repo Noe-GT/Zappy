@@ -23,8 +23,8 @@ void zappyGUI::Plv::receive(std::string command, zappyGUI::GUI &gui)
     std::string code;
     int playerID;
     int lvl;
-
-    ss >> code >> playerID >> lvl;
+    char hash;
+    ss >> code >> hash >> playerID >> lvl;
     gui.getGame()->getPlayers()[playerID].setLvl(lvl);
     std::clog << "player " << playerID << " is lvl " << lvl << std::endl;
 }
