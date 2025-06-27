@@ -37,7 +37,7 @@ void command_sst(server_t *server, client_t *client, char *message);
 void command_pnw(server_t *server, client_t *client);
 void command_pex(client_t *client);
 void command_pbc(client_t *client, const char *fmt, ...);
-void command_pic(server_t *server, client_t *client); // TODO: pic
+void command_pic(server_t *server, client_t *client);
 void command_pie(server_t *server, client_t *client, bool success);
 void command_pfk(server_t *server, client_t *client);
 void command_pdr(server_t *server, client_t *client, int resid);
