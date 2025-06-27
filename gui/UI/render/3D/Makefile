@@ -9,7 +9,7 @@ CXX  		= 		g++
 
 CXXFLAGS 	= 		-Wall -Wextra -std=c++17 -fPIC
 
-LDFLAGS 	= 		-shared -lsfml-graphics -lsfml-window -lsfml-system
+LDFLAGS 	= 		-shared -lsfml-graphics -lsfml-window -lsfml-system -L../../../../ -lprotocol
 
 NAME 		= 		libRender3d.so
 
