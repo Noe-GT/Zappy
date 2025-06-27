@@ -26,6 +26,21 @@ void new_egg(server_t *server, char *team)
     server->egg = new;
 }
 
+void new_egg_position(server_t *server, char *team, vector2_t *position)
+{
+    egg_t *new = (egg_t *)malloc(sizeof(egg_t));
+
+    new->team = team;
+    new->id = server->egg_count;
+    ++server->egg_count;
+    new->next = server->egg;
+    new->position = (vector2_t *)malloc(sizeof(vector2_t));
+    new->position->x = position->x;
+    new->position->y = position->y;
+    new->direction = rand() % 4;
+    server->egg = new;
+}
+
 static void remove_egg(egg_t **head, egg_t *to_remove, egg_t *prev)
 {
     if (prev == NULL)
@@ -46,22 +61,6 @@ egg_t *pop_egg(egg_t **egg, char *team)
         prev = curr;
     }
     return NULL;
-}
-
-// I know it's useless, but just in case I need to free other things
-// Also the name is funny.
-static void crack_egg(egg_t *egg)
-{
-    free(egg);
-}
-
-void create_start_team_eggs(server_t *server)
-{
-    for (uint16_t i = 0; i < PARAMETERS->team_count; ++i) {
-        for (size_t j = 0; j < PARAMETERS->nb_clients; ++j) {
-            new_egg(server, PARAMETERS->team_names[i]);
-        }
-    }
 }
 
 size_t count_eggs(egg_t *egg, char *team)

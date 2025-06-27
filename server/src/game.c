@@ -53,3 +53,26 @@ void game_logic(server_t *server)
         return;
     eat(server);
 }
+
+static bool team_won(server_t *server, char *team)
+{
+    uint16_t count = 0;
+
+    for (size_t i = 0; i < server->cons - 1; ++i) {
+        if (strcmp(server->clients[i]->team, team) == 0 &&
+            server->clients[i]->level == 8)
+            ++count;
+    }
+    return count >= 6;
+}
+
+bool is_game_done(server_t *server)
+{
+    for (uint16_t i = 0; i < PARAMETERS->team_count; ++i) {
+        if (team_won(server, PARAMETERS->team_names[i])) {
+            command_seg(server, PARAMETERS->team_names[i]);
+            return true;
+        }
+    }
+    return false;
+}

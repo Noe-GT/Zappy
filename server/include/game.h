@@ -15,8 +15,6 @@
     #define RESOURCE_TYPES 7
 
     #define MAP server->map
-    #define CLIENT server->network->client_list
-    #define TILES server->map->tiles[client->position->y][client->position->x]
 
 typedef enum resource_s {
     FOOD,
@@ -74,8 +72,10 @@ typedef struct client_s client_t;
 
 void new_egg(server_t *server, char *team);
 egg_t *pop_egg(egg_t **egg, char *team);
-void create_start_team_eggs(server_t *server);
 size_t count_eggs(egg_t *egg, char *team);
 bool replace_egg(server_t *server, client_t *client);
+void new_egg_position(server_t *server, char *team, vector2_t *position);
+void crack_egg(egg_t *egg);
+void destroy_eggs(egg_t *egg);
 
 #endif /* !GAME_H_ */

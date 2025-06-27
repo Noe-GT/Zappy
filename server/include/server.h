@@ -51,6 +51,7 @@ typedef struct server_s {
     egg_t *egg;
     uint64_t egg_count;
     map_t *map;
+    bool end;
 } server_t;
 
 void run_server(server_t *server);
@@ -85,5 +86,7 @@ void add_player_tile(server_t *server, client_t *client, vector2_t *position);
 void remove_player_tile(server_t *server, client_t *client,
     vector2_t *position);
 void forward(server_t *server, client_t *client);
+
+bool is_game_done(server_t *server);
 
 #endif /* !SERVER_HP_ */

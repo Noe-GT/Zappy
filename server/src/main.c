@@ -9,6 +9,15 @@
 
 #include <time.h>
 
+static void create_start_team_eggs(server_t *server)
+{
+    for (uint16_t i = 0; i < PARAMETERS->team_count; ++i) {
+        for (size_t j = 0; j < PARAMETERS->nb_clients; ++j) {
+            new_egg(server, PARAMETERS->team_names[i]);
+        }
+    }
+}
+
 static void initialize_map(server_t *server)
 {
     server->map = (map_t *)malloc(sizeof(map_t));

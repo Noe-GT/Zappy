@@ -59,12 +59,28 @@ static void network_events(server_t *server)
     }
 }
 
+static void game_end(server_t *server)
+{
+    destroy_eggs(server->egg);
+    for (size_t i = server->cons - 2; true; ++i) {
+        if (server->clients[i]->is_ai)
+            remove_client(server, i + 1);
+        if (i == 0)
+            break;
+    }
+}
+
 static void main_loop(server_t *server)
 {
     while (true) {
         network_events(server);
         handle_client_commands(server);
-        game_logic(server);
+        if (!server->end)
+            game_logic(server);
+        if (is_game_done(server)) {
+            server->end = true;
+            game_end(server);
+        }
     }
 }
 
