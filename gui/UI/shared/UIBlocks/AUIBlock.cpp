@@ -16,12 +16,12 @@ UIBlocks::AUIBlock::AUIBlock()
         std::cerr << "Failed to load font" << std::endl;
 }
 
-void UIBlocks::AUIBlock::draw(zappyGUI::Window &window)
+void UIBlocks::AUIBlock::draw(std::shared_ptr<zappyGUI::Window> &window)
 {
     (void)window; 
 }
 
-void UIBlocks::AUIBlock::handleEvent(const sf::Event &event, zappyGUI::Window &window)
+void UIBlocks::AUIBlock::handleEvent(const sf::Event &event, std::shared_ptr<zappyGUI::Window> &window)
 {
     (void)event; 
     (void)window;

@@ -47,3 +47,8 @@ int Scroller::getMaxVisibleOptions() const
 {
     return _maxVisibleOptions;
 }
+
+void Scroller::setOptions(std::vector<std::shared_ptr<UIBlocks::IUIBlock>> options)
+{
+    this->_options = options;
+}

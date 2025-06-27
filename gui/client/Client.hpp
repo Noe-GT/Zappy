@@ -16,7 +16,6 @@ namespace zappyGUI {
             Cserver &getCserver();
         private:
             Cserver _Client;
-            int socket;
             //FIXME: add the cirular buffer here
 
     };

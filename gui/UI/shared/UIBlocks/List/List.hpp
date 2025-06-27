@@ -15,9 +15,9 @@ namespace UIBlocks {
         public:
             List(std::vector<std::shared_ptr<IUIBlock>> &elements, std::pair<float, float> position, std::pair<float, float> size);
             ~List() = default;
-            void draw(zappyGUI::Window &window) override;
+            void draw(std::shared_ptr<zappyGUI::Window> &window) override;
             void setPosition(const std::pair<float, float> &position) override;
-            void handleEvent(const sf::Event &event, zappyGUI::Window &window) override;
+            void handleEvent(const sf::Event &event, std::shared_ptr<zappyGUI::Window> &window) override;
             
             void addElement(std::shared_ptr<IUIBlock> element);
             void removeElement(size_t index);

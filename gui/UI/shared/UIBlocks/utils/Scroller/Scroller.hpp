@@ -20,6 +20,7 @@ class Scroller {
         void scrollDown();
         void setMaxVisibleOptions(int maxVisibleOptions);
         int getMaxVisibleOptions() const;
+        void setOptions(std::vector<std::shared_ptr<UIBlocks::IUIBlock>> options);
     private:
         int _maxVisibleOptions;
         size_t _currentOffset;

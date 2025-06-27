@@ -48,7 +48,7 @@ void UIBlocks::PopupSelector::updateMaxVisibleOptions()
     _options.setMaxVisibleOptions(maxOptions);
 }
 
-void UIBlocks::PopupSelector::draw(zappyGUI::Window &window)
+void UIBlocks::PopupSelector::draw(std::shared_ptr<zappyGUI::Window> &window)
 {
     if (!_isOpen)
         return;
@@ -57,7 +57,7 @@ void UIBlocks::PopupSelector::draw(zappyGUI::Window &window)
     this->_background.setOutlineColor(this->_borderColor);
     this->_background.setOutlineThickness(this->_borderThickness);
     this->_background.setFillColor(this->_backgroundColor);
-    window.getRenderWindow().draw(this->_background);
+    window.get()->getRenderWindow().draw(this->_background);
 
     std::vector<std::shared_ptr<UIBlocks::IUIBlock>> visibleOptions = this->_options.getVisibleOptions();
     for (size_t i = 0; i < visibleOptions.size(); ++i) {
@@ -88,18 +88,16 @@ bool UIBlocks::PopupSelector::isInside(int x, int y) const
 }
 
 
-void UIBlocks::PopupSelector::handleEvent(const sf::Event &event, zappyGUI::Window &window)
+void UIBlocks::PopupSelector::handleEvent(const sf::Event &event, std::shared_ptr<zappyGUI::Window> &window)
 {
-    sf::Vector2i mousePosition = sf::Mouse::getPosition(window.getRenderWindow());
+    sf::Vector2i mousePosition = sf::Mouse::getPosition(window.get()->getRenderWindow());
     if (event.type == sf::Event::MouseButtonPressed) {
         if (event.mouseButton.button == sf::Mouse::Left) {
             if (isInside(event.mouseButton.x, event.mouseButton.y)) {
                 int index = (event.mouseButton.y - _position.second - OPTION_HORIZONTAL_SPACING) / OPTION_VERTICAL_SPACING;
                 auto visibleOptions = this->_options.getVisibleOptions();
                 if (index >= 0 && index < static_cast<int>(visibleOptions.size())) {
-                    std::cout << "Clicked on option index: " << index << std::endl;
                     this->_selected = visibleOptions[index];
-                    std::cout << "Selected option: " << std::get<std::string>(std::get<std::vector<std::shared_ptr<UIBlocks::IUIBlock>>>(this->_selected->getValue()).at(1).get()->getValue()) << std::endl;
                 }
             }
         }
@@ -128,7 +126,10 @@ void UIBlocks::PopupSelector::setPosition(const std::pair<float, float> &positio
 
 const std::variant<std::string, std::vector<std::shared_ptr<UIBlocks::IUIBlock>>> UIBlocks::PopupSelector::getValue() const
 {
-    std::variant<std::string, std::vector<std::shared_ptr<UIBlocks::IUIBlock>>> value = this->getSelected().get()->getValue();
+    if (!this->getSelected()) {
+        return std::string("No option selected");
+    }
+    std::variant<std::string, std::vector<std::shared_ptr<UIBlocks::IUIBlock>>> value = this->getSelected()->getValue();
     return value;
 }
 
@@ -142,3 +143,8 @@ void UIBlocks::PopupSelector::setSize(const int size)
 {
     (void)size;
 }
+
+void UIBlocks::PopupSelector::setOptions(std::vector<std::shared_ptr<UIBlocks::IUIBlock>> options){
+    this->_options.setOptions(options);
+}
+

@@ -13,8 +13,8 @@ namespace UIBlocks {
         public:
             AUIBlock();
             ~AUIBlock() = default;
-            void draw(zappyGUI::Window &window) override;
-            void handleEvent(const sf::Event &event, zappyGUI::Window &window) override;
+            void draw(std::shared_ptr<zappyGUI::Window> &window) override;
+            void handleEvent(const sf::Event &event, std::shared_ptr<zappyGUI::Window> &window) override;
             void setPosition(const std::pair<float, float> &position) override;
             const std::variant<std::string, std::vector<std::shared_ptr<IUIBlock>>> getValue() const override;
             void setSize(const std::pair<float, float> &size) override;

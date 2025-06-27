@@ -10,5 +10,6 @@ namespace zappyGUI {
     class Sibur: public IRessource{
         public:
             ~Sibur() override = default;
+            std::string getName() const override;
     };
 }

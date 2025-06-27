@@ -4,8 +4,8 @@
 ```mermaid
 classDiagram
     class IUIBlock {
-        + void draw(zappyGUI::Window &window)
-        + void handleEvent(const sf::Event &event, zappyGUI::Window &window)
+        + void draw(std::shared_ptr<zappyGUI::Window> &window)
+        + void handleEvent(const sf::Event &event, std::shared_ptr<zappyGUI::Window> &window)
         + void setPosition(const std::pair<float, float> &position)
         + void setSize(const std::pair<float, float> &size)
         + void setSize(const int size)
@@ -13,8 +13,8 @@ classDiagram
     }
 
     class AUIBlock {
-        + void draw(zappyGUI::Window &window)
-        + void handleEvent(const sf::Event &event, zappyGUI::Window &window)
+        + void draw(std::shared_ptr<zappyGUI::Window> &window)
+        + void handleEvent(const sf::Event &event, std::shared_ptr<zappyGUI::Window> &window)
         + void setPosition(const std::pair<float, float> &position)
         + void setSize(const std::pair<float, float> &size)
         + void setSize(const int size)
@@ -34,9 +34,9 @@ classDiagram
         - sf::Texture _texture
         - sf::Image _image
         + Image(const std::string &path, std::pair<float, float> position, std::pair<float, float> size, std::string &alternativeText)
-        + void draw(zappyGUI::Window &window)
+        + void draw(std::shared_ptr<zappyGUI::Window> &window)
         + void setPosition(const std::pair<float, float> &position)
-        + void handleEvent(const sf::Event &event, zappyGUI::Window &window)
+        + void handleEvent(const sf::Event &event, std::shared_ptr<zappyGUI::Window> &window)
         + bool isInside(int x, int y)
         + const std::variant<std::string, std::vector<std::shared_ptr<IUIBlock>>> getValue() 
         + void setSize(const std::pair<float, float> &size)
@@ -49,9 +49,9 @@ classDiagram
         - std::vector<std::shared_ptr<IUIBlock>> _elements
         - sf::RectangleShape _background
         + List(std::vector<std::shared_ptr<IUIBlock>> &elements, std::pair<float, float> position, std::pair<float, float> size)
-        + void draw(zappyGUI::Window &window)
+        + void draw(std::shared_ptr<zappyGUI::Window> &window)
         + void setPosition(const std::pair<float, float> &position)
-        + void handleEvent(const sf::Event &event, zappyGUI::Window &window)
+        + void handleEvent(const sf::Event &event, std::shared_ptr<zappyGUI::Window> &window)
         + void addElement(std::shared_ptr<IUIBlock> element)
         + void removeElement(size_t index)
         + const std::variant<std::string, std::vector<std::shared_ptr<IUIBlock>>> getValue() 
@@ -64,9 +64,9 @@ classDiagram
         - std::pair<std::shared_ptr<IUIBlock>, std::shared_ptr<IUIBlock>> _pair
 
         + Pair(std::pair<std::shared_ptr<IUIBlock>, std::shared_ptr<IUIBlock>> &pair, std::pair<float, float> position)
-        + void draw(zappyGUI::Window &window)
+        + void draw(std::shared_ptr<zappyGUI::Window> &window)
         + void setPosition(const std::pair<float, float> &position)
-        + void handleEvent(const sf::Event &event, zappyGUI::Window &window)
+        + void handleEvent(const sf::Event &event, std::shared_ptr<zappyGUI::Window> &window)
         + const std::variant<std::string, std::vector<std::shared_ptr<IUIBlock>>> getValue()
         + void setSize(const std::pair<float, float> &size)
         + void setSize(const int size)
@@ -80,9 +80,9 @@ classDiagram
         - sf::RectangleShape _background
 
         + Popup(std::string &content, std::pair<float, float> position, std::pair<float, float> size)
-        + void draw(zappyGUI::Window &window)
+        + void draw(std::shared_ptr<zappyGUI::Window> &window)
         + void setPosition(const std::pair<float, float> &position)
-        + void handleEvent(const sf::Event &event, zappyGUI::Window &window)
+        + void handleEvent(const sf::Event &event, std::shared_ptr<zappyGUI::Window> &window)
         + void open()
         + void close()
         + const std::variant<std::string, std::vector<std::shared_ptr<IUIBlock>>> getValue()
@@ -100,8 +100,8 @@ classDiagram
 
         + PopupSelector(std::vector<std::shared_ptr<IUIBlock>> &options, std::pair<float, float> position)
         + PopupSelector(std::vector<std::shared_ptr<IUIBlock>> &options, std::pair<float, float> position, std::pair<float, float> size)
-        + void draw(zappyGUI::Window &window)
-        + void handleEvent(const sf::Event &event, zappyGUI::Window &window)
+        + void draw(std::shared_ptr<zappyGUI::Window> &window)
+        + void handleEvent(const sf::Event &event, std::shared_ptr<zappyGUI::Window> &window)
         + void setPosition(const std::pair<float, float> &position)
         + const std::variant<std::string, std::vector<std::shared_ptr<IUIBlock>>> getValue()
         + bool isInside(int x, int y)
@@ -120,8 +120,8 @@ classDiagram
 
         + Text(std::string text, std::pair<float, float> position, int size)
         + Text(std::string text, std::pair<float, float> position, int size, std::string font)
-        + void draw(zappyGUI::Window &window)
-        + void handleEvent(const sf::Event &event, zappyGUI::Window &window)
+        + void draw(std::shared_ptr<zappyGUI::Window> &window)
+        + void handleEvent(const sf::Event &event, std::shared_ptr<zappyGUI::Window> &window)
         + void setPosition(const std::pair<float, float> &position)
         + void setText(const std::string &text)
         + const std::variant<std::string, std::vector<std::shared_ptr<IUIBlock>>> getValue()
@@ -134,8 +134,8 @@ classDiagram
         - Text _text
 
         + Timer(std::pair<float, float> position, int size)
-        + void draw(zappyGUI::Window &window)
-        + void handleEvent(const sf::Event &event, zappyGUI::Window &window)
+        + void draw(std::shared_ptr<zappyGUI::Window> &window)
+        + void handleEvent(const sf::Event &event, std::shared_ptr<zappyGUI::Window> &window)
         + void setPosition(const std::pair<float, float> &position)
         + void start()
         + void restart()

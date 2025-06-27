@@ -6,16 +6,16 @@
 */
 #pragma once
 
-#include "../game/ressources/IRessource.hpp"
-#include "../game/Player.hpp"
-#include "../UI/shared/UIBlocks/PopupSelector/PopupSelector.hpp"
-#include "../game/ressources/Food.hpp"
-#include "../game/ressources/Linemate.hpp"
-#include "../game/ressources/Deraumere.hpp"
-#include "../game/ressources/Sibur.hpp"
-#include "../game/ressources/Mendiane.hpp"
-#include "../game/ressources/Phiras.hpp"
-#include "../game/ressources/Thystame.hpp"
+#include "game/ressources/IRessource.hpp"
+#include "game/Player.hpp"
+#include "UI/shared/UIBlocks/PopupSelector/PopupSelector.hpp"
+#include "game/ressources/Food.hpp"
+#include "game/ressources/Linemate.hpp"
+#include "game/ressources/Deraumere.hpp"
+#include "game/ressources/Sibur.hpp"
+#include "game/ressources/Mendiane.hpp"
+#include "game/ressources/Phiras.hpp"
+#include "game/ressources/Thystame.hpp"
 
 namespace zappyGUI {
     class Player;
@@ -29,7 +29,8 @@ namespace zappyGUI {
             std::vector <std::shared_ptr <Player>> &getPlayers();
             const std::vector <std::shared_ptr <Player>> &getPlayers() const;
             std::shared_ptr <Player> &getPlayer(int index);
-            std::vector <std::pair<std::shared_ptr <IRessource>, int>> &getRessource();
+            std::vector <std::pair<std::shared_ptr <IRessource>, int>> &getRessources();
+            const std::vector <std::pair<std::shared_ptr <IRessource>, int>> &getRessourcesConst() const;
             const std::pair<size_t, size_t> &getPos() const;
 
             void setPlayer(std::vector <std::shared_ptr <Player>> newVal);

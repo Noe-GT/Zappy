@@ -5,9 +5,14 @@
 ** Mendiane.cpp
 */
 
+#include <string>
 #include "Mendiane.hpp"
 
 // zappyGUI::Mendiane::~Mendiane()
 // {
 // }
 
+std::string zappyGUI::Mendiane::getName() const
+{
+    return "Mendiane";
+}

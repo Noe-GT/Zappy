@@ -11,3 +11,8 @@
 // {
 // }
 
+std::string zappyGUI::Phiras::getName() const
+{
+    return "Phiras";
+}
+

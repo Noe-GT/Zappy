@@ -15,8 +15,8 @@ namespace UIBlocks {
             Text(std::string text, std::pair<float, float> position, int size);
             Text(std::string text, std::pair<float, float> position, int size, std::string font);
             ~Text() = default;
-            void draw(zappyGUI::Window &window) override;
-            void handleEvent(const sf::Event &event, zappyGUI::Window &window) override;
+            void draw(std::shared_ptr<zappyGUI::Window> &window) override;
+            void handleEvent(const sf::Event &event, std::shared_ptr<zappyGUI::Window> &window) override;
             void setPosition(const std::pair<float, float> &position) override;
             void setText(const std::string &text);
             const std::variant<std::string, std::vector<std::shared_ptr<IUIBlock>>> getValue() const override;

@@ -62,10 +62,16 @@ std::shared_ptr <zappyGUI::Player> &zappyGUI::Tile::getPlayer(int index)
     return this->_players.at(index);
 }
 
-std::vector <std::pair<std::shared_ptr <zappyGUI::IRessource>, int>> &zappyGUI::Tile::getRessource()
+std::vector <std::pair<std::shared_ptr <zappyGUI::IRessource>, int>> &zappyGUI::Tile::getRessources()
 {
     return this->_ressources;
 }
+
+const std::vector <std::pair<std::shared_ptr <zappyGUI::IRessource>, int>> &zappyGUI::Tile::getRessourcesConst() const
+{
+    return this->_ressources;
+}
+
 
 const std::pair<size_t, size_t> &zappyGUI::Tile::getPos() const
 {
