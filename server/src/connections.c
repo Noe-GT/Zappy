@@ -82,7 +82,7 @@ static void new_connection(server_t *server, int confd)
     client->is_ai = false;
     init_player(server, client);
     ++server->cons;
-    send_message(client->fd, "welcome\n");
+    send_message(client->fd, "WELCOME\n");
 }
 
 void attach_clients(server_t *server)
