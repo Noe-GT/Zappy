@@ -179,6 +179,9 @@ void zappyGUI::Zappy2D::handleEventKey()
         case sf::Keyboard::Down:
             this->updatePosition(keyCode);
             break;
+        case sf::Keyboard::Numpad0:
+            this->_displayRessourceType = zappyGUI::Zappy2D::ALL;
+            break;
         case sf::Keyboard::Numpad1:
             this->_displayRessourceType = zappyGUI::Zappy2D::FOOD;
             break;
@@ -199,6 +202,9 @@ void zappyGUI::Zappy2D::handleEventKey()
             break;
         case sf::Keyboard::Numpad7:
             this->_displayRessourceType = zappyGUI::Zappy2D::THYSTAME;
+            break;
+        case sf::Keyboard::Num0:
+            this->_displayRessourceType = zappyGUI::Zappy2D::ALL;
             break;
         case sf::Keyboard::Num1:
             this->_displayRessourceType = zappyGUI::Zappy2D::FOOD;

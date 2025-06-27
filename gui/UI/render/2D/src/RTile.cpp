@@ -31,12 +31,9 @@ void zappyGUI::Zappy2D::RTile::update(const zappyGUI::Tile &tile)
     float x = tile.getPos().first * (zappyGUI::BASE_TILE_SIZE * this->_ui->getZoomCoeff()) + this->_ui->getMapOffset().first;
     float y = tile.getPos().second * (zappyGUI::BASE_TILE_SIZE * this->_ui->getZoomCoeff()) + this->_ui->getMapOffset().second;
 
-    // std::cout << "==" << std::endl;
     if (tile.getPlayers().size() >= 1) {
-        // std::cout << "player" << std::endl;
         this->updatePlayers(tile);
     } else {
-        // std::cout << "tile" << std::endl;
         this->_back.setTexture(this->_ui->getAssets()._tileTexture);
         this->_back.setColor(sf::Color::White);
     }
@@ -63,13 +60,20 @@ void zappyGUI::Zappy2D::RTile::handleRessouces(const zappyGUI::Tile &tile)
 {
     const std::vector<std::pair<std::shared_ptr<zappyGUI::IRessource>, int>> &ressources = tile.getRessourcesConst();
 
-    if (ressources[this->_ui->getDisplayRessourceType()].second <= 0)
+    if (this->_ui->getDisplayRessourceType() == zappyGUI::Zappy2D::ressourceType::ALL) {
+        for (int type = 0; type < 7; type ++) {
+            if (ressources[type].second > 0) {
+                this->setRessource(static_cast<zappyGUI::Zappy2D::ressourceType>(type));
+                return;
+            }
+        }
+    } else if (ressources[this->_ui->getDisplayRessourceType()].second <= 0)
         this->_ressource.setColor(sf::Color::Transparent);
     else
-        this->setRessource();
+        this->setRessource(this->_ui->getDisplayRessourceType());
 }
 
-void zappyGUI::Zappy2D::RTile::setRessource()
+void zappyGUI::Zappy2D::RTile::setRessource(zappyGUI::Zappy2D::ressourceType ressourceType)
 {
     float tileSize = zappyGUI::BASE_TILE_SIZE * this->_ui->getZoomCoeff();
     float ressourceSize = zappyGUI::BASE_RESSOURCE_SIZE * this->_ui->getZoomCoeff();
@@ -78,13 +82,13 @@ void zappyGUI::Zappy2D::RTile::setRessource()
 
     this->_ressource.setScale(sf::Vector2f(this->_ui->getZoomCoeff(), this->_ui->getZoomCoeff()));
     this->_ressource.setPosition(x, y);
-    this->setRessourceTexture();
+    this->setRessourceTexture(ressourceType);
     this->_ressource.setColor(sf::Color::White);
 }
 
-void zappyGUI::Zappy2D::RTile::setRessourceTexture()
+void zappyGUI::Zappy2D::RTile::setRessourceTexture(zappyGUI::Zappy2D::ressourceType ressourceType)
 {
-    switch(this->_ui->getDisplayRessourceType()) {
+    switch(ressourceType) {
         case zappyGUI::Zappy2D::FOOD:
             this->_ressource.setTexture(this->_ui->getAssets()._foodTexture);
             break;
