@@ -26,17 +26,54 @@ void zappyGUI::Zappy2D::RTile::display(std::shared_ptr<zappyGUI::Window> window)
     window->getRenderWindow().draw(this->_ressource);
 }
 
+void zappyGUI::Zappy2D::RTile::update(const zappyGUI::Tile &tile)
+{
+    float x = tile.getPos().first * (zappyGUI::BASE_TILE_SIZE * this->_ui->getZoomCoeff()) + this->_ui->getMapOffset().first;
+    float y = tile.getPos().second * (zappyGUI::BASE_TILE_SIZE * this->_ui->getZoomCoeff()) + this->_ui->getMapOffset().second;
+
+    if (tile.getPlayers().size() >= 1) {
+        this->updatePlayers(tile);
+    } else {
+        this->_back.setTexture(this->_ui->getAssets()._tileTexture);
+        this->_back.setColor(sf::Color::White);
+    }
+    if (tile.getRessourcesConst().size() >= 1)
+        this->handleRessouces(tile);
+    this->_back.setScale(sf::Vector2f(this->_ui->getZoomCoeff(), this->_ui->getZoomCoeff()));
+    this->_back.setPosition(x, y);
+}
+
+void zappyGUI::Zappy2D::RTile::updatePlayers(const zappyGUI::Tile &tile)
+{
+    std::string team = tile.getPlayers().front()->getName();
+    sf::Color color;
+
+    if (team.size() >= 2)
+        color = sf::Color(team[0] * 255 / 26, team[2] * 255 / 26, team[team.size() - 1] * 255 / 26);
+    else if (team.size() == 1)
+        color = sf::Color(team[0] * 255 / 26, team[0] * 255 / 26, team[0] * 255 / 26);
+    this->_back.setTexture(this->_ui->getAssets()._playerTexture);
+    this->_back.setColor(color);
+}
+
 void zappyGUI::Zappy2D::RTile::handleRessouces(const zappyGUI::Tile &tile)
 {
     const std::vector<std::pair<std::shared_ptr<zappyGUI::IRessource>, int>> &ressources = tile.getRessourcesConst();
 
-    if (ressources[this->_ui->getDisplayRessourceType()].second <= 0)
+    if (this->_ui->getDisplayRessourceType() == zappyGUI::Zappy2D::ressourceType::ALL) {
+        for (int type = 0; type < 7; type ++) {
+            if (ressources[type].second > 0) {
+                this->setRessource(static_cast<zappyGUI::Zappy2D::ressourceType>(type));
+                return;
+            }
+        }
+    } else if (ressources[this->_ui->getDisplayRessourceType()].second <= 0)
         this->_ressource.setColor(sf::Color::Transparent);
     else
-        this->setRessource();
+        this->setRessource(this->_ui->getDisplayRessourceType());
 }
 
-void zappyGUI::Zappy2D::RTile::setRessource()
+void zappyGUI::Zappy2D::RTile::setRessource(zappyGUI::Zappy2D::ressourceType ressourceType)
 {
     float tileSize = zappyGUI::BASE_TILE_SIZE * this->_ui->getZoomCoeff();
     float ressourceSize = zappyGUI::BASE_RESSOURCE_SIZE * this->_ui->getZoomCoeff();
@@ -45,13 +82,13 @@ void zappyGUI::Zappy2D::RTile::setRessource()
 
     this->_ressource.setScale(sf::Vector2f(this->_ui->getZoomCoeff(), this->_ui->getZoomCoeff()));
     this->_ressource.setPosition(x, y);
-    this->setRessourceTexture();
+    this->setRessourceTexture(ressourceType);
     this->_ressource.setColor(sf::Color::White);
 }
 
-void zappyGUI::Zappy2D::RTile::setRessourceTexture()
+void zappyGUI::Zappy2D::RTile::setRessourceTexture(zappyGUI::Zappy2D::ressourceType ressourceType)
 {
-    switch(this->_ui->getDisplayRessourceType()) {
+    switch(ressourceType) {
         case zappyGUI::Zappy2D::FOOD:
             this->_ressource.setTexture(this->_ui->getAssets()._foodTexture);
             break;
@@ -74,34 +111,4 @@ void zappyGUI::Zappy2D::RTile::setRessourceTexture()
             this->_ressource.setTexture(this->_ui->getAssets()._thystameTexture);
             break;
     }
-}
-
-void zappyGUI::Zappy2D::RTile::update(const zappyGUI::Tile &tile)
-{
-    float x = tile.getPos().first * (zappyGUI::BASE_TILE_SIZE * this->_ui->getZoomCoeff()) + this->_ui->getMapOffset().first;
-    float y = tile.getPos().second * (zappyGUI::BASE_TILE_SIZE * this->_ui->getZoomCoeff()) + this->_ui->getMapOffset().second;
-
-    if (tile.getPlayers().size() >= 1)
-        this->updatePlayers(tile);
-    else
-        this->_back.setTexture(this->_ui->getAssets()._tileTexture);
-    if (tile.getRessourcesConst().size() >= 1)
-        this->handleRessouces(tile);
-    this->_back.setScale(sf::Vector2f(this->_ui->getZoomCoeff(), this->_ui->getZoomCoeff()));
-    this->_back.setPosition(x, y);
-}
-
-void zappyGUI::Zappy2D::RTile::updatePlayers(const zappyGUI::Tile &tile)
-{
-    std::string team = tile.getPlayers().front()->getName();
-    sf::Color color;
-
-    if (team.size() >= 2)
-        color = sf::Color(team[0] * 255 / 26, team[2] * 255 / 26, team[team.size() - 1] * 255 / 26);
-    else if (team.size() == 1)
-        color = sf::Color(team[0] * 255 / 26, team[0] * 255 / 26, team[0] * 255 / 26);
-    else
-        color = sf::Color(sf::Color::White);
-    this->_back.setTexture(this->_ui->getAssets()._playerTexture);
-    this->_back.setColor(color);
 }

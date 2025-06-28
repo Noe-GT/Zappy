@@ -28,7 +28,8 @@ namespace zappyGUI {
                 SIBUR,
                 MENDIANE,
                 PHIRAS,
-                THYSTAME
+                THYSTAME,
+                ALL
             };
 
             class AssetPool {
@@ -57,8 +58,9 @@ namespace zappyGUI {
 
                 private:
                     void handleRessouces(const zappyGUI::Tile &tile);
-                    void setRessource();
-                    void setRessourceTexture();
+                    void handleRessourceAll(const zappyGUI::Tile &tile);
+                    void setRessource(zappyGUI::Zappy2D::ressourceType ressourceType);
+                    void setRessourceTexture(zappyGUI::Zappy2D::ressourceType ressourceType);
                     void updatePlayers(const zappyGUI::Tile &tile);
 
                     sf::Sprite _back;

@@ -11,7 +11,7 @@ zappyGUI::Zappy2D::Zappy2D():
     _assets(),
     _tiles(),
     _zoomCoeff(1.0),
-    _mapOffset(std::pair<int, int>(200, 20)),
+    _mapOffset(std::pair<float, float>(0.0, 0.0)),
     _displayRessourceType(zappyGUI::Zappy2D::FOOD)
 {
 }
@@ -22,12 +22,12 @@ void zappyGUI::Zappy2D::initialize(std::shared_ptr<zappyGUI::GUI> gui)
     std::cout << "mapsize: " << mapSize.first << ":" << mapSize.second << std::endl;
 
     zappyGUI::AGraphical::initialize(gui);
-    this->zoomFill();
     for (size_t y = 0; y < mapSize.second; y++) {
         this->_tiles.emplace_back();
         for (size_t x = 0; x < mapSize.first; x++)
-            this->_tiles.back().emplace_back(x, y, std::shared_ptr<zappyGUI::Zappy2D>(this));
+        this->_tiles.back().emplace_back(x, y, std::shared_ptr<zappyGUI::Zappy2D>(this));
     }
+    this->zoomFill();
     this->centerMap();
 }
 
@@ -139,12 +139,14 @@ void zappyGUI::Zappy2D::handleEventMouse()
     int tilex = omx / (this->_zoomCoeff * zappyGUI::BASE_TILE_SIZE);
     int tiley = omy / (this->_zoomCoeff * zappyGUI::BASE_TILE_SIZE);
 
-    std::cout << "mouse: " << mx << ":" << my << std::endl;
-    std::cout << "-off: " << omx << ":" << omy << std::endl;
-    std::cout << "tile: " << tilex << ":" << tiley << std::endl;
-    // if ((tilex >= 0 && tilex < mapSize.first) &&
-    //     (tiley >= 0 && tiley < mapSize.second))
-    //     this->_gui->getGame()->setSelectedTile(std::pair<float, float>(mx, my), std::pair<int, int>(tilex, tiley));
+    // std::cout << "=============" << std::endl;
+    // std::cout << "mouse: " << mx << ":" << my << std::endl;
+    // std::cout << "off: " << this->_mapOffset.first << ":" << this->_mapOffset.second << std::endl;
+    // std::cout << "-off: " << omx << ":" << omy << std::endl;
+    // std::cout << "tile: " << tilex << ":" << tiley << std::endl;
+    if ((tilex >= 0 && tilex < static_cast<int>(mapSize.first)) &&
+        (tiley >= 0 && tiley < static_cast<int>(mapSize.second)))
+        this->_gui->getGame()->setSelectedTile(std::pair<float, float>(mx, my), std::pair<int, int>(tilex, tiley));
 }
 
 void zappyGUI::Zappy2D::handleEventKey()
@@ -177,6 +179,9 @@ void zappyGUI::Zappy2D::handleEventKey()
         case sf::Keyboard::Down:
             this->updatePosition(keyCode);
             break;
+        case sf::Keyboard::Numpad0:
+            this->_displayRessourceType = zappyGUI::Zappy2D::ALL;
+            break;
         case sf::Keyboard::Numpad1:
             this->_displayRessourceType = zappyGUI::Zappy2D::FOOD;
             break;
@@ -197,6 +202,9 @@ void zappyGUI::Zappy2D::handleEventKey()
             break;
         case sf::Keyboard::Numpad7:
             this->_displayRessourceType = zappyGUI::Zappy2D::THYSTAME;
+            break;
+        case sf::Keyboard::Num0:
+            this->_displayRessourceType = zappyGUI::Zappy2D::ALL;
             break;
         case sf::Keyboard::Num1:
             this->_displayRessourceType = zappyGUI::Zappy2D::FOOD;

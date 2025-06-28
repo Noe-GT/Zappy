@@ -27,7 +27,7 @@ namespace zappyGUI {
             bool isGameInProgess();
             std::vector <std::string> &getLogs();
             std::vector <std::vector <Tile>> &getMap();
-            const std::pair<size_t, size_t> &getMapSize() const;
+            const std::pair<unsigned int, unsigned int> &getMapSize() const;
             std::vector <Player> &getPlayers();
             std::vector <std::pair<std::shared_ptr <Player>, int>> &getEggs();
             std::vector <std::string> &getTeams();
@@ -38,7 +38,7 @@ namespace zappyGUI {
             void setLogs(std::vector <std::string> newVal);
             void addLogs(std::string newVal);
             void setMap(std::vector <std::vector <Tile>> newVal);
-            void setMapSize(int newX, int newY);
+            void setMapSize(unsigned int newX, unsigned int newY);
             void setPlayers(std::vector <Player> newVal);
             void addPlayer(Player newVal);
             void setEggs(std::vector <std::pair <std::shared_ptr <Player>, int>> newVal);
@@ -62,10 +62,10 @@ namespace zappyGUI {
             std::vector<Player> _players;
             std::vector<std::pair <std::shared_ptr <Player>, int>> _eggs;
             std::vector<std::string> _logs;
-            std::pair<size_t, size_t> _mapSize;
+            std::pair<unsigned int, unsigned int> _mapSize;
             std::vector<std::vector <Tile>> _map;
             std::vector<std::string> _teams;
-            
+
             std::shared_ptr<Player> _selectedPlayer;
             std::shared_ptr<UIBlocks::PopupSelector> _playersListUI;
             std::shared_ptr<UIBlocks::Text> _selectedPlayerLevelText;
