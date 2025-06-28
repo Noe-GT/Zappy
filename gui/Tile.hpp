@@ -38,7 +38,7 @@ namespace zappyGUI {
 
             void addPlayer(std::shared_ptr <Player> newVal);
             void addRessource(std::shared_ptr <IRessource> newVal);
-
+            void removePlayerAt(int id);
             zappyGUI::Tile& operator=(const Tile& other);
 
         private:

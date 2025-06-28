@@ -5,6 +5,7 @@
 ** Tile.cpp
 */
 #include "Tile.hpp"
+#include <iostream>
 
 zappyGUI::Tile::Tile(const std::pair<size_t, size_t> &pos):
     _pos(pos)
@@ -91,6 +92,17 @@ void zappyGUI::Tile::setRessource(std::vector <std::pair<std::shared_ptr <zappyG
 void zappyGUI::Tile::addPlayer(std::shared_ptr <zappyGUI::Player> newVal)
 {
     this->_players.push_back(newVal);
+}
+
+void zappyGUI::Tile::removePlayerAt(int id)
+{
+    for (int i = 0; i < this->_players.size(); i++) {
+        if (this->_players[i]->getId() == id) {
+            this->_players.erase(this->_players.begin() + i);
+            std::cout << "get out of here " << id << std::endl;
+            break;
+        }
+    }
 }
 
 void zappyGUI::Tile::addRessource(std::shared_ptr <zappyGUI::IRessource> newVal)

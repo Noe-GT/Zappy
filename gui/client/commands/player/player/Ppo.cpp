@@ -31,6 +31,7 @@ void zappyGUI::Ppo::receive(std::string command, zappyGUI::GUI &gui)
     if (playerID > gui.getGame()->getPlayers().size())
         return;
     oldPos = gui.getGame()->getPlayers()[playerID].getPos();
+    gui.getGame()->getMap()[oldPos.second][oldPos.first].removePlayerAt(playerID);
     std::vector<std::shared_ptr<zappyGUI::Player>>& playersOnTile = gui.getGame()->getMap()[oldPos.second][oldPos.first].getPlayers();
     auto it = std::find_if(playersOnTile.begin(), playersOnTile.end(), [playerID](const auto& player) {
         return player->getId() == playerID;

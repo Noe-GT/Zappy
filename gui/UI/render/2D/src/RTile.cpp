@@ -38,6 +38,9 @@ void zappyGUI::Zappy2D::RTile::update(const zappyGUI::Tile &tile)
 
     if (tile.getPlayers().size() >= 1) {
         this->updatePlayers(tile);
+    } else {
+        this->_back.setColor(sf::Color::White);
+        this->_back.setTexture(this->_ui->getAssets()._tileTexture);
     }
     if (tile.getRessourcesConst().size() >= 1)
         this->handleRessouces(tile);
@@ -53,8 +56,8 @@ void zappyGUI::Zappy2D::RTile::updatePlayers(const zappyGUI::Tile &tile)
             return;
         }
     }
-    this->_back.setTexture(this->_ui->getAssets()._tileTexture);
     this->_back.setColor(sf::Color::White);
+    this->_back.setTexture(this->_ui->getAssets()._tileTexture);
 }
 
 void zappyGUI::Zappy2D::RTile::updatePlayer(const zappyGUI::Tile &tile, const  std::shared_ptr<zappyGUI::Player> &player)
