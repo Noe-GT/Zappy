@@ -19,6 +19,8 @@ SRC 		= 		$(shell find src -type f -name '*.cpp')				\
 
 OBJ 		= 		$(SRC:.cpp=.o)
 
+UNAME_S := $(shell uname -s)
+
 ifeq ($(UNAME_S), Darwin)
 	LDFLAGS += 		-undefined dynamic_lookup
 else
