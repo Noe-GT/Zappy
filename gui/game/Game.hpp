@@ -50,6 +50,7 @@ namespace zappyGUI {
             void displayUI(std::shared_ptr<zappyGUI::Window> window);
             void handleUIEvents(const sf::Event& event, std::shared_ptr<zappyGUI::Window> window);
             void update();
+            void updateSelectedTileSelector();
 
             void setSelectedTile(std::pair<float, float> windowPos, std::pair<int, int> mapPos);
 
@@ -77,6 +78,8 @@ namespace zappyGUI {
             std::shared_ptr<UIBlocks::Text> _spellsListTitle;
             std::shared_ptr<UIBlocks::Text> _logsTitle;
             std::shared_ptr<UIBlocks::Pair> _selectedTileSelector;
+            std::pair<int, int> _selectedTileMapPosition;
+            std::pair<float, float> _selectedTileWindowPosition;
 
 
 
