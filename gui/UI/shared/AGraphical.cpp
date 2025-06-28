@@ -23,13 +23,7 @@ void zappyGUI::AGraphical::handleEvents()
 {
 }
 
-std::shared_ptr<zappyGUI::Window> zappyGUI::AGraphical::getWindow() const
-{
-    return this->_window;
-}
-
 void zappyGUI::AGraphical::initialize(std::shared_ptr<zappyGUI::GUI> gui)
 {
-    this->_window = gui->getWindow();
     this->_gui = gui;
 }

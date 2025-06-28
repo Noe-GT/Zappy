@@ -165,7 +165,7 @@ void zappyGUI::Game::addTeam(std::string newVal)
     this->_teams.push_back(newVal);
 }
 
-void zappyGUI::Game::display(std::shared_ptr<zappyGUI::IGraphical> renderer)
+void zappyGUI::Game::display(std::shared_ptr<zappyGUI::IGraphical> renderer, std::shared_ptr<Window> window)
 {
     for (const std::vector<zappyGUI::Tile> &tileRow : this->_map) {
         for (const zappyGUI::Tile &tile : tileRow) {
@@ -173,7 +173,7 @@ void zappyGUI::Game::display(std::shared_ptr<zappyGUI::IGraphical> renderer)
             renderer->displayTile(tile);
         }
     }
-    this->displayUI(renderer->getWindow());
+    this->displayUI(window);
 }
 
 void zappyGUI::Game::update()

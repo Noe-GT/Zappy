@@ -83,7 +83,7 @@ void zappyGUI::GUI::display()
 {
     // FIXME: add the calls to the display of all elements of the map here
     if (this->_selectedRenderer != -1 && this->_renderers[this->_selectedRenderer] != nullptr) {
-        this->_game->display(this->_renderers[this->_selectedRenderer]);
+        this->_game->display(this->_renderers[this->_selectedRenderer], this->_window);
     }
     this->_window->display();
 }
@@ -141,14 +141,18 @@ void zappyGUI::GUI::update()
     if (pfd.revents & POLLERR) {
         std::cerr << "error detected on the socket" << std::endl;
         this->_window->close();
+        return;
     }
     if (pfd.revents & POLLHUP) {
         std::cerr << "Server closed" << std::endl;
         this->_window->close();
+        std::cout << "closed window" << std::endl;
+        return;
     }
     if (pfd.revents & POLLNVAL) {
         std::cerr << "invalid socket" << std::endl;
         this->_window->close();
+        return;
     }
 }
 

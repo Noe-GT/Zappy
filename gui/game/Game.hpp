@@ -46,7 +46,7 @@ namespace zappyGUI {
             void setTeams(std::vector <std::string> newVal);
             void addTeam(std::string newVal);
 
-            void display(std::shared_ptr<zappyGUI::IGraphical> renderer);
+            void display(std::shared_ptr<zappyGUI::IGraphical> renderer, std::shared_ptr<Window> window);
             void displayUI(std::shared_ptr<zappyGUI::Window> window);
             void handleUIEvents(const sf::Event& event, std::shared_ptr<zappyGUI::Window> window);
             void update();

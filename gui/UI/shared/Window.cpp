@@ -15,9 +15,9 @@ zappyGUI::Window::Window(): _isFullscreen(false)
 
 zappyGUI::Window::~Window()
 {
-    if (this->_window.isOpen()) {
-        this->_window.close();
-    }
+    // if (this->_window.isOpen()) {
+    //     this->_window.close();
+    // }
 }
 
 zappyGUI::Window::Window(const zappyGUI::Window &other) : _isFullscreen(other._isFullscreen)

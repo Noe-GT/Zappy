@@ -34,8 +34,8 @@ void zappyGUI::Zappy2D::initialize(std::shared_ptr<zappyGUI::GUI> gui)
 void zappyGUI::Zappy2D::zoomFill()
 {
     const std::pair<size_t, size_t> &mapSize = this->_gui->getGame()->getMapSize();
-    float windowWidth = this->_window->getSize().first;
-    float windowHeight = this->_window->getSize().second;
+    float windowWidth = this->_gui->getWindow()->getSize().first;
+    float windowHeight = this->_gui->getWindow()->getSize().second;
     float widthRatio;
     float heightRatio;
 
@@ -53,8 +53,8 @@ void zappyGUI::Zappy2D::centerMap()
 {
     const std::pair<size_t, size_t> &mapSize = this->_gui->getGame()->getMapSize();
 
-    this->_mapOffset.first = static_cast<int>((this->_window->getSize().first - (mapSize.first * zappyGUI::BASE_TILE_SIZE * this->_zoomCoeff)) / 2.0);
-    this->_mapOffset.second = static_cast<int>((this->_window->getSize().second - (mapSize.second * zappyGUI::BASE_TILE_SIZE * this->_zoomCoeff)) / 2.0);
+    this->_mapOffset.first = static_cast<int>((this->_gui->getWindow()->getSize().first - (mapSize.first * zappyGUI::BASE_TILE_SIZE * this->_zoomCoeff)) / 2.0);
+    this->_mapOffset.second = static_cast<int>((this->_gui->getWindow()->getSize().second - (mapSize.second * zappyGUI::BASE_TILE_SIZE * this->_zoomCoeff)) / 2.0);
 }
 
 void zappyGUI::Zappy2D::updateZoom(bool zoomOut)
@@ -92,7 +92,7 @@ void zappyGUI::Zappy2D::updateTile(const zappyGUI::Tile &tile) {
 }
 
 void zappyGUI::Zappy2D::displayTile(const zappyGUI::Tile &tile) {
-    this->_tiles[tile.getPos().second][tile.getPos().first].display(this->_window);
+    this->_tiles[tile.getPos().second][tile.getPos().first].display(this->_gui->getWindow());
 }
 
 const std::string &zappyGUI::Zappy2D::getDisplayTeam() const
@@ -123,7 +123,7 @@ const zappyGUI::Zappy2D::AssetPool &zappyGUI::Zappy2D::getAssets() const
 
 void zappyGUI::Zappy2D::handleEvents()
 {
-    if (this->_window->getEvent().type == sf::Event::MouseButtonPressed)
+    if (this->_gui->getWindow()->getEvent().type == sf::Event::MouseButtonPressed)
         this->handleEventMouse();
     else
         this->handleEventKey();
@@ -132,8 +132,8 @@ void zappyGUI::Zappy2D::handleEvents()
 void zappyGUI::Zappy2D::handleEventMouse()
 {
     const std::pair<size_t, size_t> &mapSize = this->_gui->getGame()->getMapSize();
-    int mx = this->_window->getEvent().mouseButton.x;
-    int my = this->_window->getEvent().mouseButton.y;
+    int mx = this->_gui->getWindow()->getEvent().mouseButton.x;
+    int my = this->_gui->getWindow()->getEvent().mouseButton.y;
     int omx = mx - this->_mapOffset.first;
     int omy = my - this->_mapOffset.second;
     int tilex = omx / (this->_zoomCoeff * zappyGUI::BASE_TILE_SIZE);
@@ -151,7 +151,7 @@ void zappyGUI::Zappy2D::handleEventMouse()
 
 void zappyGUI::Zappy2D::handleEventKey()
 {
-    const sf::Keyboard::Key &keyCode = this->_window->getEvent().key.code;
+    const sf::Keyboard::Key &keyCode = this->_gui->getWindow()->getEvent().key.code;
 
     switch (keyCode) {
         case sf::Keyboard::C:
