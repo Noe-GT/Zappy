@@ -9,7 +9,7 @@ CXX  		= 		g++
 
 CXXFLAGS 	= 		-Wall -Wextra -std=c++17 -fPIC
 
-LDFLAGS 	= 		-shared -lsfml-graphics -lsfml-window -lsfml-system -L../../../../ -lprotocol -undefined dynamic_lookup
+LDFLAGS 	= 		-shared -lsfml-graphics -lsfml-window -lsfml-system -L../../../../ -lprotocol
 
 NAME 		= 		libRender2d.so
 
@@ -18,6 +18,16 @@ ROOT_DIR	=	../../../../
 SRC 		= 		$(shell find src -type f -name '*.cpp')				\
 
 OBJ 		= 		$(SRC:.cpp=.o)
+
+ifeq ($(UNAME_S), Darwin)
+	LDFLAGS += 		-undefined dynamic_lookup
+else
+	obj  	+= 		$(shell find ../../../../gui/UI/shared -type f -name '.plugin.o') 	\
+                    $(shell find ../../../../gui/game -type f -name '.plugin.o') 		\
+                    $(shell find ../../../../gui -maxdepth 1 -type f -name '.plugin.o') \
+                    $(shell find ../../../../gui/client -type f -name '.o')
+endif
+
 
 all: $(NAME)
 
