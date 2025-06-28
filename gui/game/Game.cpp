@@ -236,8 +236,9 @@ void zappyGUI::Game::displayUI(std::shared_ptr<zappyGUI::Window> window)
     this->_playersListTitle->draw(window);
     this->_spellsListTitle->draw(window);
     this->_logsTitle->draw(window);
-    if (this->_selectedTileSelector)
+    if (this->_selectedTileSelector) {
         this->_selectedTileSelector->draw(window);
+    }
 }
 
 void zappyGUI::Game::handleUIEvents(const sf::Event& event, std::shared_ptr<zappyGUI::Window> window)
@@ -286,9 +287,14 @@ void zappyGUI::Game::setSelectedTile(std::pair<float, float> windowPos, std::pai
         ressourcesTexts.push_back(ressourceText);
     }
     std::shared_ptr<UIBlocks::List> ressourceList = std::make_shared<UIBlocks::List>(ressourcesTexts, windowPos, std::pair<float, float>(100, 50));
-    this->_selectedTileSelector->setFirst(playerSelector);
-    this->_selectedTileSelector->setSecond(ressourceList);
-    this->_selectedTileSelector->setPosition(windowPos);
+    if (this->_selectedTileSelector == nullptr) {
+        std::pair<std::shared_ptr<UIBlocks::IUIBlock>, std::shared_ptr<UIBlocks::IUIBlock>> pair(playerSelector, ressourceList);
+        this->_selectedTileSelector = std::make_shared<UIBlocks::Pair>(pair, windowPos);
+    } else {
+        this->_selectedTileSelector->setFirst(playerSelector);
+        this->_selectedTileSelector->setSecond(ressourceList);
+        this->_selectedTileSelector->setPosition(windowPos);
+    }
 }
 
 

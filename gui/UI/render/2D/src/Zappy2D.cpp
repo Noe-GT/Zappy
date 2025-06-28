@@ -146,7 +146,7 @@ void zappyGUI::Zappy2D::handleEventMouse()
     // std::cout << "tile: " << tilex << ":" << tiley << std::endl;
     if ((tilex >= 0 && tilex < static_cast<int>(mapSize.first)) &&
         (tiley >= 0 && tiley < static_cast<int>(mapSize.second)))
-        this->_gui->getGame()->setSelectedTile(std::pair<float, float>(mx, my), std::pair<int, int>(tilex, tiley));
+            this->_gui->getGame()->setSelectedTile(std::pair<float, float>(mx, my), std::pair<int, int>(tilex, tiley));
 }
 
 void zappyGUI::Zappy2D::handleEventKey()
