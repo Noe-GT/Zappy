@@ -70,6 +70,11 @@ void command_ok(int fd);
 void command_ko(int fd);
 void command_aic(server_t *server, client_t *client);
 
+void server_ppo(server_t *server, client_t *client);
+void server_pin(server_t *server, client_t *client);
+void server_plv(server_t *server, client_t *client);
+void server_mct(server_t *server);
+
 void bct(server_t *server, client_t *client, uint32_t x, uint32_t y);
 bool can_start_incantation(server_t *server, client_t *client);
 

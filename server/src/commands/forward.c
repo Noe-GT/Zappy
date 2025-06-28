@@ -15,5 +15,6 @@ void command_forward(server_t *server, client_t *client, char *message)
     forward(server, client);
     remove_player_tile(server, client, &old);
     add_player_tile(server, client, client->position);
+    server_ppo(server, client);
     command_ok(client->fd);
 }

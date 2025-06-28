@@ -40,7 +40,8 @@ void command_broadcast(server_t *server, client_t *client, char *message)
     char *text = message + strlen("broadcast ");
 
     for (uint64_t i = 0; i < server->cons - 1; ++i) {
-        if (server->clients[i]->id == client->id) {
+        if (server->clients[i]->is_ai
+            && server->clients[i]->id == client->id) {
             command_ok(client->fd);
             continue;
         }

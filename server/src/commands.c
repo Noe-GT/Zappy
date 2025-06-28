@@ -125,6 +125,7 @@ static bool ai_connection_process(server_t *server, client_t *client)
             return false;
         }
         client->is_ai = true;
+        client->inventory[FOOD] = 10;
         client->queue = shift_queue(client->queue);
         command_aic(server, client);
         return true;
@@ -138,8 +139,10 @@ static bool connection_process(server_t *server, client_t *client)
 {
     if (client->is_gui == false && client->is_ai == false) {
         if (strcmp(client->queue->command, "GRAPHIC\n") == 0) {
+            printf("éouoi\n");
             client->is_gui = true;
             client->queue = shift_queue(client->queue);
+            command_mct(server, client, NULL);
             return true;
         }
         return ai_connection_process(server, client);

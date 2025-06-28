@@ -17,4 +17,10 @@ void command_inventory(server_t *server, client_t *client, char *message)
         client->inventory[LINEMATE], client->inventory[DERAUMERE],
         client->inventory[SIBUR], client->inventory[MENDIANE],
         client->inventory[PHIRAS], client->inventory[THYSTAME]);
+    printf("[food %d, linemate %d, deraumere %d, sibur %d, "
+        "mendiane %d, phiras %d, thystame %d]\n",
+        client->inventory[FOOD],
+        client->inventory[LINEMATE], client->inventory[DERAUMERE],
+        client->inventory[SIBUR], client->inventory[MENDIANE],
+        client->inventory[PHIRAS], client->inventory[THYSTAME]);
 }

@@ -75,4 +75,5 @@ void command_incantation(server_t *server, client_t *client, char *message)
     (void)message;
     elevate_players(tile, server, client);
     command_pie(server, client, true);
+    server_plv(server, client);
 }

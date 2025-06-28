@@ -76,7 +76,8 @@ static void append_tile_content(server_t *server, tile_t *tile,
     for (int i = 0; i < RESOURCE_TYPES; ++i) {
         for (int j = 0; j < tile->resources[i]; ++j) {
             append_resources(buffer, 256, &len);
-            len += snprintf(buffer + len, 256 - len, "%s", names[i]);
+            len += snprintf(buffer + len, 256 - len, "%s", names[i] == NULL
+                ? "" : names[i]);
         }
     }
     buffer[len] = '\0';
@@ -101,7 +102,7 @@ char *get_content(client_t *client, server_t *server, int x, int y)
 {
     int yw = 0;
     int xw = 0;
-    char *content;
+    char *content = NULL;
 
     get_vision_coordinates(client, y, &xw, &yw);
     if (client->direction == UP)
@@ -117,10 +118,14 @@ char *get_content(client_t *client, server_t *server, int x, int y)
 
 static void append_content(char *result, int *len, char *content, bool is_last)
 {
+    printf("len %d\n", *len);
+    printf("content %s\n", content);
     if (is_last)
-        *len += snprintf(result + *len, 4096 - *len, "%s]", content);
+        *len += snprintf(result + *len, 4096 - *len, "%s]", content == NULL
+            ? "" : content);
     else
-        *len += snprintf(result + *len, 4096 - *len, "%s, ", content);
+        *len += snprintf(result + *len, 4096 - *len, "%s, ", content == NULL
+            ? "" : content);
 }
 
 static bool is_last_tile(client_t *client, int y, int x)
@@ -139,7 +144,8 @@ char *handle_vision(server_t *server, client_t *client)
         return strdup("[]");
     content = get_tile_content(server, client->position->x,
         client->position->y);
-    len += snprintf(result + len, 4096 - len, "[%s, ", content);
+    len += snprintf(result + len, 4096 - len, "[%s, ", content == NULL
+        ? "" : content);
     free(content);
     for (size_t y = 0; y < client->level; ++y) {
         for (size_t x = 0; x < (2 * (y + 1) + 1); ++x) {

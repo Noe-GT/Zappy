@@ -47,6 +47,7 @@ typedef struct server_s {
     uint64_t cons;
     uint64_t tick_timer;
     uint64_t ticks;
+    uint64_t player_count;
     client_t **clients;
     egg_t *egg;
     uint64_t egg_count;

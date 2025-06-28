@@ -255,6 +255,7 @@ class NetworkManager:
         return True
 
     def send_command(self, command: Command):
+        print("COMMAND", command);
         self.command_queue.append(command)
         self._try_send_next_command()
 
@@ -785,6 +786,7 @@ class ZappyAI:
                     self.buffer.write(data)
                     while True:
                         msg = self.buffer.read()
+                        print(msg)
                         if not msg:
                             break
                         responses.append(msg.strip())

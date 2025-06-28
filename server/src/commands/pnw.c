@@ -9,6 +9,7 @@
 
 void command_pnw(server_t *server, client_t *client)
 {
+    printf("ALLOOOO\n");
     for (size_t i = 0; i < server->cons - 1; ++i) {
         if (!server->clients[i]->is_gui)
             continue;

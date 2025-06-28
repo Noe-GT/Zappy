@@ -45,11 +45,14 @@ bool is_number(char *str)
 
 bool team_exists(server_t *server, char *team)
 {
+    printf("rentre bb %s\n", team);
     for (uint16_t i = 0; i < server->parameters->team_count; ++i) {
         if (strncmp(server->parameters->team_names[i], team,
             strlen(team) - 1) == 0) {
+            printf("ya\n");
             return true;
         }
     }
+    printf("na\n");
     return false;
 }
