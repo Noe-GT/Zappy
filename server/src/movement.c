@@ -9,7 +9,8 @@
 
 static size_t player_index(tile_t *tile, client_t *client)
 {
-    printf("client id %d - pos x(%u) y(%u)\n", client->id, client->position->x, client->position->y);
+    printf("client id %d - pos x(%u) y(%u)\n", client->id,
+        client->position->x, client->position->y);
     for (size_t i = 0; i < tile->player_count; ++i) {
         printf("tile %lu\n", tile->player_count);
         printf("player id %d\n", tile->players[i]->id);
@@ -29,6 +30,17 @@ void add_player_tile(server_t *server, client_t *client, vector2_t *position)
     ++tile->player_count;
 }
 
+static void realloc_tile(tile_t *tile)
+{
+    if (tile->player_count != 1)
+        tile->players = realloc(tile->players, sizeof(client_t *)
+            * (tile->player_count - 1));
+    else {
+        free(tile->players);
+        tile->players = NULL;
+    }
+}
+
 void remove_player_tile(server_t *server, client_t *client,
     vector2_t *position)
 {
@@ -37,24 +49,11 @@ void remove_player_tile(server_t *server, client_t *client,
 
     if (index == tile->player_count - 1) {
         tile->players[index] = NULL;
-        if (tile->player_count != 1)
-            tile->players = realloc(tile->players, sizeof(client_t *)
-                * (tile->player_count - 1));
-        else {
-            free(tile->players);
-            tile->players = NULL;
-        }
+        realloc_tile(tile);
     } else {
-        for (size_t i = index; i < tile->player_count - 1; ++i) {
+        for (size_t i = index; i < tile->player_count - 1; ++i)
             tile->players[i] = tile->players[i + 1];
-        }
-        if (tile->player_count != 1)
-            tile->players = realloc(tile->players, sizeof(client_t *)
-                * (tile->player_count - 1));
-        else {
-            free(tile->players);
-            tile->players = NULL;
-        }
+        realloc_tile(tile);
     }
     --tile->player_count;
 }

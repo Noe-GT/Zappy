@@ -77,5 +77,6 @@ void server_mct(server_t *server);
 
 void bct(server_t *server, client_t *client, uint32_t x, uint32_t y);
 bool can_start_incantation(server_t *server, client_t *client);
+void command_pre_incantation(client_t *client);
 
 #endif /* !COMMANDS_H_ */

@@ -86,6 +86,7 @@ static void queue_ai_command(server_t *server, client_t *client,
         if (can_start_incantation(server, client)) {
             command->function(server, client, client->queue->command);
             client->queue = shift_queue(client->queue);
+            command_pre_incantation(client);
         } else {
             command_pie(server, client, false);
             command_ko(client->fd);

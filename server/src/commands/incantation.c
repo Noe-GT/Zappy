@@ -77,3 +77,9 @@ void command_incantation(server_t *server, client_t *client, char *message)
     command_pie(server, client, true);
     server_plv(server, client);
 }
+
+void command_pre_incantation(client_t *client)
+{
+    send_message(client->fd, "Elevation underway\nCurrent leve: %d\n",
+        client->level);
+}
