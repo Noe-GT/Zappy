@@ -41,46 +41,6 @@ zappyGUI::Game::Game() : _frequence(0), _teamNbr(0), _gameInProgess(false), _map
     this->_playersListUI->open();
     this->_logsUI->open();
     this->_spellsListUI->open();
-    zappyGUI::Player player;
-    player.setId(0);
-    player.setName("Default Player");
-    player.setLvl(1);
-    player.setPos(std::make_pair(30, 30));
-    player.setOrientation(zappyGUI::orientation::NORTH);
-    player.setInventory({
-        {std::make_shared<zappyGUI::Food>(), 0},
-        {std::make_shared<zappyGUI::Linemate>(), 25},
-        {std::make_shared<zappyGUI::Deraumere>(), 0},
-        {std::make_shared<zappyGUI::Sibur>(), 10},
-        {std::make_shared<zappyGUI::Mendiane>(), 0},
-        {std::make_shared<zappyGUI::Phiras>(), 0},
-        {std::make_shared<zappyGUI::Thystame>(), 30}
-    });
-    this->_players.push_back(player);
-    this->_map.at(0).at(0).addPlayer(std::make_shared<zappyGUI::Player>(player));
-    this->_logs.push_back("Game started");
-    this->_logs.push_back("1");
-    this->_logs.push_back("2");
-    this->_logs.push_back("3");
-    this->_logs.push_back("4");
-    this->_logs.push_back("5");
-    this->_logs.push_back("6");
-    this->_logs.push_back("7");
-    this->_logs.push_back("8");
-    this->_logs.push_back("9");
-    this->_logs.push_back("10");
-    this->_logs.push_back("11");
-    this->_logs.push_back("12");
-    this->_logs.push_back("13");
-    this->_logs.push_back("14");
-    this->_logs.push_back("15");
-    this->_logs.push_back("16");
-    this->_logs.push_back("17");
-    this->_logs.push_back("18");
-    this->_logs.push_back("19");
-    this->_logs.push_back("20");
-    this->_logs.push_back("21");
-    this->_logs.push_back("22");
 }
 
 zappyGUI::Game::~Game()
@@ -220,7 +180,7 @@ void zappyGUI::Game::update()
 {
     std::vector<std::shared_ptr<UIBlocks::IUIBlock>> playerTexts;
     for (size_t i = 0; i < this->_players.size(); ++i) {
-        std::string playerInfo = "Player " + std::to_string(this->_players[i].getId()) + " - " + this->_players[i].getName();
+        std::string playerInfo = "Player " + std::to_string(this->_players[i].getId()) + " - " + this->_players[i].getName() + " - lvl " + std::to_string(this->_players[i].getLvl());
         std::shared_ptr<UIBlocks::Text> playerText = std::make_shared<UIBlocks::Text>(playerInfo, std::pair<float, float>(0, 0), 16);
         playerTexts.push_back(playerText);
     }
@@ -247,18 +207,15 @@ void zappyGUI::Game::update()
     }
     std::vector<std::shared_ptr<UIBlocks::IUIBlock>> spellTexts;
     for (auto& player : this->_players) {
-        if (player.getSpellInProgress() != nullptr) {
-            std::string spellText = "Player " + std::to_string(player.getId()) + " - Casting Spell";
+        std::shared_ptr<zappyGUI::Spell> &spellInProgress = player.getSpellInProgress();
+        if (spellInProgress != nullptr) {
+            std::string spellText = "Player " + std::to_string(player.getId()) + " - " + std::to_string(spellInProgress->getLevel() + 1) + " -> " +
+                                    std::to_string(spellInProgress->getLevel() + 2);
             std::shared_ptr<UIBlocks::Text> spellDisplay = std::make_shared<UIBlocks::Text>(spellText, std::pair<float, float>(0, 0), 16);
             spellTexts.push_back(spellDisplay);
         }
     }
     this->_spellsListUI->setOptions(spellTexts);
-    //test
-    static int log = 0;
-    std::string message = "Hello " + std::to_string(log++);
-    this->_logs.push_back(message);
-    //
     std::reverse(this->_logs.begin(), this->_logs.end());
     std::vector<std::shared_ptr<UIBlocks::IUIBlock>> logTexts;
     for (const auto& log : this->_logs) {
