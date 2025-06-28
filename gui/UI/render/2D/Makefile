@@ -18,10 +18,17 @@ ROOT_DIR	=	../../../../
 SRC 		= 		$(shell find src -type f -name '*.cpp')				\
 
 OBJ 		= 		$(SRC:.cpp=.o)										\
-					$(shell find ../../../../gui/UI/shared -type f -name '*.plugin.o') \
-					$(shell find ../../../../gui/game -type f -name '*.plugin.o') \
-					$(shell find ../../../../gui -maxdepth 1 -type f -name '*.plugin.o') \
-					$(shell find ../../../../gui/client -type f -name '*.o')
+
+UNAME_S	:=	$(shell uname -s)
+
+ifeq ($(UNAME_S), Darwin)
+	LDFLAGS +=		-undefined dynamic_lookup
+else
+	OBJ	+=			$(shell find ../../../../gui/UI/shared -type f -name '.plugin.o')	\
+					$(shell find ../../../../gui/game -type f -name '.plugin.o')		\
+					$(shell find ../../../../gui -maxdepth 1 -type f -name '.plugin.o')	\
+					$(shell find ../../../../gui/client -type f -name '.o')
+endif
 
 all: $(NAME)
 
