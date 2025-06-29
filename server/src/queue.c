@@ -7,6 +7,13 @@
 
 #include "../include/client.h"
 
+static size_t queue_len(queue_t *queue)
+{
+    if (queue == NULL)
+        return 0;
+    return 1 + queue_len(queue->next);
+}
+
 queue_t *init_queue(char *command)
 {
     queue_t *node = (queue_t *)malloc(sizeof(queue_t));
@@ -22,6 +29,11 @@ queue_t *add_queue(queue_t *queue, char *command)
 {
     queue_t *node = init_queue(command);
 
+    if (queue_len(queue) >= MAX_QUEUE_LEN) {
+        free(node);
+        free(command);
+        return queue;
+    }
     if (node == NULL)
         return queue;
     node->next = queue;

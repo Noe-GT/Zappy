@@ -12,6 +12,7 @@ static void shread_with_teeth(server_t *server, client_t *client, size_t index)
 {
     send_message(client->fd, "dead\n");
     command_pdi(server, client);
+    remove_player_tile(server, client, client->position);
     remove_client(server, index);
 }
 

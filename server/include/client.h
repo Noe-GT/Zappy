@@ -8,6 +8,8 @@
 #ifndef CLIENT_H_
     #define CLIENT_H_
 
+    #define MAX_QUEUE_LEN 10
+
     #include <stdio.h>
     #include <stdlib.h>
     #include <stdint.h>
