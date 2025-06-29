@@ -22,6 +22,9 @@ std::vector<int> getPlayerToMove(std::shared_ptr<zappyGUI::Game> game, int id)
     std::pair <int, int> pos;
     std::vector <int> result;
 
+    if (id >= (int)game->getPlayers().size()) {
+        return result;
+    }
     pos.first = game->getPlayers()[id].getPos().first;
     pos.second = game->getPlayers()[id].getPos().second;
     if (game->getPlayers()[id].getOrientation() == zappyGUI::orientation::NORTH) {

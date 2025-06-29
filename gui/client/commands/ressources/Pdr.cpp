@@ -28,6 +28,9 @@ void zappyGUI::Pdr::receive(std::string command, zappyGUI::GUI &gui)
     char hash;
 
     ss >> code >> hash >> playerID >> ressourceID;
+    if (playerID >= gui.getGame()->getPlayers().size()) {
+        return;
+    }
     playerPos = gui.getGame()->getPlayers()[playerID].getPos();
     std::clog << "pdr1" << std::endl;
     if (gui.getGame()->getPlayers().size() > playerID) {
