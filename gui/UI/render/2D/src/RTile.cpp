@@ -18,7 +18,7 @@ zappyGUI::Zappy2D::RTile::RTile(int x, int y, std::shared_ptr<zappyGUI::Zappy2D>
 
     this->_ressourceAmount.setFont(ui->_assets._font);
     this->_ressourceAmount.setScale(1.0, 1.0);
-    this->_ressourceAmount.setFillColor(sf::Color::White);
+    this->_ressourceAmount.setFillColor(sf::Color::Transparent);
     this->_back.setTexture(ui->getAssets()._tileTexture);
     this->_back.setScale(sf::Vector2f(1.0, 1.0));
     this->_back.setPosition(sf::Vector2f(winX, winY));
@@ -28,7 +28,7 @@ void zappyGUI::Zappy2D::RTile::display(std::shared_ptr<zappyGUI::Window> window)
 {
     window->getRenderWindow().draw(this->_back);
     window->getRenderWindow().draw(this->_ressource);
-    window->getRenderWindow().draw(this->_ressourceAmount);
+    // window->getRenderWindow().draw(this->_ressourceAmount);
 }
 
 void zappyGUI::Zappy2D::RTile::update(const zappyGUI::Tile &tile)
@@ -100,10 +100,10 @@ void zappyGUI::Zappy2D::RTile::setRessource(zappyGUI::Zappy2D::ressourceType res
 
     this->_ressource.setScale(sf::Vector2f(this->_ui->getZoomCoeff(), this->_ui->getZoomCoeff()));
     this->_ressource.setPosition(x, y);
-    this->_ressourceAmount.setFillColor(sf::Color::Transparent);
+    this->_ressourceAmount.setFillColor(sf::Color::White);
     this->_ressourceAmount.setPosition(x, y);
     this->_ressourceAmount.setCharacterSize(RESSOURCE_FONT_SIZE);
-    this->_ressourceAmount.setString(std::to_string(5));
+    this->_ressourceAmount.setString(std::to_string(amount));
     this->setRessourceTexture(ressourceType);
     this->_ressource.setColor(sf::Color::White);
 }
