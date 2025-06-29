@@ -30,7 +30,7 @@ static void eat(server_t *server)
 
     if (server->cons == 1)
         return;
-    for (size_t i = server->cons - 2; i >= 0; --i) {
+    for (size_t i = server->cons - 2; true; --i) {
         if (!server->clients[i]->is_ai && i == 0)
             break;
         if (!server->clients[i]->is_ai)

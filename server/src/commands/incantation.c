@@ -80,6 +80,6 @@ void command_incantation(server_t *server, client_t *client, char *message)
 
 void command_pre_incantation(client_t *client)
 {
-    send_message(client->fd, "Elevation underway\nCurrent leve: %d\n",
+    send_message(client->fd, "Elevation underway\nCurrent level: %d\n",
         client->level);
 }

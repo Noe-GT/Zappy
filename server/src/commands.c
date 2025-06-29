@@ -70,8 +70,10 @@ static void handle_gui_message(server_t *server, client_t *client)
         return;
     printf("Handling massage: %s", client->queue->command);
     find_gui_command(&command, client->queue->command);
-    if (command.name == 0)
+    if (command.name == 0) {
+        client->queue = shift_queue(client->queue);
         return command_suc(client);
+    }
     command.function(server, client, client->queue->command);
     client->queue = shift_queue(client->queue);
 }
@@ -107,8 +109,10 @@ static void handle_ai_message(server_t *server, client_t *client, uint64_t now)
         return;
     printf("Handling massage: %s", client->queue->command);
     find_ai_command(&command, client->queue->command);
-    if (command.name == 0)
+    if (command.name == 0) {
+        client->queue = shift_queue(client->queue);
         return command_ko(client->fd);
+    }
     if (client->queue->pending || command.cooldown == 0) {
         command.function(server, client, client->queue->command);
         client->queue = shift_queue(client->queue);

@@ -22,6 +22,7 @@
 static void signhandler(int _)
 {
     (void)_;
+    printf("Server interrupted by the user\n");
     exit(0);
 }
 
