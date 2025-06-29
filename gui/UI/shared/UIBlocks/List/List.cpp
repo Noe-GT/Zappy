@@ -34,6 +34,11 @@ void UIBlocks::List::handleEvent(const sf::Event &event, std::shared_ptr<zappyGU
     }
 }
 
+void UIBlocks::List::setList(const std::vector<std::shared_ptr<IUIBlock>> elements)
+{
+    this->_elements = elements;
+}
+
 void UIBlocks::List::addElement(std::shared_ptr<IUIBlock> element)
 {
     _elements.push_back(element);
