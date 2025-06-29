@@ -25,7 +25,7 @@ void zappyGUI::Zappy2D::initialize(std::shared_ptr<zappyGUI::GUI> gui)
     for (size_t y = 0; y < mapSize.second; y++) {
         this->_tiles.emplace_back();
         for (size_t x = 0; x < mapSize.first; x++)
-        this->_tiles.back().emplace_back(x, y, std::shared_ptr<zappyGUI::Zappy2D>(this));
+        this->_tiles.back().emplace_back(x, y, shared_from_this());
     }
     this->zoomFill();
     this->centerMap();

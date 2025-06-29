@@ -22,8 +22,8 @@ namespace zappyGUI {
     constexpr float ZOOM_COEFF_SENSITIVITY = 0.1f;
     constexpr int MAP_OFFSET_SENSITIVITY = 10;
 
-    class Zappy2D: public AGraphical {
-        public:
+    class Zappy2D: public AGraphical, public  std::enable_shared_from_this<Zappy2D> {
+        public
             enum ressourceType {
                 FOOD,
                 LINEMATE,
@@ -54,7 +54,7 @@ namespace zappyGUI {
 
             class RTile {
                 public:
-                    RTile(int x, int y, std::shared_ptr<zappyGUI::Zappy2D> ui);
+                    RTile(int x, int y, std::weak_ptr<zappyGUI::Zappy2D> ui);
                     ~RTile() = default;
 
                     void display(std::shared_ptr<zappyGUI::Window> window) const;
@@ -71,7 +71,7 @@ namespace zappyGUI {
                     sf::Sprite _back;
                     sf::Sprite _ressource;
                     sf::Text _ressourceAmount;
-                    std::shared_ptr<zappyGUI::Zappy2D> _ui;
+                    std::weak_ptr<zappyGUI::Zappy2D> _ui;
             };
 
             Zappy2D();
