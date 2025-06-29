@@ -25,7 +25,7 @@ void zappyGUI::Zappy2D::initialize(std::shared_ptr<zappyGUI::GUI> gui)
     for (size_t y = 0; y < mapSize.second; y++) {
         this->_tiles.emplace_back();
         for (size_t x = 0; x < mapSize.first; x++)
-        this->_tiles.back().emplace_back(x, y, std::shared_ptr<zappyGUI::Zappy2D>(this));
+        this->_tiles.back().emplace_back(x, y, *(this));
     }
     this->zoomFill();
     this->centerMap();
@@ -88,7 +88,7 @@ void zappyGUI::Zappy2D::update()
 }
 
 void zappyGUI::Zappy2D::updateTile(const zappyGUI::Tile &tile) {
-    this->_tiles[tile.getPos().second][tile.getPos().first].update(tile);
+    this->_tiles[tile.getPos().second][tile.getPos().first].update(tile, *(this));
 }
 
 void zappyGUI::Zappy2D::displayTile(const zappyGUI::Tile &tile) {
