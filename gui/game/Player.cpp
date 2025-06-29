@@ -154,7 +154,7 @@ void zappyGUI::Player::kill()
     this->_name.clear();
     this->_orientation = SOUTH;
     this->_spellInProgress = nullptr;
-    this->_alive = false;
+    // this->_alive = false;
 }
 
 void zappyGUI::Player::revive()

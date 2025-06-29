@@ -28,7 +28,7 @@ void zappyGUI::Pgt::receive(std::string command, zappyGUI::GUI &gui)
 
     std::clog << "pgt" << std::endl;
     ss >> code >> hash >> playerID >> ressourceID;
-    if (playerID > gui.getGame()->getPlayers().size())
+    if (playerID >= gui.getGame()->getPlayers().size())
         return;
     playerPos = gui.getGame()->getPlayers()[playerID].getPos();
     gui.getGame()->getPlayers()[playerID].getInventory()[ressourceID].second ++;

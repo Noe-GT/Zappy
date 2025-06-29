@@ -25,7 +25,7 @@ void zappyGUI::Zappy2D::initialize(std::shared_ptr<zappyGUI::GUI> gui)
     for (size_t y = 0; y < mapSize.second; y++) {
         this->_tiles.emplace_back();
         for (size_t x = 0; x < mapSize.first; x++)
-        this->_tiles.back().emplace_back(x, y, std::shared_ptr<zappyGUI::Zappy2D>(this));
+        this->_tiles.back().emplace_back(x, y, *(this));
     }
     this->zoomFill();
     this->centerMap();
@@ -88,7 +88,7 @@ void zappyGUI::Zappy2D::update()
 }
 
 void zappyGUI::Zappy2D::updateTile(const zappyGUI::Tile &tile) {
-    this->_tiles[tile.getPos().second][tile.getPos().first].update(tile);
+    this->_tiles[tile.getPos().second][tile.getPos().first].update(tile, *(this));
 }
 
 void zappyGUI::Zappy2D::displayTile(const zappyGUI::Tile &tile) {
@@ -146,7 +146,7 @@ void zappyGUI::Zappy2D::handleEventMouse()
     // std::cout << "tile: " << tilex << ":" << tiley << std::endl;
     if ((tilex >= 0 && tilex < static_cast<int>(mapSize.first)) &&
         (tiley >= 0 && tiley < static_cast<int>(mapSize.second)))
-        this->_gui->getGame()->setSelectedTile(std::pair<float, float>(mx, my), std::pair<int, int>(tilex, tiley));
+            this->_gui->getGame()->setSelectedTile(std::pair<float, float>(mx, my), std::pair<int, int>(tiley, tilex));
 }
 
 void zappyGUI::Zappy2D::handleEventKey()
@@ -240,7 +240,8 @@ zappyGUI::Zappy2D::AssetPool::AssetPool():
     _siburTexture(),
     _mendianeTexture(),
     _phirasTexture(),
-    _thystameTexture()
+    _thystameTexture(),
+    _font()
 {
     this->_tileTexture.loadFromFile((ASSETS_FOLDER + std::string("tile1.png")));
     this->_playerTexture.loadFromFile((ASSETS_FOLDER + std::string("player1.png")));
@@ -251,6 +252,7 @@ zappyGUI::Zappy2D::AssetPool::AssetPool():
     this->_phirasTexture.loadFromFile((ASSETS_FOLDER + std::string("ore5.png")));
     this->_thystameTexture.loadFromFile((ASSETS_FOLDER + std::string("ore6.png")));
     this->_foodTexture.loadFromFile((ASSETS_FOLDER + std::string("food.png")));
+    this->_font.loadFromFile(GLOBAL_ASSETS_FOLDER + std::string("island_material.mtl"));
 }
 
 extern "C" {

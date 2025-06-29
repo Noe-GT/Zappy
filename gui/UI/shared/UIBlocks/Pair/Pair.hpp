@@ -26,6 +26,8 @@ namespace UIBlocks {
 
         private:
             std::pair<float, float> _position;
+            std::pair<float, float> _size;
             std::pair<std::shared_ptr<IUIBlock>, std::shared_ptr<IUIBlock>> _pair;
+            sf::RectangleShape _background;
     };
 }
