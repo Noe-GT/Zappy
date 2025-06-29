@@ -37,7 +37,7 @@ void zappyGUI::Pin::receive(std::string command, zappyGUI::GUI &gui)
     ss >> code >> hash >> playerID >> x >> y >> q0 >> q1 >> q2 >> q3 >> q4 >> q5 >> q6;
     (void) x;
     (void) y;
-    if (playerID < 0 || static_cast<size_t>(playerID) < gui.getGame()->getPlayers().size()) {
+    if (playerID >= 0 && static_cast<size_t>(playerID) < gui.getGame()->getPlayers().size()) {
         gui.getGame()->getPlayers()[playerID].getInventory()[0].second = q0;
         gui.getGame()->getPlayers()[playerID].getInventory()[1].second = q1;
         gui.getGame()->getPlayers()[playerID].getInventory()[2].second = q2;

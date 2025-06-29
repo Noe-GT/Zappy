@@ -17,7 +17,7 @@ zappyGUI::Seg::~Seg()
 {
 }
 
-void zappyGUI::Seg::receive(std::string command, zappyGUI::GUI &gui)
+void zappyGUI::Seg::receive(std::string command, zappyGUI::GUI &)
 {
     std::stringstream ss(command);
     std::string code;

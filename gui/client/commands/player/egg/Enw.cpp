@@ -31,7 +31,7 @@ void zappyGUI::Enw::receive(std::string command, zappyGUI::GUI &gui)
 
     std::clog << "enw" << std::endl;
     ss >> code >> hash >> eggID >> hash2 >> playerID >> pos.first >> pos.second;
-    if (playerID < 0 || static_cast<size_t>(playerID) < gui.getGame()->getPlayers().size()) {
+    if (playerID >= 0 && static_cast<size_t>(playerID) < gui.getGame()->getPlayers().size()) {
         gui.getGame()->getPlayers()[playerID].getSpellInProgress() = nullptr;
         newPlayer.setName(gui.getGame()->getPlayers()[playerID].getName());
     }

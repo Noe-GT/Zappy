@@ -8,8 +8,8 @@
 #include "Pair.hpp"
 
 UIBlocks::Pair::Pair(std::pair<std::shared_ptr<UIBlocks::IUIBlock>, std::shared_ptr<UIBlocks::IUIBlock>> &pair, std::pair<float, float> position):
-    _pair(pair),
     _size(200, 50),
+    _pair(pair),
     _background(sf::Vector2f(_size.first, _size.second))
 {
     this->setPosition(position);

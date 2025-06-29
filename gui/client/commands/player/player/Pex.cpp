@@ -64,7 +64,7 @@ void zappyGUI::Pex::receive(std::string command, zappyGUI::GUI &gui)
     char hash;
     std::clog << "pex" << std::endl;
     ss >> code >> hash >> playerID;
-    if (playerID < 0 || static_cast<size_t>(playerID) < gui.getGame()->getPlayers().size()) {
+    if (playerID >= 0 && static_cast<size_t>(playerID) < gui.getGame()->getPlayers().size()) {
         playerToMove = getPlayerToMove(gui.getGame(), playerID);
         for (std::size_t i = 0; i != playerToMove.size(); i++) {
             std::clog << "player " << playerID << " expulsed player " << playerToMove[i] << std::endl;

@@ -25,7 +25,7 @@ void zappyGUI::Plv::receive(std::string command, zappyGUI::GUI &gui)
     int lvl;
     char hash;
     ss >> code >> hash >> playerID >> lvl;
-    if (playerID < 0 || static_cast<size_t>(playerID) < gui.getGame()->getPlayers().size()) {
+    if (playerID >= 0 && static_cast<size_t>(playerID) < gui.getGame()->getPlayers().size()) {
         gui.getGame()->getPlayers()[playerID].setLvl(lvl);
         std::clog << "player " << playerID << " is lvl " << lvl << std::endl;
     }

@@ -62,11 +62,10 @@ namespace zappyGUI {
 
                 private:
                     void handleRessouces(const zappyGUI::Tile &tile);
-                    void handleRessourceAll(const zappyGUI::Tile &tile);
                     void setRessource(zappyGUI::Zappy2D::ressourceType ressourceType, int amount);
                     void setRessourceTexture(zappyGUI::Zappy2D::ressourceType ressourceType);
                     void updatePlayers(const zappyGUI::Tile &tile);
-                    void updatePlayer(const zappyGUI::Tile &tile, const  std::shared_ptr<zappyGUI::Player> &player);
+                    void updatePlayer(const  std::shared_ptr<zappyGUI::Player> &player);
 
                     sf::Sprite _back;
                     sf::Sprite _ressource;

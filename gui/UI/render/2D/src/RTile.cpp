@@ -18,7 +18,7 @@ zappyGUI::Zappy2D::RTile::RTile(int x, int y, std::shared_ptr<zappyGUI::Zappy2D>
 
     this->_ressourceAmount.setFont(ui->_assets._font);
     this->_ressourceAmount.setScale(1.0, 1.0);
-    this->_ressourceAmount.setColor(sf::Color::White);
+    this->_ressourceAmount.setFillColor(sf::Color::White);
     this->_back.setTexture(ui->getAssets()._tileTexture);
     this->_back.setScale(sf::Vector2f(1.0, 1.0));
     this->_back.setPosition(sf::Vector2f(winX, winY));
@@ -52,7 +52,7 @@ void zappyGUI::Zappy2D::RTile::updatePlayers(const zappyGUI::Tile &tile)
 {
     for (const std::shared_ptr<zappyGUI::Player> &player : tile.getPlayers()) {
         if (player->isAlive()) {
-            this->updatePlayer(tile, player);
+            this->updatePlayer(player);
             return;
         }
     }
@@ -60,9 +60,9 @@ void zappyGUI::Zappy2D::RTile::updatePlayers(const zappyGUI::Tile &tile)
     this->_back.setTexture(this->_ui->getAssets()._tileTexture);
 }
 
-void zappyGUI::Zappy2D::RTile::updatePlayer(const zappyGUI::Tile &tile, const  std::shared_ptr<zappyGUI::Player> &player)
+void zappyGUI::Zappy2D::RTile::updatePlayer(const std::shared_ptr<zappyGUI::Player> &player)
 {
-    std::string team = tile.getPlayers().front()->getName();
+    std::string team = player->getName();
     sf::Color color;
 
     if (team.size() >= 2)
@@ -86,7 +86,7 @@ void zappyGUI::Zappy2D::RTile::handleRessouces(const zappyGUI::Tile &tile)
         }
     } else if (ressources[this->_ui->getDisplayRessourceType()].second <= 0) {
         this->_ressource.setColor(sf::Color::Transparent);
-        this->_ressourceAmount.setColor(sf::Color::Transparent);
+        this->_ressourceAmount.setFillColor(sf::Color::Transparent);
     } else
         this->setRessource(this->_ui->getDisplayRessourceType(), ressources[this->_ui->getDisplayRessourceType()].second);
 }
@@ -100,7 +100,7 @@ void zappyGUI::Zappy2D::RTile::setRessource(zappyGUI::Zappy2D::ressourceType res
 
     this->_ressource.setScale(sf::Vector2f(this->_ui->getZoomCoeff(), this->_ui->getZoomCoeff()));
     this->_ressource.setPosition(x, y);
-    this->_ressourceAmount.setColor(sf::Color::White);
+    this->_ressourceAmount.setFillColor(sf::Color::Transparent);
     this->_ressourceAmount.setPosition(x, y);
     this->_ressourceAmount.setCharacterSize(RESSOURCE_FONT_SIZE);
     this->_ressourceAmount.setString(std::to_string(5));
@@ -131,6 +131,8 @@ void zappyGUI::Zappy2D::RTile::setRessourceTexture(zappyGUI::Zappy2D::ressourceT
             break;
         case zappyGUI::Zappy2D::THYSTAME:
             this->_ressource.setTexture(this->_ui->getAssets()._thystameTexture);
+            break;
+        case zappyGUI::Zappy2D::ALL:
             break;
     }
 }

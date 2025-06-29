@@ -96,7 +96,7 @@ void zappyGUI::Tile::addPlayer(std::shared_ptr <zappyGUI::Player> newVal)
 
 void zappyGUI::Tile::removePlayerAt(int id)
 {
-    for (int i = 0; i < this->_players.size(); i++) {
+    for (size_t i = 0; i < this->_players.size(); i++) {
         if (this->_players[i]->getId() == id) {
             this->_players.erase(this->_players.begin() + i);
             break;
