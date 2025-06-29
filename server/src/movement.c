@@ -12,8 +12,6 @@ static size_t player_index(tile_t *tile, client_t *client)
     printf("client id %d - pos x(%u) y(%u)\n", client->id,
         client->position->x, client->position->y);
     for (size_t i = 0; i < tile->player_count; ++i) {
-        printf("tile %lu\n", tile->player_count);
-        printf("player id %d\n", tile->players[i]->id);
         if (tile->players[i]->id == client->id)
             return i;
     }

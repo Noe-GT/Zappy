@@ -140,7 +140,6 @@ static bool connection_process(server_t *server, client_t *client)
 {
     if (client->is_gui == false && client->is_ai == false) {
         if (strcmp(client->queue->command, "GRAPHIC\n") == 0) {
-            printf("éouoi\n");
             client->is_gui = true;
             client->queue = shift_queue(client->queue);
             command_mct(server, client, NULL);

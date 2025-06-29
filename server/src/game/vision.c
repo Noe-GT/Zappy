@@ -75,17 +75,18 @@ static void append_tile_content(server_t *server, tile_t *tile,
     append_eggs(server, pos, buffer, &len);
     for (int i = 0; i < RESOURCE_TYPES; ++i) {
         for (int j = 0; j < tile->resources[i]; ++j) {
-            append_resources(buffer, 256, &len);
-            len += snprintf(buffer + len, 256 - len, "%s", names[i] == NULL
+            append_resources(buffer, 400, &len);
+            len += snprintf(buffer + len, 400 - len, "%s", names[i] == NULL
                 ? "" : names[i]);
         }
     }
+    printf("len %d\n", len);
     buffer[len] = '\0';
 }
 
 static char *get_tile_content(server_t *server, int x, int y)
 {
-    char *buffer = malloc(256);
+    char *buffer = malloc(400);
     tile_t *tile;
     vector2_t pos;
 
@@ -118,8 +119,6 @@ char *get_content(client_t *client, server_t *server, int x, int y)
 
 static void append_content(char *result, int *len, char *content, bool is_last)
 {
-    printf("len %d\n", *len);
-    printf("content %s\n", content);
     if (is_last)
         *len += snprintf(result + *len, 4096 - *len, "%s]", content == NULL
             ? "" : content);

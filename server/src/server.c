@@ -27,11 +27,24 @@ static void signhandler(int _)
 
 static size_t handle_event(server_t *server, client_t *client, size_t i)
 {
+    char *message = NULL;
+
     if (!receive(server->clfds[i].fd, server->clients[i - 1]->buffer)) {
         remove_client(server, i);
         return -1;
     }
-    client->queue = add_queue(client->queue, read_string(client->buffer));
+    while (true) {
+        message = read_string(client->buffer);
+        if (message == NULL)
+            break;
+        if (queue_len(client->queue) >= MAX_QUEUE_LEN) {
+            destroy_buffer(client->buffer);
+            client->buffer = create_buffer();
+            break;
+        } else {
+            client->queue = add_queue(client->queue, message);
+        }
+    }
     return 0;
 }
 

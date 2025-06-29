@@ -27,21 +27,17 @@ static void player_eat(server_t *server, client_t *client, size_t index)
 static void eat(server_t *server)
 {
     uint64_t tick = 0;
-    size_t i = server->cons - 2;
 
     if (server->cons == 1)
         return;
-    while (true) {
+    for (size_t i = server->cons - 2; i >= 0; --i) {
         if (!server->clients[i]->is_ai && i == 0)
             break;
-        if (!server->clients[i]->is_ai) {
-            --i;
+        if (!server->clients[i]->is_ai)
             continue;
-        }
         tick = server->ticks - server->clients[i]->entry_tick;
         if (tick != 0 && tick % 126 == 0)
             player_eat(server, server->clients[i], i + 1);
-        --i;
         if (i == 0)
             break;
     }
@@ -64,10 +60,8 @@ void game_logic(server_t *server)
         handle_ressource(server);
     if (server->ticks % 500 == 0)
         clean_buffers(server);
-    if (server->ticks % (PARAMETERS->freq * 5) == 0) {
-        printf("sending map\n");
+    if (server->ticks % (PARAMETERS->freq * 5) == 0)
         server_mct(server);
-    }
     ++server->ticks;
     server->tick_timer = now + (1000 / server->parameters->freq);
     if (!server || !server->clients)
