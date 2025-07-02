@@ -41,6 +41,8 @@ GUI_LDFLAGS = -lsfml-graphics -lsfml-window -lsfml-system -ldl -L. -lprotocol
 
 CRITERION	=	--coverage -lcriterion
 
+DIRS := $(shell find gui/UI/render -type f -name Makefile -exec dirname {} \;)
+
 all:	$(PROTOCOL_EXEC) $(SERVER_EXEC) gui
 
 $(PROTOCOL_EXEC): $(PROTOCOL_OBJ)
@@ -50,11 +52,12 @@ gui: $(RENDERS_OBJ) $(GUI_EXEC)
 
 $(GUI_EXEC): $(GUI_OBJ)
 	mkdir -p gui/plugins/
-	@for dir in $(shell find gui/UI/render -type f -name Makefile -exec dirname {} \;); do 	\
-		$(MAKE) -C $$dir; 																	\
-		mv $$dir/*.so gui/plugins/;													 		\
+	@for dir in $(DIRS); do \
+		$(MAKE) -C $$dir; \
+		mv $$dir/*.so gui/plugins/; \
 	done
-	$(CPPC) $(GUI_OBJ) $(RENDERS_OBJ) -o $(GUI_EXEC) $(CFLAGS) $(CPPFLAGS) $(GUI_LDFLAGS)
+	$(CPPC) $(GUI_OBJ) $(RENDERS_OBJ) -o $(GUI_EXEC) $(CFLAGS) $(CPPFLAGS) \
+		$(GUI_LDFLAGS)
 
 tests_run:	$(PROTOCOL_EXEC) $(TEST_OBJ)	$(TEST_SERVER)
 	$(CC) $(CFLAGS) -o $(TEST_EXEC) $(TEST_OBJ) $(TEST_SERVER) $(CRITERION) \
@@ -62,14 +65,15 @@ tests_run:	$(PROTOCOL_EXEC) $(TEST_OBJ)	$(TEST_SERVER)
 	./$(TEST_EXEC)
 
 $(SERVER_EXEC): $(SERVER_OBJ) $(PROTOCOL_EXEC)
-	$(CC) $(SERVER_OBJ) $(CFLAGS) -Iserver/include -o $(SERVER_EXEC) -L. -lprotocol
+	$(CC) $(SERVER_OBJ) $(CFLAGS) -Iserver/include -o $(SERVER_EXEC) -L. \
+		-lprotocol
 
 $(AI_EXEC): $(AI_OBJ)
 	$(CC) $(AI_OBJ) -o $(AI_EXEC) $(CFLAGS)
 
 clean:
-	@for dir in $(shell find gui/UI/render -type f -name Makefile -exec dirname {} \;); do 	\
-		$(MAKE) -C $$dir clean; 															\
+	@for dir in $(DIRS); do \
+		$(MAKE) -C $$dir clean; \
 	done
 	rm -f $(SERVER_OBJ)
 	rm -f $(GUI_OBJ)
@@ -81,8 +85,8 @@ clean:
 	rm -f *.gch
 
 fclean: clean
-	@for dir in $(shell find gui/UI/render -type f -name Makefile -exec dirname {} \;); do 	\
-		$(MAKE) -C $$dir fclean;															\
+	@for dir in $(DIRS); do \
+		$(MAKE) -C $$dir fclean; \
 	done
 	rm -f gui/plugins/*
 	rm -f $(GUI_EXEC) $(AI_EXEC) $(SERVER_EXEC) $(PROTOCOL_EXEC) $(TEST_EXEC)

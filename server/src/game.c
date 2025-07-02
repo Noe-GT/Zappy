@@ -36,7 +36,7 @@ static void eat(server_t *server)
         if (!server->clients[i]->is_ai)
             continue;
         tick = server->ticks - server->clients[i]->entry_tick;
-        if (tick != 0 && tick % 126 == 0)
+        if (tick != 0 && tick % 300 == 0)
             player_eat(server, server->clients[i], i + 1);
         if (i == 0)
             break;
@@ -60,10 +60,10 @@ void game_logic(server_t *server)
         handle_ressource(server);
     if (server->ticks % 500 == 0)
         clean_buffers(server);
-    if (server->ticks % (PARAMETERS->freq * 5) == 0)
+    if (server->ticks % (PARAMETERS->freq * 10) == 0)
         server_mct(server);
     ++server->ticks;
-    server->tick_timer = now + (1000 / server->parameters->freq);
+    server->tick_timer = get_time_milliseconds() + (1000 / server->parameters->freq);
     if (!server || !server->clients)
         return;
     eat(server);
@@ -71,16 +71,14 @@ void game_logic(server_t *server)
 
 static bool team_won(server_t *server, char *team)
 {
-    uint16_t count = 0;
-
     for (size_t i = 0; i < server->cons - 1; ++i) {
         if (!server->clients[i]->is_ai)
             continue;
         if (strcmp(server->clients[i]->team, team) == 0 &&
             server->clients[i]->level == 8)
-            ++count;
+            return true;
     }
-    return count >= 6;
+    return false;
 }
 
 bool is_game_done(server_t *server)

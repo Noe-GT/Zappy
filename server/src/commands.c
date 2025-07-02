@@ -81,15 +81,17 @@ static void handle_gui_message(server_t *server, client_t *client)
 static void queue_ai_command(server_t *server, client_t *client,
     command_t *command, uint64_t now)
 {
+    if (!client->queue)
+        return;
     if (strcmp(client->queue->command, "Fork\n") == 0)
         command_pfk(server, client);
     if (strcmp(client->queue->command, "Incantation\n") == 0) {
         command_pic(server, client);
         if (can_start_incantation(server, client)) {
             command->function(server, client, client->queue->command);
-            client->queue = shift_queue(client->queue);
             command_pre_incantation(client);
         } else {
+            printf("failed incantation, logic is mayb broken\n");
             command_pie(server, client, false);
             command_ko(client->fd);
             client->queue = shift_queue(client->queue);
@@ -116,7 +118,8 @@ static void handle_ai_message(server_t *server, client_t *client, uint64_t now)
     if (client->queue->pending || command.cooldown == 0) {
         command.function(server, client, client->queue->command);
         client->queue = shift_queue(client->queue);
-    } else {
+    }
+    if (client->queue && !client->queue->pending) {
         queue_ai_command(server, client, &command, now);
     }
 }

@@ -16,6 +16,7 @@
 
     #define PARAMETERS server->parameters
     #define DOWNTIME calculate_downtime(server)
+    #define CLIENTN server->clients[i - 1]
 
 typedef struct required_flags_s {
     bool port;

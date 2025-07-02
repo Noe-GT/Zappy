@@ -75,8 +75,8 @@ static void append_tile_content(server_t *server, tile_t *tile,
     append_eggs(server, pos, buffer, &len);
     for (int i = 0; i < RESOURCE_TYPES; ++i) {
         for (int j = 0; j < tile->resources[i]; ++j) {
-            append_resources(buffer, 400, &len);
-            len += snprintf(buffer + len, 400 - len, "%s", names[i] == NULL
+            append_resources(buffer, 800, &len);
+            len += snprintf(buffer + len, 800 - len, "%s", names[i] == NULL
                 ? "" : names[i]);
         }
     }
@@ -86,7 +86,7 @@ static void append_tile_content(server_t *server, tile_t *tile,
 
 static char *get_tile_content(server_t *server, int x, int y)
 {
-    char *buffer = malloc(400);
+    char *buffer = malloc(800);
     tile_t *tile;
     vector2_t pos;
 
@@ -120,10 +120,10 @@ char *get_content(client_t *client, server_t *server, int x, int y)
 static void append_content(char *result, int *len, char *content, bool is_last)
 {
     if (is_last)
-        *len += snprintf(result + *len, 4096 - *len, "%s]", content == NULL
+        *len += snprintf(result + *len, 8096 - *len, "%s]", content == NULL
             ? "" : content);
     else
-        *len += snprintf(result + *len, 4096 - *len, "%s, ", content == NULL
+        *len += snprintf(result + *len, 8096 - *len, "%s, ", content == NULL
             ? "" : content);
 }
 
@@ -134,7 +134,7 @@ static bool is_last_tile(client_t *client, int y, int x)
 
 char *handle_vision(server_t *server, client_t *client)
 {
-    char *result = malloc(4096);
+    char *result = malloc(8096);
     char *content;
     int len = 0;
 
@@ -143,7 +143,7 @@ char *handle_vision(server_t *server, client_t *client)
         return strdup("[]");
     content = get_tile_content(server, client->position->x,
         client->position->y);
-    len += snprintf(result + len, 4096 - len, "[%s, ", content == NULL
+    len += snprintf(result + len, 8096 - len, "[%s, ", content == NULL
         ? "" : content);
     free(content);
     for (size_t y = 0; y < client->level; ++y) {

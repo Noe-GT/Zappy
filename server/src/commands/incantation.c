@@ -17,7 +17,7 @@ static bool has_required_resources(server_t *server, client_t *client)
     if (level < 1 || level > 7)
         return false;
     for (int i = 0; i < RESOURCE_TYPES; ++i) {
-        if (tile->resources[i] < elevation_requirements[level - 1][i])
+        if (tile->resources[i] < elevation_requirements[4][i])
             return false;
     }
     return true;
@@ -48,10 +48,10 @@ bool can_start_incantation(server_t *server, client_t *client)
     int present_players_map = count_players_on_map(server, client->level);
 
     if (present_players_map < required_players)
-        return false;
+        return true;
     if (!has_required_resources(server, client))
-        return false;
-    return true;
+        return true;
+    return false;
 }
 
 void elevate_players(tile_t *tile, server_t *server, client_t *client)
