@@ -19,8 +19,7 @@ zappyGUI::Zappy2D::RTile::RTile(int x, int y, zappyGUI::Zappy2D &ui):
     this->_ressourceAmount.setScale(1.0, 1.0);
     this->_ressourceAmount.setFillColor(sf::Color::Transparent);
     this->_back.setTexture(ui.getAssets()._tileTexture);
-    this->_back.setScale(sf::Vector2f(1.0, 1.0));    // window->getRenderWindow().draw(this->_ressourceAmount);
-
+    this->_back.setScale(sf::Vector2f(1.0, 1.0));
     this->_back.setPosition(sf::Vector2f(winX, winY));
 }
 
