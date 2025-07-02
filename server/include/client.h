@@ -8,6 +8,8 @@
 #ifndef CLIENT_H_
     #define CLIENT_H_
 
+    #define MAX_QUEUE_LEN 10
+
     #include <stdio.h>
     #include <stdlib.h>
     #include <stdint.h>
@@ -39,7 +41,7 @@ typedef struct client_s {
     uint64_t entry_tick;
 } client_t;
 
-queue_t *init_queue(char *command);
+size_t queue_len(queue_t *queue);
 queue_t *add_queue(queue_t *queue, char *command);
 void destroy_queue(queue_t *queue);
 queue_t *shift_queue(queue_t *queue);

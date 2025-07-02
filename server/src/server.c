@@ -22,16 +22,31 @@
 static void signhandler(int _)
 {
     (void)_;
+    printf("Server interrupted by the user\n");
     exit(0);
 }
 
 static size_t handle_event(server_t *server, client_t *client, size_t i)
 {
+    char *message = NULL;
+
     if (!receive(server->clfds[i].fd, server->clients[i - 1]->buffer)) {
+        remove_player_tile(server, CLIENTN, CLIENTN->position);
         remove_client(server, i);
         return -1;
     }
-    client->queue = add_queue(client->queue, read_string(client->buffer));
+    while (true) {
+        message = read_string(client->buffer);
+        if (message == NULL)
+            break;
+        if (queue_len(client->queue) >= MAX_QUEUE_LEN) {
+            destroy_buffer(client->buffer);
+            client->buffer = create_buffer();
+            break;
+        } else {
+            client->queue = add_queue(client->queue, message);
+        }
+    }
     return 0;
 }
 
@@ -62,7 +77,11 @@ static void network_events(server_t *server)
 static void game_end(server_t *server)
 {
     destroy_eggs(server->egg);
-    for (size_t i = server->cons - 2; true; ++i) {
+    for (size_t i = server->cons - 2; true; --i) {
+        if (!server->clients[i]->is_ai && i == 0)
+            break;
+        if (!server->clients[i]->is_ai)
+            continue;
         if (server->clients[i]->is_ai)
             remove_client(server, i + 1);
         if (i == 0)

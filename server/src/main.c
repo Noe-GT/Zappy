@@ -33,6 +33,7 @@ int main(int ac, char **av)
     srand(time(NULL));
     parser(ac, av, &server);
     initialize_map(&server);
+    handle_ressource(&server);
     create_start_team_eggs(&server);
     run_server(&server);
 }

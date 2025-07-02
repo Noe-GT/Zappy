@@ -7,6 +7,15 @@
 
 #include "../../include/commands.h"
 
+void server_mct(server_t *server)
+{
+    for (size_t i = 0; i < server->cons - 1; ++i) {
+        if (!server->clients[i]->is_gui)
+            continue;
+        command_mct(server, server->clients[i], NULL);
+    }
+}
+
 void command_mct(server_t *server, client_t *client, char *message)
 {
     (void)message;

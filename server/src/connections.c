@@ -29,6 +29,7 @@ void destroy_tab(char **tab)
 static void free_client(client_t *client)
 {
     free(client->position);
+    free(client);
 }
 
 void remove_client(server_t *server, size_t index)
@@ -48,11 +49,11 @@ void remove_client(server_t *server, size_t index)
             sizeof(client_t *) * server->cons);
     }
     free_client(client);
-    free(client);
 }
 
 void init_player(server_t *server, client_t *client)
 {
+    memset(client->inventory, 0, sizeof(int) * RESOURCE_TYPES);
     client->position = NULL;
     client->direction = 0;
     client->level = 1;

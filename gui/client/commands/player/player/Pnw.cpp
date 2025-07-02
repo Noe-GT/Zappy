@@ -36,7 +36,7 @@ void zappyGUI::Pnw::receive(std::string command, zappyGUI::GUI &gui)
     newPlayer.setPos(playerPos);
     newPlayer.setName(teamName);
     newPlayer.setOrientation(orientation - 1);
-    if ((int) gui.getGame()->getPlayers().size() <= playerID) {
+    if (playerID >= (int)gui.getGame()->getPlayers().size()) {
         gui.getGame()->getPlayers().push_back(newPlayer);
         gui.getGame()->getPlayers()[playerID].revive();
     }

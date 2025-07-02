@@ -32,6 +32,9 @@ void zappyGUI::Pic::receive(std::string command, zappyGUI::GUI &gui)
 
     std::clog << "pic" << std::endl;
     ss >> code >> x >> y >> lvl >> hash >> casterID;
+    if (casterID >= 0 && static_cast<size_t>(casterID) >= gui.getGame()->getPlayers().size()) {
+        return;
+    }
     spell.setLevel(gui.getGame()->getPlayers()[casterID].getLvl() + 1);
     spell.setCaster(std::make_shared <Player> (gui.getGame()->getPlayers()[casterID]));
     spell.setPos(x, y);

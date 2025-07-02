@@ -11,11 +11,12 @@ void command_aic(server_t *server, client_t *client)
 {
     uint16_t count = count_eggs(server->egg, client->team) + 1;
 
-    if (PARAMETERS->nb_clients - count == 0)
+    if (count == 0)
         return command_ko(client->fd);
     else
         send_message(client->fd, "%d\n%u %u\n", count,
             PARAMETERS->width, PARAMETERS->height);
     add_player_tile(server, client, client->position);
     command_pnw(server, client);
+    server_pin(server, client);
 }

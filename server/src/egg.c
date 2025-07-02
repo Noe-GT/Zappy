@@ -80,7 +80,8 @@ bool replace_egg(server_t *server, client_t *client)
         return false;
     client->position = egg->position;
     client->direction = egg->direction;
-    client->id = egg->id;
+    client->id = server->player_count;
+    ++server->player_count;
     crack_egg(egg);
     return true;
 }

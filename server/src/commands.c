@@ -70,8 +70,10 @@ static void handle_gui_message(server_t *server, client_t *client)
         return;
     printf("Handling massage: %s", client->queue->command);
     find_gui_command(&command, client->queue->command);
-    if (command.name == 0)
+    if (command.name == 0) {
+        client->queue = shift_queue(client->queue);
         return command_suc(client);
+    }
     command.function(server, client, client->queue->command);
     client->queue = shift_queue(client->queue);
 }
@@ -79,14 +81,17 @@ static void handle_gui_message(server_t *server, client_t *client)
 static void queue_ai_command(server_t *server, client_t *client,
     command_t *command, uint64_t now)
 {
+    if (!client->queue)
+        return;
     if (strcmp(client->queue->command, "Fork\n") == 0)
         command_pfk(server, client);
     if (strcmp(client->queue->command, "Incantation\n") == 0) {
         command_pic(server, client);
         if (can_start_incantation(server, client)) {
             command->function(server, client, client->queue->command);
-            client->queue = shift_queue(client->queue);
+            command_pre_incantation(client);
         } else {
+            printf("failed incantation, logic is mayb broken\n");
             command_pie(server, client, false);
             command_ko(client->fd);
             client->queue = shift_queue(client->queue);
@@ -106,12 +111,15 @@ static void handle_ai_message(server_t *server, client_t *client, uint64_t now)
         return;
     printf("Handling massage: %s", client->queue->command);
     find_ai_command(&command, client->queue->command);
-    if (command.name == 0)
+    if (command.name == 0) {
+        client->queue = shift_queue(client->queue);
         return command_ko(client->fd);
+    }
     if (client->queue->pending || command.cooldown == 0) {
         command.function(server, client, client->queue->command);
         client->queue = shift_queue(client->queue);
-    } else {
+    }
+    if (client->queue && !client->queue->pending) {
         queue_ai_command(server, client, &command, now);
     }
 }
@@ -125,6 +133,7 @@ static bool ai_connection_process(server_t *server, client_t *client)
             return false;
         }
         client->is_ai = true;
+        client->inventory[FOOD] = 10;
         client->queue = shift_queue(client->queue);
         command_aic(server, client);
         return true;
@@ -140,6 +149,7 @@ static bool connection_process(server_t *server, client_t *client)
         if (strcmp(client->queue->command, "GRAPHIC\n") == 0) {
             client->is_gui = true;
             client->queue = shift_queue(client->queue);
+            command_mct(server, client, NULL);
             return true;
         }
         return ai_connection_process(server, client);

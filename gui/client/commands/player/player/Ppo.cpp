@@ -28,7 +28,7 @@ void zappyGUI::Ppo::receive(std::string command, zappyGUI::GUI &gui)
 
     std::clog << "ppo" << std::endl;
     ss >> code >> hash >> playerID >> pos.first >> pos.second >> orientation;
-    if (playerID > 0 && static_cast<size_t>(playerID) > gui.getGame()->getPlayers().size())
+    if (playerID >= 0 && static_cast<size_t>(playerID) >= gui.getGame()->getPlayers().size())
         return;
     oldPos = gui.getGame()->getPlayers()[playerID].getPos();
     gui.getGame()->getMap()[oldPos.second][oldPos.first].removePlayerAt(playerID);

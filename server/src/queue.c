@@ -7,7 +7,7 @@
 
 #include "../include/client.h"
 
-queue_t *init_queue(char *command)
+static queue_t *init_queue(char *command)
 {
     queue_t *node = (queue_t *)malloc(sizeof(queue_t));
 
@@ -15,17 +15,37 @@ queue_t *init_queue(char *command)
         return NULL;
     node->command = command;
     node->pending = false;
+    node->next = NULL;
     return node;
+}
+
+static queue_t *queue_last(queue_t *queue)
+{
+    if (queue == NULL)
+        return NULL;
+    if (queue->next == NULL)
+        return queue;
+    return queue_last(queue->next);
+}
+
+size_t queue_len(queue_t *queue)
+{
+    if (queue == NULL)
+        return 0;
+    return 1 + queue_len(queue->next);
 }
 
 queue_t *add_queue(queue_t *queue, char *command)
 {
     queue_t *node = init_queue(command);
+    queue_t *last = queue_last(queue);
 
     if (node == NULL)
         return queue;
-    node->next = queue;
-    return node;
+    if (last == NULL)
+        return node;
+    last->next = node;
+    return queue;
 }
 
 void destroy_queue(queue_t *queue)

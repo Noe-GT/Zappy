@@ -1,13 +1,6 @@
 #pragma once
 #include "../../../shared/AGraphical.hpp"
 #include "../../../../game/Game.hpp"
-// #define BASE_TILE_SIZE 32
-// #define BASE_PLAYER_SIZE 10
-// #define BASE_RESSOURCE_SIZE 16
-// #define ZOOM_COEFF_MAX (float)5.0
-// // #define ZOOM_COEFF_MIN (float)0.1
-// #define ZOOM_COEFF_SENSITIVITY (float)0.1
-// #define MAP_OFFSET_SENSITIVITY (float)10.0
 #define ASSETS_FOLDER "gui/UI/render/2D/assets/"
 #define GLOBAL_ASSETS_FOLDER "../../../../../assets/"
 
@@ -22,7 +15,7 @@ namespace zappyGUI {
     constexpr float ZOOM_COEFF_SENSITIVITY = 0.1f;
     constexpr int MAP_OFFSET_SENSITIVITY = 10;
 
-    class Zappy2D: public AGraphical {
+    class Zappy2D: public AGraphical{
         public:
             enum ressourceType {
                 FOOD,
@@ -54,23 +47,22 @@ namespace zappyGUI {
 
             class RTile {
                 public:
-                    RTile(int x, int y, std::shared_ptr<zappyGUI::Zappy2D> ui);
+                    RTile(int x, int y, zappyGUI::Zappy2D &ui);
                     ~RTile() = default;
 
                     void display(std::shared_ptr<zappyGUI::Window> window) const;
-                    void update(const zappyGUI::Tile &tile);
+                    void update(const zappyGUI::Tile &tile, zappyGUI::Zappy2D &ui);
 
                 private:
-                    void handleRessouces(const zappyGUI::Tile &tile);
-                    void setRessource(zappyGUI::Zappy2D::ressourceType ressourceType, int amount);
-                    void setRessourceTexture(zappyGUI::Zappy2D::ressourceType ressourceType);
-                    void updatePlayers(const zappyGUI::Tile &tile);
-                    void updatePlayer(const  std::shared_ptr<zappyGUI::Player> &player);
+                    void handleRessouces(const zappyGUI::Tile &tile, zappyGUI::Zappy2D &ui);
+                    void setRessource(zappyGUI::Zappy2D::ressourceType ressourceType, int amount, zappyGUI::Zappy2D &ui);
+                    void setRessourceTexture(zappyGUI::Zappy2D::ressourceType ressourceType, zappyGUI::Zappy2D &ui);
+                    void updatePlayers(const zappyGUI::Tile &tile, zappyGUI::Zappy2D &ui);
+                    void updatePlayer(const zappyGUI::Tile &tile, const  std::shared_ptr<zappyGUI::Player> &player, zappyGUI::Zappy2D &ui);
 
                     sf::Sprite _back;
                     sf::Sprite _ressource;
                     sf::Text _ressourceAmount;
-                    std::shared_ptr<zappyGUI::Zappy2D> _ui;
             };
 
             Zappy2D();
