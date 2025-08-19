@@ -7,14 +7,15 @@ The project is divided into 3 parts:
 - AI player (in Python)
 
 ## subject
-- [**main subject**](https://intra.epitech.eu/module/2024/B-YEP-400/LYN-4-1/acti-664618/project/file/subject/B-YEP-400_zappy.pdf)
-- [**gui protocol subject**](https://intra.epitech.eu/module/2024/B-YEP-400/LYN-4-1/acti-664618/project/file/subject/B-YEP-400_zappy_GUI_protocol.pdf)
-## Documentation / Organisation Links
+- [**main subject**](./documentation/zappy_guidelines.pdf)
+- [**gui protocol subject**](./documentation/zappy_GUI_protocol.pdf)
 
+## Documentation / Organisation Links
 - [**TODO List**](./TODO.md)
 - [**GUI Documentation**](./documentation/GUI.md)
 - [**AI Documentation**](https://media1.tenor.com/m/jSakpprrHBEAAAAd/shrek-smirk.gif)
 - [**SERVER Documentation**](https://media1.tenor.com/m/jSakpprrHBEAAAAd/shrek-smirk.gif)
+
 ## how to compile and launch
 compile the project with
 ```bash
