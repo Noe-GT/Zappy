@@ -1,4 +1,10 @@
 # Zappy
+Online world simulation with server, GUI, and AI players.
+
+The project is divided into 3 parts:
+- Server (in C)
+- GUI (in C++)
+- AI player (in Python)
 
 ## subject
 - [**main subject**](https://intra.epitech.eu/module/2024/B-YEP-400/LYN-4-1/acti-664618/project/file/subject/B-YEP-400_zappy.pdf)
